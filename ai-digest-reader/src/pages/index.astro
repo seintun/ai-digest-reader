@@ -359,66 +359,214 @@ const { } = Astro.props;
           '</div>' +
           '<span class="font-bold text-base text-slate-900 dark:text-white">AI Summary</span>' +
         '</div>' +
-        '<div class="relative">' +
-          '<button id="summary-tab-toggle" class="flex items-center gap-1 text-sm bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-200 font-medium cursor-pointer px-3 py-1.5 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors duration-200">' +
-            '<span id="current-tab-label">Simple</span>' +
-            '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>' +
-          '</button>' +
-          '<div id="summary-tabs-dropdown" class="hidden absolute right-0 mt-1 w-36 bg-white dark:bg-slate-800 rounded-lg shadow-lg border border-slate-200 dark:border-slate-700 z-50">' +
-            '<button data-tab="simple" class="tab-btn w-full text-left px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer rounded-t-lg transition-colors duration-150 active">Simple</button>' +
-            '<button data-tab="structured" class="tab-btn w-full text-left px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer transition-colors duration-150">Structured</button>' +
-            '<button data-tab="full" class="tab-btn w-full text-left px-3 py-2 text-sm hover:bg-slate-100 dark:hover:bg-slate-700 cursor-pointer rounded-b-lg transition-colors duration-150">Full Brief</button>' +
+      '</div>' +
+      '<div class="swipe-track-outer" id="swipe-track-outer">' +
+        '<div class="swipe-track" id="swipe-track">' +
+          '<div class="swipe-card">' +
+            '<div class="card-snippet">' +
+              '<p class="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium">' + summary.simple + '</p>' +
+            '</div>' +
+            '<div class="card-snippet-fade"></div>' +
+            '<button type="button" class="card-view-more mt-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">View more ↓</button>' +
+          '</div>' +
+          '<div class="swipe-card">' +
+            '<div class="card-snippet">' +
+              '<div class="space-y-3">' +
+                '<div><h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Key Themes</h4><div class="flex flex-wrap gap-2">' + themesHtml + '</div></div>' +
+                breakingHtml +
+                '<div><h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Must Read</h4><div class="space-y-1 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-1">' + mustReadHtml + '</div></div>' +
+              '</div>' +
+            '</div>' +
+            '<div class="card-snippet-fade"></div>' +
+            '<button type="button" class="card-view-more mt-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">View more ↓</button>' +
+          '</div>' +
+          '<div class="swipe-card">' +
+            '<div class="card-snippet">' +
+              '<div id="full-brief-content" class="digest-prose text-sm text-slate-700 dark:text-slate-200 leading-relaxed"></div>' +
+            '</div>' +
+            '<div class="card-snippet-fade"></div>' +
+            '<button type="button" class="card-view-more mt-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">View more ↓</button>' +
           '</div>' +
         '</div>' +
       '</div>' +
-      '<div id="summary-simple" class="tab-content"><p class="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium">' + summary.simple + '</p></div>' +
-      '<div id="summary-structured" class="tab-content hidden"><div class="space-y-3">' +
-        '<div><h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Key Themes</h4><div class="flex flex-wrap gap-2">' + themesHtml + '</div></div>' +
-        breakingHtml +
-        '<div><h4 class="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">Must Read</h4><div class="space-y-1 bg-slate-50 dark:bg-slate-800/50 rounded-lg p-1">' + mustReadHtml + '</div></div>' +
-      '</div></div>' +
-      '<div id="summary-full" class="tab-content hidden"><div id="full-brief-content" class="digest-prose text-sm text-slate-700 dark:text-slate-200 leading-relaxed"></div></div>' +
-    '</div>' +
-    '<style>.tab-btn.active{background-color:rgb(37 99 235 / 0.1);color:rgb(37 99 235);font-weight:600;}:global(.dark) .tab-btn.active{background-color:rgb(96 165 250 / 0.2);color:rgb(147 197 253);font-weight:600;}</style>';
+      '<div class="mt-3 flex items-center justify-between gap-3">' +
+        '<button type="button" id="summary-prev-btn" class="h-8 w-8 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" aria-label="Previous summary card">' +
+          '<svg class="mx-auto h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>' +
+        '</button>' +
+        '<div class="flex items-center gap-2" aria-label="Summary cards">' +
+          '<button type="button" class="swipe-dot active" data-index="0" aria-label="Show Simple summary"></button>' +
+          '<button type="button" class="swipe-dot" data-index="1" aria-label="Show Structured summary"></button>' +
+          '<button type="button" class="swipe-dot" data-index="2" aria-label="Show Full Brief summary"></button>' +
+        '</div>' +
+        '<button type="button" id="summary-next-btn" class="h-8 w-8 rounded-full border border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-300 disabled:opacity-40 disabled:cursor-not-allowed hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors" aria-label="Next summary card">' +
+          '<svg class="mx-auto h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>' +
+        '</button>' +
+      '</div>' +
+    '</div>';
   }
 
   function initSummaryTabs() {
-    const toggle = document.getElementById('summary-tab-toggle');
-    const dropdown = document.getElementById('summary-tabs-dropdown');
-    const tabButtons = document.querySelectorAll('.tab-btn');
-    const tabContents = document.querySelectorAll('.tab-content');
-    const currentLabel = document.getElementById('current-tab-label');
+    const outer = document.getElementById('swipe-track-outer');
+    const track = document.getElementById('swipe-track') as HTMLElement | null;
+    const prevBtn = document.getElementById('summary-prev-btn') as HTMLButtonElement | null;
+    const nextBtn = document.getElementById('summary-next-btn') as HTMLButtonElement | null;
+    const dots = document.querySelectorAll('.swipe-dot');
     const fullBriefContent = document.getElementById('full-brief-content');
+
+    function escapeHtml(input: string): string {
+      return input
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+    }
+
+    function formatInlineMarkdown(input: string): string {
+      return input
+        .replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
+    }
+
+    function renderMarkdown(markdown: string): string {
+      const lines = markdown.split('\n');
+      const output: string[] = [];
+      let listType: 'ul' | 'ol' | null = null;
+
+      const closeList = () => {
+        if (listType === 'ul') output.push('</ul>');
+        if (listType === 'ol') output.push('</ol>');
+        listType = null;
+      };
+
+      lines.forEach((line) => {
+        const ulMatch = line.match(/^\s*[-*]\s+(.+)/);
+        const olMatch = line.match(/^\s*\d+\.\s+(.+)/);
+
+        if (ulMatch) {
+          if (listType === 'ol') closeList();
+          if (listType !== 'ul') {
+            output.push('<ul class="list-disc pl-5 mb-2 space-y-1">');
+            listType = 'ul';
+          }
+          output.push('<li>' + formatInlineMarkdown(escapeHtml(ulMatch[1].trim())) + '</li>');
+          return;
+        }
+
+        if (olMatch) {
+          if (listType === 'ul') closeList();
+          if (listType !== 'ol') {
+            output.push('<ol class="list-decimal pl-5 mb-2 space-y-1">');
+            listType = 'ol';
+          }
+          output.push('<li>' + formatInlineMarkdown(escapeHtml(olMatch[1].trim())) + '</li>');
+          return;
+        }
+
+        if (listType) closeList();
+        output.push(formatInlineMarkdown(escapeHtml(line)));
+      });
+
+      if (listType) closeList();
+
+      let html = output.join('\n');
+      html = html
+        .replace(/^###\s+(.+)$/gm, '<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-3 mb-1">$1</h4>')
+        .replace(/^##\s+(.+)$/gm, '<h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">$1</h3>')
+        .replace(/^#\s+(.+)$/gm, '<h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-4 mb-2">$1</h2>');
+
+      return html
+        .split(/\n\n+/)
+        .map((chunk) => chunk.trim())
+        .filter(Boolean)
+        .map((chunk) => {
+          if (/^<(h2|h3|h4|ul|ol)/.test(chunk)) return chunk;
+          return '<p class="mb-2">' + chunk.replace(/\n/g, '<br />') + '</p>';
+        })
+        .join('');
+    }
     
     if (fullBriefContent) {
       const summaryData = state.summary;
       if (summaryData) {
-        const formatted = summaryData.fullBrief
-          .replace(/\n\n/g, '</p><p>')
-          .replace(/##\s+(.+)/g, '<h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">$1</h3>')
-          .replace(/###\s+(.+)/g, '<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-3 mb-1">$1</h4>');
-        fullBriefContent.innerHTML = '<p>' + formatted + '</p>';
+        fullBriefContent.innerHTML = renderMarkdown(summaryData.fullBrief);
       }
     }
-    
-    toggle?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      dropdown?.classList.toggle('hidden');
+
+    if (!outer || !track || !prevBtn || !nextBtn || dots.length === 0) return;
+
+    let current = 0;
+    const total = 3;
+
+    function goTo(index: number) {
+      current = Math.max(0, Math.min(total - 1, index));
+      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      dots.forEach((dot, idx) => {
+        dot.classList.toggle('active', idx === current);
+      });
+      prevBtn.disabled = current === 0;
+      nextBtn.disabled = current === total - 1;
+    }
+
+    prevBtn.addEventListener('click', () => goTo(current - 1));
+    nextBtn.addEventListener('click', () => goTo(current + 1));
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => goTo(index));
     });
-    
-    document.addEventListener('click', () => dropdown?.classList.add('hidden'));
-    
-    tabButtons.forEach(btn => {
+
+    let touchStartX = 0;
+    outer.addEventListener('touchstart', (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+
+    outer.addEventListener('touchend', (event) => {
+      const dx = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(dx) > 40) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+      }
+    }, { passive: true });
+
+    let dragging = false;
+    let pointerStartX = 0;
+
+    outer.addEventListener('pointerdown', (event) => {
+      if (event.button !== 0) return;
+      dragging = true;
+      pointerStartX = event.clientX;
+      (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
+    });
+
+    outer.addEventListener('pointermove', () => {
+      if (!dragging) return;
+    });
+
+    outer.addEventListener('pointerup', (event) => {
+      if (!dragging) return;
+      dragging = false;
+      const dx = event.clientX - pointerStartX;
+      if (Math.abs(dx) > 40) {
+        goTo(dx < 0 ? current + 1 : current - 1);
+      }
+    });
+
+    outer.addEventListener('pointercancel', () => {
+      dragging = false;
+    });
+
+    document.querySelectorAll('.card-view-more').forEach((button) => {
+      const btn = button as HTMLButtonElement;
       btn.addEventListener('click', () => {
-        const tab = btn.getAttribute('data-tab');
-        if (!tab) return;
-        tabButtons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        if (currentLabel) currentLabel.textContent = tab === 'simple' ? 'Simple' : tab === 'structured' ? 'Structured' : 'Full Brief';
-        tabContents.forEach(content => content.classList.toggle('hidden', content.id.replace('summary-', '') !== tab));
-        dropdown?.classList.add('hidden');
+        const card = btn.closest('.swipe-card');
+        const snippet = card?.querySelector('.card-snippet');
+        const fade = card?.querySelector('.card-snippet-fade') as HTMLElement | null;
+        if (!snippet) return;
+        const expanded = snippet.classList.toggle('expanded');
+        if (fade) {
+          fade.style.opacity = expanded ? '0' : '1';
+        }
+        btn.textContent = expanded ? 'Show less ↑' : 'View more ↓';
       });
     });
+
+    goTo(0);
   }
 
   function showError(message: string) {
@@ -537,5 +685,72 @@ const { } = Astro.props;
     );
     background-size: 200% 100%;
     animation: shimmer 1.5s infinite;
+  }
+
+  .card-snippet {
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    max-height: 4.5rem;
+    position: relative;
+  }
+
+  .card-snippet.expanded {
+    max-height: 800px;
+  }
+
+  .card-snippet-fade {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    height: 2rem;
+    background: linear-gradient(to bottom, transparent, white);
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+  }
+
+  :global(.dark) .card-snippet-fade {
+    background: linear-gradient(to bottom, transparent, rgb(30 41 59));
+  }
+
+  .swipe-track-outer {
+    overflow: hidden;
+    position: relative;
+    touch-action: pan-y;
+  }
+
+  .swipe-track {
+    display: flex;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
+  }
+
+  .swipe-card {
+    flex: 0 0 100%;
+    min-width: 0;
+    position: relative;
+    padding-bottom: 0.25rem;
+  }
+
+  .swipe-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 9999px;
+    background-color: rgb(148 163 184);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+    cursor: pointer;
+  }
+
+  .swipe-dot.active {
+    background-color: rgb(99 102 241);
+    transform: scale(1.4);
+  }
+
+  :global(.dark) .swipe-dot {
+    background-color: rgb(100 116 139);
+  }
+
+  :global(.dark) .swipe-dot.active {
+    background-color: rgb(129 140 248);
   }
 </style>
