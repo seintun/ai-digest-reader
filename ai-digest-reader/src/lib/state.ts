@@ -73,8 +73,8 @@ state = {
   ...loadPersistedState(),
 };
 
-export function setViewMode: (mode: ViewMode) => void = createStateUpdater('viewMode');
-export function setSource: (source: Source) => void = createStateUpdater('source');
+export const setViewMode: (mode: ViewMode) => void = createStateUpdater('viewMode');
+export const setSource: (source: Source) => void = createStateUpdater('source');
 export const setStories = createStateUpdater('stories');
 export const setLoading = createStateUpdater('loading');
 export const setError = createStateUpdater('error');
