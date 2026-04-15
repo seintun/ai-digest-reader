@@ -61,13 +61,15 @@ Error: Rate limit exceeded. Please wait and retry.
 2. **Retry with exponential backoff** - The script automatically retries
 3. **Use `--no-ai`** to skip AI summaries temporarily:
    ```bash
-   python scripts/generator.py --no-ai
+   python digest.py --no-ai
    ```
 
 **Preventive measures:**
 - Generate digests during off-peak hours
 - Cache responses locally
 - Use `--no-ai` for CI/CD pipelines
+
+**Note:** If `analyzer.py` fails (Claude not installed), the script will continue without AI summary and print a warning.
 
 ---
 
@@ -91,13 +93,13 @@ claude --version
 claude auth
 
 # 2. Run with verbose output
-python scripts/generator.py --verbose
+python digest.py --no-ai
 
 # 3. Check if stories were fetched
-python scripts/aggregator.py
+python digest.py --no-ai
 
-# 4. Generate without AI as fallback
-python scripts/generator.py --no-ai
+# 4. Generate with AI (if Claude CLI installed)
+python digest.py
 ```
 
 ---
@@ -112,7 +114,7 @@ python scripts/generator.py --no-ai
 **Solution:**
 1. Ensure sufficient stories are fetched:
    ```bash
-   python scripts/generator.py --limit 20
+   python digest.py --limit 20
    ```
 2. Wait for a day with more activity
 3. Check that stories have meaningful titles and scores
@@ -132,10 +134,10 @@ Error: Failed to fetch Reddit posts: 429 Too Many Requests
 ```bash
 # Wait and retry
 sleep 60
-python scripts/generator.py
+python digest.py
 
 # Or reduce the number of posts
-python scripts/generator.py --limit 5
+python digest.py --limit 5
 ```
 
 Reddit's free API has strict rate limits. The script includes automatic retry with backoff.
@@ -155,7 +157,7 @@ Error: Failed to fetch HN stories: Connection timeout
 ping news.ycombinator.com
 
 # Retry
-python scripts/generator.py
+python digest.py
 ```
 
 HN's Firebase API is generally reliable. Timeouts are usually network-related.
@@ -180,7 +182,7 @@ HN's Firebase API is generally reliable. Timeouts are usually network-related.
 curl https://www.reddit.com/r/ArtificialIntelligence.json
 
 # Try different subreddits
-python scripts/generator.py --subreddits ChatGPT MachineLearning
+python digest.py --subreddits ChatGPT MachineLearning
 
 # Run during peak hours (typically 9 AM - 11 PM local time)
 ```
@@ -228,7 +230,7 @@ python scripts/generator.py --subreddits ChatGPT MachineLearning
 
 2. **Regenerate digest:**
    ```bash
-   python scripts/generator.py > ai-digest-reader/public/data/digest.json
+   python digest.py --output-dir ai-digest-reader/public/data/
    ```
 
 3. **Clear localStorage** as described above

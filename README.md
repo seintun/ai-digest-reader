@@ -33,22 +33,22 @@ pip install -r requirements.txt
 
 ```bash
 # Generate today's digest with AI summary (requires Claude CLI)
-python scripts/generator.py
+python digest.py
 
 # Generate without AI summary
-python scripts/generator.py --no-ai
+python digest.py --no-ai
 
 # Custom output directory
-python scripts/generator.py --output-dir my-digests/
+python digest.py --output-dir my-digests/
 
 # Limit posts per source
-python scripts/generator.py --limit 5
+python digest.py --limit 5
 
 # Fetch specific subreddits only
-python scripts/generator.py --subreddits ArtificialIntelligence LocalLLaMA
+python digest.py --subreddits ArtificialIntelligence LocalLLaMA
 
 # Combine options
-python scripts/generator.py --no-ai --limit 10 --output-dir ./output
+python digest.py --no-ai --limit 10 --output-dir ./output
 ```
 
 ## Output
@@ -100,12 +100,11 @@ Human-readable format with:
 
 | Script | Purpose |
 |--------|---------|
-| `aggregator.py` | Fetch stories from Reddit + HN |
-| `analyzer.py` | Generate AI summaries (Claude CLI) |
-| `generator.py` | Main entry point (generates both outputs) |
-| `reddit_adapter.py` | Reddit API integration |
-| `hn_adapter.py` | Hacker News API integration |
-| `config.py` | Shared configuration |
+| `digest.py` | Main entry point - generates digest with AI summary |
+| `analyzer.py` | Generate AI summaries via Claude CLI |
+| `fetchers/` | Reddit and HN API integration |
+| `formatter.py` | Markdown output formatting |
+| `config.py` | Configuration (subreddits, limits) |
 
 ## Sources
 
