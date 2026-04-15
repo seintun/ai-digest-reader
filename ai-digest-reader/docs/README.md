@@ -13,6 +13,8 @@ A mobile-first PWA news reader that aggregates AI-related content from Reddit an
 
 ## Quick Start
 
+### Frontend (Astro)
+
 ```bash
 # Install dependencies
 npm install
@@ -25,6 +27,35 @@ npm run build
 
 # Preview production build
 npm run preview
+```
+
+### Backend (Python Digest Generator)
+
+```bash
+# Create virtual environment
+python3 -m venv venv
+
+# Activate venv
+source venv/bin/activate  # macOS/Linux
+# or: venv\Scripts\activate  # Windows
+
+# Install dependencies
+pip install requests
+
+# Generate digest JSON
+python scripts/generate_json.py
+
+# Generate and save to file
+python scripts/generate_json.py public/data/digest.json
+```
+
+### Running with Sample Data
+
+The project includes sample data at `public/data/digest.json`. After generating your own data:
+
+```bash
+# Copy generated data to public folder
+python scripts/generate_json.py > public/data/digest.json
 ```
 
 ## Tech Stack
