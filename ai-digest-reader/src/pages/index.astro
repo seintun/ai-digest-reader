@@ -326,26 +326,33 @@ const { } = Astro.props;
     }
   }
 
+  function escapeHtml(input: string): string {
+    return input
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
   function getStoryUrl(stories: Story[], id: string): string {
     const story = stories.find(s => s.i === id);
     return story?.u || '#';
   }
 
   function renderDigestSummary(summary: DigestSummaryType, stories: Story[]): string {
-    const themesHtml = summary.structured.themes.map(t => 
-      '<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">' + t + '</span>'
+    const themesHtml = summary.structured.themes.map(t =>
+      '<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">' + escapeHtml(t) + '</span>'
     ).join('');
-    
-    const breakingHtml = summary.structured.breaking 
-      ? '<div class="p-2.5 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800/50"><h4 class="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Breaking</h4><p class="text-sm text-red-800 dark:text-red-300">' + summary.structured.breaking + '</p></div>'
+
+    const breakingHtml = summary.structured.breaking
+      ? '<div class="p-2.5 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800/50"><h4 class="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Breaking</h4><p class="text-sm text-red-800 dark:text-red-300">' + escapeHtml(summary.structured.breaking) + '</p></div>'
       : '';
-    
-    const mustReadHtml = summary.structured.mustRead.map((item, idx) => 
+
+    const mustReadHtml = summary.structured.mustRead.map((item, idx) =>
       '<a href="' + getStoryUrl(stories, item.id) + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 group cursor-pointer p-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors duration-150">' +
         '<span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 dark:bg-primary-600 text-white text-xs font-bold flex items-center justify-center">' + (idx + 1) + '</span>' +
         '<div class="flex-1 min-w-0">' +
-          '<p class="text-sm font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-150">' + item.t + '</p>' +
-          '<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">' + item.reason + '</p>' +
+          '<p class="text-sm font-medium text-slate-900 dark:text-slate-100 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-150">' + escapeHtml(item.title) + '</p>' +
+          '<p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">' + escapeHtml(item.reason) + '</p>' +
         '</div>' +
         '<svg class="flex-shrink-0 w-4 h-4 text-slate-400 group-hover:text-primary-500 transition-colors duration-150 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>' +
       '</a>'
@@ -364,7 +371,7 @@ const { } = Astro.props;
         '<div class="swipe-track" id="swipe-track">' +
           '<div class="swipe-card">' +
             '<div class="card-snippet">' +
-              '<p class="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium">' + summary.simple + '</p>' +
+              '<p class="text-slate-700 dark:text-slate-200 text-sm leading-relaxed font-medium">' + escapeHtml(summary.simple) + '</p>' +
             '</div>' +
             '<div class="card-snippet-fade"></div>' +
             '<button type="button" class="card-view-more mt-2 text-sm font-medium text-primary-600 dark:text-primary-400 hover:text-primary-700 dark:hover:text-primary-300">View more ↓</button>' +
@@ -413,81 +420,17 @@ const { } = Astro.props;
     const dots = document.querySelectorAll('.swipe-dot');
     const fullBriefContent = document.getElementById('full-brief-content');
 
-    function escapeHtml(input: string): string {
-      return input
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;');
-    }
-
-    function formatInlineMarkdown(input: string): string {
-      return input
-        .replace(/\*\*([^*\n]+?)\*\*/g, '<strong>$1</strong>')
-        .replace(/\*([^*\n]+?)\*/g, '<em>$1</em>');
-    }
-
-    function renderMarkdown(markdown: string): string {
-      const lines = markdown.split('\n');
-      const output: string[] = [];
-      let listType: 'ul' | 'ol' | null = null;
-
-      const closeList = () => {
-        if (listType === 'ul') output.push('</ul>');
-        if (listType === 'ol') output.push('</ol>');
-        listType = null;
-      };
-
-      lines.forEach((line) => {
-        const ulMatch = line.match(/^\s*[-*]\s+(.+)/);
-        const olMatch = line.match(/^\s*\d+\.\s+(.+)/);
-
-        if (ulMatch) {
-          if (listType === 'ol') closeList();
-          if (listType !== 'ul') {
-            output.push('<ul class="list-disc pl-5 mb-2 space-y-1">');
-            listType = 'ul';
-          }
-          output.push('<li>' + formatInlineMarkdown(escapeHtml(ulMatch[1].trim())) + '</li>');
-          return;
-        }
-
-        if (olMatch) {
-          if (listType === 'ul') closeList();
-          if (listType !== 'ol') {
-            output.push('<ol class="list-decimal pl-5 mb-2 space-y-1">');
-            listType = 'ol';
-          }
-          output.push('<li>' + formatInlineMarkdown(escapeHtml(olMatch[1].trim())) + '</li>');
-          return;
-        }
-
-        if (listType) closeList();
-        output.push(formatInlineMarkdown(escapeHtml(line)));
-      });
-
-      if (listType) closeList();
-
-      let html = output.join('\n');
-      html = html
-        .replace(/^###\s+(.+)$/gm, '<h4 class="text-sm font-semibold text-slate-700 dark:text-slate-200 mt-3 mb-1">$1</h4>')
-        .replace(/^##\s+(.+)$/gm, '<h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">$1</h3>')
-        .replace(/^#\s+(.+)$/gm, '<h2 class="text-lg font-semibold text-slate-900 dark:text-slate-50 mt-4 mb-2">$1</h2>');
-
-      return html
-        .split(/\n\n+/)
-        .map((chunk) => chunk.trim())
-        .filter(Boolean)
-        .map((chunk) => {
-          if (/^<(h2|h3|h4|ul|ol)/.test(chunk)) return chunk;
-          return '<p class="mb-2">' + chunk.replace(/\n/g, '<br />') + '</p>';
-        })
-        .join('');
-    }
-    
     if (fullBriefContent) {
       const summaryData = state.summary;
       if (summaryData) {
-        fullBriefContent.innerHTML = renderMarkdown(summaryData.fullBrief);
+        const fb = summaryData.fullBrief;
+        let html = '<p class="mb-3 text-sm leading-relaxed">' + escapeHtml(fb.intro) + '</p>';
+        fb.sections.forEach((sec) => {
+          html += '<h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">' + escapeHtml(sec.heading) + '</h3>';
+          html += '<p class="mb-2 text-sm leading-relaxed">' + escapeHtml(sec.body) + '</p>';
+        });
+        html += '<p class="mt-3 text-xs text-slate-500 dark:text-slate-400 italic">' + escapeHtml(fb.closing) + '</p>';
+        fullBriefContent.innerHTML = html;
       }
     }
 
