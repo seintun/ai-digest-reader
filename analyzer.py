@@ -42,12 +42,23 @@ def _build_prompt(reddit_posts: List[Dict], hn_posts: List[Dict]) -> str:
     lines = ["Analyze these AI news stories and generate a structured summary in JSON format.\n"]
     
     lines.append("## Reddit Stories")
-    for post in reddit_posts:
-        lines.append(f"- [{post['i']}] {post['t']} (score: {post['s']}, comments: {post['c']})")
+    for i, post in enumerate(reddit_posts):
+        story_id = f"rd-{i}"
+        title = post.get('title', post.get('t', ''))
+        url = post.get('url', post.get('u', ''))
+        score = post.get('score', post.get('s', 0))
+        comments = post.get('comments', post.get('c', 0))
+        subreddit = post.get('subreddit', '')
+        lines.append(f"- [{story_id}] [{subreddit}] {title} (score: {score}, comments: {comments})\n  URL: {url}")
     
     lines.append("\n## Hacker News Stories")
-    for post in hn_posts:
-        lines.append(f"- [{post['i']}] {post['t']} (score: {post['s']}, comments: {post['c']})")
+    for i, post in enumerate(hn_posts):
+        story_id = f"hn-{i}"
+        title = post.get('title', post.get('t', ''))
+        url = post.get('url', post.get('u', ''))
+        score = post.get('score', post.get('s', 0))
+        comments = post.get('comments', post.get('c', 0))
+        lines.append(f"- [{story_id}] {title} (score: {score}, comments: {comments})\n  URL: {url}")
     
     lines.append("""
 Generate JSON with exactly this structure:
@@ -57,14 +68,15 @@ Generate JSON with exactly this structure:
     "themes": ["Theme 1", "Theme 2", "Theme 3"],
     "breaking": "One line on the most significant news",
     "mustRead": [
-      {"id": "story-id", "t": "Story title", "url": "story-url", "reason": "Why this is must read"}
+      {"id": "rd-0", "t": "Story title", "url": "https://...", "reason": "Why this is must read"}
     ]
   },
-  "fullBrief": "## Full Brief\n\nMarkdown content with sections..."
+  "fullBrief": "## Full Brief\\n\\nMarkdown content with sections..."
 }
 
 Rules:
 - mustRead must have exactly 3 items
+- Use story IDs like "rd-0", "rd-1", "hn-0", "hn-1" etc.
 - Include the story URL for linking
 - Keep reasons to 1 sentence
 - fullBrief should be 3-5 paragraphs in markdown

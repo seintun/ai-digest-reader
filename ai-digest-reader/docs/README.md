@@ -46,13 +46,13 @@ source venv/bin/activate  # macOS/Linux
 pip install requests
 
 # Generate digest JSON with AI summary (requires Claude CLI)
-python scripts/generator.py
+python digest.py
 
 # Generate without AI summary
-python scripts/generator.py --no-ai
+python digest.py --no-ai
 
-# Generate and save to file
-python scripts/generator.py > public/data/digest.json
+# Generate and save to public/data/digest.json
+python digest.py --output-dir ai-digest-reader/public/data/
 ```
 
 ### Prerequisites for AI Summaries
@@ -91,7 +91,7 @@ The digest reader displays AI-generated summaries created by Claude:
 
 ### Summary Generation
 
-Summaries are generated during digest creation using `scripts/analyzer.py`:
+Summaries are generated during digest creation using `analyzer.py`:
 
 1. Stories are collected from Reddit and Hacker News
 2. Claude CLI analyzes the stories
@@ -103,7 +103,7 @@ Summaries are generated during digest creation using `scripts/analyzer.py`:
 If Claude CLI is unavailable, use `--no-ai`:
 
 ```bash
-python scripts/generator.py --no-ai
+python digest.py --no-ai
 ```
 
 This generates a v1-compatible digest without the AI summary field.
