@@ -1,4 +1,10 @@
 """Markdown formatter for digest output."""
+import re
+
+
+def clean_title(title: str) -> str:
+    """Remove Reddit flair brackets like [N], [P], [D] from title."""
+    return re.sub(r'\[[A-Z]\]\s*', '', title)
 
 
 def format_digest(reddit_posts: list, hn_posts: list, digest_date: str) -> str:
@@ -11,7 +17,7 @@ def format_digest(reddit_posts: list, hn_posts: list, digest_date: str) -> str:
     ]
     
     for i, post in enumerate(reddit_posts, 1):
-        lines.append(f"{i}. **{post['title']}**")
+        lines.append(f"{i}. **{clean_title(post['title'])}**")
         lines.append(f"   - [{post['subreddit']}]({post['url']}) | {post['score']} points")
         lines.append("")
     

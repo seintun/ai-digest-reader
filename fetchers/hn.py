@@ -17,6 +17,9 @@ def fetch_hn_posts(limit: int = POST_LIMIT) -> list[dict]:
     except Exception:
         return []
     
+    if not story_ids:
+        return []
+    
     posts = []
     
     for story_id in story_ids:
