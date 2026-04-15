@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/seintun/code/claude_playground/dailydiget')
 from config import SUBREDDITS, HN_API_URL, POST_LIMIT
 
 def test_subreddits_configured():

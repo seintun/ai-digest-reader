@@ -39,26 +39,66 @@ def validate_summary(data: dict) -> bool:
     Returns False on any missing key or wrong type.
     """
     try:
-        assert data.get("schema_version") == "2"
-        assert isinstance(data.get("simple"), str) and data["simple"]
+        if not isinstance(data, dict):
+            return False
 
-        s = data.get("structured", {})
-        assert isinstance(s.get("themes"), list) and len(s["themes"]) == 3
-        assert all(isinstance(t, str) for t in s["themes"])
-        assert isinstance(s.get("breaking"), str) and s["breaking"]
-        assert isinstance(s.get("mustRead"), list) and len(s["mustRead"]) == 3
-        for item in s["mustRead"]:
-            assert all(k in item for k in ("id", "title", "url", "reason"))
-            assert all(isinstance(item[k], str) for k in ("id", "title", "url", "reason"))
+        if data.get("schema_version") != "2":
+            return False
 
-        fb = data.get("fullBrief", {})
-        assert isinstance(fb.get("intro"), str) and fb["intro"]
-        assert isinstance(fb.get("sections"), list) and len(fb["sections"]) >= 2
-        for sec in fb["sections"]:
-            assert isinstance(sec.get("heading"), str) and sec["heading"]
-            assert isinstance(sec.get("body"), str) and sec["body"]
-        assert isinstance(fb.get("closing"), str) and fb["closing"]
+        simple = data.get("simple")
+        if not isinstance(simple, str) or not simple:
+            return False
+
+        structured = data.get("structured")
+        if not isinstance(structured, dict):
+            return False
+
+        themes = structured.get("themes")
+        if not isinstance(themes, list) or len(themes) != 3:
+            return False
+        if any(not isinstance(theme, str) for theme in themes):
+            return False
+
+        breaking = structured.get("breaking")
+        if not isinstance(breaking, str) or not breaking:
+            return False
+
+        must_read = structured.get("mustRead")
+        if not isinstance(must_read, list) or len(must_read) != 3:
+            return False
+        for item in must_read:
+            if not isinstance(item, dict):
+                return False
+            for key in ("id", "title", "url", "reason"):
+                value = item.get(key)
+                if not isinstance(value, str):
+                    return False
+
+        full_brief = data.get("fullBrief")
+        if not isinstance(full_brief, dict):
+            return False
+
+        intro = full_brief.get("intro")
+        if not isinstance(intro, str) or not intro:
+            return False
+
+        sections = full_brief.get("sections")
+        if not isinstance(sections, list) or len(sections) < 2 or len(sections) > 4:
+            return False
+        for section in sections:
+            if not isinstance(section, dict):
+                return False
+            heading = section.get("heading")
+            body = section.get("body")
+            if not isinstance(heading, str) or not heading:
+                return False
+            if not isinstance(body, str) or not body:
+                return False
+
+        closing = full_brief.get("closing")
+        if not isinstance(closing, str) or not closing:
+            return False
 
         return True
-    except (AssertionError, AttributeError, TypeError):
+    except (AttributeError, TypeError):
         return False

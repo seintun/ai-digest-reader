@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/seintun/code/dailydigest')
 from schema import validate_summary
 
 
@@ -294,3 +292,15 @@ def test_sections_with_4_passes():
         {"heading": "S4", "body": "B4."},
     ]
     assert validate_summary(d) is True
+
+
+def test_sections_with_5_fails():
+    d = make_valid_summary()
+    d["fullBrief"]["sections"] = [
+        {"heading": "S1", "body": "B1."},
+        {"heading": "S2", "body": "B2."},
+        {"heading": "S3", "body": "B3."},
+        {"heading": "S4", "body": "B4."},
+        {"heading": "S5", "body": "B5."},
+    ]
+    assert validate_summary(d) is False

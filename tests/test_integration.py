@@ -1,6 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/seintun/code/claude_playground/dailydiget')
-
 def test_full_digest_format():
     """Test the full pipeline works."""
     from fetchers import fetch_reddit_posts, fetch_hn_posts
