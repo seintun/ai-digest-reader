@@ -21,7 +21,15 @@ def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
             data = response.json()
             
             if "data" in data:
-                for post in data.get("data", [])[:limit]:
+                data_section = data["data"]
+                if isinstance(data_section, list):
+                    post_list = data_section[:limit]
+                elif "children" in data_section:
+                    post_list = [c["data"] for c in data_section.get("children", [])[:limit]]
+                else:
+                    post_list = []
+                
+                for post in post_list:
                     posts.append({
                         "title": post.get("title", ""),
                         "url": post.get("url", post.get("permalink", "")),
