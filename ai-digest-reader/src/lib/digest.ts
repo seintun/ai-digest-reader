@@ -32,6 +32,26 @@ const DigestSummarySchema = z.object({
   fullBrief: FullBriefSchema,
 });
 
+const StorySchema = z.object({
+  i: z.string(),
+  t: z.string(),
+  u: z.string(),
+  p: z.string().optional(),
+  b: z.string().optional(),
+  s: z.number(),
+  c: z.number(),
+  a: z.string(),
+});
+
+const DigestSchema = z.object({
+  v: z.union([z.literal(1), z.literal(2)]),
+  d: z.string(),
+  g: z.string(),
+  r: z.array(StorySchema),
+  h: z.array(StorySchema),
+  summary: DigestSummarySchema.optional(),
+});
+
 export function validateSummary(data: unknown): DigestSummary | undefined {
   const result = DigestSummarySchema.safeParse(data);
   if (!result.success) {
@@ -60,17 +80,20 @@ export async function fetchDigest(): Promise<Digest> {
       }
       return response.json();
     })
-    .then((data: Digest) => {
-      if (data.v !== 1 && data.v !== 2) {
-        throw new Error(`Unsupported digest version: ${data.v}`);
+    .then((data: unknown) => {
+      const result = DigestSchema.safeParse(data);
+      if (!result.success) {
+        throw new Error(`Digest schema validation failed: ${result.error.issues[0]?.message ?? 'unknown error'}`);
       }
+
+      const digest = result.data as Digest;
       // Validate summary if present — degrade gracefully on schema mismatch
-      if (data.summary !== undefined) {
-        data.summary = validateSummary(data.summary);
+      if (digest.summary !== undefined) {
+        digest.summary = validateSummary(digest.summary);
       }
-      cachedDigest = data;
+      cachedDigest = digest;
       loadingPromise = null;
-      return data;
+      return digest;
     })
     .catch((error) => {
       loadingPromise = null;
