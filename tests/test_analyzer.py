@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/seintun/code/dailydigest')
 from analyzer import _build_prompt, _parse_claude_response
 
 

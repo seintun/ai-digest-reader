@@ -1,5 +1,3 @@
-import sys
-sys.path.insert(0, '/Users/seintun/code/claude_playground/dailydiget')
 from formatter import format_digest
 
 def test_format_creates_markdown():
