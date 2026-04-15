@@ -100,6 +100,11 @@ const sources = [
 
 <script>
   function initFilters() {
+    if ((window as typeof window & { __controlsInitialized?: boolean }).__controlsInitialized) {
+      return;
+    }
+    (window as typeof window & { __controlsInitialized?: boolean }).__controlsInitialized = true;
+
     // Source buttons
     document.querySelectorAll('.source-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
@@ -122,5 +127,4 @@ const sources = [
   }
 
   document.addEventListener('DOMContentLoaded', initFilters);
-  initFilters();
 </script>
