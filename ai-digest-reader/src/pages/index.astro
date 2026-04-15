@@ -349,7 +349,7 @@ const { } = Astro.props;
   async function fetchDigest() {
     showLoading();
     try {
-      const response = await fetch('/api/digest');
+      const response = await fetch('/data/digest.json');
       if (!response.ok) {
         throw new Error(`Failed to fetch digest: ${response.status}`);
       }
