@@ -10,11 +10,11 @@ const today = new Date().toLocaleDateString('en-US', {
 <header class="sticky top-0 z-50 border-b border-white/20 dark:border-slate-700/50 backdrop-blur-md bg-white/70 dark:bg-slate-800/60">
   <div class="max-w-5xl mx-auto px-3 sm:px-4">
     <div class="flex items-center justify-between h-14">
-      <div class="flex flex-col">
-        <h1 class="text-xl sm:text-2xl font-newsreader font-semibold text-slate-900 dark:text-white tracking-tight">
-          AI Digest
+      <div class="flex flex-col gap-0.5">
+        <h1 class="text-lg sm:text-xl font-bold tracking-tight leading-none">
+          <span class="text-amber-400">AI</span><span class="text-white"> Digest</span>
         </h1>
-        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">{today}</span>
+        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 tracking-wide">{today}</span>
       </div>
 
       <div class="flex items-center gap-2">
