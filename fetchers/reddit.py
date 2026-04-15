@@ -1,5 +1,35 @@
 import requests
-from config import SUBREDDITS, POST_LIMIT
+from config import POST_LIMIT
+
+
+def _normalize_reddit_post(post: dict, subreddit: str) -> dict:
+    permalink = f"https://reddit.com{post.get('permalink', '')}"
+    return {
+        "title": post.get("title", ""),
+        "url": post.get("url", permalink),
+        "permalink": permalink,
+        "body": post.get("selftext", "")[:280].replace("\n", " ").strip(),
+        "score": post.get("score", 0),
+        "subreddit": post.get("subreddit", subreddit),
+        "author": post.get("author", ""),
+        "comments": post.get("num_comments", 0),
+    }
+
+
+def _extract_post_list(data: dict, limit: int) -> list[dict]:
+    if "data" in data:
+        data_section = data["data"]
+        if isinstance(data_section, list):
+            return data_section[:limit]
+        if isinstance(data_section, dict) and "children" in data_section:
+            children = data_section.get("children", [])
+            return [c.get("data", {}) for c in children[:limit]]
+        return []
+
+    if "children" in data:
+        return [child.get("data", {}) for child in data.get("children", [])[:limit]]
+
+    return []
 
 
 def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
@@ -19,48 +49,16 @@ def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
                 continue
             
             data = response.json()
-            
-            if "data" in data:
-                data_section = data["data"]
-                if isinstance(data_section, list):
-                    post_list = data_section[:limit]
-                elif "children" in data_section:
-                    post_list = [c["data"] for c in data_section.get("children", [])[:limit]]
-                else:
-                    post_list = []
-                
-                for post in post_list:
-                    permalink = f"https://reddit.com{post.get('permalink', '')}"
-                    posts.append({
-                        "title": post.get("title", ""),
-                        "url": post.get("url", permalink),
-                        "permalink": permalink,
-                        "body": post.get("selftext", "")[:280].replace("\n", " ").strip(),
-                        "score": post.get("score", 0),
-                        "subreddit": post.get("subreddit", subreddit),
-                        "author": post.get("author", ""),
-                        "comments": post.get("num_comments", 0),
-                    })
-                    if len(posts) >= limit:
-                        break
-            elif "children" in data:
-                for child in data.get("children", [])[:limit]:
-                    post = child.get("data", {})
-                    permalink = f"https://reddit.com{post.get('permalink', '')}"
-                    posts.append({
-                        "title": post.get("title", ""),
-                        "url": permalink,
-                        "permalink": permalink,
-                        "body": post.get("selftext", "")[:280].replace("\n", " ").strip(),
-                        "score": post.get("score", 0),
-                        "subreddit": post.get("subreddit", subreddit),
-                        "author": post.get("author", ""),
-                        "comments": post.get("num_comments", 0),
-                    })
+
+            post_list = _extract_post_list(data, limit)
+            for post in post_list:
+                posts.append(_normalize_reddit_post(post, subreddit))
+                if len(posts) >= limit:
+                    break
             
             if posts:
                 break
-        except requests.RequestException:
+        except (requests.RequestException, ValueError):
             continue
     
     return posts[:limit]
