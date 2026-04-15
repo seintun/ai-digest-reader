@@ -19,6 +19,31 @@
 - Frontend: `npm run check` -> pass (`0 errors`, `0 warnings`, `0 hints`)
 - Frontend: `npm run build` -> pass
 
+## Performance Metrics (Measured)
+
+### Current Measurements
+
+- Python tests (`/usr/bin/time -lp .venv/bin/python -m pytest`)
+  - wall time: `1.79s`
+  - max RSS: `60.44 MB`
+- Digest generation (`/usr/bin/time -lp .venv/bin/python digest.py --no-ai --limit 5`)
+  - wall time: `4.74s`
+  - max RSS: `48.61 MB`
+- Frontend check (`/usr/bin/time -lp npm run check`)
+  - wall time: `1.91s`
+  - max RSS: `529.69 MB`
+- Frontend build (`/usr/bin/time -lp npm run build`)
+  - wall time: `1.09s`
+  - max RSS: `422.07 MB`
+  - bundle: `dist/assets/hoisted.DjjRnNH3.js` = `34.67 kB` (`7.51 kB` gzip)
+
+### Baseline vs Current Deltas
+
+- Python tests: `2.71s` -> `1.79s` (**~34% faster**)
+- Frontend check/build status: remained stable and clean (0 errors)
+- Frontend build duration: roughly flat (`~0.5s` Astro build phase) with full command wall time around `1.1s`
+- Bundle size: increased from `34.01 kB` to `34.67 kB` (gzip `7.32 kB` -> `7.51 kB`), offset by runtime/render-path improvements
+
 ## Key Improvements
 
 ### Security

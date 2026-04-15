@@ -57,3 +57,23 @@
   1. Hardening pass for service worker caching policy.
   2. Add mocked fetcher tests for deterministic CI.
   3. Dependency/version governance tightening.
+
+## Phase 5 Closeout (Performance Metrics)
+
+- Completed:
+  - Captured current timed measurements for Python tests, digest generation, frontend check, and frontend build.
+  - Added baseline-vs-current deltas to final results report.
+- Blocked:
+  - none
+- Metrics Delta:
+  - Python tests improved from `2.71s` to `1.79s` (~34% faster).
+  - Digest generation measured at `4.74s` with `48.61 MB` max RSS under `--no-ai --limit 5`.
+  - Frontend build/check remain stable; bundle size modestly increased while runtime rendering path was optimized.
+- Security Delta:
+  - unchanged from Phase 4 closeout.
+- Docs Updated:
+  - `docs/superpowers/reports/2026-04-15-aggressive-refactor-results.md`
+- Next 3 Actions:
+  1. Add repeatable perf harness script to reduce run-to-run noise.
+  2. Track digest generation latency by source (Reddit vs HN segments).
+  3. Add frontend interaction-time metrics (first render and source-switch latency).
