@@ -1,7 +1,27 @@
+# Python
 __pycache__/
 *.pyc
 venv/
 .venv/
 output/
 .env
+
+# Astro
+node_modules/
+dist/
+.astro/
+package-lock.json
+
+# IDE & OS
 .DS_Store
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OpenCode
+.opencode/
+
+# Logs
+*.log
+npm-debug.log*
