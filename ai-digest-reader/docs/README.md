@@ -32,6 +32,8 @@ npm run preview
 ### Backend (Python Digest Generator)
 
 ```bash
+cd ai-digest-reader
+
 # Create virtual environment
 python3 -m venv venv
 
@@ -42,21 +44,16 @@ source venv/bin/activate  # macOS/Linux
 # Install dependencies
 pip install requests
 
-# Generate digest JSON
+# Generate digest JSON (stdout)
 python scripts/generate_json.py
 
 # Generate and save to file
-python scripts/generate_json.py public/data/digest.json
+python scripts/generate_json.py > public/data/digest.json
 ```
 
 ### Running with Sample Data
 
-The project includes sample data at `public/data/digest.json`. After generating your own data:
-
-```bash
-# Copy generated data to public folder
-python scripts/generate_json.py > public/data/digest.json
-```
+The project includes sample data at `public/data/digest.json`. After generating your own data, the JSON is printed to stdout - redirect it to the data file.
 
 ## Tech Stack
 
