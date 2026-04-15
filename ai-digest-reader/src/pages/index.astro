@@ -87,7 +87,7 @@ const { } = Astro.props;
 </Base>
 
 <script>
-  import type { Story, Digest, ViewMode, Source } from '../types';
+  import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, MustReadItem, FullBriefSection } from '../types';
   import StoryCard from '../components/StoryCard.astro';
   import StoryList from '../components/StoryList.astro';
   import StoryGlance from '../components/StoryGlance.astro';
@@ -339,7 +339,7 @@ const { } = Astro.props;
   }
 
   function renderDigestSummary(summary: DigestSummaryType, stories: Story[]): string {
-    const themesHtml = summary.structured.themes.map(t =>
+    const themesHtml = summary.structured.themes.map((t: string) =>
       '<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">' + escapeHtml(t) + '</span>'
     ).join('');
 
@@ -347,7 +347,7 @@ const { } = Astro.props;
       ? '<div class="p-2.5 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800/50"><h4 class="text-xs font-semibold text-red-600 dark:text-red-400 uppercase tracking-wider mb-1 flex items-center gap-1"><svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24"><path d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>Breaking</h4><p class="text-sm text-red-800 dark:text-red-300">' + escapeHtml(summary.structured.breaking) + '</p></div>'
       : '';
 
-    const mustReadHtml = summary.structured.mustRead.map((item, idx) =>
+    const mustReadHtml = summary.structured.mustRead.map((item: MustReadItem, idx: number) =>
       '<a href="' + getStoryUrl(stories, item.id) + '" target="_blank" rel="noopener noreferrer" class="flex items-start gap-3 group cursor-pointer p-2.5 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700/30 transition-colors duration-150">' +
         '<span class="flex-shrink-0 w-6 h-6 rounded-full bg-primary-500 dark:bg-primary-600 text-white text-xs font-bold flex items-center justify-center">' + (idx + 1) + '</span>' +
         '<div class="flex-1 min-w-0">' +
@@ -425,7 +425,7 @@ const { } = Astro.props;
       if (summaryData) {
         const fb = summaryData.fullBrief;
         let html = '<p class="mb-3 text-sm leading-relaxed">' + escapeHtml(fb.intro) + '</p>';
-        fb.sections.forEach((sec) => {
+        fb.sections.forEach((sec: FullBriefSection) => {
           html += '<h3 class="text-base font-semibold text-slate-800 dark:text-slate-100 mt-4 mb-2">' + escapeHtml(sec.heading) + '</h3>';
           html += '<p class="mb-2 text-sm leading-relaxed">' + escapeHtml(sec.body) + '</p>';
         });
