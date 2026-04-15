@@ -1,17 +1,329 @@
 {
   "v": 1,
-  "d": "2024-01-15",
-  "g": "2024-01-15T08:30:00Z",
+  "d": "2026-04-15",
+  "g": "2026-04-15T08:39:14.931198+00:00",
   "r": [
-    {"i": "rd-0", "t": "GPT-5 rumored to achieve AGI benchmarks", "u": "https://reddit.com/r/ArtificialIntelligence/comments/...", "s": 4521, "c": 892, "a": "tech_enthusiast"},
-    {"i": "rd-1", "t": "Running Llama 3 70B on a MacBook Pro", "u": "https://reddit.com/r/LocalLLaMA/comments/...", "s": 3204, "c": 445, "a": "ml_developer"},
-    {"i": "rd-2", "t": "Claude 3.5 Sonnet beats GPT-4 on coding benchmarks", "u": "https://reddit.com/r/ChatGPT/comments/...", "s": 2890, "c": 678, "a": "ai_researcher"},
-    {"i": "rd-3", "t": "New paper: Transformer architecture efficiency gains", "u": "https://reddit.com/r/MachineLearning/comments/...", "s": 1845, "c": 234, "a": "paper_reader"}
+    {
+      "i": "rd-0",
+      "t": "Best Local LLMs - Apr 2026",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
+      "s": 387,
+      "c": 175,
+      "a": "rm-rf-rm"
+    },
+    {
+      "i": "rd-1",
+      "t": "Announcing LocalLlama discord server &amp; bot!",
+      "u": "https://www.reddit.com/gallery/1mpk2va",
+      "s": 150,
+      "c": 102,
+      "a": "HOLUPREDICTIONS"
+    },
+    {
+      "i": "rd-2",
+      "t": "Update LICENSE \u00b7 MiniMaxAI/MiniMax-M2.7 at edf8030",
+      "u": "https://huggingface.co/MiniMaxAI/MiniMax-M2.7/commit/edf8030bc287b531e4c9af83df92f96489d910c0",
+      "s": 140,
+      "c": 59,
+      "a": "pmttyji"
+    },
+    {
+      "i": "rd-3",
+      "t": "These \"Claude-4.6-Opus\" Fine Tunes of Local Models Are Usually A Downgrade",
+      "u": "https://www.reddit.com/gallery/1slnglx",
+      "s": 187,
+      "c": 90,
+      "a": "BuffMcBigHuge"
+    },
+    {
+      "i": "rd-4",
+      "t": "DGX Spark just arrived \u2014 planning to run vLLM + local models, looking for advice",
+      "u": "https://i.redd.it/dbj83qkay9vg1.jpeg",
+      "s": 57,
+      "c": 45,
+      "a": "dalemusser"
+    },
+    {
+      "i": "rd-5",
+      "t": "24/7 Headless AI Server on Xiaomi 12 Pro (Snapdragon 8 Gen 1 + Ollama/Gemma4)",
+      "u": "https://i.redd.it/fo3jf5vk85vg1.jpeg",
+      "s": 920,
+      "c": 234,
+      "a": "Aromatic_Ad_7557"
+    },
+    {
+      "i": "rd-6",
+      "t": "Hot Experts in your VRAM! Dynamic expert cache in llama.cpp for 27% faster CPU +GPU token generation with Qwen3.5-122B-A10B compared to layer-based single-GPU partial offload",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1slue0z/hot_experts_in_your_vram_dynamic_expert_cache_in/",
+      "s": 50,
+      "c": 14,
+      "a": "TriWrite"
+    },
+    {
+      "i": "rd-7",
+      "t": "MiniMax M2.7 GGUF Investigation, Fixes, Benchmarks",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1slk4di/minimax_m27_gguf_investigation_fixes_benchmarks/",
+      "s": 119,
+      "c": 39,
+      "a": "danielhanchen"
+    },
+    {
+      "i": "rd-8",
+      "t": "DFlash Doubles the T/S Gen Speed of Qwen3.5 27B (BF16) on Mac M5 Max",
+      "u": "https://www.reddit.com/gallery/1sltncp",
+      "s": 32,
+      "c": 15,
+      "a": "MiaBchDave"
+    },
+    {
+      "i": "rd-9",
+      "t": "Updated Minimax m2.7 still doesn't allow coding a product. But before the next riot starts, Ryan Lee has already confirmed that they are still working on the license, and sale of products built by m2.7 is permitted.",
+      "u": "https://i.redd.it/h9vm727jt7vg1.png",
+      "s": 87,
+      "c": 37,
+      "a": "zenmagnets"
+    },
+    {
+      "i": "rd-10",
+      "t": "Updates for ChatGPT",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
+      "s": 3561,
+      "c": 1414,
+      "a": "samaltman"
+    },
+    {
+      "i": "rd-11",
+      "t": "GPT-4o/GPT-5 complaints megathread",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
+      "s": 597,
+      "c": 4202,
+      "a": "WithoutReason1729"
+    },
+    {
+      "i": "rd-12",
+      "t": "What in the ever loving f",
+      "u": "https://v.redd.it/9qojg2osv9vg1",
+      "s": 590,
+      "c": 104,
+      "a": "michael-lethal_ai"
+    },
+    {
+      "i": "rd-13",
+      "t": "He was just following instructions \ud83d\ude2d",
+      "u": "https://i.redd.it/5p4imudte7vg1.jpeg",
+      "s": 1817,
+      "c": 25,
+      "a": "MetaSelf"
+    },
+    {
+      "i": "rd-14",
+      "t": "You can't talk to ChatGPT like a normal human anymore.",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1slt4fx/you_cant_talk_to_chatgpt_like_a_normal_human/",
+      "s": 348,
+      "c": 272,
+      "a": "CookiePersonal4654"
+    },
+    {
+      "i": "rd-15",
+      "t": "my RunLobster agent drafted a reply to an angry customer in her exact angry tone. she got angrier. i had to apologize for my own software.",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1slmx83/my_runlobster_agent_drafted_a_reply_to_an_angry/",
+      "s": 193,
+      "c": 32,
+      "a": "Even_Package_8573"
+    },
+    {
+      "i": "rd-16",
+      "t": "I tried using ChatGPT for ONE random thing\u2026 now I can\u2019t stop \ud83d\udc80",
+      "u": "https://i.redd.it/mkfu11bak5vg1.png",
+      "s": 859,
+      "c": 210,
+      "a": "Whiispard"
+    },
+    {
+      "i": "rd-17",
+      "t": "ChairGPTrash",
+      "u": "https://i.redd.it/nuz40tu5z9vg1.png",
+      "s": 47,
+      "c": 10,
+      "a": "Acceptable_Arm_6561"
+    },
+    {
+      "i": "rd-18",
+      "t": "7 years ago",
+      "u": "https://i.redd.it/70zgrozrd2vg1.jpeg",
+      "s": 4743,
+      "c": 155,
+      "a": "imfrom_mars_"
+    },
+    {
+      "i": "rd-19",
+      "t": "Another murder attempt on Sam Altman, as gunshots are fired at his residence",
+      "u": "https://www.usatoday.com/story/news/crime/2026/04/13/sam-altman-house-attack/89586825007/",
+      "s": 3350,
+      "c": 454,
+      "a": "RevolutionaryPanic"
+    },
+    {
+      "i": "rd-20",
+      "t": "[D] Self-Promotion Thread",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
+      "s": 20,
+      "c": 70,
+      "a": "AutoModerator"
+    },
+    {
+      "i": "rd-21",
+      "t": "[D] Monthly Who's Hiring and Who wants to be Hired?",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
+      "s": 7,
+      "c": 3,
+      "a": "AutoModerator"
+    },
+    {
+      "i": "rd-22",
+      "t": "Was looking at a ICLR 2025 Oral paper and I am shocked it got oral [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
+      "s": 29,
+      "c": 6,
+      "a": "Striking-Warning9533"
+    },
+    {
+      "i": "rd-23",
+      "t": "You can decompose models into a graph database [N]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slmfmw/you_can_decompose_models_into_a_graph_database_n/",
+      "s": 37,
+      "c": 16,
+      "a": "Educational_Win_2982"
+    },
+    {
+      "i": "rd-24",
+      "t": "Thoughts and experience on ML journals [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm04fm/thoughts_and_experience_on_ml_journals_d/",
+      "s": 1,
+      "c": 0,
+      "a": "kostaspap90"
+    },
+    {
+      "i": "rd-25",
+      "t": "What is the AC guidance for ICML? (Or: ICML qq thread) [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sl9zza/what_is_the_ac_guidance_for_icml_or_icml_qq/",
+      "s": 27,
+      "c": 26,
+      "a": "WhiteBear2018"
+    },
+    {
+      "i": "rd-26",
+      "t": "ClawBench: Can AI Agents Complete Everyday Online Tasks? 153 tasks, 144 live websites, best model at 33.3% [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slf7pg/clawbench_can_ai_agents_complete_everyday_online/",
+      "s": 14,
+      "c": 6,
+      "a": "Extreme_Play_8554"
+    },
+    {
+      "i": "rd-27",
+      "t": "\"I don't know!\": Teaching neural networks to abstain with the HALO-Loss. [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1skzuhd/i_dont_know_teaching_neural_networks_to_abstain/",
+      "s": 68,
+      "c": 26,
+      "a": "4rtemi5"
+    },
+    {
+      "i": "rd-28",
+      "t": "I scaled a pure Spiking Neural Network (SNN) to 1.088B parameters from scratch. Ran out of budget, but here is what I found [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1skql34/i_scaled_a_pure_spiking_neural_network_snn_to/",
+      "s": 126,
+      "c": 53,
+      "a": "zemondza"
+    },
+    {
+      "i": "rd-29",
+      "t": "[P] Added 8 Indian languages to Chatterbox TTS via LoRA \u2014 1.4% of parameters, no phoneme engineering [P]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sltun8/p_added_8_indian_languages_to_chatterbox_tts_via/",
+      "s": 0,
+      "c": 1,
+      "a": "Icy_Gas8807"
+    }
   ],
   "h": [
-    {"i": "hn-0", "t": "Anthropic releases Claude 3.5 with 200K context", "u": "https://news.ycombinator.com/item?id=...", "s": 1823, "c": 456, "a": "anonthrow"},
-    {"i": "hn-1", "t": "OpenAI announces Sora video generation model", "u": "https://news.ycombinator.com/item?id=...", "s": 1654, "c": 389, "a": "technews"},
-    {"i": "hn-2", "t": "Show HN: I built a local AI assistant with Llama 3", "u": "https://news.ycombinator.com/item?id=...", "s": 987, "c": 234, "a": "indie_dev"},
-    {"i": "hn-3", "t": "Google's Gemini Ultra beats GPT-4 on MMLU", "u": "https://news.ycombinator.com/item?id=...", "s": 876, "c": 312, "a": "ml_enthusiast"}
+    {
+      "i": "hn-0",
+      "t": "Peter Steinberger \u2013 WhatsApp CLI: sync, search, send",
+      "u": "https://github.com/steipete/wacli",
+      "s": 67,
+      "c": 44,
+      "a": "dinakars777"
+    },
+    {
+      "i": "hn-1",
+      "t": "Fixing a 20-year-old bug in Enlightenment E16",
+      "u": "https://iczelia.net/posts/e16-20-year-old-bug/",
+      "s": 98,
+      "c": 17,
+      "a": "snoofydude"
+    },
+    {
+      "i": "hn-2",
+      "t": "My adventure in designing API keys",
+      "u": "https://vjay15.github.io/blog/apikeys/",
+      "s": 43,
+      "c": 19,
+      "a": "vjay15"
+    },
+    {
+      "i": "hn-3",
+      "t": "Claude Code Routines",
+      "u": "https://code.claude.com/docs/en/routines",
+      "s": 595,
+      "c": 346,
+      "a": "matthieu_bl"
+    },
+    {
+      "i": "hn-4",
+      "t": "Rare concert recordings are landing on the Internet Archive",
+      "u": "https://techcrunch.com/2026/04/13/thousands-of-rare-concert-recordings-are-landing-on-the-internet-archive-listen-now/",
+      "s": 635,
+      "c": 182,
+      "a": "jrm-veris"
+    },
+    {
+      "i": "hn-5",
+      "t": "Dependency cooldowns turn you into a free-rider",
+      "u": "https://calpaterson.com/deps.html",
+      "s": 107,
+      "c": 68,
+      "a": "pabs3"
+    },
+    {
+      "i": "hn-6",
+      "t": "My AI-Assisted Workflow",
+      "u": "https://www.maiobarbero.dev/articles/ai-assisted-workflow/",
+      "s": 13,
+      "c": 5,
+      "a": "maiobarbero"
+    },
+    {
+      "i": "hn-7",
+      "t": "Anna's Archive Loses $322M Spotify Piracy Case Without a Fight",
+      "u": "https://torrentfreak.com/annas-archive-loses-322-million-spotify-piracy-case-without-a-fight/",
+      "s": 20,
+      "c": 10,
+      "a": "askl"
+    },
+    {
+      "i": "hn-8",
+      "t": "MDalgorithms (AI Healthcare) \u2013 Hiring Growth Marketer \u2013 Remote \u2013 $80K-$140K",
+      "u": "https://www.ycombinator.com/companies/mdalgorithms-inc/jobs/LVODKN7-growth-marketer-for-a-rapidly-growing-consumer-ai-healthcare-startup",
+      "s": 1,
+      "c": 0,
+      "a": "odedharth93"
+    },
+    {
+      "i": "hn-9",
+      "t": "A communist Apple II and fourteen years of not knowing what you're testing",
+      "u": "https://llama.gs/blog/index.php/2026/04/10/friday-archaeology-a-communist-apple-ii-and-fourteen-years-of-not-knowing-what-youre-testing/",
+      "s": 153,
+      "c": 33,
+      "a": "major4x"
+    }
   ]
 }
