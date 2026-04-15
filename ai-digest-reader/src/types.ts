@@ -2,6 +2,8 @@ export interface Story {
   i: string;
   t: string;
   u: string;
+  p?: string;
+  b?: string;
   s: number;
   c: number;
   a: string;

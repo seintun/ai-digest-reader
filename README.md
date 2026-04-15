@@ -78,6 +78,14 @@ The JSON file contains structured data including:
 - Stories from Reddit and Hacker News
 - AI-generated summary (if Claude CLI is available)
 
+Each story object now includes discussion/source links and optional body text:
+
+- `u`: original external URL (or fallback discussion URL)
+- `p`: discussion permalink (`reddit.com/...` or `news.ycombinator.com/item?...`)
+- `b`: plain-text body excerpt (`selftext` on Reddit or `text` on HN)
+
+Frontend behavior uses `p` as the primary click target and keeps `u` as a visible secondary external link.
+
 ```json
 {
   "v": 2,

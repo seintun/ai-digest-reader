@@ -24,6 +24,8 @@ def normalize_posts(posts: List[Dict], prefix: str) -> List[Dict]:
             "i": f"{prefix}-{i}",
             "t": post.get("title", ""),
             "u": post.get("url", ""),
+            "p": post.get("permalink", ""),
+            "b": post.get("body", ""),
             "s": post.get("score", 0),
             "c": post.get("comments", 0),
             "a": post.get("author", post.get("by", "")),
