@@ -49,14 +49,3 @@ export interface Digest {
 
 export type ViewMode = 'cards' | 'list' | 'glance';
 export type Source = 'reddit' | 'hn' | 'all';
-
-export interface FilterState {
-  source: Source;
-  searchQuery: string;
-  minScore: number;
-}
-
-export interface StoryWithMeta extends Story {
-  source: 'reddit' | 'hn';
-  domain: string;
-}

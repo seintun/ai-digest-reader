@@ -19,9 +19,9 @@
 | T5 | phase0 | security-audit | devils-advocate | completed | T2 | top 12 risks + controls | n/a | subagent report `ses_26cd63c12ffe2FVzSyJ1MpndOr` |
 | T6 | phase1 | security | coordinator | completed | T2,T5 | remove XSS/url risks + strong validation | `.venv/bin/python -m pytest && npm run check` | test and diff evidence |
 | T7 | phase2a | frontend | coordinator | completed | T6 | reduce render/runtime overhead | `npm run check && npm run build` | before/after timings |
-| T8 | phase2b | pipeline | coordinator | in_progress | T6 | reduce network/runtime overhead | `.venv/bin/python -m pytest` | before/after timings |
-| T9 | phase3 | modular | coordinator | pending | T7,T8 | remove low-value noise/dead code | `.venv/bin/python -m pytest && npm run build` | change summary |
-| T10 | final | docs | coordinator | pending | T9 | docs reflect architecture changes | n/a | docs updates |
+| T8 | phase2b | pipeline | coordinator | completed | T6 | reduce network/runtime overhead | `.venv/bin/python -m pytest` | before/after timings |
+| T9 | phase3 | modular | coordinator | completed | T7,T8 | remove low-value noise/dead code | `.venv/bin/python -m pytest && npm run build` | change summary |
+| T10 | final | docs | coordinator | in_progress | T9 | docs reflect architecture changes | n/a | docs updates |
 
 ## Phase Closeout Template
 
