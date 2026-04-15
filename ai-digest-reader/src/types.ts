@@ -7,12 +7,30 @@ export interface Story {
   a: string;
 }
 
+export interface MustReadItem {
+  id: string;
+  t: string;
+  url: string;
+  reason: string;
+}
+
+export interface DigestSummary {
+  simple: string;
+  structured: {
+    themes: string[];
+    breaking: string;
+    mustRead: MustReadItem[];
+  };
+  fullBrief: string;
+}
+
 export interface Digest {
-  v: 1;
+  v: 1 | 2;
   d: string;
   g: string;
   r: Story[];
   h: Story[];
+  summary?: DigestSummary;
 }
 
 export type ViewMode = 'cards' | 'list' | 'glance';
