@@ -29,19 +29,23 @@ const { } = Astro.props;
     <div id="loading-container" class="hidden">
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="loading-cards">
         {[...Array(6)].map(() => (
-          <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-xl p-4 animate-pulse">
+          <div class="bg-slate-900 border border-slate-800 rounded-xl p-4 animate-pulse">
             <div class="flex items-center gap-2 mb-2">
               <div class="h-5 w-12 bg-slate-200 dark:bg-slate-700 rounded"></div>
             </div>
             <div class="space-y-1.5 mb-3">
-              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
-              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3"></div>
+              <div class="h-4 bg-slate-700/70 rounded w-full"></div>
+              <div class="h-4 bg-slate-700/70 rounded w-2/3"></div>
+            </div>
+            <div class="space-y-1.5 mb-4">
+              <div class="h-3 bg-slate-800 rounded w-full"></div>
+              <div class="h-3 bg-slate-800 rounded w-4/5"></div>
             </div>
             <div class="flex items-center justify-between">
-              <div class="h-3 bg-slate-200 dark:bg-slate-700 rounded w-20"></div>
+              <div class="h-3 bg-slate-800 rounded w-20"></div>
               <div class="flex items-center gap-2">
-                <div class="h-3 w-6 bg-slate-200 dark:bg-slate-700 rounded"></div>
-                <div class="h-3 w-6 bg-slate-200 dark:bg-slate-700 rounded"></div>
+                <div class="h-3 w-6 bg-slate-800 rounded"></div>
+                <div class="h-3 w-6 bg-slate-800 rounded"></div>
               </div>
             </div>
           </div>
@@ -138,6 +142,21 @@ const { } = Astro.props;
     });
   }
 
+  function getDomain(url: string): string {
+    try {
+      return new URL(url).hostname.replace('www.', '');
+    } catch {
+      return 'link';
+    }
+  }
+
+  function getDiscussionUrl(story: Story): string {
+    const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+    if (story.p) return story.p;
+    if (source === 'hn') return '';
+    return story.u;
+  }
+
   function renderStories() {
     if (!elements.storiesCards || !elements.storiesList || !elements.storiesGlance) return;
 
@@ -145,7 +164,7 @@ const { } = Astro.props;
 
     elements.storiesCards.innerHTML = filteredStories.length > 0
       ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">${
-          filteredStories.map(story => renderStoryCard(story)).join('')
+          filteredStories.map((story, index) => renderStoryCard(story, index)).join('')
         }</div>`
       : '';
 
@@ -174,72 +193,117 @@ const { } = Astro.props;
     }
   }
 
-  function renderStoryCard(story: Story): string {
+  function renderStoryCard(story: Story, index: number): string {
     const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+    const discussionUrl = getDiscussionUrl(story);
     const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
     const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
+    const platformName = source === 'reddit' ? 'Reddit' : 'Hacker News';
+    const platformIcon = source === 'reddit'
+      ? '<svg class="w-3.5 h-3.5 text-[#FF4500]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+      : '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>';
 
     return `
-      <article class="group relative backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-xl p-3 sm:p-4 transition-all duration-300 hover:shadow-md hover:-translate-y-0.5">
-        <a href="${story.u}" target="_blank" rel="noopener noreferrer" class="block">
+      <article class="story-card-enter group relative bg-slate-900 border border-slate-800 rounded-xl p-3 sm:p-4 transition-all duration-300 hover:border-amber-500/40 hover:shadow-[0_16px_40px_rgba(245,158,11,0.12)] flex flex-col" style="animation-delay: ${index * 40}ms">
+        <a href="${story.u}" target="_blank" rel="noopener noreferrer" class="block cursor-pointer flex-1">
           <div class="flex items-start gap-2.5 mb-2">
-            <div class="flex-shrink-0 mt-0.5" title="${source === 'reddit' ? 'Reddit' : 'Hacker News'}">
+            <div class="flex-shrink-0 mt-0.5" title="${platformName}">
               ${source === 'reddit'
                 ? '<svg class="w-4 h-4 text-[#FF4500] opacity-90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
                 : '<svg class="w-4 h-4 text-[#FF6600] opacity-90" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
               }
             </div>
-            <h3 class="text-sm sm:text-base font-medium text-slate-900 dark:text-white line-clamp-2 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors duration-200">
+            <h3 class="text-base sm:text-base font-bold leading-snug text-slate-100 line-clamp-2 group-hover:text-amber-200 transition-colors duration-200">
               ${story.t}
             </h3>
           </div>
-          <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+          ${story.b ? `<p class="text-sm text-slate-400 line-clamp-3 mt-2">${story.b}</p>` : ''}
+        </a>
+
+        <div class="mt-3 pt-3 border-t border-slate-800/60">
+          <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
             <span class="inline-flex items-center gap-1 truncate max-w-[130px] sm:max-w-[150px]" title="${story.a}">
               <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span class="truncate">${story.a}</span>
             </span>
-            <div class="flex items-center gap-2 sm:gap-3">
-              <span class="flex items-center gap-0.5" title="Score">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
-                </svg>
-                ${scoreFormatted}
-              </span>
-              <span class="flex items-center gap-0.5" title="Comments">
-                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-                ${commentsFormatted}
-              </span>
-            </div>
+            <span class="font-mono-data flex items-center gap-0.5" title="Score">
+              <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+              </svg>
+              ${scoreFormatted}
+            </span>
           </div>
-        </a>
+          <a href="${discussionUrl || '#'}" target="_blank" rel="noopener noreferrer" data-comment-link="true" data-source="${source}" data-story-url="${story.u}" data-discussion-url="${discussionUrl}" class="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-500/40 transition-all duration-200 cursor-pointer" title="Join the discussion">
+            ${platformIcon}
+            <span>${commentsFormatted} comments on ${platformName}</span>
+          </a>
+        </div>
       </article>
     `;
   }
 
   function renderStoryList(stories: Story[]): string {
     return `
-      <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-2xl overflow-hidden">
-        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+      <div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+        <div class="sm:hidden divide-y divide-slate-800">
+          ${stories.map(story => {
+            const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+            const discussionUrl = getDiscussionUrl(story);
+            const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
+            const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
+            const platformName = source === 'reddit' ? 'Reddit' : 'Hacker News';
+
+            return `
+              <article class="p-4">
+                <a href="${story.u}" target="_blank" rel="noopener noreferrer" class="block cursor-pointer">
+                  <div class="flex items-start gap-2.5 mb-2">
+                    <div class="flex-shrink-0 mt-0.5" title="${platformName}">
+                      ${source === 'reddit'
+                        ? '<svg class="w-4 h-4 text-[#FF4500] opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+                        : '<svg class="w-4 h-4 text-[#FF6600] opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                      }
+                    </div>
+                    <h3 class="text-base font-bold text-slate-100 line-clamp-2 leading-snug">${story.t}</h3>
+                  </div>
+                  ${story.b ? `<p class="text-sm text-slate-400 line-clamp-3 ml-6">${story.b}</p>` : ''}
+                </a>
+                <div class="mt-3 pt-3 border-t border-slate-800/50">
+                  <div class="flex items-center gap-2 text-xs text-slate-500 mb-2">
+                    <span class="truncate max-w-[130px]">${story.a}</span>
+                    <span class="font-mono-data">↑ ${scoreFormatted}</span>
+                  </div>
+                  <a href="${discussionUrl || '#'}" target="_blank" rel="noopener noreferrer" data-comment-link="true" data-source="${source}" data-story-url="${story.u}" data-discussion-url="${discussionUrl}" class="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-500/40 transition-all duration-200 cursor-pointer">
+                    ${source === 'reddit'
+                      ? '<svg class="w-3.5 h-3.5 text-[#FF4500]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+                      : '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                    }
+                    <span>${commentsFormatted} comments on ${platformName}</span>
+                  </a>
+                </div>
+              </article>
+            `;
+          }).join('')}
+        </div>
+        <div class="hidden sm:block overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
           <table class="w-full min-w-[640px]">
             <thead>
-              <tr class="border-b border-slate-200/50 dark:border-slate-700/50">
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Title</th>
-                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider hidden sm:table-cell">Author</th>
-                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Score</th>
-                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Comments</th>
+              <tr class="border-b border-slate-800">
+                <th class="px-4 py-3 text-left text-xs font-mono-data text-slate-500 uppercase tracking-wider">Title</th>
+                <th class="px-4 py-3 text-left text-xs font-mono-data text-slate-500 uppercase tracking-wider hidden sm:table-cell">Author</th>
+                <th class="px-4 py-3 text-right text-xs font-mono-data text-slate-500 uppercase tracking-wider">Score</th>
+                <th class="px-4 py-3 text-right text-xs font-mono-data text-slate-500 uppercase tracking-wider">Comments</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-slate-200/50 dark:divide-slate-700/50">
+            <tbody class="divide-y divide-slate-800">
               ${stories.map(story => {
                 const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+                const discussionUrl = getDiscussionUrl(story);
                 const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
                 const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
                 return `
-                  <tr class="hover:bg-slate-100/50 dark:bg-slate-700/30 transition-colors duration-150 group/row">
+                  <tr class="hover:bg-slate-800/70 transition-colors duration-150 group/row">
                     <td class="px-4 py-3">
                       <div class="flex items-start gap-2.5">
                         <div class="flex-shrink-0 mt-0.5" title="${source === 'reddit' ? 'Reddit' : 'Hacker News'}">
@@ -247,13 +311,15 @@ const { } = Astro.props;
                             ? '<svg class="w-4 h-4 text-[#FF4500] opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
                             : '<svg class="w-4 h-4 text-[#FF6600] opacity-80" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'}
                         </div>
-                        <a href="${story.u}" target="_blank" rel="noopener noreferrer"
-                          class="text-slate-900 dark:text-white group-hover/row:text-primary-500 dark:group-hover/row:text-primary-400 transition-colors duration-150 line-clamp-2">
-                          ${story.t}
-                        </a>
+                        <div>
+                          <a href="${story.u}" target="_blank" rel="noopener noreferrer" class="font-display text-slate-100 group-hover/row:text-amber-200 transition-colors duration-150 line-clamp-2 cursor-pointer">
+                            ${story.t}
+                          </a>
+                          ${story.b ? `<p class="text-xs text-slate-400 line-clamp-2 mt-1">${story.b}</p>` : ''}
+                        </div>
                       </div>
                     </td>
-                    <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell max-w-[170px]" title="${story.a}">
+                    <td class="px-4 py-3 text-sm text-slate-400 hidden sm:table-cell max-w-[170px]" title="${story.a}">
                       <span class="inline-flex items-center gap-1.5 max-w-full">
                         <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -261,11 +327,9 @@ const { } = Astro.props;
                         <span class="truncate">${story.a}</span>
                       </span>
                     </td>
-                    <td class="px-4 py-3 text-right text-sm text-slate-600 dark:text-slate-300 tabular-nums">
-                      ${scoreFormatted}
-                    </td>
-                    <td class="px-4 py-3 text-right text-sm text-slate-500 dark:text-slate-400 tabular-nums">
-                      ${commentsFormatted}
+                    <td class="px-4 py-3 text-right text-sm text-slate-300 tabular-nums font-mono-data">${scoreFormatted}</td>
+                    <td class="px-4 py-3 text-right text-sm text-slate-400 tabular-nums font-mono-data">
+                      <a href="${discussionUrl || '#'}" target="_blank" rel="noopener noreferrer" data-comment-link="true" data-source="${source}" data-story-url="${story.u}" data-discussion-url="${discussionUrl}" class="hover:text-amber-300 transition-colors cursor-pointer">${commentsFormatted}</a>
                     </td>
                   </tr>
                 `;
@@ -284,14 +348,14 @@ const { } = Astro.props;
           const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
           return `
             <a href="${story.u}" target="_blank" rel="noopener noreferrer"
-              class="group inline-flex items-center gap-2 backdrop-blur-sm bg-white/50 dark:bg-slate-800/40 border border-white/20 dark:border-slate-700/30 rounded-full px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-700/60 hover:border-primary-300 dark:hover:border-primary-600/50 transition-all duration-150">
+              class="group inline-flex items-center gap-2 bg-slate-900 border border-slate-800 rounded-full px-3 py-1.5 text-sm text-slate-300 hover:border-amber-500/50 hover:text-amber-200 transition-all duration-150 cursor-pointer">
               <span class="flex-shrink-0 ${source === 'reddit' ? 'text-orange-500' : 'text-orange-600 dark:text-orange-400'}">
                 ${source === 'reddit'
                   ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
                   : '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
                 }
               </span>
-              <span class="truncate max-w-[200px] sm:max-w-[300px] group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+              <span class="truncate max-w-[200px] sm:max-w-[300px] transition-colors">
                 ${story.t}
               </span>
               <span class="flex-shrink-0 text-slate-400 dark:text-slate-500 tabular-nums text-xs">
@@ -598,8 +662,65 @@ const { } = Astro.props;
     renderStories();
   }
 
+  async function resolveHnDiscussionUrl(articleUrl: string): Promise<string> {
+    const endpoint = `https://hn.algolia.com/api/v1/search?query=${encodeURIComponent(articleUrl)}&restrictSearchableAttributes=url&tags=story`;
+    const response = await fetch(endpoint);
+    if (!response.ok) {
+      throw new Error(`HN lookup failed: ${response.status}`);
+    }
+    const payload = await response.json();
+    const firstHit = payload?.hits?.[0];
+    const storyId = firstHit?.story_id ?? firstHit?.objectID;
+    if (!storyId) {
+      return `https://hn.algolia.com/?query=${encodeURIComponent(articleUrl)}`;
+    }
+    return `https://news.ycombinator.com/item?id=${storyId}`;
+  }
+
+  async function handleCommentLinkClick(link: HTMLAnchorElement) {
+    const source = link.dataset.source;
+    const directUrl = link.dataset.discussionUrl;
+    const storyUrl = link.dataset.storyUrl || '';
+
+    if (directUrl || source !== 'hn') {
+      return;
+    }
+
+    const popup = window.open('about:blank', '_blank', 'noopener,noreferrer');
+    link.classList.add('opacity-60', 'pointer-events-none');
+
+    try {
+      const resolvedUrl = await resolveHnDiscussionUrl(storyUrl);
+      if (popup) {
+        popup.location.href = resolvedUrl;
+      } else {
+        window.location.href = resolvedUrl;
+      }
+    } catch {
+      const fallbackUrl = `https://hn.algolia.com/?query=${encodeURIComponent(storyUrl)}`;
+      if (popup) {
+        popup.location.href = fallbackUrl;
+      } else {
+        window.location.href = fallbackUrl;
+      }
+    } finally {
+      link.classList.remove('opacity-60', 'pointer-events-none');
+    }
+  }
+
   document.addEventListener('viewchange', handleViewChange);
   document.addEventListener('sourcechange', handleSourceChange);
+  document.addEventListener('click', (event) => {
+    const target = event.target as HTMLElement | null;
+    const link = target?.closest('a[data-comment-link="true"]') as HTMLAnchorElement | null;
+    if (!link) return;
+
+    const directUrl = link.dataset.discussionUrl;
+    if (!directUrl && link.dataset.source === 'hn') {
+      event.preventDefault();
+      void handleCommentLinkClick(link);
+    }
+  });
 
   elements.retryButton?.addEventListener('click', fetchDigest);
 
@@ -641,6 +762,21 @@ const { } = Astro.props;
 <style>
   .view-content {
     transition: opacity 0.2s ease-in-out;
+  }
+
+  @keyframes card-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .story-card-enter {
+    animation: card-in 0.3s ease-out both;
   }
 
   @keyframes shimmer {
@@ -720,7 +856,7 @@ const { } = Astro.props;
   }
 
   :global(.swipe-dot.active) {
-    background-color: rgb(99 102 241);
+    background-color: rgb(245 158 11);
     transform: scale(1.4);
   }
 
@@ -729,6 +865,6 @@ const { } = Astro.props;
   }
 
   :global(.dark .swipe-dot.active) {
-    background-color: rgb(129 140 248);
+    background-color: rgb(251 191 36);
   }
 </style>

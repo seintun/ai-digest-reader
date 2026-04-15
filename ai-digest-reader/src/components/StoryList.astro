@@ -25,24 +25,17 @@ function formatComments(comments: number): string {
   return comments.toString();
 }
 
-function getDomain(url: string): string {
-  try {
-    return new URL(url).hostname.replace('www.', '');
-  } catch {
-    return '↗';
-  }
-}
+
 ---
 
-<div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-xl overflow-hidden">
-  <div class="sm:hidden divide-y divide-slate-200/50 dark:divide-slate-700/50">
+<div class="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
+  <div class="sm:hidden divide-y divide-slate-800">
     {stories.map((story) => {
       const source = getSource(story.i);
       const discussionUrl = story.p || story.u;
-      const hasExternalLink = Boolean(story.u && story.p && story.u !== story.p);
       return (
         <article class="p-4">
-          <a href={discussionUrl} class="block min-h-[44px]">
+          <a href={story.u} target="_blank" rel="noopener noreferrer" class="block min-h-[44px] cursor-pointer">
             <div class="flex items-start gap-2 mb-1.5">
               <div class="flex-shrink-0 mt-0.5" title={source === 'reddit' ? 'Reddit' : 'Hacker News'}>
                 {source === 'reddit' ? (
@@ -55,32 +48,38 @@ function getDomain(url: string): string {
                   </svg>
                 )}
               </div>
-              <h3 class="text-sm font-medium text-slate-900 dark:text-white line-clamp-2 leading-snug">
+              <h3 class="text-sm font-bold text-slate-100 line-clamp-2 leading-snug">
                 {story.t}
               </h3>
             </div>
             {story.b && (
-              <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 ml-6">
+              <p class="text-xs text-slate-400 line-clamp-3 ml-6">
                 {story.b}
               </p>
             )}
           </a>
-          <div class="mt-2 flex items-center justify-between gap-2 text-xs text-slate-500 dark:text-slate-400">
-            <div class="flex items-center gap-2">
-              <span class="inline-flex items-center gap-1 truncate max-w-[130px]" title={story.a}>
+          <div class="mt-3 pt-3 border-t border-slate-800/50 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span class="inline-flex items-center gap-1 truncate max-w-[120px]" title={story.a}>
                 <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
                 <span class="truncate">{story.a}</span>
               </span>
-              <span>↑ {formatScore(story.s)}</span>
-              <span>c {formatComments(story.c)}</span>
+              <span class="font-mono-data">↑ {formatScore(story.s)}</span>
             </div>
-            {hasExternalLink && (
-              <a href={story.u} class="min-h-[32px] px-2 py-1 border border-slate-200 dark:border-slate-700 rounded-full flex items-center" title="Open original article">
-                {getDomain(story.u)} ↗
-              </a>
-            )}
+            <a
+              href={discussionUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium bg-slate-800 text-slate-300 border border-slate-700 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-500/50 transition-all duration-200 cursor-pointer"
+              title="Join the discussion"
+            >
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+              </svg>
+              {formatComments(story.c)} comments
+            </a>
           </div>
         </article>
       );
@@ -88,12 +87,12 @@ function getDomain(url: string): string {
   </div>
 
   <table class="hidden sm:table w-full min-w-[600px]">
-    <tbody class="divide-y divide-slate-200/50 dark:divide-slate-700/50">
+    <tbody class="divide-y divide-slate-800">
       {stories.map((story) => {
         const source = getSource(story.i);
         const discussionUrl = story.p || story.u;
         return (
-          <tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 transition-colors duration-150 group/row">
+          <tr class="hover:bg-slate-800/70 transition-colors duration-150 group/row">
             <td class="px-3 py-2.5">
               <div class="flex items-start gap-2">
                 <div class="flex-shrink-0 mt-0.5" title={source === 'reddit' ? 'Reddit' : 'Hacker News'}>
@@ -109,20 +108,22 @@ function getDomain(url: string): string {
                 </div>
                 <div>
                   <a 
-                    href={discussionUrl}
-                    class="text-sm font-medium text-slate-900 dark:text-white group-hover/row:text-primary-500 dark:group-hover/row:text-primary-400 transition-colors duration-150 line-clamp-2"
+                    href={story.u}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-sm font-bold text-slate-100 group-hover/row:text-amber-200 transition-colors duration-150 line-clamp-2 cursor-pointer"
                   >
                     {story.t}
                   </a>
                   {story.b && (
-                    <p class="text-xs text-slate-500 dark:text-slate-400 line-clamp-1 mt-1">
+                    <p class="text-xs text-slate-400 line-clamp-2 mt-1">
                       {story.b}
                     </p>
                   )}
                 </div>
               </div>
             </td>
-            <td class="px-3 py-2.5 text-xs text-slate-400 dark:text-slate-500 hidden sm:table-cell max-w-[140px]" title={story.a}>
+            <td class="px-3 py-2.5 text-xs text-slate-400 hidden sm:table-cell max-w-[140px]" title={story.a}>
               <span class="inline-flex items-center gap-1 max-w-full">
                 <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -130,18 +131,22 @@ function getDomain(url: string): string {
                 <span class="truncate">{story.a}</span>
               </span>
             </td>
-            <td class="px-3 py-2.5 text-right text-xs text-slate-500 dark:text-slate-400 tabular-nums">
+            <td class="px-3 py-2.5 text-right text-xs text-slate-300 tabular-nums font-mono-data">
               {formatScore(story.s)}
             </td>
-            <td class="px-3 py-2.5 text-right text-xs text-slate-400 dark:text-slate-500 tabular-nums">
-              {formatComments(story.c)}
-            </td>
-            <td class="px-3 py-2.5 text-right text-slate-400 dark:text-slate-500">
-              {story.u && story.p && story.u !== story.p && (
-                <a href={story.u} class="inline-flex items-center gap-1 text-xs hover:text-primary-500 transition-colors" title="Open original article">
-                  ↗
-                </a>
-              )}
+            <td class="px-3 py-3 text-right">
+              <a
+                href={discussionUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-800 text-slate-400 border border-slate-700 hover:bg-amber-500/10 hover:text-amber-300 hover:border-amber-500/50 transition-all duration-200 cursor-pointer whitespace-nowrap"
+                title="Join the discussion"
+              >
+                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                {formatComments(story.c)}
+              </a>
             </td>
           </tr>
         );

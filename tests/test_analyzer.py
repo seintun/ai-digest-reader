@@ -190,6 +190,16 @@ class TestParseClaudeResponse:
         assert result is not None
         assert result['schema_version'] == '2'
 
+    def test_json_with_extra_text_parses_first_object(self):
+        noisy = (
+            "Here is your digest in JSON format:\n"
+            f"{self.VALID_JSON}\n"
+            "Let me know if you want adjustments."
+        )
+        result = _parse_claude_response(noisy)
+        assert result is not None
+        assert result['schema_version'] == '2'
+
     def test_malformed_json_returns_none(self):
         result = _parse_claude_response('{not valid json}')
         assert result is None
