@@ -7,9 +7,10 @@ const sources = [
 ---
 
 <div class="flex flex-col gap-2 text-xs">
-  <div class="flex items-center gap-1 p-0.5 rounded-lg bg-white/30 dark:bg-slate-800/50">
-    <button type="button" data-view="cards" class="view-btn active bg-primary-500 text-white px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+  <!-- View mode toggle -->
+  <div class="flex items-center gap-1 p-0.5 rounded-lg bg-white/30 dark:bg-slate-800/50" role="group" aria-label="View mode">
+    <button type="button" data-view="cards" aria-pressed="true" class="view-btn px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <rect x="3" y="3" width="7" height="7" rx="1" />
         <rect x="14" y="3" width="7" height="7" rx="1" />
         <rect x="3" y="14" width="7" height="7" rx="1" />
@@ -17,16 +18,16 @@ const sources = [
       </svg>
       <span class="text-[11px] font-medium">Cards</span>
     </button>
-    <button type="button" data-view="list" class="view-btn text-slate-600 dark:text-slate-400 px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1 hover:bg-white/30 dark:hover:bg-slate-700/50">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button type="button" data-view="list" aria-pressed="false" class="view-btn px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <line x1="3" y1="6" x2="21" y2="6" />
         <line x1="3" y1="12" x2="21" y2="12" />
         <line x1="3" y1="18" x2="21" y2="18" />
       </svg>
       <span class="text-[11px] font-medium">List</span>
     </button>
-    <button type="button" data-view="glance" class="view-btn text-slate-600 dark:text-slate-400 px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1 hover:bg-white/30 dark:hover:bg-slate-700/50">
-      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <button type="button" data-view="glance" aria-pressed="false" class="view-btn px-3 py-2 rounded-md transition-all duration-150 flex items-center justify-center gap-1.5 flex-1">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
         <rect x="2" y="4" width="20" height="4" rx="1" />
         <rect x="2" y="10" width="20" height="4" rx="1" />
         <rect x="2" y="16" width="20" height="4" rx="1" />
@@ -35,17 +36,13 @@ const sources = [
     </button>
   </div>
 
-  <div class="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-hide">
+  <!-- Source filter -->
+  <div class="flex items-center gap-1 overflow-x-auto pb-1 scrollbar-hide" role="group" aria-label="Filter by source">
     {sources.map((source) => (
       <button
         data-source={source.id}
-        data-active={source.id === 'all' ? 'true' : 'false'}
-        class:list={[
-          'source-btn px-3 py-1.5 rounded-md font-medium transition-all duration-150 whitespace-nowrap flex-shrink-0',
-          source.id === 'all'
-            ? 'bg-primary-500 text-white'
-            : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30',
-        ]}
+        aria-pressed={source.id === 'all' ? 'true' : 'false'}
+        class="source-btn px-3 py-1.5 rounded-md font-medium transition-all duration-150 whitespace-nowrap flex-shrink-0"
       >
         {source.label} <span class="source-badge text-[10px] opacity-70">(<span class="count">-</span>)</span>
       </button>
@@ -56,52 +53,74 @@ const sources = [
 <style>
   .scrollbar-hide::-webkit-scrollbar { display: none; }
   .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* View buttons — driven by aria-pressed */
+  .view-btn {
+    color: #64748b; /* slate-500 */
+  }
+  :global(.dark) .view-btn {
+    color: #94a3b8; /* slate-400 */
+  }
+  .view-btn:where([aria-pressed="true"]) {
+    background-color: #6366f1; /* primary-500 / indigo */
+    color: #ffffff;
+  }
+  /* Only show hover bg on devices that truly support hover (not touch) */
+  @media (hover: hover) {
+    .view-btn:not([aria-pressed="true"]):hover {
+      background-color: rgba(255,255,255,0.3);
+    }
+    :global(.dark) .view-btn:not([aria-pressed="true"]):hover {
+      background-color: rgba(51,65,85,0.5); /* slate-700/50 */
+    }
+  }
+
+  /* Source buttons */
+  .source-btn {
+    background-color: rgba(255,255,255,0.5);
+    color: #475569; /* slate-600 */
+  }
+  :global(.dark) .source-btn {
+    background-color: rgba(51,65,85,0.5);
+    color: #94a3b8; /* slate-400 */
+  }
+  .source-btn:where([aria-pressed="true"]) {
+    background-color: #6366f1;
+    color: #ffffff;
+  }
+  @media (hover: hover) {
+    .source-btn:not([aria-pressed="true"]):hover {
+      background-color: #e0e7ff; /* primary-100 */
+    }
+    :global(.dark) .source-btn:not([aria-pressed="true"]):hover {
+      background-color: rgba(99,102,241,0.2); /* primary-900/30 */
+    }
+  }
 </style>
 
 <script>
-  const SOURCE_ACTIVE_CLASSES = ['bg-primary-500', 'text-white'];
-  const SOURCE_INACTIVE_CLASSES = ['bg-white/50', 'dark:bg-slate-700/50', 'text-slate-600', 'dark:text-slate-400'];
-
   function initFilters() {
+    // Source buttons
     document.querySelectorAll('.source-btn').forEach((btn) => {
-      const isActive = btn.getAttribute('data-active') === 'true';
-      btn.classList.remove(...SOURCE_ACTIVE_CLASSES, ...SOURCE_INACTIVE_CLASSES);
-      if (isActive) {
-        btn.classList.add(...SOURCE_ACTIVE_CLASSES);
-      } else {
-        btn.classList.add(...SOURCE_INACTIVE_CLASSES);
-      }
-    });
-
-    document.querySelectorAll('[data-source]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const source = btn.getAttribute('data-source');
-        document.querySelectorAll('.source-btn').forEach((b) => {
-          b.setAttribute('data-active', 'false');
-          b.classList.remove(...SOURCE_ACTIVE_CLASSES);
-          b.classList.add(...SOURCE_INACTIVE_CLASSES);
-        });
-
-        btn.setAttribute('data-active', 'true');
-        btn.classList.add(...SOURCE_ACTIVE_CLASSES);
-        btn.classList.remove(...SOURCE_INACTIVE_CLASSES);
+        document.querySelectorAll('.source-btn').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
         btn.dispatchEvent(new CustomEvent('sourcechange', { detail: { source }, bubbles: true }));
       });
     });
 
+    // View buttons
     document.querySelectorAll('.view-btn').forEach((btn) => {
       btn.addEventListener('click', () => {
         const view = btn.getAttribute('data-view');
-        document.querySelectorAll('.view-btn').forEach((b) => {
-          b.classList.remove('bg-primary-500', 'text-white');
-          b.classList.add('text-slate-600', 'dark:text-slate-400');
-        });
-        btn.classList.add('bg-primary-500', 'text-white');
-        btn.classList.remove('text-slate-600', 'dark:text-slate-400');
+        document.querySelectorAll('.view-btn').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
         btn.dispatchEvent(new CustomEvent('viewchange', { detail: { mode: view }, bubbles: true }));
       });
     });
   }
+
   document.addEventListener('DOMContentLoaded', initFilters);
   initFilters();
 </script>
