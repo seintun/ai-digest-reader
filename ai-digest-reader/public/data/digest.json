@@ -1,0 +1,105 @@
+{
+  "v": 2,
+  "d": "2026-04-15",
+  "g": "2026-04-15T03:20:19.981940",
+  "r": [
+    {
+      "i": "rd-0",
+      "t": "Best Local LLMs - Apr 2026",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
+      "s": 386,
+      "c": 175,
+      "a": "rm-rf-rm"
+    },
+    {
+      "i": "rd-1",
+      "t": "Announcing LocalLlama discord server &amp; bot!",
+      "u": "https://www.reddit.com/gallery/1mpk2va",
+      "s": 155,
+      "c": 102,
+      "a": "HOLUPREDICTIONS"
+    },
+    {
+      "i": "rd-2",
+      "t": "Update LICENSE \u00b7 MiniMaxAI/MiniMax-M2.7 at edf8030",
+      "u": "https://huggingface.co/MiniMaxAI/MiniMax-M2.7/commit/edf8030bc287b531e4c9af83df92f96489d910c0",
+      "s": 164,
+      "c": 63,
+      "a": "pmttyji"
+    },
+    {
+      "i": "rd-3",
+      "t": "Updates for ChatGPT",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
+      "s": 3565,
+      "c": 1414,
+      "a": "samaltman"
+    },
+    {
+      "i": "rd-4",
+      "t": "GPT-4o/GPT-5 complaints megathread",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
+      "s": 597,
+      "c": 4202,
+      "a": "WithoutReason1729"
+    },
+    {
+      "i": "rd-5",
+      "t": "What in the ever loving f",
+      "u": "https://v.redd.it/9qojg2osv9vg1",
+      "s": 818,
+      "c": 131,
+      "a": "michael-lethal_ai"
+    },
+    {
+      "i": "rd-6",
+      "t": "[D] Self-Promotion Thread",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
+      "s": 19,
+      "c": 71,
+      "a": "AutoModerator"
+    },
+    {
+      "i": "rd-7",
+      "t": "[D] Monthly Who's Hiring and Who wants to be Hired?",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
+      "s": 7,
+      "c": 3,
+      "a": "AutoModerator"
+    },
+    {
+      "i": "rd-8",
+      "t": "Was looking at a ICLR 2025 Oral paper and I am shocked it got oral [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
+      "s": 32,
+      "c": 12,
+      "a": "Striking-Warning9533"
+    }
+  ],
+  "h": [
+    {
+      "i": "hn-0",
+      "t": "Want to Write a Compiler? Just Read These Two Papers (2008)",
+      "u": "https://prog21.dadgum.com/30.html",
+      "s": 36,
+      "c": 9,
+      "a": "downbad_"
+    },
+    {
+      "i": "hn-1",
+      "t": "Fixing a 20-year-old bug in Enlightenment E16",
+      "u": "https://iczelia.net/posts/e16-20-year-old-bug/",
+      "s": 145,
+      "c": 43,
+      "a": "snoofydude"
+    },
+    {
+      "i": "hn-2",
+      "t": "Good Sleep, Good Learning (2012)",
+      "u": "https://super-memory.com/articles/sleep.htm",
+      "s": 20,
+      "c": 2,
+      "a": "downbad_"
+    }
+  ]
+}
