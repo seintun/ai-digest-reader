@@ -100,24 +100,22 @@ Base.astro (Layout)
 └── Controls.astro
     ├── View Switcher (Cards/List/Glance)
     └── Source Filter (All/Reddit/HN)
-└── DigestSummary.astro     ← NEW: AI Summary display
-    ├── Simple overview tab
-    ├── Themes tab
-    ├── Breaking tab
-    └── Must-Read tab
-└── StoryCard.astro / StoryList.astro / StoryGlance.astro
+└── index.astro client renderer
+    ├── cards view renderer
+    ├── list view renderer
+    ├── glance view renderer
+    └── summary swipe cards
 ```
 
-### DigestSummary Component
+### Summary Rendering
 
-The DigestSummary component displays AI-generated content in a tabbed interface:
+The summary is rendered in `index.astro` as three swipe cards:
 
-| Tab | Content | Source Field |
+| Card | Content | Source Field |
 |-----|---------|-------------|
-| Overview | One-line summary | `summary.simple` |
-| Themes | Key trends | `summary.themes[]` |
-| Breaking | Urgent news | `summary.breaking[]` |
-| Must-Read | Essential articles | `summary.mustRead[]` |
+| Simple | One-line summary | `summary.simple` |
+| Structured | Themes + breaking + must-read | `summary.structured.*` |
+| Full Brief | Intro + sections + closing | `summary.fullBrief.*` |
 
 ### Client-Side Caching
 
@@ -143,10 +141,10 @@ The app implements a hybrid caching strategy for optimal UX:
 
 ### State Management
 
-Persisted to `localStorage`:
-- `digest-data` - Cached digest with today's date (including AI summary)
-- `viewMode` - Current view preference (cards/list/glance)
-- `theme` - Dark/light mode preference
+- State is managed directly in `src/pages/index.astro` for the current single-page flow.
+- Persisted to `localStorage`:
+  - `viewMode` - Current view preference (cards/list/glance)
+  - `theme` - Dark/light mode preference
 
 ## Backend Architecture
 
@@ -200,9 +198,12 @@ claude --print "<prompt>"
 
 **Fallback:** Use `--no-ai` flag to skip AI summary generation
 
-#### Frontend Schema Validation (digest.ts)
+#### Frontend Schema Handling
 
-Zod schema mirrors the Python TypedDict contract. On `fetchDigest()`, if a `summary` field is present, it is validated with `validateSummary(data)` using `safeParse` (never throws). Invalid summaries are set to `undefined` — the UI degrades gracefully to "Summary unavailable" instead of crashing.
+- Frontend fetches `digest.json` directly in `index.astro`.
+- Rendering hardening is applied at output boundaries:
+  - untrusted text is HTML-escaped before insertion
+  - URLs are protocol-validated (`http`/`https`) before assignment to anchors/navigation
 
 ### Configuration
 
@@ -259,8 +260,8 @@ CLAUDE_MODEL = "sonnet-4-20250514"
 │ 7. Returns validated DigestSummary or None (summary omitted)        │
 │                                                                      │
 │ FRONTEND VALIDATION:                                                 │
-│ 8. digest.ts calls Zod validateSummary() on load                    │
-│ 9. Invalid summary → undefined → UI shows "Summary unavailable"     │
+│ 8. index.astro validates external URLs and escapes untrusted text    │
+│ 9. Invalid links fall back to safe placeholders                      │
 │                                                                      │
 │ ERROR HANDLING:                                                      │
 │ - Claude CLI not found → Warning, returns None                      │
