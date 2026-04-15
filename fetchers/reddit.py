@@ -30,9 +30,12 @@ def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
                     post_list = []
                 
                 for post in post_list:
+                    permalink = f"https://reddit.com{post.get('permalink', '')}"
                     posts.append({
                         "title": post.get("title", ""),
-                        "url": post.get("url", post.get("permalink", "")),
+                        "url": post.get("url", permalink),
+                        "permalink": permalink,
+                        "body": post.get("selftext", "")[:280].replace("\n", " ").strip(),
                         "score": post.get("score", 0),
                         "subreddit": post.get("subreddit", subreddit),
                         "author": post.get("author", ""),
@@ -43,9 +46,12 @@ def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
             elif "children" in data:
                 for child in data.get("children", [])[:limit]:
                     post = child.get("data", {})
+                    permalink = f"https://reddit.com{post.get('permalink', '')}"
                     posts.append({
                         "title": post.get("title", ""),
-                        "url": f"https://reddit.com{post.get('permalink', '')}",
+                        "url": permalink,
+                        "permalink": permalink,
+                        "body": post.get("selftext", "")[:280].replace("\n", " ").strip(),
                         "score": post.get("score", 0),
                         "subreddit": post.get("subreddit", subreddit),
                         "author": post.get("author", ""),
