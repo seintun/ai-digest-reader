@@ -2,7 +2,8 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Controls from '../components/Controls.astro';
-import type { Story, ViewMode, Source } from '../types';
+import DigestSummary from '../components/DigestSummary.astro';
+import type { Story, DigestSummary as DigestSummaryType, ViewMode, Source } from '../types';
 
 interface Props {}
 
@@ -13,6 +14,8 @@ const { } = Astro.props;
   <Header />
 
   <main class="max-w-4xl mx-auto px-2 sm:px-3 py-2 sm:py-3">
+    <div id="summary-container" class="hidden"></div>
+    
     <div id="controls-container" class="mb-3">
       <Controls />
     </div>
@@ -93,6 +96,7 @@ const { } = Astro.props;
   interface AppState {
     stories: Story[];
     filteredStories: Story[];
+    summary: DigestSummaryType | null;
     viewMode: ViewMode;
     source: Source;
     isLoading: boolean;
@@ -102,6 +106,7 @@ const { } = Astro.props;
   const state: AppState = {
     stories: [],
     filteredStories: [],
+    summary: null,
     viewMode: 'cards',
     source: 'all',
     isLoading: true,
@@ -119,6 +124,7 @@ const { } = Astro.props;
     storiesList: document.getElementById('stories-list'),
     storiesGlance: document.getElementById('stories-glance'),
     pullRefreshHint: document.getElementById('pull-refresh-hint'),
+    summaryContainer: document.getElementById('summary-container'),
   };
 
   function getSourceCounts(stories: Story[]): { reddit: number; hn: number; total: number } {
@@ -314,6 +320,16 @@ const { } = Astro.props;
     state.isLoading = false;
     elements.loadingContainer?.classList.add('hidden');
     elements.storiesContainer?.classList.remove('opacity-50', 'pointer-events-none');
+    
+    if (elements.summaryContainer) {
+      if (state.summary) {
+        elements.summaryContainer.classList.remove('hidden');
+        elements.summaryContainer.innerHTML = `<DigestSummary summary={state.summary!} stories={state.stories} />`;
+      } else {
+        elements.summaryContainer.classList.add('hidden');
+        elements.summaryContainer.innerHTML = '';
+      }
+    }
   }
 
   function showError(message: string) {
@@ -336,6 +352,7 @@ const { } = Astro.props;
 
       state.stories = [...data.r, ...data.h];
       state.filteredStories = filterStories(state.stories, state.source);
+      state.summary = data.summary || null;
 
       updateSourceFilter();
       renderStories();
