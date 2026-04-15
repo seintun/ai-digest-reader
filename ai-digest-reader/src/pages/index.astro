@@ -88,9 +88,7 @@ const { } = Astro.props;
 
 <script>
   import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, MustReadItem, FullBriefSection } from '../types';
-  import StoryCard from '../components/StoryCard.astro';
-  import StoryList from '../components/StoryList.astro';
-  import StoryGlance from '../components/StoryGlance.astro';
+  import { rankStories } from '../lib/ranking';
 
   interface AppState {
     stories: Story[];
@@ -133,7 +131,7 @@ const { } = Astro.props;
   }
 
   function filterStories(stories: Story[], source: Source): Story[] {
-    if (source === 'all') return stories;
+    if (source === 'all') return rankStories(stories);
     return stories.filter(story => {
       const storySource = story.i.startsWith('rd-') ? 'reddit' : 'hn';
       return storySource === source;
@@ -196,8 +194,11 @@ const { } = Astro.props;
             </h3>
           </div>
           <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-            <span class="truncate max-w-[100px] sm:max-w-[120px]" title="${story.a}">
-              ${story.a}
+            <span class="inline-flex items-center gap-1 truncate max-w-[130px] sm:max-w-[150px]" title="${story.a}">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+              <span class="truncate">${story.a}</span>
             </span>
             <div class="flex items-center gap-2 sm:gap-3">
               <span class="flex items-center gap-0.5" title="Score">
@@ -252,8 +253,13 @@ const { } = Astro.props;
                         </a>
                       </div>
                     </td>
-                    <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell truncate max-w-[150px]" title="${story.a}">
-                      ${story.a}
+                    <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell max-w-[170px]" title="${story.a}">
+                      <span class="inline-flex items-center gap-1.5 max-w-full">
+                        <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span class="truncate">${story.a}</span>
+                      </span>
                     </td>
                     <td class="px-4 py-3 text-right text-sm text-slate-600 dark:text-slate-300 tabular-nums">
                       ${scoreFormatted}
