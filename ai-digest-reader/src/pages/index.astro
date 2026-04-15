@@ -299,11 +299,11 @@ const { } = Astro.props;
 
   function updateSourceFilter() {
     const counts = getSourceCounts(state.stories);
-    const badges = document.querySelectorAll('.source-badge');
-    if (badges.length >= 3) {
-      badges[0].textContent = counts.total.toString();
-      badges[1].textContent = counts.reddit.toString();
-      badges[2].textContent = counts.hn.toString();
+    const counts_els = document.querySelectorAll('.source-badge .count');
+    if (counts_els.length >= 3) {
+      counts_els[0].textContent = counts.total.toString();
+      counts_els[1].textContent = counts.reddit.toString();
+      counts_els[2].textContent = counts.hn.toString();
     }
   }
 

@@ -6,23 +6,8 @@ const sources = [
 ];
 ---
 
-<div class="flex items-center justify-between gap-2 text-xs">
-  <div class="flex items-center gap-1">
-    {sources.map((source) => (
-      <button
-        data-source={source.id}
-        data-active={source.id === 'all' ? 'true' : 'false'}
-        class="source-btn px-2.5 py-1 rounded-md font-medium transition-all duration-150
-          data-[active=true]:bg-primary-500 data-[active=true]:text-white
-          {source.id === 'all' ? 'bg-primary-500 text-white' : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'}"
-      >
-        {source.label}
-        <span class="source-badge ml-0.5 text-[10px] opacity-70"></span>
-      </button>
-    ))}
-  </div>
-
-  <div class="flex items-center gap-1 p-0.5 rounded-lg bg-white/30 dark:bg-slate-800/50">
+<div class="flex flex-col gap-2 text-xs">
+  <div class="flex items-center gap-1 p-0.5 rounded-lg bg-white/30 dark:bg-slate-800/50 w-fit">
     <button type="button" data-view="cards" class="view-btn active bg-primary-500 text-white p-1.5 rounded transition-all duration-150 flex items-center gap-1.5">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="7" height="7" rx="1" />
@@ -48,6 +33,20 @@ const sources = [
       </svg>
       <span class="text-[11px] font-medium">Glance</span>
     </button>
+  </div>
+
+  <div class="flex items-center gap-1">
+    {sources.map((source) => (
+      <button
+        data-source={source.id}
+        data-active={source.id === 'all' ? 'true' : 'false'}
+        class="source-btn px-2.5 py-1 rounded-md font-medium transition-all duration-150
+          data-[active=true]:bg-primary-500 data-[active=true]:text-white
+          {source.id === 'all' ? 'bg-primary-500 text-white' : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'}"
+      >
+        {source.label} <span class="source-badge text-[10px] opacity-70">(<span class="count">-</span>)</span>
+      </button>
+    ))}
   </div>
 </div>
 
