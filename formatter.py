@@ -32,7 +32,7 @@ def format_digest(reddit_posts: list, hn_posts: list, digest_date: str) -> str:
     
     for i, post in enumerate(hn_posts, 1):
         lines.append(f"{i}. **{post['title']}**")
-        lines.append(f"   - [{post['url']}]({post['score']}) | {post['score']} points")
+        lines.append(f"   - [link]({post['url']}) | {post['score']} points")
         lines.append("")
     
     if not hn_posts:
