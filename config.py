@@ -5,7 +5,7 @@ SUBREDDITS = [
     "MachineLearning",
 ]
 
-HN_API_URL = "https://hacker-news.firebase.io/v0"
+HN_API_URL = "https://hacker-news.firebaseio.com/v0"
 
 POST_LIMIT = 10
 
