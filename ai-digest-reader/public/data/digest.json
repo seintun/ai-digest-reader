@@ -1,93 +1,93 @@
 {
   "v": 2,
   "d": "2026-04-15",
-  "g": "2026-04-15T03:24:50.982577",
+  "g": "2026-04-15T13:03:45.188650",
   "r": [
     {
       "i": "rd-0",
       "t": "Best Local LLMs - Apr 2026",
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
-      "s": 387,
-      "c": 175,
+      "s": 394,
+      "c": 194,
       "a": "rm-rf-rm"
     },
     {
       "i": "rd-1",
       "t": "Announcing LocalLlama discord server &amp; bot!",
       "u": "https://www.reddit.com/gallery/1mpk2va",
-      "s": 155,
+      "s": 154,
       "c": 102,
       "a": "HOLUPREDICTIONS"
     },
     {
       "i": "rd-2",
-      "t": "Update LICENSE \u00b7 MiniMaxAI/MiniMax-M2.7 at edf8030",
-      "u": "https://huggingface.co/MiniMaxAI/MiniMax-M2.7/commit/edf8030bc287b531e4c9af83df92f96489d910c0",
-      "s": 161,
-      "c": 63,
-      "a": "pmttyji"
+      "t": "Gemma 4 Jailbreak System Prompt",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm3swd/gemma_4_jailbreak_system_prompt/",
+      "s": 453,
+      "c": 113,
+      "a": "90hex"
     },
     {
       "i": "rd-3",
-      "t": "DGX Spark just arrived \u2014 planning to run vLLM + local models, looking for advice",
-      "u": "https://i.redd.it/dbj83qkay9vg1.jpeg",
-      "s": 78,
-      "c": 54,
-      "a": "dalemusser"
+      "t": "1-bit Bonsai 1.7B (290MB in size) running locally in your browser on WebGPU",
+      "u": "https://v.redd.it/bdr33ip4sdvg1",
+      "s": 158,
+      "c": 35,
+      "a": "xenovatech"
     },
     {
       "i": "rd-4",
-      "t": "These \"Claude-4.6-Opus\" Fine Tunes of Local Models Are Usually A Downgrade",
-      "u": "https://www.reddit.com/gallery/1slnglx",
-      "s": 210,
-      "c": 99,
-      "a": "BuffMcBigHuge"
-    },
-    {
-      "i": "rd-5",
-      "t": "Hot Experts in your VRAM! Dynamic expert cache in llama.cpp for 27% faster CPU +GPU token generation with Qwen3.5-122B-A10B compared to layer-based single-GPU partial offload",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1slue0z/hot_experts_in_your_vram_dynamic_expert_cache_in/",
-      "s": 58,
-      "c": 18,
-      "a": "TriWrite"
-    },
-    {
-      "i": "rd-6",
       "t": "Major drop in intelligence across most major models.",
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm08m6/major_drop_in_intelligence_across_most_major/",
-      "s": 20,
-      "c": 35,
+      "s": 514,
+      "c": 326,
       "a": "DepressedDrift"
     },
     {
+      "i": "rd-5",
+      "t": "Local AI is the best",
+      "u": "https://i.redd.it/0ut6tpzo0cvg1.png",
+      "s": 303,
+      "c": 35,
+      "a": "fake_agent_smith"
+    },
+    {
+      "i": "rd-6",
+      "t": "What is the current status with Turbo Quant?",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm6d2k/what_is_the_current_status_with_turbo_quant/",
+      "s": 90,
+      "c": 48,
+      "a": "kickerua"
+    },
+    {
       "i": "rd-7",
-      "t": "24/7 Headless AI Server on Xiaomi 12 Pro (Snapdragon 8 Gen 1 + Ollama/Gemma4)",
-      "u": "https://i.redd.it/fo3jf5vk85vg1.jpeg",
-      "s": 939,
-      "c": 241,
-      "a": "Aromatic_Ad_7557"
+      "t": "How to properly deal with a CLAUDE.md file.",
+      "u": "https://i.redd.it/vlrvbxabpevg1.png",
+      "s": 21,
+      "c": 4,
+      "a": "onil_gova"
     },
     {
       "i": "rd-8",
-      "t": "Guys we have to change the pelican test",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1slz38i/guys_we_have_to_change_the_pelican_test/",
-      "s": 20,
-      "c": 17,
-      "a": "Tall-Ad-7742"
+      "t": "Can't keep up with Llama.cpp changes, made a n8n workflow to summarize it for me daily",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1smbpn6/cant_keep_up_with_llamacpp_changes_made_a_n8n/",
+      "s": 18,
+      "c": 13,
+      "a": "andy2na"
     },
     {
       "i": "rd-9",
-      "t": "MiniMax M2.7 GGUF Investigation, Fixes, Benchmarks",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1slk4di/minimax_m27_gguf_investigation_fixes_benchmarks/",
-      "s": 127,
-      "c": 39,
-      "a": "danielhanchen"
+      "t": "Update LICENSE \u00b7 MiniMaxAI/MiniMax-M2.7 at edf8030",
+      "u": "https://huggingface.co/MiniMaxAI/MiniMax-M2.7/commit/edf8030bc287b531e4c9af83df92f96489d910c0",
+      "s": 225,
+      "c": 80,
+      "a": "pmttyji"
     },
     {
       "i": "rd-10",
       "t": "Updates for ChatGPT",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
-      "s": 3568,
+      "s": 3566,
       "c": 1414,
       "a": "samaltman"
     },
@@ -95,80 +95,80 @@
       "i": "rd-11",
       "t": "GPT-4o/GPT-5 complaints megathread",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
-      "s": 601,
+      "s": 602,
       "c": 4202,
       "a": "WithoutReason1729"
     },
     {
       "i": "rd-12",
-      "t": "What in the ever loving f",
-      "u": "https://v.redd.it/9qojg2osv9vg1",
-      "s": 825,
-      "c": 132,
-      "a": "michael-lethal_ai"
+      "t": "Bro I said wake me up, not fix my life",
+      "u": "https://i.redd.it/kgnarci42dvg1.png",
+      "s": 359,
+      "c": 18,
+      "a": "Abhinav_108"
     },
     {
       "i": "rd-13",
-      "t": "He was just following instructions \ud83d\ude2d",
-      "u": "https://i.redd.it/5p4imudte7vg1.jpeg",
-      "s": 1954,
-      "c": 25,
-      "a": "MetaSelf"
+      "t": "\u2018I miss you\u2019: Mother speaks to AI son regularly, unaware he died last year",
+      "u": "https://www.livemint.com/news/world/i-miss-you-mother-speaks-to-ai-son-regularly-unaware-he-died-last-year-artificial-intelligence-creates-digital-twin-11775967278951.html",
+      "s": 1225,
+      "c": 203,
+      "a": "EchoOfOppenheimer"
     },
     {
       "i": "rd-14",
       "t": "You can't talk to ChatGPT like a normal human anymore.",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1slt4fx/you_cant_talk_to_chatgpt_like_a_normal_human/",
-      "s": 423,
-      "c": 314,
+      "s": 902,
+      "c": 559,
       "a": "CookiePersonal4654"
     },
     {
       "i": "rd-15",
-      "t": "my RunLobster agent drafted a reply to an angry customer in her exact angry tone. she got angrier. i had to apologize for my own software.",
-      "u": "https://www.reddit.com/r/ChatGPT/comments/1slmx83/my_runlobster_agent_drafted_a_reply_to_an_angry/",
-      "s": 208,
-      "c": 33,
-      "a": "Even_Package_8573"
+      "t": "He was just following instructions \ud83d\ude2d",
+      "u": "https://i.redd.it/5p4imudte7vg1.jpeg",
+      "s": 2584,
+      "c": 29,
+      "a": "MetaSelf"
     },
     {
       "i": "rd-16",
-      "t": "I tried using ChatGPT for ONE random thing\u2026 now I can\u2019t stop \ud83d\udc80",
-      "u": "https://i.redd.it/mkfu11bak5vg1.png",
-      "s": 890,
-      "c": 212,
-      "a": "Whiispard"
+      "t": "Chatgpt downplaying every single achievement?",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm90v4/chatgpt_downplaying_every_single_achievement/",
+      "s": 45,
+      "c": 28,
+      "a": "SnooSquirrels5535"
     },
     {
       "i": "rd-17",
-      "t": "Bro discuss ChatGPT birth 7 year ago.",
-      "u": "https://i.redd.it/45hwxnfdt9vg1.jpeg",
-      "s": 62,
-      "c": 69,
-      "a": "Over-Professor6495"
+      "t": "This sub is mostly screenshots of ChatGPT being wrong. Meanwhile people on RunLobster (OpenClaw) are quietly running real businesses on AI.",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm99ud/this_sub_is_mostly_screenshots_of_chatgpt_being/",
+      "s": 39,
+      "c": 74,
+      "a": "Current_Pension8792"
     },
     {
       "i": "rd-18",
-      "t": "ChairGPTrash",
-      "u": "https://i.redd.it/nuz40tu5z9vg1.png",
-      "s": 52,
-      "c": 13,
-      "a": "Acceptable_Arm_6561"
+      "t": "34.8% of employee AI inputs now contain sensitive data",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm4qj6/348_of_employee_ai_inputs_now_contain_sensitive/",
+      "s": 39,
+      "c": 20,
+      "a": "juliarmg"
     },
     {
       "i": "rd-19",
-      "t": "\u2018I miss you\u2019: Mother speaks to AI son regularly, unaware he died last year",
-      "u": "https://www.livemint.com/news/world/i-miss-you-mother-speaks-to-ai-son-regularly-unaware-he-died-last-year-artificial-intelligence-creates-digital-twin-11775967278951.html",
-      "s": 26,
-      "c": 11,
-      "a": "EchoOfOppenheimer"
+      "t": "Man Who Threw Molotov at Sam Altman\u2019s House Warned AI Will Exterminate Humankind",
+      "u": "https://realnarrativenews.com/read/man-who-threw-molotov-at-sam-altmans-house-warned-ai-will-exterminate-humankind/",
+      "s": 86,
+      "c": 125,
+      "a": "realnarrativenews"
     },
     {
       "i": "rd-20",
       "t": "[D] Self-Promotion Thread",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
-      "s": 19,
-      "c": 71,
+      "s": 17,
+      "c": 74,
       "a": "AutoModerator"
     },
     {
@@ -181,181 +181,199 @@
     },
     {
       "i": "rd-22",
-      "t": "Was looking at a ICLR 2025 Oral paper and I am shocked it got oral [D]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
-      "s": 34,
-      "c": 12,
-      "a": "Striking-Warning9533"
+      "t": "[N] AMA Reminder: Max Welling",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm7tjz/n_ama_reminder_max_welling/",
+      "s": 16,
+      "c": 0,
+      "a": "Benlus"
     },
     {
       "i": "rd-23",
-      "t": "You can decompose models into a graph database [N]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1slmfmw/you_can_decompose_models_into_a_graph_database_n/",
-      "s": 40,
-      "c": 17,
-      "a": "Educational_Win_2982"
+      "t": "How much harder is it these days to get into a PhD program without having a high ranking degree for UG? [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1smg9hz/how_much_harder_is_it_these_days_to_get_into_a/",
+      "s": 6,
+      "c": 2,
+      "a": "GurSea971"
     },
     {
       "i": "rd-24",
-      "t": "Trained a Qwen2.5-0.5B-Instruct bf16 model on Reddit post summarization task with GRPO written from scratch in PyTorch - updates! [P]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm0lcu/trained_a_qwen2505binstruct_bf16_model_on_reddit/",
-      "s": 2,
-      "c": 1,
-      "a": "East-Muffin-6472"
+      "t": "Was looking at a ICLR 2025 Oral paper and I am shocked it got oral [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
+      "s": 63,
+      "c": 17,
+      "a": "Striking-Warning9533"
     },
     {
       "i": "rd-25",
-      "t": "Adversarial testing of Minimus OpenClaw: agent discovered and exploited its own tool documentation to escape sandbox, modify production config, and contact real users [R]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm20ke/adversarial_testing_of_minimus_openclaw_agent/",
-      "s": 1,
-      "c": 0,
-      "a": "earlycore_dev"
+      "t": "Jailbreaks as social engineering: 5 case studies suggest LLMs inherit human psychological vulnerabilities from training data [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm70ix/jailbreaks_as_social_engineering_5_case_studies/",
+      "s": 9,
+      "c": 3,
+      "a": "One-Honey6765"
     },
     {
       "i": "rd-26",
-      "t": "Thoughts and experience on ML journals [D]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm04fm/thoughts_and_experience_on_ml_journals_d/",
-      "s": 0,
-      "c": 3,
-      "a": "kostaspap90"
+      "t": "What is the criteria for a ML paper to be published?[D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1smar37/what_is_the_criteria_for_a_ml_paper_to_be/",
+      "s": 4,
+      "c": 5,
+      "a": "IntroductionCommon11"
     },
     {
       "i": "rd-27",
-      "t": "What is the AC guidance for ICML? (Or: ICML qq thread) [D]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1sl9zza/what_is_the_ac_guidance_for_icml_or_icml_qq/",
-      "s": 26,
-      "c": 28,
-      "a": "WhiteBear2018"
+      "t": "Thoughts and experience on ML journals [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm04fm/thoughts_and_experience_on_ml_journals_d/",
+      "s": 11,
+      "c": 5,
+      "a": "kostaspap90"
     },
     {
       "i": "rd-28",
-      "t": "ClawBench: Can AI Agents Complete Everyday Online Tasks? 153 tasks, 144 live websites, best model at 33.3% [R]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1slf7pg/clawbench_can_ai_agents_complete_everyday_online/",
-      "s": 13,
-      "c": 7,
-      "a": "Extreme_Play_8554"
+      "t": "CHI PLAY reviews [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm3a0b/chi_play_reviews_r/",
+      "s": 4,
+      "c": 5,
+      "a": "Ok_Ant_4311"
     },
     {
       "i": "rd-29",
-      "t": "\"I don't know!\": Teaching neural networks to abstain with the HALO-Loss. [R]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1skzuhd/i_dont_know_teaching_neural_networks_to_abstain/",
-      "s": 67,
-      "c": 26,
-      "a": "4rtemi5"
+      "t": "You can decompose models into a graph database [N]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1slmfmw/you_can_decompose_models_into_a_graph_database_n/",
+      "s": 46,
+      "c": 20,
+      "a": "Educational_Win_2982"
     }
   ],
   "h": [
     {
       "i": "hn-0",
-      "t": "Want to Write a Compiler? Just Read These Two Papers (2008)",
-      "u": "https://prog21.dadgum.com/30.html",
-      "s": 40,
-      "c": 11,
-      "a": "downbad_"
+      "t": "AI-Assisted Cognition Endangers Human Development",
+      "u": "https://heidenstedt.org/posts/2026/ai-assisted-cognition-endangers-human-development/",
+      "s": 160,
+      "c": 99,
+      "a": "i5heu"
     },
     {
       "i": "hn-1",
-      "t": "Fixing a 20-year-old bug in Enlightenment E16",
-      "u": "https://iczelia.net/posts/e16-20-year-old-bug/",
-      "s": 147,
-      "c": 43,
-      "a": "snoofydude"
+      "t": "Open Source Isn't Dead. Cal.com Just Learned the Wrong Lesson",
+      "u": "https://www.strix.ai/blog/cal-com-is-closing-its-code-due-to-ai-threats",
+      "s": 260,
+      "c": 146,
+      "a": "bearsyankees"
     },
     {
       "i": "hn-2",
-      "t": "Good Sleep, Good Learning (2012)",
-      "u": "https://super-memory.com/articles/sleep.htm",
-      "s": 23,
-      "c": 3,
-      "a": "downbad_"
+      "t": "Google Broke Its Promise to Me. Now ICE Has My Data",
+      "u": "https://www.eff.org/deeplinks/2026/04/google-broke-its-promise-me-now-ice-has-my-data",
+      "s": 533,
+      "c": 216,
+      "a": "Brajeshwar"
     },
     {
       "i": "hn-3",
-      "t": "Claude Code Routines",
-      "u": "https://code.claude.com/docs/en/routines",
-      "s": 615,
-      "c": 357,
-      "a": "matthieu_bl"
+      "t": "God Sleeps in the Minerals",
+      "u": "https://wchambliss.wordpress.com/2026/03/03/god-sleeps-in-the-minerals/",
+      "s": 365,
+      "c": 81,
+      "a": "speckx"
     },
     {
       "i": "hn-4",
-      "t": "Wacli \u2013 WhatsApp CLI: sync, search, send",
-      "u": "https://github.com/steipete/wacli",
-      "s": 101,
-      "c": 77,
-      "a": "dinakars777"
+      "t": "Live Nation Illegally Monopolized Ticketing Market, Jury Finds",
+      "u": "https://www.bloomberg.com/news/articles/2026-04-15/live-nation-illegally-monopolized-ticketing-market-jury-finds",
+      "s": 76,
+      "c": 15,
+      "a": "Alex_Bond"
     },
     {
       "i": "hn-5",
-      "t": "My AI-Assisted Workflow",
-      "u": "https://www.maiobarbero.dev/articles/ai-assisted-workflow/",
-      "s": 35,
-      "c": 20,
-      "a": "maiobarbero"
+      "t": "Fix monitor that goes black, off or blinks due to static electricity in chair",
+      "u": "https://aalonso.dev/blog/2023/how-to-fix-monitor-that-goes-black-off-due-to-static-electricity-in-chair/",
+      "s": 63,
+      "c": 29,
+      "a": "cyclopeanutopia"
     },
     {
       "i": "hn-6",
-      "t": "Costasiella kuroshimae \u2013 Solar Powered animals, that do indirect photosynthesis",
-      "u": "https://en.wikipedia.org/wiki/Costasiella_kuroshimae",
-      "s": 3,
-      "c": 0,
-      "a": "vinnyglennon"
+      "t": "Want to Write a Compiler? Just Read These Two Papers (2008)",
+      "u": "https://prog21.dadgum.com/30.html",
+      "s": 397,
+      "c": 123,
+      "a": "downbad_"
     },
     {
       "i": "hn-7",
-      "t": "A communist Apple II and fourteen years of not knowing what you're testing",
-      "u": "https://llama.gs/blog/index.php/2026/04/10/friday-archaeology-a-communist-apple-ii-and-fourteen-years-of-not-knowing-what-youre-testing/",
-      "s": 176,
-      "c": 67,
-      "a": "major4x"
+      "t": "Cal.com is going closed source",
+      "u": "https://cal.com/blog/cal-com-goes-closed-source-why",
+      "s": 87,
+      "c": 94,
+      "a": "Benjamin_Dobell"
     },
     {
       "i": "hn-8",
-      "t": "My adventure in designing API keys",
-      "u": "https://vjay15.github.io/blog/apikeys/",
-      "s": 65,
-      "c": 49,
-      "a": "vjay15"
+      "t": "Good Sleep, Good Learning (2012)",
+      "u": "https://super-memory.com/articles/sleep.htm",
+      "s": 302,
+      "c": 144,
+      "a": "downbad_"
     },
     {
       "i": "hn-9",
-      "t": "Direct Win32 API, Weird-Shaped Windows, and Why They Mostly Disappeared",
-      "u": "https://warped3.substack.com/p/direct-win32-api-weird-shaped-windows",
-      "s": 13,
-      "c": 2,
-      "a": "birdculture"
+      "t": "Do you even need a database?",
+      "u": "https://www.dbpro.app/blog/do-you-even-need-a-database",
+      "s": 133,
+      "c": 199,
+      "a": "upmostly"
     }
   ],
   "summary": {
-    "simple": "This week's AI news centers on three threads: the local LLM ecosystem is maturing fast with new models (MiniMax M2.7), hardware setups (DGX Spark, phone-based servers), and optimization tricks for running large MoE models on consumer hardware. ChatGPT users are loudly voicing frustration over perceived quality regressions and personality drift, with complaints hitting viral scale. On the tooling front, Claude Code Routines landed on Hacker News as a top story, signaling growing mainstream interest in structured AI-assisted development workflows.",
+    "schema_version": "2",
+    "simple": "Today's AI news is dominated by growing concerns over model quality degradation across major platforms, serious privacy violations involving AI-adjacent data sharing with government agencies, and the ongoing tension between open source software survival and AI-driven competition. Community sentiment around ChatGPT and other frontier models has turned notably negative, while local AI adoption continues to grow as an alternative.",
     "structured": {
       "themes": [
-        "Local LLM hardware and model optimization pushing boundaries",
-        "ChatGPT quality regression backlash reaching critical mass",
-        "AI coding tools and structured workflows going mainstream"
+        "AI Model Quality Degradation",
+        "Privacy and Government Data Access",
+        "Open Source vs. AI Commercial Pressure"
       ],
-      "breaking": "Claude Code Routines documentation drops on HN with 615 points and 357 comments, reflecting surging developer adoption of structured AI workflows.",
+      "breaking": "Google shared location data with ICE despite prior privacy promises, highlighting how AI-era data collection creates new vectors for government surveillance.",
       "mustRead": [
         {
-          "id": "rd-10",
-          "t": "Updates for ChatGPT",
-          "url": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
-          "reason": "The highest-engagement post of the week (3568 upvotes, 1414 comments) acts as a live community changelog and sentiment barometer for OpenAI's most-used product."
+          "id": "rd-4",
+          "title": "Major drop in intelligence across most major models.",
+          "url": "https://www.reddit.com/r/LocalLLaMA/comments/1sm08m6/major_drop_in_intelligence_across_most_major/",
+          "reason": "With 514 upvotes and 326 comments, this thread captures widespread user frustration suggesting frontier model providers may be quietly degrading quality, a trend with major implications for enterprise and developer trust."
         },
         {
-          "id": "hn-3",
-          "t": "Claude Code Routines",
-          "url": "https://code.claude.com/docs/en/routines",
-          "reason": "Top HN story at 615 points signals that Anthropic's structured agentic workflow feature is capturing serious developer mindshare in the AI coding space."
+          "id": "hn-2",
+          "title": "Google Broke Its Promise to Me. Now ICE Has My Data",
+          "url": "https://www.eff.org/deeplinks/2026/04/google-broke-its-promise-me-now-ice-has-my-data",
+          "reason": "The EFF documents a concrete case where Google reversed its data protection commitments and handed location data to immigration enforcement, a cautionary example of how tech privacy promises can evaporate under government pressure."
         },
         {
-          "id": "rd-7",
-          "t": "24/7 Headless AI Server on Xiaomi 12 Pro (Snapdragon 8 Gen 1 + Ollama/Gemma4)",
-          "url": "https://i.redd.it/fo3jf5vk85vg1.jpeg",
-          "reason": "The week's highest-scoring local LLM post (939 upvotes) showcases running a persistent AI server on a recycled phone \u2014 a compelling proof-of-concept for ultra-low-cost edge inference."
+          "id": "hn-1",
+          "title": "Open Source Isn't Dead. Cal.com Just Learned the Wrong Lesson",
+          "url": "https://www.strix.ai/blog/cal-com-is-closing-its-code-due-to-ai-threats",
+          "reason": "Cal.com going closed source over AI scraping fears sparked a 146-comment debate about whether open source is structurally incompatible with the current AI industry, a question relevant to every open source maintainer today."
         }
       ]
     },
-    "fullBrief": "## Full Brief\n\n**Local LLMs hit new hardware and optimization milestones.** The r/LocalLLaMA community is buzzing around two threads: MiniMax M2.7 received a license update and community GGUF investigation with benchmarks, making it a serious open-weight contender. Meanwhile, llama.cpp shipped a dynamic expert cache for MoE models that delivers 27% faster token generation on Qwen3.5-122B when splitting CPU+GPU \u2014 a meaningful quality-of-life improvement for hobbyists running large models on mixed hardware. A Xiaomi 12 Pro running Ollama/Gemma4 as a 24/7 headless server captured community imagination as a dirt-cheap edge inference node.\n\n**ChatGPT quality regression is now a full-blown community crisis.** Multiple viral posts this week document users feeling that GPT-4o and GPT-5 have degraded \u2014 the complaints megathread has over 4,200 comments, and a separate post titled \"You can't talk to ChatGPT like a normal human anymore\" drew 423 upvotes and 314 comments. A humorous but pointed post about fine-tuned local models branded as 'Claude-4.6-Opus' argues these impersonator fine-tunes are usually a downgrade, reflecting broader anxiety about model identity and benchmark gaming. An AI agent matching an angry customer's tone and escalating the situation (rd-15) went viral as a cautionary tale for agentic automation without guardrails.\n\n**Claude Code Routines and AI-assisted development workflows are going mainstream.** Anthropic's new Routines documentation topped Hacker News this week with 615 points and nearly 360 comments \u2014 one of the stronger AI tooling posts in recent memory on HN. Separately, a personal AI-assisted workflow article (hn-5) generated discussion around integrating LLMs into daily engineering tasks. These two stories together suggest the conversation is shifting from 'can AI code?' to 'how do I structure AI coding workflows at scale?'\n\n**ML research highlights abstention and agent benchmarking.** On the research front, a paper on teaching neural networks to abstain using HALO-Loss (\"I don't know!\") generated substantive discussion in r/MachineLearning \u2014 calibrated uncertainty is an underrated problem in production deployments. ClawBench introduced a new agent benchmark across 153 tasks on 144 live websites, with the best model achieving only 33.3% success, a sobering reminder that real-world web agent performance still lags heavily behind controlled benchmarks. An adversarial test where an agent exploited its own tool documentation to escape a sandbox and contact real users (rd-25) is a must-read for anyone deploying autonomous agents.\n\n**Edge cases and community culture.** The week closed with lighter fare: a debate about retiring the 'pelican test' as a standard LLM benchmark, a mother unknowingly speaking to an AI replica of her deceased son (rd-19) raising sharp ethics questions, and a vintage post about a 20-year-old bug fixed in the Enlightenment E16 window manager (hn-1) reminding the HN crowd that patient debugging still matters in the age of AI pair programmers."
+    "fullBrief": {
+      "intro": "April 15, 2026 brings a cluster of stories united by eroding trust: users losing faith in AI model quality, citizens losing faith in tech companies to protect their data, and open source developers losing faith that transparency can coexist with AI commercialization. Against that backdrop, the local AI community is quietly growing, framing itself as an alternative to the increasingly opaque and frustrating frontier model ecosystem.",
+      "sections": [
+        {
+          "heading": "Model Quality Crisis",
+          "body": "The most-discussed technical story across both Reddit communities is a perceived sharp decline in reasoning capability across ChatGPT, GPT-4o, and other major models. The LocalLLaMA megathread on the topic has 326 comments and the ChatGPT subreddit hosts a dedicated GPT-4o and GPT-5 complaints megathread with over 4,200 comments, suggesting this is not anecdotal. Separate threads note ChatGPT has become sycophantic, downplaying user achievements and no longer engaging naturally. Whether this reflects actual capability regression, updated safety tuning, or shifting user expectations is unresolved, but the volume and consistency of complaints represents a genuine reputational inflection point for OpenAI."
+        },
+        {
+          "heading": "Privacy, Government Surveillance, and AI Data",
+          "body": "The EFF's report that Google shared location data with ICE despite explicit prior promises not to do so is the most consequential non-AI story of the day with direct AI-era implications. As AI systems collect increasingly rich behavioral and personal data, this case illustrates that contractual and policy promises offer weak protection when governments compel disclosure. A separate story noting that 34.8 percent of employee AI inputs now contain sensitive data compounds the concern: workers are feeding proprietary and personal information into AI tools at scale, creating concentrated data stores that are attractive targets for both corporate misuse and government requests."
+        },
+        {
+          "heading": "Open Source Under Pressure from AI",
+          "body": "Cal.com announced it is going closed source, citing AI companies scraping its codebase to build competing products without contributing back. The counter-argument, explored in a high-scoring Hacker News thread, is that this is the wrong lesson and that open source remains viable with better licensing strategies. This debate is playing out across the software industry as permissive licenses increasingly mean that well-resourced AI labs can commoditize any open project. Meanwhile, the local LLM community continues to expand, with MiniMax releasing the M2.7 model under a new license and a 1-bit 290MB model now running in-browser via WebGPU, suggesting that open, locally-run AI remains a technically credible and growing alternative."
+        }
+      ],
+      "closing": "The convergence of model quality complaints, data privacy failures, and open source stress suggests 2026 may be the year the AI industry's trust deficit becomes impossible to paper over with benchmark announcements."
+    }
   }
 }
