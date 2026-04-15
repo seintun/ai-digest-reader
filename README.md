@@ -58,8 +58,16 @@ Two files are generated per run:
 ```
 output/
 └── 2026-04-15/
-    ├── digest-2026-04-15-090000.md    ← Human-readable digest
-    └── digest-2026-04-15-090000.json  ← Structured data (for web reader)
+    ├── digest-2026-04-15-090000.md   ← Human-readable digest
+    └── digest.json                   ← Structured data (for web reader)
+```
+
+### Deploy to frontend
+
+After generating, copy the JSON to the web reader:
+
+```bash
+cp output/$(date +%Y-%m-%d)/digest.json ai-digest-reader/public/data/digest.json
 ```
 
 ### JSON Output (digest.json)
