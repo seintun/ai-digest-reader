@@ -2,11 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Controls from '../components/Controls.astro';
-import type { Story, DigestSummary as DigestSummaryType, ViewMode, Source } from '../types';
-
-interface Props {}
-
-const { } = Astro.props;
 ---
 
 <Base title="AI Digest - Your Daily AI News">
@@ -142,14 +137,6 @@ const { } = Astro.props;
     });
   }
 
-  function getDomain(url: string): string {
-    try {
-      return new URL(url).hostname.replace('www.', '');
-    } catch {
-      return 'link';
-    }
-  }
-
   function getDiscussionUrl(story: Story): string {
     const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
     if (story.p) return story.p;
@@ -178,29 +165,44 @@ const { } = Astro.props;
 
     const { filteredStories, viewMode } = state;
 
-    elements.storiesCards.innerHTML = filteredStories.length > 0
-      ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">${
-          filteredStories.map((story, index) => renderStoryCard(story, index)).join('')
-        }</div>`
-      : '';
-
-    elements.storiesList.innerHTML = filteredStories.length > 0
-      ? renderStoryList(filteredStories)
-      : '';
-
-    elements.storiesGlance.innerHTML = filteredStories.length > 0
-      ? renderStoryGlance(filteredStories)
-      : '';
-
     [elements.storiesCards, elements.storiesList, elements.storiesGlance].forEach(el => {
       el?.classList.add('hidden');
     });
 
-    if (viewMode === 'cards') {
+    if (viewMode === 'cards' && elements.storiesCards) {
+      elements.storiesCards.innerHTML = filteredStories.length > 0
+        ? `<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">${
+            filteredStories.map((story, index) => renderStoryCard(story, index)).join('')
+          }</div>`
+        : '';
+      if (elements.storiesList) {
+        elements.storiesList.innerHTML = '';
+      }
+      if (elements.storiesGlance) {
+        elements.storiesGlance.innerHTML = '';
+      }
       elements.storiesCards?.classList.remove('hidden');
-    } else if (viewMode === 'list') {
+    } else if (viewMode === 'list' && elements.storiesList) {
+      elements.storiesList.innerHTML = filteredStories.length > 0
+        ? renderStoryList(filteredStories)
+        : '';
+      if (elements.storiesCards) {
+        elements.storiesCards.innerHTML = '';
+      }
+      if (elements.storiesGlance) {
+        elements.storiesGlance.innerHTML = '';
+      }
       elements.storiesList?.classList.remove('hidden');
-    } else {
+    } else if (elements.storiesGlance) {
+      elements.storiesGlance.innerHTML = filteredStories.length > 0
+        ? renderStoryGlance(filteredStories)
+        : '';
+      if (elements.storiesCards) {
+        elements.storiesCards.innerHTML = '';
+      }
+      if (elements.storiesList) {
+        elements.storiesList.innerHTML = '';
+      }
       elements.storiesGlance?.classList.remove('hidden');
     }
 
