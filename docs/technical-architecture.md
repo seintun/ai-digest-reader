@@ -6,6 +6,33 @@
 2. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend.
 3. Frontend state merges Reddit and HN stories and applies ranked ordering for the `all` source view.
 
+## Security and Validation Hardening
+
+- Frontend story rendering now escapes all untrusted text fields (`title`, `body`, `author`) before DOM insertion.
+- External links use protocol allowlisting (`http`/`https`) to block scriptable URL schemes.
+- `schema.validate_summary()` uses explicit conditional validation instead of `assert` checks, so behavior is stable even under optimized Python execution.
+- Summary validation enforces `fullBrief.sections` bounds of `2-4` sections to align with the contract.
+
+## Runtime and Efficiency Improvements
+
+- Frontend renders only the active view (`cards`, `list`, `glance`) per update, instead of rendering all three and hiding two.
+- Controls initialization is guarded to prevent duplicate event listener registration.
+- Hacker News fetcher now loads item payloads with bounded parallelism (`ThreadPoolExecutor`) to reduce end-to-end latency.
+- Reddit fetcher consolidates payload extraction/normalization in dedicated helpers to reduce duplicate logic and maintenance overhead.
+- Markdown formatter emits correct HN links (`[link](url)`) instead of malformed score-based links.
+
+## Codebase Simplification
+
+- Removed unused frontend modules that were not referenced by runtime code:
+  - `ai-digest-reader/src/lib/state.ts`
+  - `ai-digest-reader/src/lib/digest.ts`
+  - `ai-digest-reader/src/components/StoryCard.astro`
+  - `ai-digest-reader/src/components/StoryList.astro`
+  - `ai-digest-reader/src/components/StoryGlance.astro`
+  - `ai-digest-reader/src/components/ViewSwitcher.astro`
+  - `ai-digest-reader/src/components/SourceFilter.astro`
+- Removed stale unused interfaces from `ai-digest-reader/src/types.ts`.
+
 ## Story Schema (v2)
 
 Each story uses compact keys:

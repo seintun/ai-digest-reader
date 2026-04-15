@@ -49,3 +49,33 @@
 - Frontend audit: `ses_26cd8cb51ffecrF0INxJ58xu0w`
 - Pipeline audit: `ses_26cd73814ffeE6C4RDUIZUW7TJ`
 - Security devil's advocate: `ses_26cd63c12ffe2FVzSyJ1MpndOr`
+
+## Applied Changes and Deltas
+
+### Verification Matrix (post-refactor)
+
+- Python tests: `.venv/bin/python -m pytest` -> `79 passed`
+- Frontend checks: `npm run check` -> pass (`0 errors`, `0 warnings`, `0 hints`)
+- Frontend build: `npm run build` -> pass (static build completed)
+
+### Runtime and Build Deltas
+
+- Python test runtime baseline -> latest: `2.71s` -> `~1.39-1.93s` across post-change runs.
+- Frontend build baseline -> latest: `~505ms` -> `~492-521ms` (within noise range).
+- Main client artifact baseline -> latest: `34.01 kB (gzip 7.32 kB)` -> `34.67 kB (gzip 7.51 kB)`.
+
+### Security Delta
+
+- Closed: untrusted story text now escaped before insertion.
+- Closed: external links are protocol-allowlisted (`http`/`https`).
+- Closed: schema validation no longer relies on `assert` semantics.
+
+### Efficiency/Compactness Delta
+
+- Frontend now renders only active view per state update (cards/list/glance).
+- Removed duplicate/unused frontend modules and stale types:
+  - deleted 7 unused source files (`components` + `lib`)
+  - removed unused interfaces in `src/types.ts`
+- HN fetcher uses bounded parallel fetches for item requests.
+- Reddit fetch normalization consolidated into helper functions.
+- HN markdown output link formatting corrected.
