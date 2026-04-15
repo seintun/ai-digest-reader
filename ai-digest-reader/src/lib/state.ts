@@ -1,4 +1,5 @@
 import type { Story, ViewMode, Source } from '../types';
+import { rankStories } from './ranking';
 
 interface AppState {
   viewMode: ViewMode;
@@ -87,7 +88,7 @@ export function getFilteredStories(): Story[] {
   const { source, stories } = state;
   
   if (source === 'all') {
-    return stories;
+    return rankStories(stories);
   }
   
   return stories.filter((story) => {

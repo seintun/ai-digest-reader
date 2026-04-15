@@ -165,5 +165,16 @@ def _parse_claude_response(response: str) -> Optional[Dict[str, Any]]:
     try:
         return json.loads(text)
     except json.JSONDecodeError as e:
+        decoder = json.JSONDecoder()
+        start = text.find("{")
+        while start != -1:
+            try:
+                parsed, _ = decoder.raw_decode(text[start:])
+                if isinstance(parsed, dict):
+                    return parsed
+            except json.JSONDecodeError:
+                pass
+            start = text.find("{", start + 1)
+
         print(f"Warning: Failed to parse Claude JSON: {e}")
         return None

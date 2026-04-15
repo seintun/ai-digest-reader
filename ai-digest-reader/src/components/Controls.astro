@@ -2,7 +2,7 @@
 const sources = [
   { id: 'all', label: 'All' },
   { id: 'reddit', label: 'Reddit' },
-  { id: 'hn', label: 'HN' },
+  { id: 'hn', label: 'HackerNews' },
 ];
 ---
 
@@ -40,9 +40,12 @@ const sources = [
       <button
         data-source={source.id}
         data-active={source.id === 'all' ? 'true' : 'false'}
-        class="source-btn px-3 py-1.5 rounded-md font-medium transition-all duration-150 whitespace-nowrap flex-shrink-0
-          data-[active=true]:bg-primary-500 data-[active=true]:text-white
-          {source.id === 'all' ? 'bg-primary-500 text-white' : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'}"
+        class:list={[
+          'source-btn px-3 py-1.5 rounded-md font-medium transition-all duration-150 whitespace-nowrap flex-shrink-0',
+          source.id === 'all'
+            ? 'bg-primary-500 text-white'
+            : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30',
+        ]}
       >
         {source.label} <span class="source-badge text-[10px] opacity-70">(<span class="count">-</span>)</span>
       </button>
@@ -56,12 +59,32 @@ const sources = [
 </style>
 
 <script>
+  const SOURCE_ACTIVE_CLASSES = ['bg-primary-500', 'text-white'];
+  const SOURCE_INACTIVE_CLASSES = ['bg-white/50', 'dark:bg-slate-700/50', 'text-slate-600', 'dark:text-slate-400'];
+
   function initFilters() {
+    document.querySelectorAll('.source-btn').forEach((btn) => {
+      const isActive = btn.getAttribute('data-active') === 'true';
+      btn.classList.remove(...SOURCE_ACTIVE_CLASSES, ...SOURCE_INACTIVE_CLASSES);
+      if (isActive) {
+        btn.classList.add(...SOURCE_ACTIVE_CLASSES);
+      } else {
+        btn.classList.add(...SOURCE_INACTIVE_CLASSES);
+      }
+    });
+
     document.querySelectorAll('[data-source]').forEach((btn) => {
       btn.addEventListener('click', () => {
         const source = btn.getAttribute('data-source');
-        document.querySelectorAll('.source-btn').forEach((b) => b.removeAttribute('data-active'));
+        document.querySelectorAll('.source-btn').forEach((b) => {
+          b.setAttribute('data-active', 'false');
+          b.classList.remove(...SOURCE_ACTIVE_CLASSES);
+          b.classList.add(...SOURCE_INACTIVE_CLASSES);
+        });
+
         btn.setAttribute('data-active', 'true');
+        btn.classList.add(...SOURCE_ACTIVE_CLASSES);
+        btn.classList.remove(...SOURCE_INACTIVE_CLASSES);
         btn.dispatchEvent(new CustomEvent('sourcechange', { detail: { source }, bubbles: true }));
       });
     });

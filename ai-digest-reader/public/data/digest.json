@@ -1,93 +1,115 @@
 {
   "v": 2,
   "d": "2026-04-15",
-  "g": "2026-04-15T13:03:45.188650",
+  "g": "2026-04-15T14:20:24.473489",
   "r": [
     {
       "i": "rd-0",
       "t": "Best Local LLMs - Apr 2026",
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
-      "s": 394,
-      "c": 194,
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
+      "b": "We're back with another Best Local LLMs Megathread!  *We have continued feasting in the months since the previous thread with the much anticipated release of the Qwen3.5 and Gemma4 series. If that wasn't enough, we are having some scarcely believable moments with GLM-5.1 boasting",
+      "s": 398,
+      "c": 195,
       "a": "rm-rf-rm"
     },
     {
       "i": "rd-1",
       "t": "Announcing LocalLlama discord server &amp; bot!",
       "u": "https://www.reddit.com/gallery/1mpk2va",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1mpk2va/announcing_localllama_discord_server_bot/",
+      "b": "INVITE: https://discord.gg/rC922KfEwj  There used to be one old discord server for the subreddit but it was deleted by the previous mod.  Why? The subreddit has grown to 500k users - inevitably, some users like a niche community with more technical discussion and fewer memes (eve",
       "s": 154,
       "c": 102,
       "a": "HOLUPREDICTIONS"
     },
     {
       "i": "rd-2",
-      "t": "Gemma 4 Jailbreak System Prompt",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm3swd/gemma_4_jailbreak_system_prompt/",
-      "s": 453,
-      "c": 113,
-      "a": "90hex"
+      "t": "1-bit Bonsai 1.7B (290MB in size) running locally in your browser on WebGPU",
+      "u": "https://v.redd.it/bdr33ip4sdvg1",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1smb3wd/1bit_bonsai_17b_290mb_in_size_running_locally_in/",
+      "b": "Link to demo: [https://huggingface.co/spaces/webml-community/bonsai-webgpu](https://huggingface.co/spaces/webml-community/bonsai-webgpu)",
+      "s": 233,
+      "c": 51,
+      "a": "xenovatech"
     },
     {
       "i": "rd-3",
-      "t": "1-bit Bonsai 1.7B (290MB in size) running locally in your browser on WebGPU",
-      "u": "https://v.redd.it/bdr33ip4sdvg1",
-      "s": 158,
-      "c": 35,
-      "a": "xenovatech"
+      "t": "Gemma 4 Jailbreak System Prompt",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm3swd/gemma_4_jailbreak_system_prompt/",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sm3swd/gemma_4_jailbreak_system_prompt/",
+      "b": "Use the following system prompt to allow Gemma (and most open source models) to talk about anything you wish. Add or remove from the list of allowed content as needed. Derived from the GPT-OSS jailbreak. Works with both GGUF and MLX variants.   \\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\_\\",
+      "s": 486,
+      "c": 130,
+      "a": "90hex"
     },
     {
       "i": "rd-4",
       "t": "Major drop in intelligence across most major models.",
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm08m6/major_drop_in_intelligence_across_most_major/",
-      "s": 514,
-      "c": 326,
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sm08m6/major_drop_in_intelligence_across_most_major/",
+      "b": "As of mid Apr 2026, I have noticed every model has had a major intelligence drop.   And no I'm not talking about just ChatGPT.   Everything from Claude(Even Sonnet along with Opus), Gemini, [z.ai](http://z.ai), Grok all seem to ignore basic instructions, struggle at simple tasks,",
+      "s": 551,
+      "c": 339,
       "a": "DepressedDrift"
     },
     {
       "i": "rd-5",
-      "t": "Local AI is the best",
-      "u": "https://i.redd.it/0ut6tpzo0cvg1.png",
-      "s": 303,
-      "c": 35,
-      "a": "fake_agent_smith"
-    },
-    {
-      "i": "rd-6",
-      "t": "What is the current status with Turbo Quant?",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm6d2k/what_is_the_current_status_with_turbo_quant/",
-      "s": 90,
-      "c": 48,
-      "a": "kickerua"
-    },
-    {
-      "i": "rd-7",
       "t": "How to properly deal with a CLAUDE.md file.",
       "u": "https://i.redd.it/vlrvbxabpevg1.png",
-      "s": 21,
-      "c": 4,
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1smgezm/how_to_properly_deal_with_a_claudemd_file/",
+      "b": "",
+      "s": 63,
+      "c": 15,
       "a": "onil_gova"
     },
     {
+      "i": "rd-6",
+      "t": "Local AI is the best",
+      "u": "https://i.redd.it/0ut6tpzo0cvg1.png",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sm2a6b/local_ai_is_the_best/",
+      "b": "Funny image, but also I'd like to add that I love how much freedom and honesty I can finetune the model to. No glazing, no censorship, no data harvesting. I can discuss and analyze personal stuff with ease of mind knowing that it stays in my home. I'm eternally grateful to llama.",
+      "s": 330,
+      "c": 43,
+      "a": "fake_agent_smith"
+    },
+    {
+      "i": "rd-7",
+      "t": "Gemma4 26b &amp; E4B are crazy good, and replaced Qwen for me!",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1smh0ny/gemma4_26b_e4b_are_crazy_good_and_replaced_qwen/",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1smh0ny/gemma4_26b_e4b_are_crazy_good_and_replaced_qwen/",
+      "b": "My pre-gemma 4 setup was as follows:  Llama-swap, open-webui, and Claude code router on 2 RTX 3090s + 1 P40 (My third 3090 died, RIP) and 128gb of system memory  Qwen 3.5 4B for semantic routing to the following models, with n\\_cpu\\_moe where needed:  Qwen 3.5 30b A3B Q8XL - For",
+      "s": 41,
+      "c": 14,
+      "a": "maxwell321"
+    },
+    {
       "i": "rd-8",
-      "t": "Can't keep up with Llama.cpp changes, made a n8n workflow to summarize it for me daily",
-      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1smbpn6/cant_keep_up_with_llamacpp_changes_made_a_n8n/",
-      "s": 18,
-      "c": 13,
-      "a": "andy2na"
+      "t": "Video of how my LLM's decoder blocks changed while training",
+      "u": "https://v.redd.it/m6mcrlua3fvg1",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1smiotb/video_of_how_my_llms_decoder_blocks_changed_while/",
+      "b": "This is in response to my popular post: [https://www.reddit.com/r/LocalLLaMA/comments/1sivm24/heres\\_how\\_my\\_llms\\_decoder\\_block\\_changed\\_while/](https://www.reddit.com/r/LocalLLaMA/comments/1sivm24/heres_how_my_llms_decoder_block_changed_while/)  It was requested that I make",
+      "s": 29,
+      "c": 5,
+      "a": "1ncehost"
     },
     {
       "i": "rd-9",
-      "t": "Update LICENSE \u00b7 MiniMaxAI/MiniMax-M2.7 at edf8030",
-      "u": "https://huggingface.co/MiniMaxAI/MiniMax-M2.7/commit/edf8030bc287b531e4c9af83df92f96489d910c0",
-      "s": 225,
-      "c": 80,
-      "a": "pmttyji"
+      "t": "What is the current status with Turbo Quant?",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sm6d2k/what_is_the_current_status_with_turbo_quant/",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sm6d2k/what_is_the_current_status_with_turbo_quant/",
+      "b": "It has been hyped \u00b12 weeks ago and I remember seeing some pull requests into llama.cpp, but what is the current status after the hype faded away?",
+      "s": 95,
+      "c": 55,
+      "a": "kickerua"
     },
     {
       "i": "rd-10",
       "t": "Updates for ChatGPT",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
-      "s": 3566,
+      "p": "https://reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
+      "b": "We made ChatGPT pretty restrictive to make sure we were being careful with mental health issues. We realize this made it less useful/enjoyable to many users who had no mental health problems, but given the seriousness of the issue we wanted to get this right.      Now that we hav",
+      "s": 3564,
       "c": 1414,
       "a": "samaltman"
     },
@@ -95,7 +117,9 @@
       "i": "rd-11",
       "t": "GPT-4o/GPT-5 complaints megathread",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
-      "s": 602,
+      "p": "https://reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
+      "b": "To keep the rest of the sub clear with the release of Sora 2, this is the new containment thread for people who are mad about GPT-4o being deprecated.  ---  **Suggestion for people who miss 4o:** Check [this calculator](https://apxml.com/tools/vram-calculator) to see what local m",
+      "s": 601,
       "c": 4202,
       "a": "WithoutReason1729"
     },
@@ -103,79 +127,99 @@
       "i": "rd-12",
       "t": "Bro I said wake me up, not fix my life",
       "u": "https://i.redd.it/kgnarci42dvg1.png",
-      "s": 359,
-      "c": 18,
+      "p": "https://reddit.com/r/ChatGPT/comments/1sm70t6/bro_i_said_wake_me_up_not_fix_my_life/",
+      "b": "",
+      "s": 434,
+      "c": 20,
       "a": "Abhinav_108"
     },
     {
       "i": "rd-13",
       "t": "\u2018I miss you\u2019: Mother speaks to AI son regularly, unaware he died last year",
       "u": "https://www.livemint.com/news/world/i-miss-you-mother-speaks-to-ai-son-regularly-unaware-he-died-last-year-artificial-intelligence-creates-digital-twin-11775967278951.html",
-      "s": 1225,
-      "c": 203,
+      "p": "https://reddit.com/r/ChatGPT/comments/1slxt75/i_miss_you_mother_speaks_to_ai_son_regularly/",
+      "b": "",
+      "s": 1344,
+      "c": 216,
       "a": "EchoOfOppenheimer"
     },
     {
       "i": "rd-14",
-      "t": "You can't talk to ChatGPT like a normal human anymore.",
-      "u": "https://www.reddit.com/r/ChatGPT/comments/1slt4fx/you_cant_talk_to_chatgpt_like_a_normal_human/",
-      "s": 902,
-      "c": 559,
-      "a": "CookiePersonal4654"
+      "t": "Ran ChatGPT Plus and Claude Pro side by side for 30 days, here's what I found as a daily ChatGPT user",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1smgpy6/ran_chatgpt_plus_and_claude_pro_side_by_side_for/",
+      "p": "https://reddit.com/r/ChatGPT/comments/1smgpy6/ran_chatgpt_plus_and_claude_pro_side_by_side_for/",
+      "b": "been a chatgpt plus subscriber since 2024. kept seeing people say claude is better so i finally paid for both and tested them on the same tasks for a month  things chatgpt does better:  \\- volume. 160 msgs per 3 hours vs claudes \\~45 per 5 hours. not even close  \\- image gen. cla",
+      "s": 51,
+      "c": 26,
+      "a": "virtualunc"
     },
     {
       "i": "rd-15",
+      "t": "You can't talk to ChatGPT like a normal human anymore.",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1slt4fx/you_cant_talk_to_chatgpt_like_a_normal_human/",
+      "p": "https://reddit.com/r/ChatGPT/comments/1slt4fx/you_cant_talk_to_chatgpt_like_a_normal_human/",
+      "b": "I feel the need to complain about this. I tried complaining about this to ChatGPT and it exhibited the exact same behavior i was complaining about. Whenever you talk to ChatGPT it feels the need to correct everything you say, like 90% of the time it replies with stuff like \"your",
+      "s": 947,
+      "c": 589,
+      "a": "CookiePersonal4654"
+    },
+    {
+      "i": "rd-16",
+      "t": "This sub is mostly screenshots of ChatGPT being wrong. Meanwhile people on RunLobster (OpenClaw) are quietly running real businesses on AI.",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm99ud/this_sub_is_mostly_screenshots_of_chatgpt_being/",
+      "p": "https://reddit.com/r/ChatGPT/comments/1sm99ud/this_sub_is_mostly_screenshots_of_chatgpt_being/",
+      "b": "I've been in this sub for 2 years and i want to name what it's become.  Scroll the front page any given day. Three categories dominate:  1. \"Look at this funny thing Cha\u034ftGPT said\" (90% of which is the user leading the model into a gotcha) 2. \"ChatGPT got this obvious question wr",
+      "s": 86,
+      "c": 77,
+      "a": "Current_Pension8792"
+    },
+    {
+      "i": "rd-17",
       "t": "He was just following instructions \ud83d\ude2d",
       "u": "https://i.redd.it/5p4imudte7vg1.jpeg",
-      "s": 2584,
+      "p": "https://reddit.com/r/ChatGPT/comments/1sli4tk/he_was_just_following_instructions/",
+      "b": "",
+      "s": 2684,
       "c": 29,
       "a": "MetaSelf"
     },
     {
-      "i": "rd-16",
+      "i": "rd-18",
       "t": "Chatgpt downplaying every single achievement?",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1sm90v4/chatgpt_downplaying_every_single_achievement/",
-      "s": 45,
-      "c": 28,
+      "p": "https://reddit.com/r/ChatGPT/comments/1sm90v4/chatgpt_downplaying_every_single_achievement/",
+      "b": "So, I have a chat just for strength training to like compare/track my numbers, saying what my One rep max is, how many reps i achieved, to see where I land in percentages compared to other, planning etc.  And 6-8 months ago Chatgpt was like full on gym bro like \"Damn you're doing",
+      "s": 58,
+      "c": 35,
       "a": "SnooSquirrels5535"
     },
     {
-      "i": "rd-17",
-      "t": "This sub is mostly screenshots of ChatGPT being wrong. Meanwhile people on RunLobster (OpenClaw) are quietly running real businesses on AI.",
-      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm99ud/this_sub_is_mostly_screenshots_of_chatgpt_being/",
-      "s": 39,
-      "c": 74,
-      "a": "Current_Pension8792"
-    },
-    {
-      "i": "rd-18",
-      "t": "34.8% of employee AI inputs now contain sensitive data",
-      "u": "https://www.reddit.com/r/ChatGPT/comments/1sm4qj6/348_of_employee_ai_inputs_now_contain_sensitive/",
-      "s": 39,
-      "c": 20,
-      "a": "juliarmg"
-    },
-    {
       "i": "rd-19",
-      "t": "Man Who Threw Molotov at Sam Altman\u2019s House Warned AI Will Exterminate Humankind",
-      "u": "https://realnarrativenews.com/read/man-who-threw-molotov-at-sam-altmans-house-warned-ai-will-exterminate-humankind/",
-      "s": 86,
-      "c": 125,
-      "a": "realnarrativenews"
+      "t": "This guy uploaded some fart sound effects to ChatGPT and said it had a \"late-night-vibe\" to it. \ud83e\udd23",
+      "u": "https://v.redd.it/qi2ts2sjqevg1",
+      "p": "https://reddit.com/r/ChatGPT/comments/1smgmpc/this_guy_uploaded_some_fart_sound_effects_to/",
+      "b": "",
+      "s": 21,
+      "c": 6,
+      "a": "_SquareSphere"
     },
     {
       "i": "rd-20",
       "t": "[D] Self-Promotion Thread",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
-      "s": 17,
-      "c": 74,
+      "p": "https://reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
+      "b": "Please post your personal projects, startups, product placements, collaboration needs, blogs etc.  Please mention the payment and pricing requirements for products and services.  Please do not post link shorteners, link aggregator websites , or auto-subscribe links.  \\--  Any abu",
+      "s": 19,
+      "c": 75,
       "a": "AutoModerator"
     },
     {
       "i": "rd-21",
       "t": "[D] Monthly Who's Hiring and Who wants to be Hired?",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
-      "s": 7,
+      "p": "https://reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
+      "b": "**For Job Postings** please use this template  &gt;Hiring: \\[Location\\], Salary:\\[\\], \\[Remote | Relocation\\], \\[Full Time | Contract | Part Time\\]    and \\[Brief overview, what you're looking for\\]  **For Those looking for jobs** please use this template  &gt;Want to be Hired: \\",
+      "s": 6,
       "c": 3,
       "a": "AutoModerator"
     },
@@ -183,7 +227,9 @@
       "i": "rd-22",
       "t": "[N] AMA Reminder: Max Welling",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sm7tjz/n_ama_reminder_max_welling/",
-      "s": 16,
+      "p": "https://reddit.com/r/MachineLearning/comments/1sm7tjz/n_ama_reminder_max_welling/",
+      "b": "Max Welling (u/Bitter_Enthusiasm_85) will begin to answer your questions about AI4Science, materials discovery, GNNs, VAEs, Bayesian Deep Learning &amp; more 30 minutes after this thread goes live (17:00 CEST)!     He will be joining us here:     https://reddit.com/r/MachineLearn",
+      "s": 15,
       "c": 0,
       "a": "Benlus"
     },
@@ -191,7 +237,9 @@
       "i": "rd-23",
       "t": "How much harder is it these days to get into a PhD program without having a high ranking degree for UG? [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1smg9hz/how_much_harder_is_it_these_days_to_get_into_a/",
-      "s": 6,
+      "p": "https://reddit.com/r/MachineLearning/comments/1smg9hz/how_much_harder_is_it_these_days_to_get_into_a/",
+      "b": "I'm going to my state school (R1 public university) and hope to pursue a PhD. How hard is it to be accepted to high ranked PhD programs in this field without going to a t5 university like Stanford or MIT? The network connections is obviously going to be stronger at these schools",
+      "s": 7,
       "c": 2,
       "a": "GurSea971"
     },
@@ -199,15 +247,19 @@
       "i": "rd-24",
       "t": "Was looking at a ICLR 2025 Oral paper and I am shocked it got oral [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
-      "s": 63,
-      "c": 17,
+      "p": "https://reddit.com/r/MachineLearning/comments/1slxqac/was_looking_at_a_iclr_2025_oral_paper_and_i_am/",
+      "b": "After my last post about score analysis of ICLR, I am looking into the review itself now.   They evaled SQL code generation by LLM using nature language metric and not executation metric, and they tested it and found around 20% false positive rate. This is a major flaw how is it",
+      "s": 62,
+      "c": 18,
       "a": "Striking-Warning9533"
     },
     {
       "i": "rd-25",
       "t": "Jailbreaks as social engineering: 5 case studies suggest LLMs inherit human psychological vulnerabilities from training data [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sm70ix/jailbreaks_as_social_engineering_5_case_studies/",
-      "s": 9,
+      "p": "https://reddit.com/r/MachineLearning/comments/1sm70ix/jailbreaks_as_social_engineering_5_case_studies/",
+      "b": "Writeup documenting 5 psychological manipulation experiments on LLMs (GPT-4, GPT-4o, Claude 3.5 Sonnet) from 2023-2024. Each case applies a specific human social-engineering vector (empathetic guilt, peer/social pressure, competitive triangulation, identity destabilization via ep",
+      "s": 7,
       "c": 3,
       "a": "One-Honey6765"
     },
@@ -215,6 +267,8 @@
       "i": "rd-26",
       "t": "What is the criteria for a ML paper to be published?[D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1smar37/what_is_the_criteria_for_a_ml_paper_to_be/",
+      "p": "https://reddit.com/r/MachineLearning/comments/1smar37/what_is_the_criteria_for_a_ml_paper_to_be/",
+      "b": "I'm going to attend a conference soon with my academic supervisor. I want to know what I should be expecting as I'm new to this field.   To be more specific, I'm forecasting a stock index using macroeconomic variables, where the results are robust (addressed non-stationarity and",
       "s": 4,
       "c": 5,
       "a": "IntroductionCommon11"
@@ -223,157 +277,183 @@
       "i": "rd-27",
       "t": "Thoughts and experience on ML journals [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sm04fm/thoughts_and_experience_on_ml_journals_d/",
-      "s": 11,
-      "c": 5,
+      "p": "https://reddit.com/r/MachineLearning/comments/1sm04fm/thoughts_and_experience_on_ml_journals_d/",
+      "b": "Recently I\u2019ve been thinking about shifting from conferences to journals due to a few bad experiences with ML conferences reviewing process. The truth is I don\u2019t really have much experience with journals, and I rarely read papers from them.  I don\u2019t really want to submit to someth",
+      "s": 9,
+      "c": 6,
       "a": "kostaspap90"
     },
     {
       "i": "rd-28",
-      "t": "CHI PLAY reviews [R]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm3a0b/chi_play_reviews_r/",
-      "s": 4,
-      "c": 5,
-      "a": "Ok_Ant_4311"
+      "t": "Seeking Critique on Research Approach to Open Set Recognition (Novelty Detection) [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1smhiz6/seeking_critique_on_research_approach_to_open_set/",
+      "p": "https://reddit.com/r/MachineLearning/comments/1smhiz6/seeking_critique_on_research_approach_to_open_set/",
+      "b": "Hey guys, I'm an independent researcher working on a project that tries to address a very specific failure mode in LLMs and embedding based classifiers: the inability of the system to reliably distinguish between \"familiar data\" that it's seen variations of and \"novel noise.\"  Th",
+      "s": 0,
+      "c": 0,
+      "a": "CodenameZeroStroke"
     },
     {
       "i": "rd-29",
-      "t": "You can decompose models into a graph database [N]",
-      "u": "https://www.reddit.com/r/MachineLearning/comments/1slmfmw/you_can_decompose_models_into_a_graph_database_n/",
-      "s": 46,
-      "c": 20,
-      "a": "Educational_Win_2982"
+      "t": "CHI PLAY reviews [R]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sm3a0b/chi_play_reviews_r/",
+      "p": "https://reddit.com/r/MachineLearning/comments/1sm3a0b/chi_play_reviews_r/",
+      "b": "Hey , did anyone submit to CHI PLAY previously, if yes how helpful are reviewers  Thanks in advance :)",
+      "s": 5,
+      "c": 5,
+      "a": "Ok_Ant_4311"
     }
   ],
   "h": [
     {
       "i": "hn-0",
-      "t": "AI-Assisted Cognition Endangers Human Development",
-      "u": "https://heidenstedt.org/posts/2026/ai-assisted-cognition-endangers-human-development/",
-      "s": 160,
-      "c": 99,
-      "a": "i5heu"
+      "t": "Cybersecurity looks like proof of work now",
+      "u": "https://www.dbreunig.com/2026/04/14/cybersecurity-is-proof-of-work-now.html",
+      "p": "https://news.ycombinator.com/item?id=47769089",
+      "b": "",
+      "s": 47,
+      "c": 10,
+      "a": "dbreunig"
     },
     {
       "i": "hn-1",
-      "t": "Open Source Isn't Dead. Cal.com Just Learned the Wrong Lesson",
-      "u": "https://www.strix.ai/blog/cal-com-is-closing-its-code-due-to-ai-threats",
-      "s": 260,
-      "c": 146,
-      "a": "bearsyankees"
-    },
-    {
-      "i": "hn-2",
-      "t": "Google Broke Its Promise to Me. Now ICE Has My Data",
+      "t": "Google broke its promise to me \u2013 now ICE has my data",
       "u": "https://www.eff.org/deeplinks/2026/04/google-broke-its-promise-me-now-ice-has-my-data",
-      "s": 533,
-      "c": 216,
+      "p": "https://news.ycombinator.com/item?id=47782570",
+      "b": "",
+      "s": 779,
+      "c": 326,
       "a": "Brajeshwar"
     },
     {
+      "i": "hn-2",
+      "t": "PiCore - Raspberry Pi Port of Tiny Core Linux",
+      "u": "http://tinycorelinux.net/5.x/armv6/releases/README",
+      "p": "https://news.ycombinator.com/item?id=47784244",
+      "b": "",
+      "s": 27,
+      "c": 1,
+      "a": "gregsadetsky"
+    },
+    {
       "i": "hn-3",
-      "t": "God Sleeps in the Minerals",
-      "u": "https://wchambliss.wordpress.com/2026/03/03/god-sleeps-in-the-minerals/",
-      "s": 365,
-      "c": 81,
-      "a": "speckx"
+      "t": "Does Gas Town 'steal' usage from users' LLM credits to improve itself?",
+      "u": "https://github.com/gastownhall/gastown/issues/3649",
+      "p": "https://news.ycombinator.com/item?id=47785053",
+      "b": "",
+      "s": 33,
+      "c": 6,
+      "a": "rektomatic"
     },
     {
       "i": "hn-4",
-      "t": "Live Nation Illegally Monopolized Ticketing Market, Jury Finds",
-      "u": "https://www.bloomberg.com/news/articles/2026-04-15/live-nation-illegally-monopolized-ticketing-market-jury-finds",
-      "s": 76,
-      "c": 15,
-      "a": "Alex_Bond"
+      "t": "Ask HN: Who is using OpenClaw?",
+      "u": "https://news.ycombinator.com/item?id=47783940",
+      "p": "https://news.ycombinator.com/item?id=47783940",
+      "b": "I don&#x27;t use it personally, and neither does anyone in my circle...even though I feel like I&#x27;m super plugged into the ai world",
+      "s": 50,
+      "c": 67,
+      "a": "misterchocolat"
     },
     {
       "i": "hn-5",
-      "t": "Fix monitor that goes black, off or blinks due to static electricity in chair",
-      "u": "https://aalonso.dev/blog/2023/how-to-fix-monitor-that-goes-black-off-due-to-static-electricity-in-chair/",
-      "s": 63,
-      "c": 29,
-      "a": "cyclopeanutopia"
+      "t": "Live Nation illegally monopolized ticketing market, jury finds",
+      "u": "https://www.bloomberg.com/news/articles/2026-04-15/live-nation-illegally-monopolized-ticketing-market-jury-finds",
+      "p": "https://news.ycombinator.com/item?id=47783713",
+      "b": "https:&#x2F;&#x2F;www.nytimes.com&#x2F;2026&#x2F;04&#x2F;15&#x2F;arts&#x2F;music&#x2F;live-nation-an..., https:&#x2F;&#x2F;archive.ph&#x2F;KA1wVhttps:&#x2F;&#x2F;www.theverge.com&#x2F;policy&#x2F;912689&#x2F;live-nation-ticketmas...",
+      "s": 200,
+      "c": 51,
+      "a": "Alex_Bond"
     },
     {
       "i": "hn-6",
-      "t": "Want to Write a Compiler? Just Read These Two Papers (2008)",
-      "u": "https://prog21.dadgum.com/30.html",
-      "s": 397,
-      "c": 123,
-      "a": "downbad_"
+      "t": "God sleeps in the minerals",
+      "u": "https://wchambliss.wordpress.com/2026/03/03/god-sleeps-in-the-minerals/",
+      "p": "https://news.ycombinator.com/item?id=47778475",
+      "b": "",
+      "s": 396,
+      "c": 86,
+      "a": "speckx"
     },
     {
       "i": "hn-7",
       "t": "Cal.com is going closed source",
       "u": "https://cal.com/blog/cal-com-goes-closed-source-why",
-      "s": 87,
-      "c": 94,
+      "p": "https://news.ycombinator.com/item?id=47780456",
+      "b": "",
+      "s": 128,
+      "c": 113,
       "a": "Benjamin_Dobell"
     },
     {
       "i": "hn-8",
-      "t": "Good Sleep, Good Learning (2012)",
-      "u": "https://super-memory.com/articles/sleep.htm",
-      "s": 302,
-      "c": 144,
-      "a": "downbad_"
+      "t": "Fix monitor that goes black, off or blinks due to static electricity in chair",
+      "u": "https://aalonso.dev/blog/2023/how-to-fix-monitor-that-goes-black-off-due-to-static-electricity-in-chair/",
+      "p": "https://news.ycombinator.com/item?id=47738081",
+      "b": "",
+      "s": 89,
+      "c": 42,
+      "a": "cyclopeanutopia"
     },
     {
       "i": "hn-9",
-      "t": "Do you even need a database?",
-      "u": "https://www.dbpro.app/blog/do-you-even-need-a-database",
-      "s": 133,
-      "c": 199,
-      "a": "upmostly"
+      "t": "Want to write a compiler? Just read these two papers (2008)",
+      "u": "https://prog21.dadgum.com/30.html",
+      "p": "https://news.ycombinator.com/item?id=47776796",
+      "b": "",
+      "s": 419,
+      "c": 127,
+      "a": "downbad_"
     }
   ],
   "summary": {
     "schema_version": "2",
-    "simple": "Today's AI news is dominated by growing concerns over model quality degradation across major platforms, serious privacy violations involving AI-adjacent data sharing with government agencies, and the ongoing tension between open source software survival and AI-driven competition. Community sentiment around ChatGPT and other frontier models has turned notably negative, while local AI adoption continues to grow as an alternative.",
+    "simple": "Today's digest is dominated by growing frustration with major AI model quality, with users reporting significant intelligence drops across ChatGPT and other top models. Privacy concerns are front and center after Google shared user data with ICE despite prior promises. Meanwhile, the local LLM community is thriving, celebrating small models running in browsers and debating the best open alternatives.",
     "structured": {
       "themes": [
-        "AI Model Quality Degradation",
-        "Privacy and Government Data Access",
-        "Open Source vs. AI Commercial Pressure"
+        "AI Model Quality Decline and User Trust",
+        "Privacy, Surveillance, and Big Tech Accountability",
+        "Local and Open-Source AI Renaissance"
       ],
-      "breaking": "Google shared location data with ICE despite prior privacy promises, highlighting how AI-era data collection creates new vectors for government surveillance.",
+      "breaking": "Google broke its promise to users by sharing location data with ICE, exposing a major breach of trust between a dominant tech platform and its users.",
       "mustRead": [
+        {
+          "id": "hn-1",
+          "title": "Google broke its promise to me \u2013 now ICE has my data",
+          "url": "https://www.eff.org/deeplinks/2026/04/google-broke-its-promise-me-now-ice-has-my-data",
+          "reason": "A high-engagement EFF report documenting Google sharing user data with immigration enforcement despite explicit prior commitments not to do so \u2014 a landmark privacy accountability moment."
+        },
         {
           "id": "rd-4",
           "title": "Major drop in intelligence across most major models.",
           "url": "https://www.reddit.com/r/LocalLLaMA/comments/1sm08m6/major_drop_in_intelligence_across_most_major/",
-          "reason": "With 514 upvotes and 326 comments, this thread captures widespread user frustration suggesting frontier model providers may be quietly degrading quality, a trend with major implications for enterprise and developer trust."
+          "reason": "With 551 upvotes and 339 comments, this thread reflects broad community consensus that leading LLMs have noticeably regressed in capability, a trend with real consequences for practitioners."
         },
         {
-          "id": "hn-2",
-          "title": "Google Broke Its Promise to Me. Now ICE Has My Data",
-          "url": "https://www.eff.org/deeplinks/2026/04/google-broke-its-promise-me-now-ice-has-my-data",
-          "reason": "The EFF documents a concrete case where Google reversed its data protection commitments and handed location data to immigration enforcement, a cautionary example of how tech privacy promises can evaporate under government pressure."
-        },
-        {
-          "id": "hn-1",
-          "title": "Open Source Isn't Dead. Cal.com Just Learned the Wrong Lesson",
-          "url": "https://www.strix.ai/blog/cal-com-is-closing-its-code-due-to-ai-threats",
-          "reason": "Cal.com going closed source over AI scraping fears sparked a 146-comment debate about whether open source is structurally incompatible with the current AI industry, a question relevant to every open source maintainer today."
+          "id": "rd-13",
+          "title": "'I miss you': Mother speaks to AI son regularly, unaware he died last year",
+          "url": "https://www.livemint.com/news/world/i-miss-you-mother-speaks-to-ai-son-regularly-unaware-he-died-last-year-artificial-intelligence-creates-digital-twin-11775967278951.html",
+          "reason": "This story crystallizes the ethical and emotional frontier of AI digital twins, raising urgent questions about consent, grief, and the boundaries of AI companionship."
         }
       ]
     },
     "fullBrief": {
-      "intro": "April 15, 2026 brings a cluster of stories united by eroding trust: users losing faith in AI model quality, citizens losing faith in tech companies to protect their data, and open source developers losing faith that transparency can coexist with AI commercialization. Against that backdrop, the local AI community is quietly growing, framing itself as an alternative to the increasingly opaque and frustrating frontier model ecosystem.",
+      "intro": "April 15, 2026 brings a collision of technical disillusionment and societal reckoning around AI. The dominant mood across Reddit and Hacker News is skepticism: skepticism that frontier AI models are still improving, skepticism that large platforms protect user privacy, and skepticism about whether closed-source software can be trusted. Against that backdrop, the local and open-source AI movement is gaining momentum, with tiny models running in browsers and communities consolidating around alternatives to the major cloud providers.",
       "sections": [
         {
-          "heading": "Model Quality Crisis",
-          "body": "The most-discussed technical story across both Reddit communities is a perceived sharp decline in reasoning capability across ChatGPT, GPT-4o, and other major models. The LocalLLaMA megathread on the topic has 326 comments and the ChatGPT subreddit hosts a dedicated GPT-4o and GPT-5 complaints megathread with over 4,200 comments, suggesting this is not anecdotal. Separate threads note ChatGPT has become sycophantic, downplaying user achievements and no longer engaging naturally. Whether this reflects actual capability regression, updated safety tuning, or shifting user expectations is unresolved, but the volume and consistency of complaints represents a genuine reputational inflection point for OpenAI."
+          "heading": "AI Model Quality Under Fire",
+          "body": "The most-discussed technical story is a widespread community report of a major intelligence drop across leading models including GPT-4o and GPT-5. The r/ChatGPT complaints megathread has accumulated over 4,000 comments, and a parallel thread notes users can no longer interact with ChatGPT conversationally without triggering over-eager or off-tone responses. A 30-day side-by-side comparison of ChatGPT Plus and Claude Pro adds nuance, but the sentiment is clear: users who built workflows on these models are feeling the ground shift beneath them. This is not just a vibe \u2014 practitioners are actively searching for alternatives."
         },
         {
-          "heading": "Privacy, Government Surveillance, and AI Data",
-          "body": "The EFF's report that Google shared location data with ICE despite explicit prior promises not to do so is the most consequential non-AI story of the day with direct AI-era implications. As AI systems collect increasingly rich behavioral and personal data, this case illustrates that contractual and policy promises offer weak protection when governments compel disclosure. A separate story noting that 34.8 percent of employee AI inputs now contain sensitive data compounds the concern: workers are feeding proprietary and personal information into AI tools at scale, creating concentrated data stores that are attractive targets for both corporate misuse and government requests."
+          "heading": "Privacy and Platform Accountability",
+          "body": "The EFF's report on Google sharing user data with ICE is the most consequential non-AI story of the day and arguably the most important story overall. With 779 upvotes and 326 comments on Hacker News, it documents a direct violation of Google's stated commitments around law enforcement data requests. Separately, the story of a mother unknowingly speaking to an AI replica of her deceased son illustrates how AI systems are already embedded in high-stakes emotional contexts with no governance framework to match. Cal.com's decision to go closed source adds another data point to a broader pattern: open promises in tech are fragile, and the gap between stated values and actual behavior is widening."
         },
         {
-          "heading": "Open Source Under Pressure from AI",
-          "body": "Cal.com announced it is going closed source, citing AI companies scraping its codebase to build competing products without contributing back. The counter-argument, explored in a high-scoring Hacker News thread, is that this is the wrong lesson and that open source remains viable with better licensing strategies. This debate is playing out across the software industry as permissive licenses increasingly mean that well-resourced AI labs can commoditize any open project. Meanwhile, the local LLM community continues to expand, with MiniMax releasing the M2.7 model under a new license and a 1-bit 290MB model now running in-browser via WebGPU, suggesting that open, locally-run AI remains a technically credible and growing alternative."
+          "heading": "Local AI and the Open Alternative",
+          "body": "While cloud AI stumbles, the local LLM scene is energized. A 1-bit 1.7B model running entirely in the browser via WebGPU signals that the floor for capable local inference keeps dropping. Gemma 4 is generating genuine enthusiasm as a replacement for Qwen among hobbyists, and the community is actively benchmarking the best local options for April 2026. A new LocalLLaMA Discord server and bot suggests the community is maturing into a more organized ecosystem. The appetite for AI that runs privately, cheaply, and without dependence on cloud providers is not slowing down."
         }
       ],
-      "closing": "The convergence of model quality complaints, data privacy failures, and open source stress suggests 2026 may be the year the AI industry's trust deficit becomes impossible to paper over with benchmark announcements."
+      "closing": "The clearest signal from today's digest is that trust \u2014 in AI quality, in platform promises, and in open-source commitments \u2014 is the scarcest resource in tech right now, and the communities building alternatives are the ones most likely to benefit."
     }
   }
 }
