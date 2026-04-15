@@ -447,12 +447,12 @@ const { } = Astro.props;
 
     function goTo(index: number) {
       current = Math.max(0, Math.min(total - 1, index));
-      track.style.transform = 'translateX(-' + (current * 100) + '%)';
+      track!.style.transform = 'translateX(-' + (current * 100) + '%)';
       dots.forEach((dot, idx) => {
         dot.classList.toggle('active', idx === current);
       });
-      prevBtn.disabled = current === 0;
-      nextBtn.disabled = current === total - 1;
+      prevBtn!.disabled = current === 0;
+      nextBtn!.disabled = current === total - 1;
       const activeCard = cards[current];
       if (activeCard && outer) {
         // Use offsetHeight to get the current visible height including the snippet's max-height constraint
