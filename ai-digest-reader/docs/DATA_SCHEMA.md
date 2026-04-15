@@ -28,13 +28,31 @@ interface Story {
 
 ## DigestSummary Structure (v2+)
 
+`schema.py` is the Python single source of truth for this shape. The TypeScript mirror lives in `src/types.ts`.
+
 ```typescript
 interface DigestSummary {
-  simple: string;         // One-line overview
-  themes: string[];       // Key themes/trends
-  breaking: string[];    // Breaking news items
+  schema_version: string;  // Always "2" for current output
+  simple: string;          // 2-3 sentence TL;DR
+  structured: Structured;  // Themes, breaking headline, must-reads
+  fullBrief: FullBrief;   // Structured long-form briefing
+}
+
+interface Structured {
+  themes: string[];        // Key themes/trends (3 items typical)
+  breaking: string;        // Single breaking headline sentence
   mustRead: MustReadItem[]; // Essential reading
-  fullBrief: string;     // Detailed briefing paragraph
+}
+
+interface FullBrief {
+  intro: string;                // Opening paragraph
+  sections: FullBriefSection[]; // Body sections
+  closing: string;              // One-sentence takeaway
+}
+
+interface FullBriefSection {
+  heading: string;  // Section title
+  body: string;     // Paragraph text
 }
 ```
 
@@ -42,9 +60,9 @@ interface DigestSummary {
 
 ```typescript
 interface MustReadItem {
-  title: string;    // Article title
+  id: string;      // Story ID (e.g. "rd-0", "hn-3")
+  title: string;   // Article title
   url: string;     // Article URL
-  source: 'reddit' | 'hn';  // Source platform
   reason: string;  // Why this is essential reading
 }
 ```

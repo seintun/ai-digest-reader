@@ -78,11 +78,18 @@ The JSON file contains structured data including:
   "r": [...],
   "h": [...],
   "summary": {
-    "simple": "One-line overview",
-    "themes": ["Theme 1", "Theme 2"],
-    "breaking": ["Breaking item"],
-    "mustRead": [{"title": "...", "url": "...", "source": "reddit", "reason": "..."}],
-    "fullBrief": "Detailed briefing..."
+    "schema_version": "2",
+    "simple": "2-3 sentence TL;DR",
+    "structured": {
+      "themes": ["Theme 1", "Theme 2", "Theme 3"],
+      "breaking": "One sentence.",
+      "mustRead": [{"id": "rd-0", "title": "Story title", "url": "https://...", "reason": "Why it matters."}]
+    },
+    "fullBrief": {
+      "intro": "Opening paragraph.",
+      "sections": [{"heading": "Section Title", "body": "Paragraph text."}],
+      "closing": "One-sentence takeaway."
+    }
   }
 }
 ```
@@ -101,7 +108,8 @@ Human-readable format with:
 | Script | Purpose |
 |--------|---------|
 | `digest.py` | Main entry point - generates digest with AI summary |
-| `analyzer.py` | Generate AI summaries via Claude CLI |
+| `analyzer.py` | Generate AI summaries via Claude CLI; validates output with one-retry on schema failure |
+| `schema.py` | Single source of truth: `DigestSummary` TypedDict contract and `validate_summary()` |
 | `fetchers/` | Reddit and HN API integration |
 | `formatter.py` | Markdown output formatting |
 | `config.py` | Configuration (subreddits, limits) |
