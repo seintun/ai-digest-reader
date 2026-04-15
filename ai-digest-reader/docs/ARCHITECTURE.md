@@ -176,20 +176,33 @@ Serverless function deployed to Vercel - serves pre-generated digest.json:
 └─────────────────┘
 ```
 
+#### schema.py (Contract Definition)
+
+Single source of truth for the `DigestSummary` TypedDict contract. All other Python modules import from here.
+
+- `DigestSummary`, `FullBrief`, `FullBriefSection`, `Structured`, `MustReadItem` TypedDicts
+- `validate_summary(data: dict) -> bool` — validates strict v2 shape
+
 #### analyzer.py (AI Summary Generation)
 
 Uses Claude CLI to analyze stories and generate structured summaries:
 
 ```bash
 # Requires Claude CLI installed and authenticated
-claude -p --output-format stream-json << 'EOF'
-Analyze these AI news stories and provide a structured summary...
-EOF
+claude --print "<prompt>"
 ```
 
-**Output:** DigestSummary object with themes, breaking news, must-read items
+**Prompt strategy:** Few-shot example with exact output format enforces v2 schema.
+
+**Validation + retry:** After parsing Claude's response, `validate_summary()` from `schema.py` is called. On failure, the prompt is retried once with a stricter instruction appended. Returns `None` after two failures — digest continues without a summary.
+
+**Output:** Validated `DigestSummary` dict (`schema_version: "2"`, `simple`, `structured`, `fullBrief`)
 
 **Fallback:** Use `--no-ai` flag to skip AI summary generation
+
+#### Frontend Schema Validation (digest.ts)
+
+Zod schema mirrors the Python TypedDict contract. On `fetchDigest()`, if a `summary` field is present, it is validated with `validateSummary(data)` using `safeParse` (never throws). Invalid summaries are set to `undefined` — the UI degrades gracefully to "Summary unavailable" instead of crashing.
 
 ### Configuration
 
@@ -238,16 +251,21 @@ CLAUDE_MODEL = "sonnet-4-20250514"
 │                      AI SUMMARY GENERATION                           │
 ├─────────────────────────────────────────────────────────────────────┤
 │ 1. analyzer.py collects top stories from aggregator                  │
-│ 2. Formats prompt with story titles, URLs, scores                   │
-│ 3. Invokes Claude CLI: claude -p --output-format stream-json         │
-│ 4. Parses structured response into DigestSummary format            │
-│ 5. Returns {simple, themes, breaking, mustRead, fullBrief}          │
-│                                                                         │
-│ ERROR HANDLING:                                                       │
-│ - Claude CLI not found → Exit with setup instructions               │
-│ - Auth failure → Prompt for claude auth                             │
-│ - API rate limit → Retry with exponential backoff                   │
-│ - Generation timeout → Skip summary, continue without               │
+│ 2. Formats few-shot prompt with story IDs, titles, URLs, scores     │
+│ 3. Invokes Claude CLI: claude --print "<prompt>"                    │
+│ 4. Parses JSON response (_parse_claude_response handles fences)     │
+│ 5. Validates with schema.validate_summary() → strict v2 check       │
+│ 6. On failure: retry once with stricter prompt appended              │
+│ 7. Returns validated DigestSummary or None (summary omitted)        │
+│                                                                      │
+│ FRONTEND VALIDATION:                                                 │
+│ 8. digest.ts calls Zod validateSummary() on load                    │
+│ 9. Invalid summary → undefined → UI shows "Summary unavailable"     │
+│                                                                      │
+│ ERROR HANDLING:                                                      │
+│ - Claude CLI not found → Warning, returns None                      │
+│ - Timeout (60s) → Warning, returns None                             │
+│ - Schema validation fails twice → Warning, returns None             │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 

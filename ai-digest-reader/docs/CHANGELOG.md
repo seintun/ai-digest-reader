@@ -2,6 +2,32 @@
 
 All notable changes to the AI News Digest Aggregator project.
 
+## [Unreleased] - Strict v2 Summary Schema
+
+### Added
+- **`schema.py`** — Python `TypedDict` single source of truth for `DigestSummary` contract (`MustReadItem`, `FullBriefSection`, `FullBrief`, `Structured`, `DigestSummary`)
+- **`validate_summary()`** in `schema.py` — validates all required fields, types, and cardinality (themes=3, mustRead=3, sections≥2)
+- **Retry logic** in `analyzer.py` — retries once with stricter prompt on schema validation failure
+- **Few-shot prompt** in `analyzer.py` — exact JSON example enforces v2 output shape from Claude
+- **Zod schema** in `digest.ts` — `DigestSummarySchema` mirrors the Python contract
+- **`validateSummary()`** in `digest.ts` — uses `safeParse` (never throws), degrades gracefully
+- **`FullBriefSection`** and **`FullBrief`** TypeScript interfaces in `types.ts`
+- **72 tests** across `test_schema.py` (40) and `test_analyzer.py` (32)
+
+### Changed
+- `MustReadItem.t` → `MustReadItem.title` (readable, explicit field name)
+- `DigestSummary.fullBrief` type: `string` → `FullBrief` structured object
+- `DigestSummary` now includes `schema_version: string` (always `"2"`)
+- Full Brief card renders structured `intro / sections[] / closing` instead of parsed markdown
+- All summary card strings now wrapped in `escapeHtml()` for XSS safety
+- Version check in `fetchDigest()` accepts both `v: 1` and `v: 2`
+
+### Removed
+- `renderMarkdown()` and `formatInlineMarkdown()` functions (replaced by structured rendering)
+- Local `DigestResponse` interface in `digest.ts` (replaced by `Digest` from `types.ts`)
+
+---
+
 ## [2.0.0] - 2026-04-15
 
 ### Added
