@@ -1,0 +1,17 @@
+{
+  "v": 1,
+  "d": "2024-01-15",
+  "g": "2024-01-15T08:30:00Z",
+  "r": [
+    {"i": "rd-0", "t": "GPT-5 rumored to achieve AGI benchmarks", "u": "https://reddit.com/r/ArtificialIntelligence/comments/...", "s": 4521, "c": 892, "a": "tech_enthusiast"},
+    {"i": "rd-1", "t": "Running Llama 3 70B on a MacBook Pro", "u": "https://reddit.com/r/LocalLLaMA/comments/...", "s": 3204, "c": 445, "a": "ml_developer"},
+    {"i": "rd-2", "t": "Claude 3.5 Sonnet beats GPT-4 on coding benchmarks", "u": "https://reddit.com/r/ChatGPT/comments/...", "s": 2890, "c": 678, "a": "ai_researcher"},
+    {"i": "rd-3", "t": "New paper: Transformer architecture efficiency gains", "u": "https://reddit.com/r/MachineLearning/comments/...", "s": 1845, "c": 234, "a": "paper_reader"}
+  ],
+  "h": [
+    {"i": "hn-0", "t": "Anthropic releases Claude 3.5 with 200K context", "u": "https://news.ycombinator.com/item?id=...", "s": 1823, "c": 456, "a": "anonthrow"},
+    {"i": "hn-1", "t": "OpenAI announces Sora video generation model", "u": "https://news.ycombinator.com/item?id=...", "s": 1654, "c": 389, "a": "technews"},
+    {"i": "hn-2", "t": "Show HN: I built a local AI assistant with Llama 3", "u": "https://news.ycombinator.com/item?id=...", "s": 987, "c": 234, "a": "indie_dev"},
+    {"i": "hn-3", "t": "Google's Gemini Ultra beats GPT-4 on MMLU", "u": "https://news.ycombinator.com/item?id=...", "s": 876, "c": 312, "a": "ml_enthusiast"}
+  ]
+}

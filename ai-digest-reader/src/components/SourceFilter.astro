@@ -1,0 +1,120 @@
+---
+interface Props {
+  redditCount: number;
+  hnCount: number;
+  totalCount: number;
+}
+
+const { redditCount, hnCount, totalCount } = Astro.props;
+
+const sources = [
+  {
+    id: 'all',
+    label: 'All',
+    count: totalCount,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>`,
+  },
+  {
+    id: 'reddit',
+    label: 'Reddit',
+    count: redditCount,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>`,
+  },
+  {
+    id: 'hn',
+    label: 'Hacker News',
+    count: hnCount,
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5"><path d="M12 0L0 12h7l5 12 5-12h7L12 0zm0 6.5l6.5 6.5h-4.5V22h-4v-9H5.5l6.5-6.5z"/></svg>`,
+  },
+];
+---
+
+<div
+  id="source-filter"
+  class="flex flex-wrap gap-3 p-4 bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 dark:bg-slate-800/30 dark:border-slate-700/30"
+>
+  {
+    sources.map((source) => (
+      <button
+        data-source={source.id}
+        class="source-btn group relative flex items-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200
+          bg-white/20 dark:bg-slate-700/30
+          text-slate-700 dark:text-slate-300
+          hover:bg-white/30 dark:hover:bg-slate-700/50
+          active:scale-95"
+      >
+        <span class="source-icon transition-colors" set:html={source.icon} />
+        <span class="source-label">{source.label}</span>
+        <span
+          class="source-badge min-w-[1.25rem] h-6 px-1.5 rounded-full text-xs font-semibold flex items-center justify-center
+            bg-indigo-500/20 text-indigo-600 dark:text-indigo-400
+            group-hover:bg-indigo-500/30"
+        >
+          {source.count}
+        </span>
+      </button>
+    ))
+  }
+</div>
+
+<script>
+  class SourceFilter {
+    constructor() {
+      const container = document.getElementById('source-filter');
+      if (!container) return;
+
+      const buttons = container.querySelectorAll('.source-btn');
+      let activeSource = 'all';
+
+      const setActive = (btn: Element) => {
+        buttons.forEach((b) => {
+          b.classList.remove(
+            'bg-indigo-500/30',
+            'dark:bg-indigo-500/30',
+            'ring-2',
+            'ring-indigo-500/50'
+          );
+          b.classList.add(
+            'bg-white/20',
+            'dark:bg-slate-700/30',
+            'text-slate-700',
+            'dark:text-slate-300'
+          );
+        });
+
+        btn.classList.remove(
+          'bg-white/20',
+          'dark:bg-slate-700/30',
+          'text-slate-700',
+          'dark:text-slate-300'
+        );
+        btn.classList.add(
+          'bg-indigo-500/30',
+          'dark:bg-indigo-500/30',
+          'ring-2',
+          'ring-indigo-500/50',
+          'text-indigo-700',
+          'dark:text-indigo-300'
+        );
+
+        activeSource = btn.getAttribute('data-source') || 'all';
+        btn.dispatchEvent(
+          new CustomEvent('sourcechange', {
+            bubbles: true,
+            detail: { source: activeSource },
+          })
+        );
+      };
+
+      buttons.forEach((btn) => {
+        if (btn.getAttribute('data-source') === activeSource) {
+          setActive(btn);
+        }
+
+        btn.addEventListener('click', () => setActive(btn));
+      });
+    }
+  }
+
+  new SourceFilter();
+</script>

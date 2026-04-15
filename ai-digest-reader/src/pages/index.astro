@@ -1,0 +1,456 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import ViewSwitcher from '../components/ViewSwitcher.astro';
+import SourceFilter from '../components/SourceFilter.astro';
+import StoryCard from '../components/StoryCard.astro';
+import StoryList from '../components/StoryList.astro';
+import StoryGlance from '../components/StoryGlance.astro';
+import type { Story, ViewMode, Source } from '../types';
+
+interface Props {}
+
+const { } = Astro.props;
+---
+
+<Base title="AI Digest - Your Daily AI News">
+  <Header />
+
+  <main class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+      <ViewSwitcher defaultView="cards" />
+    </div>
+
+    <div id="source-filter-container" class="mb-6">
+      <SourceFilter redditCount={0} hnCount={0} totalCount={0} />
+    </div>
+
+    <div id="pull-refresh-hint" class="flex items-center justify-center gap-2 mb-6 text-sm text-slate-400 dark:text-slate-500 opacity-0 transition-opacity duration-300">
+      <svg class="w-4 h-4 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+      </svg>
+      <span>Pull down to refresh</span>
+    </div>
+
+    <div id="loading-container" class="hidden">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="loading-cards">
+        {[...Array(6)].map(() => (
+          <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-2xl p-5 animate-pulse">
+            <div class="flex items-center gap-2 mb-3">
+              <div class="h-6 w-16 bg-slate-200 dark:bg-slate-700 rounded-md"></div>
+            </div>
+            <div class="space-y-2 mb-4">
+              <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded w-full"></div>
+              <div class="h-5 bg-slate-200 dark:bg-slate-700 rounded w-3/4"></div>
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-24"></div>
+              <div class="flex items-center gap-3">
+                <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-8"></div>
+                <div class="h-4 bg-slate-200 dark:bg-slate-700 rounded w-8"></div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div id="error-container" class="hidden">
+      <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-red-200 dark:border-red-800/50 rounded-2xl p-8 text-center">
+        <svg class="w-12 h-12 mx-auto mb-4 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        </svg>
+        <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">Failed to load stories</h3>
+        <p id="error-message" class="text-slate-500 dark:text-slate-400 mb-4">Something went wrong</p>
+        <button
+          id="retry-button"
+          class="inline-flex items-center gap-2 px-4 py-2 bg-primary-500 hover:bg-primary-600 text-white rounded-lg transition-colors duration-200"
+        >
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+          Try Again
+        </button>
+      </div>
+    </div>
+
+    <div id="stories-container" class="transition-opacity duration-300">
+      <div id="stories-cards" class="view-content"></div>
+      <div id="stories-list" class="view-content hidden"></div>
+      <div id="stories-glance" class="view-content hidden"></div>
+    </div>
+
+    <div id="empty-container" class="hidden">
+      <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-2xl p-8 text-center">
+        <svg class="w-12 h-12 mx-auto mb-4 text-slate-300 dark:text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+        </svg>
+        <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2">No stories found</h3>
+        <p class="text-slate-500 dark:text-slate-400">Try adjusting your filters or check back later</p>
+      </div>
+    </div>
+  </main>
+</Base>
+
+<script>
+  import type { Story, Digest, ViewMode, Source } from '../types';
+  import StoryCard from '../components/StoryCard.astro';
+  import StoryList from '../components/StoryList.astro';
+  import StoryGlance from '../components/StoryGlance.astro';
+
+  interface AppState {
+    stories: Story[];
+    filteredStories: Story[];
+    viewMode: ViewMode;
+    source: Source;
+    isLoading: boolean;
+    error: string | null;
+  }
+
+  const state: AppState = {
+    stories: [],
+    filteredStories: [],
+    viewMode: 'cards',
+    source: 'all',
+    isLoading: true,
+    error: null,
+  };
+
+  const elements = {
+    loadingContainer: document.getElementById('loading-container'),
+    errorContainer: document.getElementById('error-container'),
+    errorMessage: document.getElementById('error-message'),
+    retryButton: document.getElementById('retry-button'),
+    storiesContainer: document.getElementById('stories-container'),
+    emptyContainer: document.getElementById('empty-container'),
+    storiesCards: document.getElementById('stories-cards'),
+    storiesList: document.getElementById('stories-list'),
+    storiesGlance: document.getElementById('stories-glance'),
+    sourceFilterContainer: document.getElementById('source-filter-container'),
+    pullRefreshHint: document.getElementById('pull-refresh-hint'),
+  };
+
+  function getSourceCounts(stories: Story[]): { reddit: number; hn: number; total: number } {
+    const reddit = stories.filter(s => s.i.startsWith('rd-')).length;
+    const hn = stories.filter(s => s.i.startsWith('hn-')).length;
+    return { reddit, hn, total: stories.length };
+  }
+
+  function filterStories(stories: Story[], source: Source): Story[] {
+    if (source === 'all') return stories;
+    return stories.filter(story => {
+      const storySource = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+      return storySource === source;
+    });
+  }
+
+  function renderStories() {
+    if (!elements.storiesCards || !elements.storiesList || !elements.storiesGlance) return;
+
+    const { filteredStories, viewMode } = state;
+
+    elements.storiesCards.innerHTML = filteredStories.length > 0
+      ? `<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">${
+          filteredStories.map(story => renderStoryCard(story)).join('')
+        }</div>`
+      : '';
+
+    elements.storiesList.innerHTML = filteredStories.length > 0
+      ? renderStoryList(filteredStories)
+      : '';
+
+    elements.storiesGlance.innerHTML = filteredStories.length > 0
+      ? renderStoryGlance(filteredStories)
+      : '';
+
+    [elements.storiesCards, elements.storiesList, elements.storiesGlance].forEach(el => {
+      el?.classList.add('hidden');
+    });
+
+    if (viewMode === 'cards') {
+      elements.storiesCards?.classList.remove('hidden');
+    } else if (viewMode === 'list') {
+      elements.storiesList?.classList.remove('hidden');
+    } else {
+      elements.storiesGlance?.classList.remove('hidden');
+    }
+
+    if (elements.emptyContainer) {
+      elements.emptyContainer.classList.toggle('hidden', filteredStories.length > 0);
+    }
+  }
+
+  function renderStoryCard(story: Story): string {
+    const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+    const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
+    const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
+
+    return `
+      <article class="group relative backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-2xl p-5 transition-all duration-300 hover:shadow-lg hover:shadow-primary-500/10 hover:-translate-y-1">
+        <a href="${story.u}" target="_blank" rel="noopener noreferrer" class="block">
+          <div class="flex items-center gap-2 mb-3">
+            <span class="inline-flex items-center px-2.5 py-1 rounded-md text-xs font-medium ${
+              source === 'reddit'
+                ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                : 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'
+            }">
+              ${source === 'reddit' ? 'Reddit' : 'Hacker News'}
+            </span>
+          </div>
+          <h3 class="text-lg font-medium text-slate-900 dark:text-white mb-2 line-clamp-2 group-hover:text-primary-500 dark:group-hover:text-primary-400 transition-colors duration-200">
+            ${story.t}
+          </h3>
+          <div class="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
+            <span class="truncate max-w-[120px]" title="${story.a}">
+              by ${story.a}
+            </span>
+            <div class="flex items-center gap-3 ml-2">
+              <span class="flex items-center gap-1" title="Score">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" />
+                </svg>
+                ${scoreFormatted}
+              </span>
+              <span class="flex items-center gap-1" title="Comments">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                </svg>
+                ${commentsFormatted}
+              </span>
+            </div>
+          </div>
+        </a>
+        <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+          <svg class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+          </svg>
+        </div>
+      </article>
+    `;
+  }
+
+  function renderStoryList(stories: Story[]): string {
+    return `
+      <div class="backdrop-blur-md bg-white/70 dark:bg-slate-800/60 border border-white/20 dark:border-slate-700/50 rounded-2xl overflow-hidden">
+        <div class="overflow-x-auto -mx-4 px-4 sm:mx-0 sm:px-0">
+          <table class="w-full min-w-[640px]">
+            <thead>
+              <tr class="border-b border-slate-200/50 dark:border-slate-700/50">
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Source</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Title</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider hidden sm:table-cell">Author</th>
+                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Score</th>
+                <th class="px-4 py-3 text-right text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Comments</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-200/50 dark:divide-slate-700/50">
+              ${stories.map(story => {
+                const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+                const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
+                const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
+                return `
+                  <tr class="hover:bg-slate-100/50 dark:hover:bg-slate-700/30 transition-colors duration-150">
+                    <td class="px-4 py-3 whitespace-nowrap">
+                      <span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium ${
+                        source === 'reddit'
+                          ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400'
+                          : 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300'
+                      }">
+                        ${source === 'reddit' ? 'RD' : 'HN'}
+                      </span>
+                    </td>
+                    <td class="px-4 py-3">
+                      <a href="${story.u}" target="_blank" rel="noopener noreferrer"
+                        class="text-slate-900 dark:text-white hover:text-primary-500 dark:hover:text-primary-400 transition-colors duration-150 line-clamp-1">
+                        ${story.t}
+                      </a>
+                    </td>
+                    <td class="px-4 py-3 text-sm text-slate-500 dark:text-slate-400 hidden sm:table-cell truncate max-w-[150px]" title="${story.a}">
+                      ${story.a}
+                    </td>
+                    <td class="px-4 py-3 text-right text-sm text-slate-600 dark:text-slate-300 tabular-nums">
+                      ${scoreFormatted}
+                    </td>
+                    <td class="px-4 py-3 text-right text-sm text-slate-500 dark:text-slate-400 tabular-nums">
+                      ${commentsFormatted}
+                    </td>
+                  </tr>
+                `;
+              }).join('')}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+  }
+
+  function renderStoryGlance(stories: Story[]): string {
+    return `
+      <div class="flex flex-wrap gap-2">
+        ${stories.map(story => {
+          const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+          return `
+            <a href="${story.u}" target="_blank" rel="noopener noreferrer"
+              class="group inline-flex items-center gap-2 backdrop-blur-sm bg-white/50 dark:bg-slate-800/40 border border-white/20 dark:border-slate-700/30 rounded-full px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:bg-white/80 dark:hover:bg-slate-700/60 hover:border-primary-300 dark:hover:border-primary-600/50 transition-all duration-150">
+              <span class="flex-shrink-0 ${source === 'reddit' ? 'text-orange-500' : 'text-orange-600 dark:text-orange-400'}">
+                ${source === 'reddit'
+                  ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
+                  : '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                }
+              </span>
+              <span class="truncate max-w-[200px] sm:max-w-[300px] group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
+                ${story.t}
+              </span>
+              <span class="flex-shrink-0 text-slate-400 dark:text-slate-500 tabular-nums text-xs">
+                ${story.s}
+              </span>
+            </a>
+          `;
+        }).join('')}
+      </div>
+    `;
+  }
+
+  function updateSourceFilter() {
+    const counts = getSourceCounts(state.stories);
+    const container = elements.sourceFilterContainer;
+    if (!container) return;
+
+    const badges = container.querySelectorAll('.source-badge');
+    if (badges.length >= 3) {
+      badges[0].textContent = counts.total.toString();
+      badges[1].textContent = counts.reddit.toString();
+      badges[2].textContent = counts.hn.toString();
+    }
+  }
+
+  function showLoading() {
+    state.isLoading = true;
+    elements.loadingContainer?.classList.remove('hidden');
+    elements.errorContainer?.classList.add('hidden');
+    elements.storiesContainer?.classList.add('opacity-50', 'pointer-events-none');
+  }
+
+  function hideLoading() {
+    state.isLoading = false;
+    elements.loadingContainer?.classList.add('hidden');
+    elements.storiesContainer?.classList.remove('opacity-50', 'pointer-events-none');
+  }
+
+  function showError(message: string) {
+    state.error = message;
+    hideLoading();
+    elements.errorContainer?.classList.remove('hidden');
+    if (elements.errorMessage) {
+      elements.errorMessage.textContent = message;
+    }
+  }
+
+  async function fetchDigest() {
+    showLoading();
+    try {
+      const response = await fetch('/api/digest');
+      if (!response.ok) {
+        throw new Error(`Failed to fetch digest: ${response.status}`);
+      }
+      const data: Digest = await response.json();
+
+      state.stories = [...data.r, ...data.h];
+      state.filteredStories = filterStories(state.stories, state.source);
+
+      updateSourceFilter();
+      renderStories();
+      hideLoading();
+    } catch (error) {
+      console.error('Error fetching digest:', error);
+      showError(error instanceof Error ? error.message : 'Failed to load stories');
+    }
+  }
+
+  function handleViewChange(event: Event) {
+    const customEvent = event as CustomEvent<{ mode: ViewMode }>;
+    state.viewMode = customEvent.detail.mode;
+
+    if (elements.storiesContainer) {
+      elements.storiesContainer.classList.add('opacity-0');
+      setTimeout(() => {
+        renderStories();
+        elements.storiesContainer?.classList.remove('opacity-0');
+      }, 150);
+    } else {
+      renderStories();
+    }
+  }
+
+  function handleSourceChange(event: Event) {
+    const customEvent = event as CustomEvent<{ source: Source }>;
+    state.source = customEvent.detail.source;
+    state.filteredStories = filterStories(state.stories, state.source);
+    renderStories();
+  }
+
+  document.addEventListener('viewchange', handleViewChange);
+  document.addEventListener('sourcechange', handleSourceChange);
+
+  elements.retryButton?.addEventListener('click', fetchDigest);
+
+  let touchStartY = 0;
+  let touchEndY = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if (window.scrollY === 0) {
+      touchStartY = e.changedTouches[0].screenY;
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    touchEndY = e.changedTouches[0].screenY;
+    const pullDistance = touchEndY - touchStartY;
+
+    if (pullDistance > 80 && window.scrollY === 0) {
+      if (elements.pullRefreshHint) {
+        elements.pullRefreshHint.style.opacity = '0';
+      }
+      fetchDigest();
+    }
+  }, { passive: true });
+
+  if (window.scrollY === 0) {
+    if (elements.pullRefreshHint) {
+      elements.pullRefreshHint.style.opacity = '1';
+      setTimeout(() => {
+        if (elements.pullRefreshHint) {
+          elements.pullRefreshHint.style.opacity = '0';
+        }
+      }, 3000);
+    }
+  }
+
+  fetchDigest();
+</script>
+
+<style>
+  .view-content {
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  .animate-shimmer {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.4) 50%,
+      transparent 100%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+  }
+</style>
