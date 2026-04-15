@@ -44,12 +44,12 @@ def main():
     
     output_dir.mkdir(parents=True, exist_ok=True)
     
-    filename = f"{digest_time}.md"
+    filename = f"digest-{digest_date}-{digest_time}.md"
     output_path = output_dir / filename
     
     i = 1
     while output_path.exists():
-        filename = f"{digest_time}_{i}.md"
+        filename = f"digest-{digest_date}-{digest_time}_{i}.md"
         output_path = output_dir / filename
         i += 1
     
