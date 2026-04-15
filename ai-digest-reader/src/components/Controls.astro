@@ -11,11 +11,10 @@ const sources = [
     {sources.map((source) => (
       <button
         data-source={source.id}
+        data-active={source.id === 'all' ? 'true' : 'false'}
         class="source-btn px-2.5 py-1 rounded-md font-medium transition-all duration-150
-          bg-white/50 dark:bg-slate-700/50
-          text-slate-600 dark:text-slate-400
-          hover:bg-primary-100 dark:hover:bg-primary-900/30
-          data-[active=true]:bg-primary-500 data-[active=true]:text-white"
+          data-[active=true]:bg-primary-500 data-[active=true]:text-white
+          {source.id === 'all' ? 'bg-primary-500 text-white' : 'bg-white/50 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:bg-primary-100 dark:hover:bg-primary-900/30'}"
       >
         {source.label}
         <span class="source-badge ml-0.5 text-[10px] opacity-70"></span>
@@ -24,7 +23,7 @@ const sources = [
   </div>
 
   <div class="flex items-center gap-1 p-0.5 rounded-lg bg-white/30 dark:bg-slate-800/50">
-    <button type="button" data-view="cards" class="view-btn p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center">
+    <button type="button" data-view="cards" class="view-btn active bg-primary-500 text-white p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="3" y="3" width="7" height="7" rx="1" />
         <rect x="14" y="3" width="7" height="7" rx="1" />
@@ -32,14 +31,14 @@ const sources = [
         <rect x="14" y="14" width="7" height="7" rx="1" />
       </svg>
     </button>
-    <button type="button" data-view="list" class="view-btn p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center">
+    <button type="button" data-view="list" class="view-btn text-slate-600 dark:text-slate-400 p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center hover:bg-white/30 dark:hover:bg-slate-700/50">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <line x1="3" y1="6" x2="21" y2="6" />
         <line x1="3" y1="12" x2="21" y2="12" />
         <line x1="3" y1="18" x2="21" y2="18" />
       </svg>
     </button>
-    <button type="button" data-view="glance" class="view-btn p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center">
+    <button type="button" data-view="glance" class="view-btn text-slate-600 dark:text-slate-400 p-1.5 rounded transition-all duration-150 min-h-[32px] min-w-[32px] flex items-center justify-center hover:bg-white/30 dark:hover:bg-slate-700/50">
       <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
         <rect x="2" y="4" width="20" height="4" rx="1" />
         <rect x="2" y="10" width="20" height="4" rx="1" />
