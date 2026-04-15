@@ -495,6 +495,12 @@ const { } = Astro.props;
 
     let current = 0;
     const total = 3;
+    const cards = Array.from(track.querySelectorAll('.swipe-card')) as HTMLElement[];
+
+    function isInteractiveTarget(target: EventTarget | null): boolean {
+      const element = target as HTMLElement | null;
+      return Boolean(element?.closest('button, a'));
+    }
 
     function goTo(index: number) {
       current = Math.max(0, Math.min(total - 1, index));
@@ -504,6 +510,11 @@ const { } = Astro.props;
       });
       prevBtn.disabled = current === 0;
       nextBtn.disabled = current === total - 1;
+      const activeCard = cards[current];
+      if (activeCard && outer) {
+        // Use offsetHeight to get the current visible height including the snippet's max-height constraint
+        outer.style.height = activeCard.offsetHeight + 'px';
+      }
     }
 
     prevBtn.addEventListener('click', () => goTo(current - 1));
@@ -514,11 +525,17 @@ const { } = Astro.props;
 
     let touchStartX = 0;
     outer.addEventListener('touchstart', (event) => {
+      if (isInteractiveTarget(event.target)) {
+        touchStartX = 0;
+        return;
+      }
       touchStartX = event.changedTouches[0].clientX;
     }, { passive: true });
 
     outer.addEventListener('touchend', (event) => {
+      if (touchStartX === 0) return;
       const dx = event.changedTouches[0].clientX - touchStartX;
+      touchStartX = 0;
       if (Math.abs(dx) > 40) {
         goTo(dx < 0 ? current + 1 : current - 1);
       }
@@ -528,7 +545,7 @@ const { } = Astro.props;
     let pointerStartX = 0;
 
     outer.addEventListener('pointerdown', (event) => {
-      if (event.button !== 0) return;
+      if (event.button !== 0 || isInteractiveTarget(event.target)) return;
       dragging = true;
       pointerStartX = event.clientX;
       (event.currentTarget as HTMLElement).setPointerCapture(event.pointerId);
@@ -551,18 +568,40 @@ const { } = Astro.props;
       dragging = false;
     });
 
-    document.querySelectorAll('.card-view-more').forEach((button) => {
-      const btn = button as HTMLButtonElement;
-      btn.addEventListener('click', () => {
-        const card = btn.closest('.swipe-card');
-        const snippet = card?.querySelector('.card-snippet');
-        const fade = card?.querySelector('.card-snippet-fade') as HTMLElement | null;
-        if (!snippet) return;
-        const expanded = snippet.classList.toggle('expanded');
-        if (fade) {
-          fade.style.opacity = expanded ? '0' : '1';
+    const viewMoreButtons = Array.from(document.querySelectorAll('.card-view-more')) as HTMLButtonElement[];
+    const snippets = Array.from(document.querySelectorAll('.card-snippet')) as HTMLElement[];
+    const fades = Array.from(document.querySelectorAll('.card-snippet-fade')) as HTMLElement[];
+    function setCardExpanded(cardIndex: number, expanded: boolean) {
+      const snippet = snippets[cardIndex];
+      const fade = fades[cardIndex];
+      const btn = viewMoreButtons[cardIndex];
+      if (!snippet || !fade || !btn) return;
+
+      snippet.classList.toggle('expanded', expanded);
+      snippet.style.maxHeight = expanded ? snippet.scrollHeight + 'px' : '9rem';
+      fade.style.opacity = (expanded || snippet.scrollHeight <= 144) ? '0' : '1';
+      btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      btn.textContent = expanded ? 'Show less ↑' : 'View more ↓';
+
+      if (cardIndex === current) {
+        const activeCard = cards[current];
+        if (activeCard && outer) {
+          // Calculate target height: card height - current snippet height + target snippet height
+          const currentSnippetHeight = snippet.offsetHeight;
+          const targetSnippetHeight = expanded ? snippet.scrollHeight : Math.min(snippet.scrollHeight, 144);
+          const currentCardHeight = activeCard.offsetHeight;
+          const targetCardHeight = currentCardHeight - currentSnippetHeight + targetSnippetHeight;
+          
+          outer.style.height = targetCardHeight + 'px';
         }
-        btn.textContent = expanded ? 'Show less ↑' : 'View more ↓';
+      }
+    }
+
+    viewMoreButtons.forEach((btn, index) => {
+      setCardExpanded(index, false);
+      btn.addEventListener('click', () => {
+        const isExpanded = snippets[index]?.classList.contains('expanded') ?? false;
+        setCardExpanded(index, !isExpanded);
       });
     });
 
@@ -687,18 +726,18 @@ const { } = Astro.props;
     animation: shimmer 1.5s infinite;
   }
 
-  .card-snippet {
+  :global(.card-snippet) {
     overflow: hidden;
     transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    max-height: 4.5rem;
+    max-height: 9rem;
     position: relative;
   }
 
-  .card-snippet.expanded {
+  :global(.card-snippet.expanded) {
     max-height: 800px;
   }
 
-  .card-snippet-fade {
+  :global(.card-snippet-fade) {
     position: absolute;
     bottom: 2rem;
     left: 0;
@@ -709,30 +748,32 @@ const { } = Astro.props;
     transition: opacity 0.2s ease;
   }
 
-  :global(.dark) .card-snippet-fade {
+  :global(.dark .card-snippet-fade) {
     background: linear-gradient(to bottom, transparent, rgb(30 41 59));
   }
 
-  .swipe-track-outer {
+  :global(.swipe-track-outer) {
     overflow: hidden;
     position: relative;
     touch-action: pan-y;
+    transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  .swipe-track {
+  :global(.swipe-track) {
     display: flex;
+    align-items: flex-start;
     transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform;
   }
 
-  .swipe-card {
+  :global(.swipe-card) {
     flex: 0 0 100%;
     min-width: 0;
     position: relative;
     padding-bottom: 0.25rem;
   }
 
-  .swipe-dot {
+  :global(.swipe-dot) {
     width: 6px;
     height: 6px;
     border-radius: 9999px;
@@ -741,16 +782,16 @@ const { } = Astro.props;
     cursor: pointer;
   }
 
-  .swipe-dot.active {
+  :global(.swipe-dot.active) {
     background-color: rgb(99 102 241);
     transform: scale(1.4);
   }
 
-  :global(.dark) .swipe-dot {
+  :global(.dark .swipe-dot) {
     background-color: rgb(100 116 139);
   }
 
-  :global(.dark) .swipe-dot.active {
+  :global(.dark .swipe-dot.active) {
     background-color: rgb(129 140 248);
   }
 </style>
