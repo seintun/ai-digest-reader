@@ -41,17 +41,25 @@ OUTPUT RULES — read carefully:
 
 def generate_summary(ranked_posts: List[Dict]) -> Optional[Dict[str, Any]]:
     """Generate a schema-v2 summary from ranked content-aware posts."""
+    summary, _ = generate_summary_with_meta(ranked_posts)
+    return summary
+
+
+def generate_summary_with_meta(ranked_posts: List[Dict]) -> tuple[Optional[Dict[str, Any]], Dict[str, Any]]:
+    """Generate schema-v2 summary with metadata about source/fallback behavior."""
     if not ranked_posts:
-        return None
+        return None, {"source": "none", "generated": False}
 
     prompt = _build_prompt(ranked_posts)
     raw = _call_openrouter(prompt)
+    source = "openrouter"
     if raw is None:
         raw = _call_claude_cli(prompt)
+        source = "claude_cli"
     if raw is None:
-        return None
+        return None, {"source": "none", "generated": False}
 
     parsed = _parse_claude_response(raw)
     if parsed and validate_summary(parsed):
-        return parsed
-    return None
+        return parsed, {"source": source, "generated": True}
+    return None, {"source": source, "generated": False}
