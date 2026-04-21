@@ -21,7 +21,7 @@ export interface Story {
   s: number;       // score (0 for RSS)
   c: number;       // comment count (0 for RSS)
   a: string;       // author
-  cat?: string;    // category: "AI & ML" | "Tech" | "Science" | "World News" | "Futurology" | "Startups"
+  cat?: string;    // category: "AI & ML" | "Tech" | "Security" | "Science" | "World News" | "Business" | "Futurology" | "Startups"
 }
 
 export type StorySource = 'reddit' | 'hn' | 'rss';
@@ -73,6 +73,6 @@ export interface Digest {
 
 export type ViewMode = 'cards' | 'list' | 'glance';
 export type Source = 'all' | 'reddit' | 'hn' | 'rss';
-export type Category = 'all' | 'AI & ML' | 'Tech' | 'Science' | 'World News' | 'Futurology' | 'Startups';
+export type Category = 'all' | 'AI & ML' | 'Tech' | 'Security' | 'Science' | 'World News' | 'Business' | 'Futurology' | 'Startups';
 
-export const CATEGORIES: Category[] = ['all', 'AI & ML', 'Tech', 'Science', 'World News', 'Futurology', 'Startups'];
+export const CATEGORIES: Category[] = ['all', 'AI & ML', 'Tech', 'Security', 'Science', 'World News', 'Business', 'Futurology', 'Startups'];

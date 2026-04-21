@@ -38,7 +38,7 @@ def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[
             "s": post.get("score", 0),
             "c": post.get("comments", 0),
             "a": post.get("author", post.get("by", "")),
-            "cat": category or post.get("category", ""),
+            "cat": post.get("category", "") or category,
         })
     return normalized
 
@@ -66,22 +66,11 @@ def main():
     hn_posts = fetch_hn_posts(limit=args.limit)
     print(f"Found {len(hn_posts)} HN posts")
 
-    # Normalize Reddit posts with per-subreddit category
-    reddit_normalized = []
-    for i, post in enumerate(all_reddit_posts):
+    # Tag each post with its subreddit category, then normalize in one pass
+    for post in all_reddit_posts:
         sub = post.get("subreddit", "")
-        cat = SUBREDDIT_CATEGORIES.get(sub, "Tech")
-        reddit_normalized.append({
-            "i": f"rd-{i}",
-            "t": post.get("title", ""),
-            "u": post.get("url", ""),
-            "p": post.get("permalink", ""),
-            "b": post.get("body", ""),
-            "s": post.get("score", 0),
-            "c": post.get("comments", 0),
-            "a": post.get("author", ""),
-            "cat": cat,
-        })
+        post["category"] = SUBREDDIT_CATEGORIES.get(sub, "Tech")
+    reddit_normalized = normalize_posts(all_reddit_posts, "rd")
 
     hn_normalized = normalize_posts(hn_posts, "hn", category=HN_CATEGORY)
 
