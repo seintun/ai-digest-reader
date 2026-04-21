@@ -5,7 +5,7 @@ Automated AI news digest aggregating content from Reddit, Hacker News, and RSS f
 ## Features
 
 - **Multi-source aggregation** — 24 Reddit subs + HN front page + 14 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
-- **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
+- **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2.6`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
 - **Story categories** — AI & ML, Tech, Security, Science, World News, Business, Futurology, Startups
 - **Schema v4** — Ranked stories, content-quality metadata, optional RSS stories, run metrics
 - **Automation** — GitHub Actions runs twice daily (7am + 6pm UTC); manual trigger also available
@@ -185,7 +185,11 @@ output/
     "scraping": {"candidate_urls": 40, "success_rate": 82.5, "cache_hit_rate": 35.0},
     "ranking": {"total_posts": 120, "llm_quality_used": true},
     "summary": {"source": "openrouter", "generated": true},
-    "cost": {"estimated_usd": 0.17, "within_budget": true},
+    "cost": {
+      "pricing_source": "https://platform.kimi.ai/docs/pricing/chat-k26 (static rates: input=$0.213/M, output=$4.00/M)",
+      "session_model_usd": 0.021384,
+      "within_budget": true
+    },
     "degradation": {
       "scraping_fallback_used": false,
       "ranking_fallback_used": false,
@@ -239,6 +243,7 @@ The pipeline degrades safely in this order when dependencies fail:
 5. **No-summary fallback**: if all LLM paths fail, digest still outputs stories without `summary`.
 
 Every run records which fallback paths were used in `digest.json.metrics.degradation`.
+Per-run model spend from actual API token usage is recorded in `digest.json.metrics.cost.session_model_usd`.
 
 ## Sources
 

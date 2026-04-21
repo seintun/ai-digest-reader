@@ -38,7 +38,7 @@ def test_build_prompt_truncates_content_to_2000_chars():
 
 
 def test_generate_summary_with_meta_returns_none_when_calls_fail(monkeypatch):
-    monkeypatch.setattr(analyzer_v2, "_call_openrouter", lambda _prompt: None)
+    monkeypatch.setattr(analyzer_v2, "_call_openrouter_with_usage", lambda _prompt: (None, {"input_tokens": 0, "output_tokens": 0}))
     monkeypatch.setattr(analyzer_v2, "_call_claude_cli", lambda _prompt: None)
     summary, meta = analyzer_v2.generate_summary_with_meta(
         [{"i": "rd-0", "t": "Story", "rank": 90, "s": 1, "c": 1, "content_quality": 1, "content": "x"}]

@@ -12,7 +12,7 @@ Both analyzers use a two-tier provider approach: OpenRouter API (preferred) with
 
 ## Provider Hierarchy
 1. **OpenRouter API** (`OPENROUTER_API_KEY` env var) — primary
-   - Model: `moonshotai/kimi-k2` (cost-effective, ~$0.15/M tokens)
+   - Model: `moonshotai/kimi-k2.6` (cost-effective, ~$0.15/M tokens)
    - Uses OpenAI-compatible SDK (`openai` package)
    - 90s timeout
 2. **Claude CLI** (fallback, no API key needed) — user's Claude subscription
@@ -43,6 +43,6 @@ Per-run fallback status is recorded in `digest.json.metrics.degradation`.
 ## Adding a New Model
 Set `OPENROUTER_API_KEY` and change the model in `analyzer.py` and `ranker.py` OpenRouter calls:
 ```python
-model="moonshotai/kimi-k2"  # or "x-ai/grok-4-0131", "google/gemini-flash-1.5", etc.
+model="moonshotai/kimi-k2.6"  # or "x-ai/grok-4-0131", "google/gemini-flash-1.5", etc.
 ```
 See https://openrouter.ai/models for available models and pricing.

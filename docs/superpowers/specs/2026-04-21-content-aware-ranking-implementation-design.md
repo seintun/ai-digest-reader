@@ -276,8 +276,8 @@ docs: update README with new scraping capabilities
 
 | Step | Model | Input | Cost Estimate |
 |------|-------|-------|---------------|
-| Ranking | `moonshotai/kimi-k2` | 40 × 200 chars | $0.05 |
-| Summarization | `moonshotai/kimi-k2` | 15 × 2000 chars | $0.12 |
+| Ranking | `moonshotai/kimi-k2.6` | 40 × 200 chars | $0.05 |
+| Summarization | `moonshotai/kimi-k2.6` | 15 × 2000 chars | $0.12 |
 | **Total** | | | **$0.17/run** |
 
 **Optimizations**:

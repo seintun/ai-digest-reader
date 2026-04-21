@@ -38,7 +38,7 @@ def test_cross_source_signal_applies_to_same_story_across_sources():
 
 
 def test_ranker_falls_back_when_llm_quality_unavailable(monkeypatch):
-    monkeypatch.setattr(ranker, "_rate_content_quality", lambda _posts, _content: None)
+    monkeypatch.setattr(ranker, "_rate_content_quality", lambda _posts, _content: (None, {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0}))
     posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 100, "c": 20, "b": "body"}]
     ranked = rank_posts(posts, {})
     assert ranked[0]["content_quality"] == 0

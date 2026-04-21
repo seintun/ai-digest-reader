@@ -2,7 +2,7 @@
 import json
 import os
 import subprocess
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 
 from schema import validate_summary
 
@@ -52,9 +52,15 @@ def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional
 
 def _call_openrouter(prompt: str) -> Optional[str]:
     """Call OpenRouter API. Returns raw response text or None."""
+    raw, _ = _call_openrouter_with_usage(prompt)
+    return raw
+
+
+def _call_openrouter_with_usage(prompt: str) -> Tuple[Optional[str], Dict[str, int]]:
+    """Call OpenRouter API. Returns (raw response text or None, token usage)."""
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
-        return None
+        return None, {"input_tokens": 0, "output_tokens": 0}
     try:
         from openai import OpenAI
         client = OpenAI(
@@ -66,17 +72,23 @@ def _call_openrouter(prompt: str) -> Optional[str]:
             },
         )
         response = client.chat.completions.create(
-            model="moonshotai/kimi-k2",
+            model="moonshotai/kimi-k2.6",
             messages=[{"role": "user", "content": prompt}],
             timeout=90,
         )
-        return response.choices[0].message.content
+        usage = response.usage
+        input_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
+        output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
+        return response.choices[0].message.content, {
+            "input_tokens": input_tokens,
+            "output_tokens": output_tokens,
+        }
     except ImportError:
         print("openai package not installed, falling back to Claude CLI")
-        return None
+        return None, {"input_tokens": 0, "output_tokens": 0}
     except Exception as e:
         print(f"OpenRouter API error: {e}")
-        return None
+        return None, {"input_tokens": 0, "output_tokens": 0}
 
 
 def _call_claude_cli(prompt: str) -> Optional[str]:

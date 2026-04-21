@@ -10,6 +10,8 @@ from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
+from model_pricing import usage_to_dict
+
 
 def _source_from_id(story_id: str) -> str:
     return (story_id or "").split("-", 1)[0]
@@ -104,10 +106,10 @@ def _parse_json_object(text: str) -> Optional[dict]:
             return None
 
 
-def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Optional[Dict[str, int]]:
+def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int]]:
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
-        return None
+        return None, usage_to_dict(0, 0)
     candidates = []
     for post in posts:
         content = scraped_content.get(post.get("u", ""), "") or ""
@@ -115,7 +117,7 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         if excerpt:
             candidates.append((post.get("i", ""), excerpt))
     if not candidates:
-        return None
+        return None, usage_to_dict(0, 0)
 
     lines = [
         "Rate each excerpt for substance from 1 (clickbait/thin) to 10 (highly substantive).",
@@ -125,6 +127,8 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         lines.append(f"[{story_id}] {excerpt}")
     prompt = "\n".join(lines)
 
+    input_tokens = 0
+    output_tokens = 0
     try:
         from openai import OpenAI
 
@@ -137,20 +141,23 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
             },
         )
         response = client.chat.completions.create(
-            model="moonshotai/kimi-k2",
+            model="moonshotai/kimi-k2.6",
             messages=[{"role": "user", "content": prompt}],
             timeout=60,
         )
         raw = response.choices[0].message.content or ""
+        usage = response.usage
+        input_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
+        output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
     except Exception:
-        return None
+        return None, usage_to_dict(0, 0)
 
     parsed = _parse_json_object(raw)
     if not parsed:
-        return None
+        return None, usage_to_dict(input_tokens, output_tokens)
     items = parsed.get("ratings")
     if not isinstance(items, list):
-        return None
+        return None, usage_to_dict(input_tokens, output_tokens)
 
     ratings: Dict[str, int] = {}
     for item in items:
@@ -165,14 +172,14 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         except (TypeError, ValueError):
             continue
         ratings[story_id] = max(1, min(10, rating_int))
-    return ratings or None
+    return ratings or None, usage_to_dict(input_tokens, output_tokens)
 
 
 def rank_posts_with_metrics(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[List[Dict], Dict]:
     """Score and rank posts with rank/content metadata and ranking metrics."""
     ranked = [dict(post) for post in posts]
     cross_source_scores = _compute_cross_source_scores(ranked)
-    llm_quality = _rate_content_quality(ranked, scraped_content)
+    llm_quality, llm_usage = _rate_content_quality(ranked, scraped_content)
 
     for post in ranked:
         story_id = post.get("i", "")
@@ -198,6 +205,7 @@ def rank_posts_with_metrics(posts: List[Dict], scraped_content: Dict[str, str]) 
     metrics = {
         "total_posts": len(ranked),
         "llm_quality_used": llm_quality is not None,
+        "llm_usage": llm_usage,
     }
     return ranked, metrics
 
