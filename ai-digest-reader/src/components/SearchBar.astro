@@ -31,6 +31,8 @@
 </div>
 
 <script>
+  import type {} from '../lib/window-hooks';
+
   const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
   const searchClear = document.getElementById('search-clear') as HTMLButtonElement | null;
   const searchInfo = document.getElementById('search-results-info');
@@ -60,7 +62,7 @@
   });
 
   // Called from index.astro after filtering
-  (window as any).updateSearchInfo = (count: number, query: string) => {
+  window.updateSearchInfo = (count: number, query: string) => {
     if (!searchInfo) return;
     if (query) {
       searchInfo.textContent = `${count} result${count !== 1 ? 's' : ''} for "${query}"`;
