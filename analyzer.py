@@ -1,57 +1,97 @@
-"""Claude CLI integration for AI-powered digest summary generation."""
-import subprocess
+"""AI summary generator using OpenRouter API with Claude CLI fallback."""
 import json
+import os
+import subprocess
 from typing import Dict, Any, List, Optional
+
+from schema import validate_summary
 
 
 def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional[Dict[str, Any]]:
     """
-    Calls claude CLI with all stories, returns validated structured JSON.
+    Calls OpenRouter API (with Claude CLI fallback), returns validated structured JSON.
     Retries once if validation fails. Returns None if analysis fails.
     """
-    from schema import validate_summary
-
     prompt = _build_prompt(reddit_posts, hn_posts)
 
+    raw = _call_openrouter(prompt)
+    if raw is None:
+        raw = _call_claude_cli(prompt)
+    if raw is None:
+        return None
+
+    parsed = _parse_claude_response(raw)
+    if parsed and validate_summary(parsed):
+        return parsed
+
+    # Retry once with a stricter instruction
+    print("Warning: Summary failed schema validation — retrying with stricter prompt.")
+    retry_prompt = (
+        prompt
+        + "\n\nCRITICAL: Your previous response did not match the required schema. "
+        "Output ONLY the raw JSON object. No text before or after. "
+        "schema_version must be \"2\". mustRead must have exactly 3 items. "
+        "fullBrief must have intro, sections (2-4 items), and closing. "
+        "All values must be plain text strings — no markdown."
+    )
+
+    raw2 = _call_openrouter(retry_prompt)
+    if raw2 is None:
+        raw2 = _call_claude_cli(retry_prompt)
+    if raw2 is None:
+        print("Warning: Summary failed schema validation after retry. Summary will be omitted.")
+        return None
+
+    parsed2 = _parse_claude_response(raw2)
+    if parsed2 and validate_summary(parsed2):
+        return parsed2
+
+    print("Warning: Summary failed schema validation after retry. Summary will be omitted.")
+    return None
+
+
+def _call_openrouter(prompt: str) -> Optional[str]:
+    """Call OpenRouter API. Returns raw response text or None."""
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        return None
+    try:
+        from openai import OpenAI
+        client = OpenAI(
+            base_url="https://openrouter.ai/api/v1",
+            api_key=api_key,
+            default_headers={
+                "HTTP-Referer": "https://dailydigest.vercel.app",
+                "X-Title": "DailyDigest",
+            },
+        )
+        response = client.chat.completions.create(
+            model="moonshotai/kimi-k2",
+            messages=[{"role": "user", "content": prompt}],
+            timeout=90,
+        )
+        return response.choices[0].message.content
+    except ImportError:
+        print("openai package not installed, falling back to Claude CLI")
+        return None
+    except Exception as e:
+        print(f"OpenRouter API error: {e}")
+        return None
+
+
+def _call_claude_cli(prompt: str) -> Optional[str]:
+    """Call Claude CLI subprocess. Returns raw response text or None."""
     try:
         result = subprocess.run(
             ["claude", "--print", prompt],
             capture_output=True,
             text=True,
-            timeout=60
+            timeout=60,
         )
-
         if result.returncode != 0:
             print(f"Claude CLI error: {result.stderr}")
             return None
-
-        parsed = _parse_claude_response(result.stdout)
-        if parsed and validate_summary(parsed):
-            return parsed
-
-        # Retry once with a stricter instruction
-        print("Warning: Summary failed schema validation — retrying with stricter prompt.")
-        retry_prompt = (
-            prompt
-            + "\n\nCRITICAL: Your previous response did not match the required schema. "
-            "Output ONLY the raw JSON object. No text before or after. "
-            "schema_version must be \"2\". mustRead must have exactly 3 items. "
-            "fullBrief must have intro, sections (2-4 items), and closing. "
-            "All values must be plain text strings — no markdown."
-        )
-        result2 = subprocess.run(
-            ["claude", "--print", retry_prompt],
-            capture_output=True,
-            text=True,
-            timeout=60
-        )
-        parsed2 = _parse_claude_response(result2.stdout)
-        if parsed2 and validate_summary(parsed2):
-            return parsed2
-
-        print("Warning: Summary failed schema validation after retry. Summary will be omitted.")
-        return None
-
+        return result.stdout
     except FileNotFoundError:
         print("Warning: claude CLI not found. Install with: npm install -g @anthropic-ai/claude-code")
         return None
@@ -59,7 +99,7 @@ def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional
         print("Warning: Claude CLI timed out after 60s")
         return None
     except Exception as e:
-        print(f"Warning: Claude analysis failed: {e}")
+        print(f"Warning: Claude CLI failed: {e}")
         return None
 
 
