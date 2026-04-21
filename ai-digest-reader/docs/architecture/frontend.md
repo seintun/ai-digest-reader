@@ -50,6 +50,24 @@ state.filteredStories
 DOM innerHTML update
 ```
 
+## Performance
+
+### Code Splitting
+Vite auto-splits JS chunks (no `manualChunks` override). The current single bundle is ~40KB gzipped.
+
+### Fonts
+Inter and Newsreader are self-hosted via `@fontsource` — no render-blocking Google Fonts request. DM Serif Display and IBM Plex Mono load from Google Fonts CDN with `display=swap`.
+
+### Service Worker (`public/sw.js`)
+- **Shell assets** (HTML, manifest, offline.html): cache-first, precached on install
+- **digest.json**: stale-while-revalidate — instant load from cache, background refresh
+- **Other assets**: cache-first with network fallback
+- **Offline fallback**: `/offline.html` served when network unavailable
+
+### Bundle Size (target)
+- JS bundle: < 50KB gzip
+- Fonts: served locally, no network waterfall
+
 ## Adding a New Source
 1. Add fetcher in Python backend (`fetchers/`)
 2. Add new prefix (e.g. `gh-`) to digest.json in `digest.py`
