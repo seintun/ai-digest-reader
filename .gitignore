@@ -26,4 +26,5 @@ package-lock.json
 # Logs
 *.log
 npm-debug.log*
+logs/
 .claude/
