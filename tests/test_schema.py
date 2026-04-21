@@ -304,3 +304,40 @@ def test_sections_with_5_fails():
         {"heading": "S5", "body": "B5."},
     ]
     assert validate_summary(d) is False
+
+
+def test_schema_version_constant():
+    from schema import SCHEMA_VERSION
+    assert SCHEMA_VERSION == "3"
+
+
+def test_validate_v3_digest_valid():
+    from schema import validate_v3_digest
+    valid = {
+        "v": 3, "d": "2026-04-21", "g": "2026-04-21T10:00:00",
+        "r": [], "h": []
+    }
+    assert validate_v3_digest(valid) is True
+
+
+def test_validate_v3_digest_wrong_version():
+    from schema import validate_v3_digest
+    assert validate_v3_digest({"v": 2, "d": "x", "g": "x", "r": [], "h": []}) is False
+
+
+def test_validate_v3_digest_missing_key():
+    from schema import validate_v3_digest
+    assert validate_v3_digest({"v": 3, "d": "x", "g": "x", "r": []}) is False  # missing h
+
+
+def test_validate_v3_digest_with_rs():
+    from schema import validate_v3_digest
+    valid = {"v": 3, "d": "2026-04-21", "g": "x", "r": [], "h": [], "rs": []}
+    assert validate_v3_digest(valid) is True
+
+
+def test_validate_v3_digest_not_dict():
+    from schema import validate_v3_digest
+    assert validate_v3_digest(None) is False
+    assert validate_v3_digest("string") is False
+    assert validate_v3_digest([]) is False

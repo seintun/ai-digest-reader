@@ -110,6 +110,8 @@ SCHEMA_VERSION = "3"
 
 def validate_v3_digest(digest: Any) -> bool:
     """Validate top-level structure of a v3 digest envelope."""
+    if not isinstance(digest, dict):
+        return False
     required = {"v", "d", "g", "r", "h"}
     if not all(k in digest for k in required):
         return False
