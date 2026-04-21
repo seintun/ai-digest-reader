@@ -1,122 +1,54 @@
 # AI Digest Reader
 
-A mobile-first PWA news reader that aggregates AI-related content from Reddit and Hacker News into a clean, personalized digest with AI-generated summaries.
+Mobile-first PWA news reader that aggregates AI and tech content from Reddit, Hacker News, and RSS feeds into a clean daily digest with AI-generated summaries.
 
 ## Features
 
-- **Multi-source aggregation** - Combines posts from Reddit (r/ArtificialIntelligence, r/LocalLLaMA, r/ChatGPT, r/MachineLearning) and Hacker News
-- **AI Summary** - Claude-powered daily briefings with themes, breaking news, and must-read articles
-- **Tabbed summary display** - Quick overview, themes, breaking news, and must-read in a tabbed interface
-- **Three view modes** - Cards, list, and glance views for different browsing preferences
-- **Source filtering** - Filter content by Reddit, Hacker News, or view all
-- **Dark mode** - Automatic theme detection with manual toggle
-- **Offline support** - PWA with service worker caching
-- **Responsive design** - Mobile-first approach with desktop support
+- **Multi-source** — Reddit (11 subs), Hacker News, 10 RSS feeds
+- **AI summaries** — Daily briefings with themes, breaking news, must-reads, and a full brief (via OpenRouter/Kimi K2)
+- **Search** — Real-time full-text search across titles and excerpts
+- **Category filters** — All, AI & ML, Tech, Science, World News, Futurology, Startups
+- **Source filters** — Reddit, HN, RSS, or All
+- **Three view modes** — Cards, list, and glance
+- **Bookmarks** — Save stories to a local bookmarks list (localStorage)
+- **Bottom navigation** — Mobile-native nav bar (Home / Search / Saved)
+- **Dark mode** — System-aware with manual toggle
+- **Offline support** — PWA service worker with stale-while-revalidate
+- **Responsive** — Mobile-first, works on any screen size
 
 ## Quick Start
-
-### Frontend (Astro)
 
 ```bash
 # Install dependencies
 cd ai-digest-reader
 npm install
 
-# Start development server
+# Development server
 npm run dev
 
-# Build for production
+# Production build
 npm run build
+
+# Type check
+npm run check
 
 # Preview production build
 npm run preview
 ```
 
-### Backend (Python Digest Generator)
-
-```bash
-# Create virtual environment
-python3 -m venv venv
-
-# Activate venv
-source venv/bin/activate  # macOS/Linux
-# or: venv\Scripts\activate  # Windows
-
-# Install dependencies
-pip install requests
-
-# Generate digest JSON with AI summary (requires Claude CLI)
-python digest.py
-
-# Generate without AI summary
-python digest.py --no-ai
-
-# Generate and save to public/data/digest.json
-python digest.py --output-dir ai-digest-reader/public/data/
-```
-
-### Prerequisites for AI Summaries
-
-Install Claude CLI for AI-powered summaries:
-
-```bash
-# macOS
-brew install anthropic/anthropic/claude
-
-# or via npm
-npm install -g @anthropic-ai/claude
-
-# Verify
-claude --version
-```
-
-### Running with Sample Data
-
-The project includes sample data at `public/data/digest.json`. After generating your own data, the JSON is printed to stdout - redirect it to the data file:
-
-```bash
-python scripts/generator.py > public/data/digest.json
-```
-
-## AI Summary Feature
-
-The digest reader displays AI-generated summaries created by Claude:
-
-| Tab | Content |
-|-----|---------|
-| **Overview** | One-line summary of the day's AI news |
-| **Themes** | Key themes and trends identified |
-| **Breaking** | Urgent or important breaking news |
-| **Must-Read** | Curated essential articles with reasons |
-
-### Summary Generation
-
-Summaries are generated during digest creation using `analyzer.py`:
-
-1. Stories are collected from Reddit and Hacker News
-2. Claude CLI analyzes the stories
-3. Structured summary is generated with themes, breaking news, and must-read items
-4. Summary is included in `digest.json` (schema v2)
-
-### Without AI Summary
-
-If Claude CLI is unavailable, use `--no-ai`:
-
-```bash
-python digest.py --no-ai
-```
-
-This generates a v1-compatible digest without the AI summary field.
-
 ## Tech Stack
 
 | Layer | Technology |
 |-------|------------|
-| Frontend | Astro 5, Tailwind CSS 3, Vanilla JavaScript |
-| Backend | Python CLI (data generation + AI analysis) |
-| AI Summaries | Claude CLI (Anthropic) |
+| Framework | Astro 4 |
+| Styling | Tailwind CSS 3 |
+| Fonts | @fontsource/inter, @fontsource/newsreader (self-hosted) |
+| Language | TypeScript (strict) |
+| State | Vanilla JS + custom DOM events |
+| Storage | localStorage (bookmarks, theme) |
+| PWA | Service worker with dual cache |
 | Deployment | Vercel |
-| Data | JSON (schema v2) |
+| Data | digest.json (schema v3) |
 
 ## Project Structure
 
@@ -124,33 +56,142 @@ This generates a v1-compatible digest without the AI summary field.
 ai-digest-reader/
 ├── src/
 │   ├── pages/
-│   │   └── api/digest.ts    ← Serverless API endpoint
+│   │   └── index.astro          ← Main page (thin orchestrator)
 │   ├── components/
-│   │   ├── DigestSummary.astro  ← AI summary display
-│   │   └── ...
-│   └── layouts/
+│   │   ├── Header.astro         ← App header with theme toggle
+│   │   ├── Controls.astro       ← Source + view mode tabs
+│   │   ├── SearchBar.astro      ← Real-time search input
+│   │   ├── CategoryFilter.astro ← Category pill tabs
+│   │   ├── BottomNav.astro      ← Mobile bottom navigation
+│   │   └── Icons.astro          ← Centralized SVG icon library
+│   ├── lib/
+│   │   ├── utils.ts             ← Formatting + filtering utilities
+│   │   ├── storage.ts           ← localStorage helpers (bookmarks, theme)
+│   │   └── window-hooks.ts      ← Typed Window interface augmentation
+│   ├── styles/
+│   │   └── global.css           ← Base styles, font loading, dark mode
+│   └── types.ts                 ← All TypeScript types (Story, Digest, etc.)
 ├── public/
-│   └── data/digest.json     ← Pre-generated digest data
-├── package.json
-└── vercel.json
+│   ├── data/digest.json         ← Pre-generated digest (updated by pipeline)
+│   ├── sw.js                    ← Service worker
+│   ├── manifest.json            ← PWA manifest
+│   └── offline.html             ← Offline fallback page
+├── docs/                        ← Architecture and developer docs
+├── astro.config.mjs
+├── tailwind.config.mjs
+└── package.json
 ```
 
-## Screenshots
+## Component Architecture
 
-*Coming soon*
+Components communicate via custom DOM events — no framework state management needed.
 
-### Card View with AI Summary
-![Card View Placeholder]
+| Event | Dispatched by | Handled in |
+|-------|--------------|------------|
+| `searchchange` | `SearchBar` | `index.astro` |
+| `categorychange` | `CategoryFilter` | `index.astro` |
+| `sourcechange` | `Controls` | `index.astro` |
+| `navchange` | `BottomNav` | `index.astro` |
 
-### Summary Tabs
-![Summary Display Placeholder]
+### Window hooks
 
-### List View
-![List View Placeholder]
+`src/lib/window-hooks.ts` augments the global `Window` interface so cross-component callbacks are fully typed without `(window as any)` casts:
+
+```ts
+window.updateSearchInfo(count, query)
+window.setNavActive(section)
+window.updateBookmarkBadge(count)
+```
+
+## Data Flow
+
+```
+digest.json
+    └── Astro reads at build time (or runtime fetch)
+            ├── Reddit stories (digest.r[])
+            ├── HN stories (digest.h[])
+            └── RSS stories (digest.rs[])
+                    ↓
+            AppState { stories, searchQuery, category, source, bookmarks }
+                    ↓
+            filterStories() → filtered[]
+                    ↓
+            renderCards() / renderList() / renderGlance() / renderBookmarks()
+```
+
+## Types
+
+All types are in `src/types.ts`. Key interfaces:
+
+```ts
+interface Story {
+  i: string;    // id: rd-N, hn-N, rs-N
+  t: string;    // title
+  u: string;    // article URL
+  p?: string;   // discussion permalink
+  b?: string;   // body excerpt
+  s: number;    // score
+  c: number;    // comment count
+  a: string;    // author
+  cat?: string; // category
+}
+
+interface Digest {
+  v: 2 | 3;
+  d: string;         // date YYYY-MM-DD
+  g: string;         // generated ISO timestamp
+  r: Story[];        // Reddit
+  h: Story[];        // HN
+  rs?: Story[];      // RSS (v3+)
+  summary?: DigestSummary;
+}
+```
+
+## PWA / Offline
+
+The service worker (`public/sw.js`) uses two caches:
+
+- **`ai-digest-v2`** — App shell (HTML, CSS, JS, fonts)
+- **`digest-data-v1`** — `digest.json` with stale-while-revalidate: serve cached immediately, fetch fresh in background
+
+`public/offline.html` is shown when both the network and cache miss.
+
+## Development
+
+### Adding a new category
+
+1. Add to `CATEGORIES` in `src/types.ts`
+2. Add a button in `CategoryFilter.astro`
+3. Update `config.py` and `SUBREDDIT_CATEGORIES` / `RSS_FEEDS` in the Python backend
+
+### Adding a new RSS source
+
+Edit `config.py`:
+
+```python
+RSS_FEEDS = [
+    # ...existing feeds...
+    {
+        "url": "https://example.com/feed.xml",
+        "source": "Example",
+        "category": "Tech",
+    },
+]
+```
+
+### Running type checks
+
+```bash
+npm run check
+```
+
+Uses `astro check` which runs `tsc` over all `.astro` and `.ts` files.
 
 ## Documentation
 
-- [Architecture](ARCHITECTURE.md)
-- [Data Schema](DATA_SCHEMA.md)
+- [Architecture overview](ARCHITECTURE.md)
+- [Data schema](DATA_SCHEMA.md)
+- [Deployment guide](DEPLOYMENT.md)
 - [Troubleshooting](TROUBLESHOOTING.md)
 - [Changelog](CHANGELOG.md)
+- [Architecture docs](architecture/) — rss-fetcher, ai-summarization, automation, frontend
