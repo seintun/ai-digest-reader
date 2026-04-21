@@ -29,6 +29,7 @@ def _fetch_item(story_id: int) -> dict | None:
             "score": story.get("score", 0),
             "author": story.get("by", ""),
             "comments": story.get("descendants", 0),
+            "ts": story.get("time"),
         }
     except requests.RequestException:
         return None

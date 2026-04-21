@@ -104,8 +104,8 @@ def validate_summary(data: Any) -> bool:
         return False
 
 
-# v3 schema additions
-SCHEMA_VERSION = "3"
+# digest schema additions
+SCHEMA_VERSION = "4"
 
 
 def validate_v3_digest(digest: Any) -> bool:
@@ -116,5 +116,17 @@ def validate_v3_digest(digest: Any) -> bool:
     if not all(k in digest for k in required):
         return False
     if digest.get("v") != 3:
+        return False
+    return True
+
+
+def validate_v4_digest(digest: Any) -> bool:
+    """Validate top-level structure of a v4 digest envelope."""
+    if not isinstance(digest, dict):
+        return False
+    required = {"v", "d", "g", "r", "h", "rs"}
+    if not all(k in digest for k in required):
+        return False
+    if digest.get("v") != 4:
         return False
     return True
