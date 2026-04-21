@@ -1,13 +1,6 @@
 ---
-const categories = [
-  { id: 'all', label: 'All' },
-  { id: 'AI & ML', label: 'AI & ML' },
-  { id: 'Tech', label: 'Tech' },
-  { id: 'Science', label: 'Science' },
-  { id: 'World News', label: 'World News' },
-  { id: 'Futurology', label: 'Futurology' },
-  { id: 'Startups', label: 'Startups' },
-];
+import { CATEGORIES } from '../types';
+const categories = CATEGORIES.map(id => ({ id, label: id === 'all' ? 'All' : id }));
 ---
 <div
   id="category-filter"
