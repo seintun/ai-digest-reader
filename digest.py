@@ -5,7 +5,7 @@ import json
 from datetime import date, datetime
 from pathlib import Path
 import time
-from typing import Dict, List
+from typing import Any, Dict, List
 
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
 from fetchers import fetch_reddit_posts, fetch_hn_posts
@@ -110,7 +110,39 @@ def main():
         candidate_urls = [post.get("u", "") for post in candidates if post.get("u")]
         if candidate_urls:
             print(f"Scraping article content for {len(candidate_urls)} candidates...")
-            scraped_content, scrape_stats = scrape_articles_with_stats(candidate_urls)
+            scrape_error_counts: Dict[str, int] = {}
+
+            def _on_scrape_progress(event: Dict[str, Any]) -> None:
+                done = int(event.get("done", 0) or 0)
+                total = int(event.get("total", 0) or 0)
+                status = str(event.get("status", "") or "")
+                url = str(event.get("url", "") or "")
+                error = str(event.get("error", "") or "")
+                cache_hits = int(event.get("cache_hits", 0) or 0)
+                network_success = int(event.get("network_success", 0) or 0)
+                failures = int(event.get("failures", 0) or 0)
+                percent = (done / total * 100.0) if total else 0.0
+                line = (
+                    f"\r  progress: {done}/{total} ({percent:5.1f}%)"
+                    f" | cache={cache_hits} network={network_success} failed={failures}"
+                )
+                print(line, end="", flush=True)
+                if status == "failed":
+                    reason = error or "unknown_error"
+                    scrape_error_counts[reason] = scrape_error_counts.get(reason, 0) + 1
+                    print(f"\n  failed: {url} ({reason})")
+                if done == total:
+                    print("")
+
+            scraped_content, scrape_stats = scrape_articles_with_stats(
+                candidate_urls,
+                progress_callback=_on_scrape_progress,
+            )
+            if scrape_error_counts:
+                reason_summary = ", ".join(
+                    f"{reason}={count}" for reason, count in sorted(scrape_error_counts.items())
+                )
+                print(f"  scrape failures by reason: {reason_summary}")
     scrape_seconds = time.perf_counter() - scrape_started
 
     ranking_started = time.perf_counter()
