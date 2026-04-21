@@ -21,6 +21,7 @@ export interface Story {
   s: number;       // score (0 for RSS)
   c: number;       // comment count (0 for RSS)
   a: string;       // author
+  sn?: string;     // source/publication name (e.g. BBC, MIT Tech Review)
   cat?: string;    // category: "AI & ML" | "Tech" | "Security" | "Science" | "World News" | "Business" | "Futurology" | "Startups"
   rank?: number;   // v4 ranking score (0-100)
   content_available?: boolean; // v4 scrape success indicator

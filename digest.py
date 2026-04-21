@@ -54,6 +54,7 @@ def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[
             "s": post.get("score", 0),
             "c": post.get("comments", 0),
             "a": post.get("author", post.get("by", "")),
+            "sn": post.get("source_name", ""),
             "cat": post.get("category", "") or category,
             "ts": post.get("ts"),
         })
