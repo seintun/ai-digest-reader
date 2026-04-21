@@ -1,11 +1,14 @@
 """Content-aware summary generator using ranked stories."""
 from __future__ import annotations
 
+import os
 from typing import Any, Dict, List, Optional
 
 from analyzer import _call_claude_cli, _call_openrouter_with_usage, _parse_claude_response
 from model_pricing import usage_to_dict
 from schema import validate_summary
+
+SUMMARY_RETRY_ATTEMPTS = max(1, int(os.environ.get("SUMMARY_V2_RETRY_ATTEMPTS", "1") or "1"))
 
 
 def _build_prompt(ranked_posts: List[Dict]) -> str:
@@ -51,17 +54,31 @@ def generate_summary_with_meta(ranked_posts: List[Dict]) -> tuple[Optional[Dict[
     if not ranked_posts:
         return None, {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
 
-    prompt = _build_prompt(ranked_posts)
-    raw, usage = _call_openrouter_with_usage(prompt)
-    source = "openrouter"
+    base_prompt = _build_prompt(ranked_posts)
+    latest_usage: Dict[str, Any] = usage_to_dict(0, 0)
+    # Retry OpenRouter on malformed/non-valid responses to improve resilience.
+    for attempt in range(SUMMARY_RETRY_ATTEMPTS):
+        prompt = base_prompt
+        if attempt > 0:
+            prompt += (
+                "\n\nCRITICAL RETRY: Previous output was invalid. "
+                "Return ONLY one raw JSON object that strictly follows the schema rules."
+            )
+
+        raw, usage = _call_openrouter_with_usage(prompt)
+        latest_usage = usage
+        if raw is None:
+            continue
+
+        parsed = _parse_claude_response(raw)
+        if parsed and validate_summary(parsed):
+            return parsed, {"source": "openrouter", "generated": True, "usage": usage}
+
+    raw = _call_claude_cli(base_prompt)
     if raw is None:
-        raw = _call_claude_cli(prompt)
-        source = "claude_cli"
-        usage = {"input_tokens": 0, "output_tokens": 0}
-    if raw is None:
-        return None, {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
+        return None, {"source": "none", "generated": False, "usage": latest_usage}
 
     parsed = _parse_claude_response(raw)
     if parsed and validate_summary(parsed):
-        return parsed, {"source": source, "generated": True, "usage": usage_to_dict(usage["input_tokens"], usage["output_tokens"])}
-    return None, {"source": source, "generated": False, "usage": usage_to_dict(usage["input_tokens"], usage["output_tokens"])}
+        return parsed, {"source": "claude_cli", "generated": True, "usage": latest_usage}
+    return None, {"source": "claude_cli", "generated": False, "usage": latest_usage}

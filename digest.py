@@ -15,6 +15,7 @@ from pipeline_metrics import (
 )
 from ranker import rank_posts_with_metrics
 from scraper import scrape_articles_with_stats, select_scrape_candidates
+from model_pricing import usage_to_dict
 
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
@@ -68,6 +69,11 @@ def main():
     parser.add_argument("--output-dir", type=str, help="Output directory (default: output/YYYY-MM-DD)")
     parser.add_argument("--subreddits", nargs="*", help="Specific subreddits to fetch")
     parser.add_argument("--no-ai", action="store_true", help="Skip AI summary generation")
+    parser.add_argument(
+        "--allow-v1-summary-fallback",
+        action="store_true",
+        help="Allow legacy analyzer v1 summary fallback when v2 fails (slower).",
+    )
     args = parser.parse_args()
 
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
@@ -160,7 +166,7 @@ def main():
     rss_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rs-")]
 
     summary = None
-    summary_meta = {"source": "none", "generated": False}
+    summary_meta = {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
     summary_started = time.perf_counter()
     if generate_summary_with_meta and ranked_posts and not args.no_ai:
         print("Generating content-aware AI summary...")
@@ -173,14 +179,17 @@ def main():
         summary = generate_summary_v2(ranked_posts[:15])
         summary_meta = {"source": "openrouter_or_cli", "generated": bool(summary)}
 
-    if summary is None and generate_summary and not args.no_ai:
+    if summary is None and generate_summary and not args.no_ai and args.allow_v1_summary_fallback:
+        prior_usage = summary_meta.get("usage", usage_to_dict(0, 0))
         summary = generate_summary(all_reddit_posts, hn_posts)
         if summary:
             print("Fallback AI summary generated")
-            summary_meta = {"source": "analyzer_v1", "generated": True}
+            summary_meta = {"source": "analyzer_v1", "generated": True, "usage": prior_usage}
         else:
             print("AI summary unavailable, continuing without it")
-            summary_meta = {"source": "none", "generated": False}
+            summary_meta = {"source": "none", "generated": False, "usage": prior_usage}
+    elif summary is None and generate_summary and not args.no_ai:
+        print("Skipping legacy analyzer v1 fallback (use --allow-v1-summary-fallback to enable).")
     summary_seconds = time.perf_counter() - summary_started
 
     digest_date = date.today().strftime(DATE_FORMAT)
@@ -206,6 +215,14 @@ def main():
     ranking_usage = ranking_metrics.get("llm_usage", {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0})
     summary_usage = summary_meta.get("usage", {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0})
     session_model_cost = round(float(ranking_usage.get("cost_usd", 0.0)) + float(summary_usage.get("cost_usd", 0.0)), 6)
+    ranking_cost_source = str(ranking_usage.get("cost_source", "unavailable"))
+    summary_cost_source = str(summary_usage.get("cost_source", "unavailable"))
+    openrouter_cost_used = "openrouter_usage" in {ranking_cost_source, summary_cost_source} or "mixed_openrouter_and_estimate" in {ranking_cost_source, summary_cost_source}
+    cost_sources = sorted({ranking_cost_source, summary_cost_source})
+    if openrouter_cost_used:
+        pricing_source = "OpenRouter response usage accounting (`usage.cost`, credits treated as USD-equivalent)"
+    else:
+        pricing_source = "No OpenRouter reported cost for this run"
 
     total_seconds = time.perf_counter() - run_started
     metrics = {
@@ -228,7 +245,9 @@ def main():
         "ranking": ranking_metrics,
         "summary": summary_meta,
         "cost": {
-            "pricing_source": "https://platform.kimi.ai/docs/pricing/chat-k26 (static rates: input=$0.213/M, output=$4.00/M)",
+            "pricing_source": pricing_source,
+            "cost_sources": cost_sources,
+            "openrouter_cost_used": openrouter_cost_used,
             "session_model_usd": session_model_cost,
             "ranking_llm": ranking_usage,
             "summary_llm": summary_usage,

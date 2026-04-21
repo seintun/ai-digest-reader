@@ -104,6 +104,8 @@ import BottomNav from '../components/BottomNav.astro';
     stories: Story[];
     filteredStories: Story[];
     summary: DigestSummaryType | null;
+    summaryCostUsd: number | null;
+    summaryCostAvailable: boolean;
     viewMode: ViewMode;
     source: Source;
     isLoading: boolean;
@@ -117,6 +119,8 @@ import BottomNav from '../components/BottomNav.astro';
     stories: [],
     filteredStories: [],
     summary: null,
+    summaryCostUsd: null,
+    summaryCostAvailable: false,
     viewMode: 'cards',
     source: 'all',
     isLoading: true,
@@ -520,7 +524,12 @@ import BottomNav from '../components/BottomNav.astro';
     elements.storiesContainer?.classList.remove('opacity-50', 'pointer-events-none');
     
     if (elements.summaryContainer && state.summary) {
-      elements.summaryContainer.innerHTML = renderDigestSummary(state.summary, state.stories);
+      elements.summaryContainer.innerHTML = renderDigestSummary(
+        state.summary,
+        state.stories,
+        state.summaryCostUsd,
+        state.summaryCostAvailable,
+      );
       initSummaryTabs();
     }
   }
@@ -530,7 +539,12 @@ import BottomNav from '../components/BottomNav.astro';
     return safeExternalUrl(story?.u);
   }
 
-  function renderDigestSummary(summary: DigestSummaryType, stories: Story[]): string {
+  function renderDigestSummary(
+    summary: DigestSummaryType,
+    stories: Story[],
+    summaryCostUsd: number | null,
+    summaryCostAvailable: boolean,
+  ): string {
     const themesHtml = summary.structured.themes.map((t: string) =>
       '<span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-100 dark:bg-primary-900/50 text-primary-700 dark:text-primary-300">' + escapeHtml(t) + '</span>'
     ).join('');
@@ -550,6 +564,10 @@ import BottomNav from '../components/BottomNav.astro';
       '</a>'
     ).join('');
     
+    const summaryCostLine = summaryCostAvailable && summaryCostUsd !== null
+      ? '<br>· AI summary cost: $' + summaryCostUsd.toFixed(5)
+      : '<br>· AI summary cost: N/A';
+
     return '<div class="digest-summary bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-2xl p-4 mb-4 shadow-sm">' +
       '<div class="flex items-center justify-between mb-3">' +
         '<div class="flex items-center gap-2">' +
@@ -558,7 +576,7 @@ import BottomNav from '../components/BottomNav.astro';
           '</div>' +
           '<span class="font-bold text-base text-slate-900 dark:text-white">AI Summary</span>' +
         '</div>' +
-        '<span class="text-xs text-slate-400 dark:text-slate-500 text-right leading-tight">Insights AI-generated &amp; curated<br>· may be inaccurate</span>' +
+        '<span class="text-xs text-slate-400 dark:text-slate-500 text-right leading-tight">Insights AI-generated &amp; curated<br>· may be inaccurate' + summaryCostLine + '</span>' +
       '</div>' +
       '<div class="swipe-track-outer" id="swipe-track-outer">' +
         '<div class="swipe-track" id="swipe-track">' +
@@ -771,6 +789,10 @@ import BottomNav from '../components/BottomNav.astro';
       });
       state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
       state.summary = data.summary || null;
+      const summaryCostRaw = (data.metrics as any)?.cost?.summary_llm?.cost_usd;
+      const summaryCostSourceRaw = (data.metrics as any)?.cost?.summary_llm?.cost_source;
+      state.summaryCostUsd = typeof summaryCostRaw === 'number' ? summaryCostRaw : null;
+      state.summaryCostAvailable = summaryCostSourceRaw === 'openrouter_usage';
 
       updateSourceFilter();
       renderStories();
