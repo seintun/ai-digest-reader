@@ -1,7 +1,7 @@
 {
   "v": 3,
   "d": "2026-04-21",
-  "g": "2026-04-21T11:16:23.115676",
+  "g": "2026-04-21T11:40:09.113106",
   "r": [
     {
       "i": "rd-0",
@@ -9,7 +9,7 @@
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1sknx6n/best_local_llms_apr_2026/",
       "b": "We're back with another Best Local LLMs Megathread!  *We have continued feasting in the months since the previous thread with the much anticipated release of the Qwen3.5 and Gemma4 series. If that wasn't enough, we are having some scarcely believable moments with GLM-5.1 boasting",
-      "s": 434,
+      "s": 432,
       "c": 249,
       "a": "rm-rf-rm",
       "cat": "AI & ML"
@@ -31,8 +31,8 @@
       "u": "https://i.redd.it/8z2ldj7ybiwg1.jpeg",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1srhzii/every_time_a_new_model_comes_out_the_old_one_is/",
       "b": "",
-      "s": 710,
-      "c": 129,
+      "s": 735,
+      "c": 137,
       "a": "FullChampionship7564",
       "cat": "AI & ML"
     },
@@ -42,8 +42,8 @@
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1srkah3/unpopular_opinion_openclaw_and_all_its_clones_are/",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1srkah3/unpopular_opinion_openclaw_and_all_its_clones_are/",
       "b": "It seems to me that OpenClaw and all its clones are almost useless tools for those who know what they're doing.  It's kind of impressive for someone who has never used a CLI, Claude Code, Codex, etc. Nor used any workflow tool like 8n8 or make.  For these people, asking an AI to",
-      "s": 344,
-      "c": 139,
+      "s": 374,
+      "c": 145,
       "a": "pacmanpill",
       "cat": "AI & ML"
     },
@@ -53,8 +53,8 @@
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1srrhi5/gemma_4_vision/",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1srrhi5/gemma_4_vision/",
       "b": "A lot of people in the [Gemma 4 Model Request Thread](https://www.reddit.com/r/LocalLLaMA/comments/1srgqk4/which_gemma_model_do_you_want_next/) were asking for better vision capabilities in the next Gemma Model. This tells me that people are not configuring Gemma 4's vision budge",
-      "s": 108,
-      "c": 37,
+      "s": 117,
+      "c": 39,
       "a": "seamonn",
       "cat": "AI & ML"
     },
@@ -64,123 +64,167 @@
       "u": "https://www.reddit.com/gallery/1srs4uj",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1srs4uj/differences_between_kimi_k25_and_kimi_k26_on/",
       "b": "**Some Notes:**  * The one caveat though is that I find Kimi's results to be quite inconsistent; the model clearly has a very high ceiling, but you'll see that some of it's builds (in my opinion) lack in quality compared to the others (though they're all a massive improvement fro",
-      "s": 92,
-      "c": 11,
+      "s": 103,
+      "c": 14,
       "a": "ENT_Alam",
       "cat": "AI & ML"
     },
     {
       "i": "rd-6",
+      "t": "Open WebUI Desktop Released!",
+      "u": "https://github.com/open-webui/desktop",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1srhnvn/open_webui_desktop_released/",
+      "b": "Looks like this also includes llama.cpp. You can either run everything local or connect it to a remote server as well.",
+      "s": 227,
+      "c": 83,
+      "a": "My_Unbiased_Opinion",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-7",
       "t": "Kimi K2.6 is a legit Opus 4.7 replacement",
       "u": "https://www.reddit.com/r/LocalLLaMA/comments/1sr8p49/kimi_k26_is_a_legit_opus_47_replacement/",
       "p": "https://reddit.com/r/LocalLLaMA/comments/1sr8p49/kimi_k26_is_a_legit_opus_47_replacement/",
       "b": "After testing it and getting some customer feedback too, its the first model I'd confidently recommend to our customers as an Opus 4.7 replacement.  It's not really better than Opus 4.7 at anything, but, it can do about 85% of the tasks that Opus can at a reasonable quality, and,",
-      "s": 919,
+      "s": 922,
       "c": 287,
       "a": "bigboyparpa",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-7",
-      "t": "Open WebUI Desktop Released!",
-      "u": "https://github.com/open-webui/desktop",
-      "p": "https://reddit.com/r/LocalLLaMA/comments/1srhnvn/open_webui_desktop_released/",
-      "b": "Looks like this also includes llama.cpp. You can either run everything local or connect it to a remote server as well.",
-      "s": 221,
-      "c": 82,
-      "a": "My_Unbiased_Opinion",
+      "i": "rd-8",
+      "t": "Surprising screenshot - Most token usage is non-coders (openrouter ranking)",
+      "u": "https://i.redd.it/q2p1xw1nkiwg1.png",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1sritap/surprising_screenshot_most_token_usage_is/",
+      "b": "Just browsing this page and was shocked to see this.   \\- 6 out of the top 10 coding agent apps are non-coding.   \\- Opencode is not even top 10  I know some folks use Hermes for coding. Would be happy to be corrected if hermes and openclaw have become coding replacements for ope",
+      "s": 165,
+      "c": 89,
+      "a": "superloser48",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-8",
+      "i": "rd-9",
+      "t": "235M param LLM from scratch on a single RTX 5080",
+      "u": "https://www.reddit.com/r/LocalLLaMA/comments/1srsxqs/235m_param_llm_from_scratch_on_a_single_rtx_5080/",
+      "p": "https://reddit.com/r/LocalLLaMA/comments/1srsxqs/235m_param_llm_from_scratch_on_a_single_rtx_5080/",
+      "b": "Hey everyone,  Been working on this for a while and figured I'd share it here too. I made a small transformer language model completely from scratch in PyTorch. No pretrained weights, no HuggingFace downloads. Every parameter was trained from raw text on a single consumer GPU.  C",
+      "s": 33,
+      "c": 4,
+      "a": "ExcellentTip9926",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-10",
       "t": "Updates for ChatGPT",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
       "p": "https://reddit.com/r/ChatGPT/comments/1o6jins/updates_for_chatgpt/",
       "b": "We made ChatGPT pretty restrictive to make sure we were being careful with mental health issues. We realize this made it less useful/enjoyable to many users who had no mental health problems, but given the seriousness of the issue we wanted to get this right.      Now that we hav",
-      "s": 3565,
+      "s": 3566,
       "c": 1414,
       "a": "samaltman",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-9",
+      "i": "rd-11",
       "t": "GPT-4o/GPT-5 complaints megathread",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
       "p": "https://reddit.com/r/ChatGPT/comments/1nvea4p/gpt4ogpt5_complaints_megathread/",
       "b": "To keep the rest of the sub clear with the release of Sora 2, this is the new containment thread for people who are mad about GPT-4o being deprecated.  ---  **Suggestion for people who miss 4o:** Check [this calculator](https://apxml.com/tools/vram-calculator) to see what local m",
-      "s": 602,
+      "s": 600,
       "c": 4201,
       "a": "WithoutReason1729",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-10",
+      "i": "rd-12",
       "t": "Ok, woah",
       "u": "https://i.redd.it/av0fr2sdyhwg1.png",
       "p": "https://reddit.com/r/ChatGPT/comments/1srgqcn/ok_woah/",
       "b": "AGI is here \ud83e\udee3  PS: Posted it as a joke, I work as an AI Engineer. I know how to prompt and how they work \ud83d\ude2d\ud83d\ude2d",
-      "s": 1428,
-      "c": 127,
+      "s": 1462,
+      "c": 131,
       "a": "Kill-Switch-OG",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-11",
+      "i": "rd-13",
       "t": "Asked ChatGPT for an Image of the Most Average Daily Life of Humans",
       "u": "https://i.redd.it/mhn4as2w1jwg1.png",
       "p": "https://reddit.com/r/ChatGPT/comments/1srkm3c/asked_chatgpt_for_an_image_of_the_most_average/",
       "b": "",
-      "s": 477,
-      "c": 142,
+      "s": 538,
+      "c": 147,
       "a": "Algoartist",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-12",
+      "i": "rd-14",
       "t": "\"Haha the AI is so dumb!\"",
       "u": "https://i.redd.it/vavr45bobkwg1.png",
       "p": "https://reddit.com/r/ChatGPT/comments/1srr8ju/haha_the_ai_is_so_dumb/",
       "b": "",
-      "s": 125,
-      "c": 43,
+      "s": 141,
+      "c": 45,
       "a": "R_mom_gay_",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-13",
+      "i": "rd-15",
+      "t": "Why is ChatGPT getting to be dismissive and rude",
+      "u": "https://www.reddit.com/r/ChatGPT/comments/1sruhkj/why_is_chatgpt_getting_to_be_dismissive_and_rude/",
+      "p": "https://reddit.com/r/ChatGPT/comments/1sruhkj/why_is_chatgpt_getting_to_be_dismissive_and_rude/",
+      "b": "So I\u2019ve been using ChatGPT for about a year now.. on and off with premium, mostly when I actually need it.  Over the past couple of months though, I\u2019ve noticed a shift in how it responds. It feels a lot more dismissive, almost like it\u2019s trying to \u201creality check\u201d me even when I di",
+      "s": 52,
+      "c": 57,
+      "a": "Jolly-Wall-5351",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-16",
       "t": "I was deleting memories and found this",
       "u": "https://i.redd.it/w4hyiy7utewg1.jpeg",
       "p": "https://reddit.com/r/ChatGPT/comments/1sr2yex/i_was_deleting_memories_and_found_this/",
       "b": "",
-      "s": 1742,
-      "c": 121,
+      "s": 1760,
+      "c": 125,
       "a": "Jindabyne1",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-14",
+      "i": "rd-17",
       "t": "Why is ChatGPT so arrogant",
       "u": "https://i.redd.it/3iy2cstm0iwg1.png",
       "p": "https://reddit.com/r/ChatGPT/comments/1srgxuw/why_is_chatgpt_so_arrogant/",
       "b": "It keeps on wanting to \u201cgently push back\u201d or \u201cgently challenge\u201d and sometimes just straight up twists my words so it can find mistakes in it",
-      "s": 227,
-      "c": 62,
+      "s": 234,
+      "c": 63,
       "a": "wa019b",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-15",
+      "i": "rd-18",
       "t": "Some common misunderstandings about LLMs",
       "u": "https://www.reddit.com/r/ChatGPT/comments/1srepmh/some_common_misunderstandings_about_llms/",
       "p": "https://reddit.com/r/ChatGPT/comments/1srepmh/some_common_misunderstandings_about_llms/",
       "b": "I keep seeing the same misconceptions, so here are a few practical ones:  **1. \u201cYou are a lawyer\u201d doesn\u2019t create a lawyer**   Role prompts can change style and vocabulary. They do not magically install professional expertise.  You may get legal-sounding language, but not necessar",
-      "s": 262,
+      "s": 268,
       "c": 50,
       "a": "yuer2025",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-16",
+      "i": "rd-19",
+      "t": "Linkedin screenshot of Jesus by Gpt image v2",
+      "u": "https://i.redd.it/dqskr6n4ygwg1.png",
+      "p": "https://reddit.com/r/ChatGPT/comments/1srd03b/linkedin_screenshot_of_jesus_by_gpt_image_v2/",
+      "b": "By GPT Image v2",
+      "s": 281,
+      "c": 86,
+      "a": "bricks0fbollywood",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-20",
       "t": "[D] Self-Promotion Thread",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
       "p": "https://reddit.com/r/MachineLearning/comments/1sa4rlx/d_selfpromotion_thread/",
@@ -191,40 +235,40 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rd-17",
+      "i": "rd-21",
       "t": "[D] Monthly Who's Hiring and Who wants to be Hired?",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
       "p": "https://reddit.com/r/MachineLearning/comments/1s8b199/d_monthly_whos_hiring_and_who_wants_to_be_hired/",
       "b": "**For Job Postings** please use this template  &gt;Hiring: \\[Location\\], Salary:\\[\\], \\[Remote | Relocation\\], \\[Full Time | Contract | Part Time\\]    and \\[Brief overview, what you're looking for\\]  **For Those looking for jobs** please use this template  &gt;Want to be Hired: \\",
-      "s": 8,
+      "s": 6,
       "c": 4,
       "a": "AutoModerator",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-18",
+      "i": "rd-22",
       "t": "Bulding my own Diffusion Language Model from scratch was easier than I thought [P]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1srufft/bulding_my_own_diffusion_language_model_from/",
       "p": "https://reddit.com/r/MachineLearning/comments/1srufft/bulding_my_own_diffusion_language_model_from/",
       "b": "Since I felt like I was relying on Claude Code a lot recently, I wanted to see how hard it is to implement a diffusion language model from scratch without the help of AI-Generated code. So I built one while waiting for the training for my master's thesis.  This is what I got afte",
-      "s": 13,
-      "c": 3,
+      "s": 22,
+      "c": 4,
       "a": "Encrux615",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-19",
+      "i": "rd-23",
       "t": "How exactly one goes about networking in conferences? [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sqz7nu/how_exactly_one_goes_about_networking_in/",
       "p": "https://reddit.com/r/MachineLearning/comments/1sqz7nu/how_exactly_one_goes_about_networking_in/",
       "b": "So ICLR is coming and apparently the biggest value one can get from these conferences is to network.  Let's take my example: I'm a PhD student looking for industry internships. Say I have located about 15-20 posters regarding topics adjacent or directly related to my area of rese",
-      "s": 73,
+      "s": 72,
       "c": 29,
       "a": "howtorewriteaname",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-20",
+      "i": "rd-24",
       "t": "Are we optimizing AI research for acceptance rather than lasting value? [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sqps89/are_we_optimizing_ai_research_for_acceptance/",
       "p": "https://reddit.com/r/MachineLearning/comments/1sqps89/are_we_optimizing_ai_research_for_acceptance/",
@@ -235,7 +279,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rd-21",
+      "i": "rd-25",
       "t": "[D] It seems that EVERY DAY there are around 100 - 200 new machine learning papers uploaded on Arxiv.",
       "u": "https://arxiv.org/list/cs.LG/recent?skip=0&amp;show=500",
       "p": "https://reddit.com/r/MachineLearning/comments/1sqi69n/d_it_seems_that_every_day_there_are_around_100/",
@@ -246,117 +290,161 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rd-22",
+      "i": "rd-26",
       "t": "Does submitting to only journals negatively affect research career after finishing PhD? [D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sqnuez/does_submitting_to_only_journals_negatively/",
       "p": "https://reddit.com/r/MachineLearning/comments/1sqnuez/does_submitting_to_only_journals_negatively/",
       "b": "I saw many discussions about TMLR and other journals lately and how their review processes are considered fairer and less random.  My question is, how much does it hurt one's chance much of getting interviewed/hired as a ML research scientist if they choose to publish at only jou",
-      "s": 26,
+      "s": 24,
       "c": 48,
       "a": "dontknowwhattoplay",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-23",
+      "i": "rd-27",
       "t": "C++ CuTe / CUTLASS vs CuTeDSL (Python) in 2026 \u2014 what should new GPU kernel / LLM inference engineers actually learn?[D]",
       "u": "https://www.reddit.com/r/MachineLearning/comments/1sqfgat/c_cute_cutlass_vs_cutedsl_python_in_2026_what/",
       "p": "https://reddit.com/r/MachineLearning/comments/1sqfgat/c_cute_cutlass_vs_cutedsl_python_in_2026_what/",
       "b": "For people just starting out in GPU kernel engineering or LLM inference (FlashAttention / FlashInfer / SGLang / vLLM style work), most job postings still list \u201cC++17, CuTe, CUTLASS\u201d as hard requirements.  At the same time NVIDIA has been pushing CuTeDSL (the Python DSL in CUTLASS",
-      "s": 41,
+      "s": 40,
       "c": 16,
       "a": "Daemontatox",
       "cat": "AI & ML"
     },
     {
-      "i": "rd-24",
+      "i": "rd-28",
+      "t": "Open-source single-GPU reproductions of Cartridges and STILL for neural KV-cache compaction [P]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1squ94n/opensource_singlegpu_reproductions_of_cartridges/",
+      "p": "https://reddit.com/r/MachineLearning/comments/1squ94n/opensource_singlegpu_reproductions_of_cartridges/",
+      "b": "I implemented two recent ideas for long-context inference / KV-cache compaction and open-sourced both reproductions:  * Cartridges: [https://github.com/shreyansh26/cartridges](https://github.com/shreyansh26/cartridges) * STILL: [https://github.com/shreyansh26/STILL-Towards-Infini",
+      "s": 2,
+      "c": 0,
+      "a": "shreyansh26",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-29",
+      "t": "CVPR Broadening Participation Results. [D]",
+      "u": "https://www.reddit.com/r/MachineLearning/comments/1sqr6xq/cvpr_broadening_participation_results_d/",
+      "p": "https://reddit.com/r/MachineLearning/comments/1sqr6xq/cvpr_broadening_participation_results_d/",
+      "b": "Did anyone get an email?  I emailed the chairs. They say every participant got an email titled: \"CVPR26 BP Scholarship Decision Has Been Released\", and participants got a separate email with the award and details.     But I got no such email, yet.",
+      "s": 2,
+      "c": 3,
+      "a": "Erika_bomber",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rd-30",
       "t": "This Scammer Used an AI-Generated MAGA Girl to Grift \u2018Super Dumb\u2019 Men",
       "u": "https://www.wired.com/story/ai-generated-maga-girls/",
       "p": "https://reddit.com/r/technology/comments/1srpnzi/this_scammer_used_an_aigenerated_maga_girl_to/",
       "b": "",
-      "s": 3644,
-      "c": 300,
+      "s": 4539,
+      "c": 361,
       "a": "Unusual-State1827",
       "cat": "Tech"
     },
     {
-      "i": "rd-25",
+      "i": "rd-31",
       "t": "Google Starts Scanning All Your Photos As New Update Goes Live",
       "u": "https://www.forbes.com/sites/zakdoffman/2026/04/20/google-starts-scanning-all-your-photos-as-new-update-goes-live/",
       "p": "https://reddit.com/r/technology/comments/1srkydg/google_starts_scanning_all_your_photos_as_new/",
       "b": "",
-      "s": 2338,
-      "c": 259,
+      "s": 2553,
+      "c": 281,
       "a": "fattyfoods",
       "cat": "Tech"
     },
     {
-      "i": "rd-26",
+      "i": "rd-32",
       "t": "Jeff Bezos' secretive AI startup is set to be valued at around $38 billion after raising a $10 billion mega round",
       "u": "https://www.businessinsider.com/jeff-bezos-project-prometheus-valued-at-38-billion-2026-4",
       "p": "https://reddit.com/r/technology/comments/1srgg9z/jeff_bezos_secretive_ai_startup_is_set_to_be/",
       "b": "",
-      "s": 4601,
-      "c": 365,
+      "s": 4669,
+      "c": 369,
       "a": "Just-Grocery-2229",
       "cat": "Tech"
     },
     {
-      "i": "rd-27",
+      "i": "rd-33",
       "t": "Why leading Chinese scientists are rising to the top in the Communist Party",
       "u": "https://www.scmp.com/news/china/politics/article/3350757/why-leading-chinese-scientists-are-rising-top-communist-party?module=flexi_unit-focus&amp;pgtype=homepage",
       "p": "https://reddit.com/r/technology/comments/1srj9g4/why_leading_chinese_scientists_are_rising_to_the/",
       "b": "",
-      "s": 2167,
-      "c": 264,
+      "s": 2319,
+      "c": 278,
       "a": "Saltedline",
       "cat": "Tech"
     },
     {
-      "i": "rd-28",
-      "t": "JetBlue Responds to Accusations of Using Surveillance Pricing After Viral Tweet",
-      "u": "https://gizmodo.com/jetblue-responds-to-accusations-of-using-surveillance-pricing-after-viral-tweet-2000748602",
-      "p": "https://reddit.com/r/technology/comments/1sr819l/jetblue_responds_to_accusations_of_using/",
-      "b": "",
-      "s": 9311,
-      "c": 359,
-      "a": "habichuelacondulce",
-      "cat": "Tech"
-    },
-    {
-      "i": "rd-29",
+      "i": "rd-34",
       "t": "Man with Instagram handle \u2018ihackedthegovernment\u2019 pleads guilty to hacking the government",
       "u": "https://www.dexerto.com/entertainment/man-with-instagram-handle-ihackedthegovernment-pleads-guilty-to-hacking-the-government-3354468/",
       "p": "https://reddit.com/r/technology/comments/1srtsbs/man_with_instagram_handle_ihackedthegovernment/",
       "b": "",
-      "s": 321,
-      "c": 23,
+      "s": 496,
+      "c": 26,
       "a": "IndicaOatmeal",
       "cat": "Tech"
     },
     {
-      "i": "rd-30",
+      "i": "rd-35",
+      "t": "JetBlue Responds to Accusations of Using Surveillance Pricing After Viral Tweet",
+      "u": "https://gizmodo.com/jetblue-responds-to-accusations-of-using-surveillance-pricing-after-viral-tweet-2000748602",
+      "p": "https://reddit.com/r/technology/comments/1sr819l/jetblue_responds_to_accusations_of_using/",
+      "b": "",
+      "s": 9349,
+      "c": 361,
+      "a": "habichuelacondulce",
+      "cat": "Tech"
+    },
+    {
+      "i": "rd-36",
       "t": "These Middle Eastern News Sites Are Actually U.S. Government Propaganda Operations",
       "u": "https://theintercept.com/2026/04/20/pentagon-middle-eastern-news-propaganda-iran/",
       "p": "https://reddit.com/r/technology/comments/1srjucn/these_middle_eastern_news_sites_are_actually_us/",
       "b": "",
-      "s": 1044,
-      "c": 70,
+      "s": 1095,
+      "c": 72,
       "a": "zsreport",
       "cat": "Tech"
     },
     {
-      "i": "rd-31",
+      "i": "rd-37",
       "t": "'Outrageous mess': About 2,000 AI road safety camera fines withdrawn in WA",
       "u": "https://www.abc.net.au/news/2026-04-21/fines-withdrawn-as-ai-road-safety-camera-controversy-continues/106587938?utm_source=abc_news_app&amp;utm_medium=content_shared&amp;utm_campaign=abc_news_app&amp;utm_content=link",
       "p": "https://reddit.com/r/technology/comments/1srkhwd/outrageous_mess_about_2000_ai_road_safety_camera/",
       "b": "",
-      "s": 836,
-      "c": 57,
+      "s": 870,
+      "c": 55,
       "a": "Inevitable_Jaguar676",
       "cat": "Tech"
     },
     {
-      "i": "rd-32",
+      "i": "rd-38",
+      "t": "Microsoft cuts Game Pass subscription prices after new Xbox CEO promises to 'recommit' to gamers / But the subscriptions won't have new \"Call of Duty\" games at launch time.",
+      "u": "https://www.cnbc.com/2026/04/21/microsoft-game-pass-ultimate-subscription-price-cut.html",
+      "p": "https://reddit.com/r/technology/comments/1srszy1/microsoft_cuts_game_pass_subscription_prices/",
+      "b": "",
+      "s": 322,
+      "c": 101,
+      "a": "MarvelsGrantMan136",
+      "cat": "Tech"
+    },
+    {
+      "i": "rd-39",
+      "t": "Apple CEO Tim Cook stepping down, John Ternus confirmed as new Apple CEO",
+      "u": "https://9to5mac.com/2026/04/20/apple-ceo-tim-cook-stepping-down-john-ternus-confirmed-as-new-apple-ceo/?extended-comments=1",
+      "p": "https://reddit.com/r/technology/comments/1sr27m5/apple_ceo_tim_cook_stepping_down_john_ternus/",
+      "b": "",
+      "s": 14625,
+      "c": 1063,
+      "a": "thejoshwhite",
+      "cat": "Tech"
+    },
+    {
+      "i": "rd-40",
       "t": "Announcement: Temporary LLM Content Ban",
       "u": "https://www.reddit.com/r/programming/comments/1s9jkzi/announcement_temporary_llm_content_ban/",
       "p": "https://reddit.com/r/programming/comments/1s9jkzi/announcement_temporary_llm_content_ban/",
@@ -367,51 +455,51 @@
       "cat": "Tech"
     },
     {
-      "i": "rd-33",
+      "i": "rd-41",
       "t": "State of the Subreddit (January 2027): Mods applications and rules updates",
       "u": "https://www.reddit.com/r/programming/comments/1qoxwdt/state_of_the_subreddit_january_2027_mods/",
       "p": "https://reddit.com/r/programming/comments/1qoxwdt/state_of_the_subreddit_january_2027_mods/",
       "b": "tl;dr: mods applications and minor rules changes. Also it's 2026, lol.  Hello fellow programs!  It's been a while since I've [checked in](https://old.reddit.com/r/programming/comments/1chs4ib/the_state_of_the_subreddit_may_2024/) and I wanted to give an update on the state of aff",
-      "s": 127,
+      "s": 130,
       "c": 96,
       "a": "ketralnis",
       "cat": "Tech"
     },
     {
-      "i": "rd-34",
+      "i": "rd-42",
       "t": "Highlights from Git 2.54",
       "u": "https://github.blog/open-source/git/highlights-from-git-2-54/",
       "p": "https://reddit.com/r/programming/comments/1srhttc/highlights_from_git_254/",
       "b": "",
-      "s": 200,
+      "s": 207,
       "c": 36,
       "a": "Skaarj",
       "cat": "Tech"
     },
     {
-      "i": "rd-35",
+      "i": "rd-43",
       "t": "Running a Minecraft Server and more on a 1960s UNIVAC Computer",
       "u": "https://farlow.dev/2026/04/17/running-a-minecraft-server-and-more-on-a-1960s-univac-computer",
       "p": "https://reddit.com/r/programming/comments/1srof92/running_a_minecraft_server_and_more_on_a_1960s/",
       "b": "",
-      "s": 25,
+      "s": 33,
       "c": 0,
       "a": "Dear-Economics-315",
       "cat": "Tech"
     },
     {
-      "i": "rd-36",
+      "i": "rd-44",
       "t": "Theseus, a static Windows emulator",
       "u": "https://neugierig.org/software/blog/2026/04/theseus.html",
       "p": "https://reddit.com/r/programming/comments/1srccyp/theseus_a_static_windows_emulator/",
       "b": "",
-      "s": 56,
+      "s": 58,
       "c": 2,
       "a": "mttd",
       "cat": "Tech"
     },
     {
-      "i": "rd-37",
+      "i": "rd-45",
       "t": "An interactive explainer of how audio fingerprinting lets Shazam identify a song in seconds",
       "u": "https://perthirtysix.com/how-the-heck-does-shazam-work",
       "p": "https://reddit.com/r/programming/comments/1sqrv8p/an_interactive_explainer_of_how_audio/",
@@ -422,18 +510,29 @@
       "cat": "Tech"
     },
     {
-      "i": "rd-38",
+      "i": "rd-46",
       "t": "How To Make a Fast Dynamic Language Interpreter",
       "u": "https://zef-lang.dev/implementation",
       "p": "https://reddit.com/r/programming/comments/1src2an/how_to_make_a_fast_dynamic_language_interpreter/",
       "b": "",
-      "s": 31,
+      "s": 29,
       "c": 2,
       "a": "mttd",
       "cat": "Tech"
     },
     {
-      "i": "rd-39",
+      "i": "rd-47",
+      "t": "Announcing TypeScript 7.0 Beta",
+      "u": "https://devblogs.microsoft.com/typescript/announcing-typescript-7-0-beta/",
+      "p": "https://reddit.com/r/programming/comments/1srwby3/announcing_typescript_70_beta/",
+      "b": "",
+      "s": 1,
+      "c": 0,
+      "a": "DanielRosenwasser",
+      "cat": "Tech"
+    },
+    {
+      "i": "rd-48",
       "t": "The Great Stream Fix: Interleaving Writes in Seastar with Invariants Tracing",
       "u": "https://www.scylladb.com/2026/04/21/interleaving-writes-in-seastar",
       "p": "https://reddit.com/r/programming/comments/1srvpmv/the_great_stream_fix_interleaving_writes_in/",
@@ -444,238 +543,293 @@
       "cat": "Tech"
     },
     {
-      "i": "rd-40",
+      "i": "rd-49",
+      "t": "Designing a portable and human-readable data format: trying to solve the visual displacement problem in tabular data and spreadsheets",
+      "u": "https://github.com/Datastripes/DataSheetStandard/blob/main/README.md",
+      "p": "https://reddit.com/r/programming/comments/1srgtik/designing_a_portable_and_humanreadable_data/",
+      "b": "",
+      "s": 3,
+      "c": 5,
+      "a": "Vinserello",
+      "cat": "Tech"
+    },
+    {
+      "i": "rd-50",
       "t": "There's more to ADHD than inattention, hyperactivity, and impulsivity. ADHD symptoms can be broken down into nine categories. Some categories are not fully represented in the diagnostic criteria. Broadening the diagnostic criteria with patient lived experiences could make for better intervention.",
       "u": "https://www.psychologytoday.com/au/blog/brain-curiosities/202604/new-study-finds-that-adhd-has-9-categories-of-symptoms",
       "p": "https://reddit.com/r/science/comments/1srjeim/theres_more_to_adhd_than_inattention/",
       "b": "",
-      "s": 7554,
-      "c": 700,
+      "s": 7870,
+      "c": 728,
       "a": "mvea",
       "cat": "Science"
     },
     {
-      "i": "rd-41",
+      "i": "rd-51",
       "t": "Curiosity Mars rover uncovered a diverse mix of organic molecules on Mars, including chemicals widely considered building blocks for the origin of life on Earth",
       "u": "https://news.ufl.edu/2026/04/mars-rover-/",
       "p": "https://reddit.com/r/science/comments/1srmvv1/curiosity_mars_rover_uncovered_a_diverse_mix_of/",
       "b": "",
-      "s": 1237,
+      "s": 1313,
       "c": 29,
       "a": "Shiny-Tie-126",
       "cat": "Science"
     },
     {
-      "i": "rd-42",
+      "i": "rd-52",
       "t": "Homicide is not the leading cause of death in pregnant and postpartum women in the US.",
       "u": "https://www.nejm.org/doi/10.1056/NEJMc2512078",
       "p": "https://reddit.com/r/science/comments/1srtjf9/homicide_is_not_the_leading_cause_of_death_in/",
       "b": "",
-      "s": 294,
-      "c": 121,
+      "s": 393,
+      "c": 151,
       "a": "PrimaryInjurious",
       "cat": "Science"
     },
     {
-      "i": "rd-43",
+      "i": "rd-53",
       "t": "Listening to one-minute-long audio recordings of forest soundscapes has positive effects on people\u2019s short-term wellbeing, with major improvements found when soundscapes came from local temperate forests, compared to more exotic tropical forests",
       "u": "https://www.surrey.ac.uk/news/recordings-local-forest-soundscapes-help-improve-wellbeing",
       "p": "https://reddit.com/r/science/comments/1srmyb9/listening_to_oneminutelong_audio_recordings_of/",
       "b": "",
-      "s": 554,
+      "s": 596,
       "c": 17,
       "a": "sr_local",
       "cat": "Science"
     },
     {
-      "i": "rd-44",
+      "i": "rd-54",
       "t": "A simple ocean-based model predicts a powerful El Ni\u00f1o for late 2026, with temperatures projected to be over 2\u00b0C above normal. By using only sea level and surface temperature data, the \"Wyrtki-CSLIM\" system achieves 15-month forecast accuracy comparable to complex AI and dynamical models.",
       "u": "https://agupubs.onlinelibrary.wiley.com/doi/10.1029/2025GL119694",
       "p": "https://reddit.com/r/science/comments/1srnh1k/a_simple_oceanbased_model_predicts_a_powerful_el/",
       "b": "",
-      "s": 239,
+      "s": 249,
       "c": 9,
       "a": "Cosmyka",
       "cat": "Science"
     },
     {
-      "i": "rd-45",
+      "i": "rd-55",
       "t": "Researchers at the University of Colorado Anschutz found that a class of targeted cancer drugs known as tyrosine kinase inhibitors can change how taste buds are maintained, altering flavor perception overall.",
       "u": "https://news.cuanschutz.edu/news-stories/some-cancer-drugs-disrupt-taste-by-changing-the-cells-inside-taste-buds-study-shows?utm_campaign=Chemo_and_Taste&amp;utm_source=Reddit&amp;utm_medium=social",
       "p": "https://reddit.com/r/science/comments/1srpohf/researchers_at_the_university_of_colorado/",
       "b": "",
-      "s": 164,
+      "s": 177,
       "c": 2,
       "a": "CUAnschutzMed",
       "cat": "Science"
     },
     {
-      "i": "rd-46",
+      "i": "rd-56",
       "t": "Men who identify as incels (involuntary celibates) consume more pornography and experience greater bodily dissatisfaction than other men. Frequent adult media use, combined with the belief that women expect men to look like pornographic actors, tends to worsen how these men view their own bodies.",
       "u": "https://www.psypost.org/study-links-internalized-pornographic-standards-to-body-image-issues-among-incel-men/",
       "p": "https://reddit.com/r/science/comments/1sr33b4/men_who_identify_as_incels_involuntary_celibates/",
       "b": "",
-      "s": 4318,
+      "s": 4328,
       "c": 470,
       "a": "mvea",
       "cat": "Science"
     },
     {
-      "i": "rd-47",
+      "i": "rd-57",
       "t": "Excessive Napping May Be a Warning Sign of Underlying or Developing Health Conditions in Older Adults",
       "u": "https://www.massgeneralbrigham.org/en/about/newsroom/press-releases/high-mortality-rates-in-older-adults-napping-excessively",
       "p": "https://reddit.com/r/science/comments/1sqwx3p/excessive_napping_may_be_a_warning_sign_of/",
       "b": "",
-      "s": 5057,
+      "s": 5061,
       "c": 294,
       "a": "MassGen-Research",
       "cat": "Science"
     },
     {
-      "i": "rd-48",
+      "i": "rd-58",
+      "t": "The largest US study, which tracked 11,036 children from ages 9 to 10 through to ages 16 and 17, discovered that cannabis use slows cognitive development, impairs memory, and reduces learning speed during crucial years of brain growth",
+      "u": "https://today.ucsd.edu/story/largest-us-study-finds-teen-cannabis-use-linked-to-slower-cognitive-development",
+      "p": "https://reddit.com/r/science/comments/1sqof6l/the_largest_us_study_which_tracked_11036_children/",
+      "b": "",
+      "s": 20359,
+      "c": 1190,
+      "a": "sr_local",
+      "cat": "Science"
+    },
+    {
+      "i": "rd-59",
+      "t": "The Strange Way Cocaine Water Pollution is Changing Salmon",
+      "u": "https://www.scientificamerican.com/article/the-strange-way-cocaine-water-pollution-is-changing-salmon/",
+      "p": "https://reddit.com/r/science/comments/1sr8blp/the_strange_way_cocaine_water_pollution_is/",
+      "b": "",
+      "s": 1351,
+      "c": 95,
+      "a": "scientificamerican",
+      "cat": "Science"
+    },
+    {
+      "i": "rd-60",
       "t": "/r/WorldNews Live Thread: Russian Invasion of Ukraine Day 1517, Part 1 (Thread #1664)",
       "u": "https://www.reddit.com/live/18hnzysb1elcs",
       "p": "https://reddit.com/r/worldnews/comments/1srcu82/rworldnews_live_thread_russian_invasion_of/",
       "b": "",
-      "s": 381,
+      "s": 389,
       "c": 58,
       "a": "WorldNewsMods",
       "cat": "World News"
     },
     {
-      "i": "rd-49",
+      "i": "rd-61",
       "t": "/r/WorldNews Discussion Thread: US and Israel launch attack on Iran; Iran retaliates (Thread #16)",
       "u": "https://www.reddit.com/r/worldnews/comments/1son2zz/rworldnews_discussion_thread_us_and_israel_launch/",
       "p": "https://reddit.com/r/worldnews/comments/1son2zz/rworldnews_discussion_thread_us_and_israel_launch/",
       "b": "If you see any newsworthy information from a major news outlet or live broadcast, feel free to share a brief summary as a top-level comment in the discussion post.  Other redditors will appreciate if you include the source of where you read, saw, or heard the information.",
-      "s": 165,
-      "c": 2001,
+      "s": 172,
+      "c": 2018,
       "a": "WorldNewsMods",
       "cat": "World News"
     },
     {
-      "i": "rd-50",
+      "i": "rd-62",
       "t": "Zelensky says failure of US envoys to visit Kyiv is 'disrespectful'",
       "u": "https://www.bbc.com/news/articles/cd9v420y190o?at_medium=RSS&amp;at_campaign=rss",
       "p": "https://reddit.com/r/worldnews/comments/1srld3m/zelensky_says_failure_of_us_envoys_to_visit_kyiv/",
       "b": "",
-      "s": 5778,
-      "c": 211,
+      "s": 6286,
+      "c": 222,
       "a": "Goldern_Emerald",
       "cat": "World News"
     },
     {
-      "i": "rd-51",
-      "t": "Hackers Breach Russian Ministry Call, Reveal China Supplies \u201890%\u2019 of Drone Electronics",
-      "u": "https://www.kyivpost.com/post/74379",
-      "p": "https://reddit.com/r/worldnews/comments/1srgwqp/hackers_breach_russian_ministry_call_reveal_china/",
-      "b": "",
-      "s": 16308,
-      "c": 470,
-      "a": "pheexio",
-      "cat": "World News"
-    },
-    {
-      "i": "rd-52",
+      "i": "rd-63",
       "t": "FBI arrests Glasgow University student for taking photos of US military planes",
       "u": "https://thetab.com/2026/04/20/fbi-arrests-glasgow-university-student-over-u-s-military-photos",
       "p": "https://reddit.com/r/worldnews/comments/1sriubn/fbi_arrests_glasgow_university_student_for_taking/",
       "b": "",
-      "s": 8878,
-      "c": 487,
+      "s": 9152,
+      "c": 500,
       "a": "Legitimate-Break-143",
       "cat": "World News"
     },
     {
-      "i": "rd-53",
-      "t": "Two CIA officers die in Mexico accident after counternarcotics operation",
-      "u": "https://www.washingtonpost.com/national-security/2026/04/21/cia-mexico-accident-counter-narcotics/",
-      "p": "https://reddit.com/r/worldnews/comments/1srq8qu/two_cia_officers_die_in_mexico_accident_after/",
+      "i": "rd-64",
+      "t": "Hackers Breach Russian Ministry Call, Reveal China Supplies \u201890%\u2019 of Drone Electronics",
+      "u": "https://www.kyivpost.com/post/74379",
+      "p": "https://reddit.com/r/worldnews/comments/1srgwqp/hackers_breach_russian_ministry_call_reveal_china/",
       "b": "",
-      "s": 2460,
-      "c": 158,
-      "a": "UnscheduledCalendar",
+      "s": 16580,
+      "c": 479,
+      "a": "pheexio",
       "cat": "World News"
     },
     {
-      "i": "rd-54",
+      "i": "rd-65",
       "t": "Taiwan president Ching-te has been forced to cancel his Eswatini visit after three countries along the flight route withdrew permission for him to fly over their territories amid pressure from China",
       "u": "https://www.wral.com/news/ap/76618-taiwan-president-postpones-eswatini-visit-and-says-china-pressured-african-countries/",
       "p": "https://reddit.com/r/worldnews/comments/1srne96/taiwan_president_chingte_has_been_forced_to/",
       "b": "",
-      "s": 3324,
-      "c": 269,
+      "s": 3863,
+      "c": 285,
       "a": "WayOutbackBoy",
       "cat": "World News"
     },
     {
-      "i": "rd-55",
+      "i": "rd-66",
+      "t": "Two CIA officers die in Mexico accident after counternarcotics operation",
+      "u": "https://www.washingtonpost.com/national-security/2026/04/21/cia-mexico-accident-counter-narcotics/",
+      "p": "https://reddit.com/r/worldnews/comments/1srq8qu/two_cia_officers_die_in_mexico_accident_after/",
+      "b": "",
+      "s": 2715,
+      "c": 180,
+      "a": "UnscheduledCalendar",
+      "cat": "World News"
+    },
+    {
+      "i": "rd-67",
       "t": "Bombed \"narco boat\" was a fishing boat",
       "u": "https://www.theguardian.com/global-development/2026/apr/21/ecuador-us-boat-strike-survivors",
       "p": "https://reddit.com/r/worldnews/comments/1srqgip/bombed_narco_boat_was_a_fishing_boat/",
       "b": "",
-      "s": 1846,
-      "c": 113,
+      "s": 2230,
+      "c": 128,
       "a": "joedenowhere",
       "cat": "World News"
     },
     {
-      "i": "rd-56",
+      "i": "rd-68",
+      "t": "A network of YouTube accounts is promoting U.S. annexation to Albertans, researchers say. It has 40M views",
+      "u": "https://www.thestar.com/news/investigations/a-network-of-youtube-accounts-is-promoting-us-annexation-to-albertans-researchers-say-it-has-40m-views/article_b26d9311-f3f1-4304-a443-360f51f6a558.html",
+      "p": "https://reddit.com/r/worldnews/comments/1srpq5q/a_network_of_youtube_accounts_is_promoting_us/",
+      "b": "",
+      "s": 1917,
+      "c": 236,
+      "a": "ImDoubleB",
+      "cat": "World News"
+    },
+    {
+      "i": "rd-69",
+      "t": "IDF jails soldiers for damaging Jesus statue in Lebanon: 'Moral failure'",
+      "u": "https://www.ynetnews.com/article/b1qt4bsp11l",
+      "p": "https://reddit.com/r/worldnews/comments/1srqklk/idf_jails_soldiers_for_damaging_jesus_statue_in/",
+      "b": "",
+      "s": 1633,
+      "c": 434,
+      "a": "qTp_Meteor",
+      "cat": "World News"
+    },
+    {
+      "i": "rd-70",
       "t": "Clean energy pushes fossil-fuel power into reverse for \u2018first time ever\u2019",
       "u": "https://www.carbonbrief.org/clean-energy-pushes-fossil-fuel-power-into-reverse-for-first-time-ever/",
       "p": "https://reddit.com/r/Futurology/comments/1srqsnx/clean_energy_pushes_fossilfuel_power_into_reverse/",
       "b": "",
-      "s": 279,
-      "c": 6,
+      "s": 314,
+      "c": 8,
       "a": "grundar",
       "cat": "Futurology"
     },
     {
-      "i": "rd-57",
+      "i": "rd-71",
       "t": "Elon Musk Is Taking the X Playbook to Starlink",
       "u": "https://www.theatlantic.com/technology/2026/04/elon-musk-starlink-satellites/686877/?utm_source=reddit&amp;utm_campaign=the-atlantic&amp;utm_medium=social&amp;utm_content=edit-promo",
       "p": "https://reddit.com/r/Futurology/comments/1srqu4u/elon_musk_is_taking_the_x_playbook_to_starlink/",
       "b": "",
-      "s": 110,
-      "c": 51,
+      "s": 134,
+      "c": 57,
       "a": "theatlantic",
       "cat": "Futurology"
     },
     {
-      "i": "rd-58",
+      "i": "rd-72",
       "t": "23 Major News Sites Have Blocked the Wayback Machine \u2013 Digital History In Danger",
       "u": "https://www.gadgetreview.com/23-major-news-sites-have-blocked-the-wayback-machine-digital-history-in-danger",
       "p": "https://reddit.com/r/Futurology/comments/1sqjf82/23_major_news_sites_have_blocked_the_wayback/",
       "b": "",
-      "s": 10747,
-      "c": 294,
+      "s": 10759,
+      "c": 295,
       "a": "EchoOfOppenheimer",
       "cat": "Futurology"
     },
     {
-      "i": "rd-59",
+      "i": "rd-73",
       "t": "Multi-year field study finds that agrivoltaics can support healthy potato yields",
       "u": "https://www.pv-magazine.com/2026/03/30/multi-year-field-study-suggest-that-agrivoltaics-can-support-healthy-potato-yields/",
       "p": "https://reddit.com/r/Futurology/comments/1sqp6aj/multiyear_field_study_finds_that_agrivoltaics_can/",
       "b": "",
-      "s": 319,
+      "s": 315,
       "c": 31,
       "a": "sundler",
       "cat": "Futurology"
     },
     {
-      "i": "rd-60",
+      "i": "rd-74",
       "t": "Microsoft exec suggests AI agents will need to buy software licenses, just like employees",
       "u": "https://www.businessinsider.com/microsoft-executive-suggests-ai-agents-buy-software-licenses-seats-2026-4",
       "p": "https://reddit.com/r/Futurology/comments/1spqzd5/microsoft_exec_suggests_ai_agents_will_need_to/",
       "b": "",
-      "s": 2542,
+      "s": 2544,
       "c": 339,
       "a": "EchoOfOppenheimer",
       "cat": "Futurology"
     },
     {
-      "i": "rd-61",
+      "i": "rd-75",
       "t": "What is something that you think will change the future of internet - other then ai",
       "u": "https://www.reddit.com/r/Futurology/comments/1sriwyz/what_is_something_that_you_think_will_change_the/",
       "p": "https://reddit.com/r/Futurology/comments/1sriwyz/what_is_something_that_you_think_will_change_the/",
@@ -686,7 +840,7 @@
       "cat": "Futurology"
     },
     {
-      "i": "rd-62",
+      "i": "rd-76",
       "t": "Mark Zuckerberg is reportedly building an AI clone to replace him in meetings - The AI version of Zuckerberg is trained on his mannerisms, tone, and public statements",
       "u": "https://www.theverge.com/tech/910990/meta-ceo-mark-zuckerberg-ai-clone",
       "p": "https://reddit.com/r/Futurology/comments/1spn17g/mark_zuckerberg_is_reportedly_building_an_ai/",
@@ -697,106 +851,150 @@
       "cat": "Futurology"
     },
     {
-      "i": "rd-63",
+      "i": "rd-77",
       "t": "Brussels pushes remote working to ease energy crisis. European Commission also recommends heat pumps and public transport subsidies",
       "u": "https://www.ft.com/content/bbc9c31e-cc43-41a6-8fb7-057d44b25a21",
       "p": "https://reddit.com/r/Futurology/comments/1spq44k/brussels_pushes_remote_working_to_ease_energy/",
       "b": "",
-      "s": 268,
+      "s": 271,
       "c": 7,
       "a": "sundler",
       "cat": "Futurology"
     },
     {
-      "i": "rd-64",
+      "i": "rd-78",
+      "t": "New metric shows renewables are 53% cheaper than nuclear power",
+      "u": "https://www.pv-magazine.com/2026/04/17/new-metric-shows-renewables-are-53-cheaper-than-nuclear-power/",
+      "p": "https://reddit.com/r/Futurology/comments/1spa4wo/new_metric_shows_renewables_are_53_cheaper_than/",
+      "b": "",
+      "s": 1657,
+      "c": 497,
+      "a": "V2O5",
+      "cat": "Futurology"
+    },
+    {
+      "i": "rd-79",
+      "t": "Is repurposing old compute hardware for useful work mostly wishful thinking",
+      "u": "https://www.reddit.com/r/Futurology/comments/1spvri2/is_repurposing_old_compute_hardware_for_useful/",
+      "p": "https://reddit.com/r/Futurology/comments/1spvri2/is_repurposing_old_compute_hardware_for_useful/",
+      "b": "millions of machines exist because one incentive made sense at one point. then the environment changes and suddenly  we've got massive idle or underused compute everywhereit seems obvious to ask whether some of that can be redirected toward something socially useful, but the exec",
+      "s": 45,
+      "c": 80,
+      "a": "jorchjorch",
+      "cat": "Futurology"
+    },
+    {
+      "i": "rd-80",
       "t": "Researchers Induce Smells With Ultrasound, No Chemical Cartridges Required",
       "u": "https://www.uploadvr.com/researchers-induce-smells-with-ultrasound/",
       "p": "https://reddit.com/r/singularity/comments/1sntwcg/researchers_induce_smells_with_ultrasound_no/",
       "b": "",
-      "s": 257,
+      "s": 261,
       "c": 48,
       "a": "striketheviol",
       "cat": "Futurology"
     },
     {
-      "i": "rd-65",
+      "i": "rd-81",
       "t": "Hollywood is so screwed",
       "u": "https://v.redd.it/g8cvuxh1advg1",
       "p": "https://reddit.com/r/singularity/comments/1sm88v5/hollywood_is_so_screwed/",
       "b": "",
-      "s": 9395,
+      "s": 9399,
       "c": 1514,
       "a": "adj_noun_digit",
       "cat": "Futurology"
     },
     {
-      "i": "rd-66",
+      "i": "rd-82",
       "t": "Another CyberNani face spotted",
       "u": "https://v.redd.it/qnzao2vk7iwg1",
       "p": "https://reddit.com/r/singularity/comments/1srhkn0/another_cybernani_face_spotted/",
       "b": "",
-      "s": 561,
-      "c": 84,
+      "s": 577,
+      "c": 87,
       "a": "Distinct-Question-16",
       "cat": "Futurology"
     },
     {
-      "i": "rd-67",
+      "i": "rd-83",
+      "t": "Differences Between Kimi K2.5 and Kimi K2.6 on MineBench",
+      "u": "https://www.reddit.com/gallery/1srs29t",
+      "p": "https://reddit.com/r/singularity/comments/1srs29t/differences_between_kimi_k25_and_kimi_k26_on/",
+      "b": "**Some Notes:**  * The one caveat though is that I find Kimi's results to be quite inconsistent; the model clearly has a very high ceiling, but you'll see that some of it's builds (in my opinion) lack in quality compared to the others (though they're all a massive improvement fro",
+      "s": 94,
+      "c": 18,
+      "a": "ENT_Alam",
+      "cat": "Futurology"
+    },
+    {
+      "i": "rd-84",
       "t": "AGI \ud83d\ude80",
       "u": "https://i.redd.it/3py61pk1qdwg1.jpeg",
       "p": "https://reddit.com/r/singularity/comments/1sqvvws/agi/",
       "b": "",
-      "s": 6544,
+      "s": 6574,
       "c": 213,
       "a": "policyweb",
       "cat": "Futurology"
     },
     {
-      "i": "rd-68",
-      "t": "Differences Between Kimi K2.5 and Kimi K2.6 on MineBench",
-      "u": "https://www.reddit.com/gallery/1srs29t",
-      "p": "https://reddit.com/r/singularity/comments/1srs29t/differences_between_kimi_k25_and_kimi_k26_on/",
-      "b": "**Some Notes:**  * The one caveat though is that I find Kimi's results to be quite inconsistent; the model clearly has a very high ceiling, but you'll see that some of it's builds (in my opinion) lack in quality compared to the others (though they're all a massive improvement fro",
-      "s": 89,
-      "c": 14,
-      "a": "ENT_Alam",
+      "i": "rd-85",
+      "t": "The new ChatGPT images model is the new standard in photorealistic image generation",
+      "u": "https://www.reddit.com/gallery/1srvo8i",
+      "p": "https://reddit.com/r/singularity/comments/1srvo8i/the_new_chatgpt_images_model_is_the_new_standard/",
+      "b": "",
+      "s": 63,
+      "c": 26,
+      "a": "Glittering-Neck-2505",
       "cat": "Futurology"
     },
     {
-      "i": "rd-69",
+      "i": "rd-86",
       "t": "Introducing Deep Research and Deep Research Max",
       "u": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/next-generation-gemini-deep-research/",
       "p": "https://reddit.com/r/singularity/comments/1srsxvs/introducing_deep_research_and_deep_research_max/",
       "b": "",
-      "s": 73,
-      "c": 13,
+      "s": 81,
+      "c": 16,
       "a": "ShreckAndDonkey123",
       "cat": "Futurology"
     },
     {
-      "i": "rd-70",
+      "i": "rd-87",
       "t": "Deezer says 44% of new music uploads are AI-generated, most streams are fraudulent",
       "u": "https://arstechnica.com/ai/2026/04/deezer-says-44-of-new-music-uploads-are-ai-generated-most-streams-are-fraudulent/",
       "p": "https://reddit.com/r/singularity/comments/1srlgc6/deezer_says_44_of_new_music_uploads_are/",
       "b": "",
-      "s": 150,
-      "c": 27,
+      "s": 158,
+      "c": 29,
       "a": "JackFisherBooks",
       "cat": "Futurology"
     },
     {
-      "i": "rd-71",
+      "i": "rd-88",
       "t": "OpenAI teases gpt-image 2? Livestream at 12pm PT",
       "u": "https://x.com/openai/status/2046589828918317155?s=46",
       "p": "https://reddit.com/r/singularity/comments/1srom61/openai_teases_gptimage_2_livestream_at_12pm_pt/",
       "b": "",
-      "s": 102,
-      "c": 22,
+      "s": 103,
+      "c": 23,
       "a": "d1ez3",
       "cat": "Futurology"
     },
     {
-      "i": "rd-72",
+      "i": "rd-89",
+      "t": "GPT-Image-2 now reviews its own output and iterates until it is satisfied with the correctness of its output.",
+      "u": "https://i.redd.it/l1gy51g5bhwg1.png",
+      "p": "https://reddit.com/r/singularity/comments/1srehi7/gptimage2_now_reviews_its_own_output_and_iterates/",
+      "b": "This image took \\~11 minutes to generate while it continued to review and iterate on its own outputs several times.",
+      "s": 472,
+      "c": 63,
+      "a": "Plane_Garbage",
+      "cat": "Futurology"
+    },
+    {
+      "i": "rd-90",
       "t": "Share your startup - quarterly post",
       "u": "https://www.reddit.com/r/startups/comments/1siohta/share_your_startup_quarterly_post/",
       "p": "https://reddit.com/r/startups/comments/1siohta/share_your_startup_quarterly_post/",
@@ -807,7 +1005,7 @@
       "cat": "Startups"
     },
     {
-      "i": "rd-73",
+      "i": "rd-91",
       "t": "[Hiring/Seeking/Offering] Jobs / Co-Founders Weekly Thread",
       "u": "https://www.reddit.com/r/startups/comments/1sqehzy/hiringseekingoffering_jobs_cofounders_weekly/",
       "p": "https://reddit.com/r/startups/comments/1sqehzy/hiringseekingoffering_jobs_cofounders_weekly/",
@@ -818,29 +1016,29 @@
       "cat": "Startups"
     },
     {
-      "i": "rd-74",
+      "i": "rd-92",
       "t": "How are startups adapting technical assessments now that candidates use AI anyway? i will not promote",
       "u": "https://www.reddit.com/r/startups/comments/1srhmxb/how_are_startups_adapting_technical_assessments/",
       "p": "https://reddit.com/r/startups/comments/1srhmxb/how_are_startups_adapting_technical_assessments/",
       "b": "i will not promote  Curious how other startups are dealing with this.  It feels like technical assessments got a lot messier once AI became part of how people actually work.  A lot of coding tests and take-homes were designed for a world where the candidate was basically working",
-      "s": 25,
-      "c": 43,
+      "s": 27,
+      "c": 44,
       "a": "snoopdoge111",
       "cat": "Startups"
     },
     {
-      "i": "rd-75",
+      "i": "rd-93",
       "t": "trying to figure out cold start for a niche BDSM app with a two sided market problem. Has anyone been through this? (I will not promote)",
       "u": "https://www.reddit.com/r/startups/comments/1sru6mr/trying_to_figure_out_cold_start_for_a_niche_bdsm/",
       "p": "https://reddit.com/r/startups/comments/1sru6mr/trying_to_figure_out_cold_start_for_a_niche_bdsm/",
       "b": "Hey everyone,  I recently took over a niche BDSM app that uses a task based matching mechanic instead of the usual swipe or chat first approach. Wanted to share where I'm at with the cold start problem and hear from people who've been through something similar.  How the product w",
-      "s": 4,
-      "c": 3,
+      "s": 5,
+      "c": 4,
       "a": "Key-Box-2548",
       "cat": "Startups"
     },
     {
-      "i": "rd-76",
+      "i": "rd-94",
       "t": "I've built an App for those that suffer with Endo/PCOS... but im too nervous to release it (i will not promote)",
       "u": "https://www.reddit.com/r/startups/comments/1srrvz7/ive_built_an_app_for_those_that_suffer_with/",
       "p": "https://reddit.com/r/startups/comments/1srrvz7/ive_built_an_app_for_those_that_suffer_with/",
@@ -851,36 +1049,58 @@
       "cat": "Startups"
     },
     {
-      "i": "rd-77",
+      "i": "rd-95",
+      "t": "How do you actually get first users for your SaaS? (i will not promote)",
+      "u": "https://www.reddit.com/r/startups/comments/1srqu63/how_do_you_actually_get_first_users_for_your_saas/",
+      "p": "https://reddit.com/r/startups/comments/1srqu63/how_do_you_actually_get_first_users_for_your_saas/",
+      "b": "hey guys, being really vulnerable here...  building our SaaS was the easy part, but getting users is honestly killing me lol.  the product is super solid and solves a headache we had ourselves, but we have almost zero marketing background.  whenever we try to post about it anywhe",
+      "s": 3,
+      "c": 11,
+      "a": "nitinnnn_",
+      "cat": "Startups"
+    },
+    {
+      "i": "rd-96",
       "t": "European alternatives to US SaaS tools, my updated list for 2026 (i will not promote)",
       "u": "https://www.reddit.com/r/startups/comments/1srkg1i/european_alternatives_to_us_saas_tools_my_updated/",
       "p": "https://reddit.com/r/startups/comments/1srkg1i/european_alternatives_to_us_saas_tools_my_updated/",
       "b": "With everything going on (Cloud Act, Schrems II aftermath, GDPR enforcement getting serious, and let's be honest, the tariff chaos making USD pricing unpredictable), our team decided to audit our entire stack and switch to EU-based tools wherever possible.  **Project Management**",
       "s": 6,
-      "c": 18,
+      "c": 19,
       "a": "bataprod",
       "cat": "Startups"
     },
     {
-      "i": "rd-78",
-      "t": "How do you actually get first users for your SaaS? (i will not promote)",
-      "u": "https://www.reddit.com/r/startups/comments/1srqu63/how_do_you_actually_get_first_users_for_your_saas/",
-      "p": "https://reddit.com/r/startups/comments/1srqu63/how_do_you_actually_get_first_users_for_your_saas/",
-      "b": "hey guys, being really vulnerable here...  building our SaaS was the easy part, but getting users is honestly killing me lol.  the product is super solid and solves a headache we had ourselves, but we have almost zero marketing background.  whenever we try to post about it anywhe",
-      "s": 2,
-      "c": 10,
-      "a": "nitinnnn_",
-      "cat": "Startups"
-    },
-    {
-      "i": "rd-79",
+      "i": "rd-97",
       "t": "Validation post : Would anyone pay for a \u201cbrowser profile health + Cookies warmup\u201d tool? (I will not promote)",
       "u": "https://www.reddit.com/r/startups/comments/1srhw56/validation_post_would_anyone_pay_for_a_browser/",
       "p": "https://reddit.com/r/startups/comments/1srhw56/validation_post_would_anyone_pay_for_a_browser/",
       "b": "I\u2019ve been using browser profile tools (anti-detect browsers) for a while, and there\u2019s something I keep running into that I feel like isn\u2019t really solved properly.  Profiles just randomly \u201cgo bad\u201d sometimes. And it\u2019s never clear why.  Could be IP quality, timezone mismatch, finger",
-      "s": 5,
-      "c": 9,
+      "s": 7,
+      "c": 10,
       "a": "LocalConversation850",
+      "cat": "Startups"
+    },
+    {
+      "i": "rd-98",
+      "t": "How does one get a job at a startup? I will not promote",
+      "u": "https://www.reddit.com/r/startups/comments/1srmit6/how_does_one_get_a_job_at_a_startup_i_will_not/",
+      "p": "https://reddit.com/r/startups/comments/1srmit6/how_does_one_get_a_job_at_a_startup_i_will_not/",
+      "b": "Im a business student and pretty much all of my free time is invested into creating something, finding a way to execute an idea I have, or trying to find likeminded people who are interested in creating something.  My main focus recently has been in software development and SaaS",
+      "s": 2,
+      "c": 13,
+      "a": "NewspaperOk1616",
+      "cat": "Startups"
+    },
+    {
+      "i": "rd-99",
+      "t": "How do you know when your outbound problem is the message vs the system? (I will not promote)",
+      "u": "https://www.reddit.com/r/startups/comments/1srezd6/how_do_you_know_when_your_outbound_problem_is_the/",
+      "p": "https://reddit.com/r/startups/comments/1srezd6/how_do_you_know_when_your_outbound_problem_is_the/",
+      "b": "For quite some time now, I have been considering this topic and came to the conclusion that a high number of weak outbound leads do not automatically lead to poor-quality copy. This led me to constantly revise and rewrite my emails, create new CTAs, and think of new ways to follo",
+      "s": 3,
+      "c": 10,
+      "a": "DeliciousWin4649",
       "cat": "Startups"
     }
   ],
@@ -891,79 +1111,90 @@
       "u": "https://www.trendmicro.com/en_us/research/26/d/vercel-breach-oauth-supply-chain.html",
       "p": "https://news.ycombinator.com/item?id=47851634",
       "b": "Vercel April 2026 security incident - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47824463 - April 2026 (485 comments)A Roblox cheat and one AI tool brought down Vercel&#x27;s platform - https:&#x2F;&#x2F;news.ycombinator.com&#x2F;item?id=47844431 - April 2026 (145 commen",
-      "s": 49,
-      "c": 19,
+      "s": 72,
+      "c": 25,
       "a": "queenelvis",
       "cat": "Tech"
     },
     {
       "i": "hn-1",
-      "t": "Laws of Software Engineering",
-      "u": "https://lawsofsoftwareengineering.com",
-      "p": "https://news.ycombinator.com/item?id=47847179",
-      "b": "",
-      "s": 609,
-      "c": 313,
-      "a": "milanm081",
-      "cat": "Tech"
-    },
-    {
-      "i": "hn-2",
-      "t": "A Periodic Map of Cheese",
-      "u": "https://cheesemap.netlify.app/",
-      "p": "https://news.ycombinator.com/item?id=47851077",
-      "b": "",
-      "s": 40,
-      "c": 11,
-      "a": "sfrechtling",
-      "cat": "Tech"
-    },
-    {
-      "i": "hn-3",
-      "t": "Show HN: GoModel \u2013 an open-source AI gateway in Go",
-      "u": "https://github.com/ENTERPILOT/GOModel/",
-      "p": "https://news.ycombinator.com/item?id=47849097",
-      "b": "Hi, I\u2019m Jakub, a solo founder based in Warsaw.I\u2019ve been building GoModel since December with a couple of contributors. It&#x27;s an open-source AI gateway that sits between your app and model providers like OpenAI, Anthropic or others.I built it for my startup to solve a few prob",
-      "s": 102,
-      "c": 30,
-      "a": "santiago-pl",
-      "cat": "Tech"
-    },
-    {
-      "i": "hn-4",
       "t": "Britannica11.org \u2013 a structured edition of the 1911 Encyclop\u00e6dia Britannica",
       "u": "https://britannica11.org/",
       "p": "https://news.ycombinator.com/item?id=47851885",
       "b": "",
-      "s": 17,
-      "c": 19,
+      "s": 40,
+      "c": 27,
       "a": "ahaspel",
       "cat": "Tech"
     },
     {
-      "i": "hn-5",
-      "t": "Fusion Power Plant Simulator",
-      "u": "https://www.fusionenergybase.com/fusion-power-plant-simulator",
-      "p": "https://news.ycombinator.com/item?id=47849315",
+      "i": "hn-2",
+      "t": "Laws of Software Engineering",
+      "u": "https://lawsofsoftwareengineering.com",
+      "p": "https://news.ycombinator.com/item?id=47847179",
       "b": "",
-      "s": 87,
-      "c": 32,
-      "a": "sam",
+      "s": 633,
+      "c": 327,
+      "a": "milanm081",
+      "cat": "Tech"
+    },
+    {
+      "i": "hn-3",
+      "t": "A Periodic Map of Cheese",
+      "u": "https://cheesemap.netlify.app/",
+      "p": "https://news.ycombinator.com/item?id=47851077",
+      "b": "",
+      "s": 57,
+      "c": 26,
+      "a": "sfrechtling",
+      "cat": "Tech"
+    },
+    {
+      "i": "hn-4",
+      "t": "Framework Laptop 13 Pro",
+      "u": "https://frame.work/laptop13pro",
+      "p": "https://news.ycombinator.com/item?id=47852177",
+      "b": "",
+      "s": 75,
+      "c": 22,
+      "a": "Trollmann",
+      "cat": "Tech"
+    },
+    {
+      "i": "hn-5",
+      "t": "Show HN: GoModel \u2013 an open-source AI gateway in Go",
+      "u": "https://github.com/ENTERPILOT/GOModel/",
+      "p": "https://news.ycombinator.com/item?id=47849097",
+      "b": "Hi, I\u2019m Jakub, a solo founder based in Warsaw.I\u2019ve been building GoModel since December with a couple of contributors. It&#x27;s an open-source AI gateway that sits between your app and model providers like OpenAI, Anthropic or others.I built it for my startup to solve a few prob",
+      "s": 107,
+      "c": 37,
+      "a": "santiago-pl",
       "cat": "Tech"
     },
     {
       "i": "hn-6",
-      "t": "Kasane: New drop-in Kakoune front end with GPU rendering and WASM Plugins",
-      "u": "https://github.com/Yus314/kasane",
-      "p": "https://news.ycombinator.com/item?id=47850542",
+      "t": "Fusion Power Plant Simulator",
+      "u": "https://www.fusionenergybase.com/fusion-power-plant-simulator",
+      "p": "https://news.ycombinator.com/item?id=47849315",
       "b": "",
-      "s": 24,
-      "c": 1,
-      "a": "nsagent",
+      "s": 91,
+      "c": 34,
+      "a": "sam",
       "cat": "Tech"
     },
     {
       "i": "hn-7",
+      "t": "Edit store price tags using Flipper Zero",
+      "u": "https://github.com/i12bp8/TagTinker",
+      "p": "https://news.ycombinator.com/item?id=47822978",
+      "b": "",
+      "s": 143,
+      "c": 155,
+      "a": "trueduke",
+      "cat": "Tech"
+    },
+    {
+      "i": "hn-8",
       "t": "Trellis AI (YC W24) Is hiring engineers to build self-improving agents",
       "u": "https://www.ycombinator.com/companies/trellis-ai/jobs/SvzJaTH-member-of-technical-staff-product-engineering-full-time",
       "p": "https://news.ycombinator.com/item?id=47851456",
@@ -971,6 +1202,17 @@
       "s": 1,
       "c": 0,
       "a": "macklinkachorn",
+      "cat": "Tech"
+    },
+    {
+      "i": "hn-9",
+      "t": "Modern Front end Complexity: essential or accidental?",
+      "u": "https://binaryigor.com/modern-frontend-complexity.html",
+      "p": "https://news.ycombinator.com/item?id=47824051",
+      "b": "",
+      "s": 23,
+      "c": 11,
+      "a": "gsky",
       "cat": "Tech"
     }
   ],
@@ -1065,6 +1307,39 @@
     },
     {
       "i": "rs-8",
+      "t": "Revolut eyes valuation of up to $200B in eventual IPO",
+      "u": "https://techcrunch.com/2026/04/21/revolut-eyes-valuation-of-up-to-200b-in-eventual-ipo/",
+      "p": "https://techcrunch.com/2026/04/21/revolut-eyes-valuation-of-up-to-200b-in-eventual-ipo/",
+      "b": "Fintech giant Revolut, which secured a full banking license in the U.K. in March after years of waiting, was most recently valued at $75 billion in a secondary share sale.",
+      "s": 0,
+      "c": 0,
+      "a": "Ram Iyer",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-9",
+      "t": "With US spy laws set to expire, lawmakers are split over protecting Americans from warrantless surveillance",
+      "u": "https://techcrunch.com/2026/04/21/with-us-spy-laws-set-to-expire-lawmakers-are-split-over-protecting-americans-from-warrantless-surveillance/",
+      "p": "https://techcrunch.com/2026/04/21/with-us-spy-laws-set-to-expire-lawmakers-are-split-over-protecting-americans-from-warrantless-surveillance/",
+      "b": "Some lawmakers are calling for widespread reforms following years of surveillance scandals and abuses across successive U.S. administrations. But even if the spy law known as Section 702 expires on April 30, the government's spy powers will not automatically lapse.",
+      "s": 0,
+      "c": 0,
+      "a": "Zack Whittaker",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-10",
+      "t": "X makes it 1,900 percent more expensive to post links",
+      "u": "https://www.theverge.com/tech/916178/x-link-post-api-expensive-techmeme",
+      "p": "https://www.theverge.com/tech/916178/x-link-post-api-expensive-techmeme",
+      "b": "Posting links to X through custom social media software just got a lot more expensive. On Monday, X significantly increased how much it costs to post a URL via the X API, which is what third-party tools use to hook into the platform. It now costs $0.20 when a link is posted, up f",
+      "s": 0,
+      "c": 0,
+      "a": "Jay Peters",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-11",
       "t": "Framework announces Laptop 13 Pro, \u2018the MacBook Pro for Linux users\u2019",
       "u": "https://www.theverge.com/gadgets/915508/framework-announces-laptop-13-pro-the-macbook-pro-for-linux-users",
       "p": "https://www.theverge.com/gadgets/915508/framework-announces-laptop-13-pro-the-macbook-pro-for-linux-users",
@@ -1075,7 +1350,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-9",
+      "i": "rs-12",
       "t": "Framework\u2019s first eGPUs turn its laptop into a desktop PC",
       "u": "https://www.theverge.com/gadgets/915328/framework-oculink-egpu-dev-kit-laptop-16",
       "p": "https://www.theverge.com/gadgets/915328/framework-oculink-egpu-dev-kit-laptop-16",
@@ -1086,7 +1361,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-10",
+      "i": "rs-13",
       "t": "Framework is building a better couch keyboard because everyone hates the Logitech one",
       "u": "https://www.theverge.com/tech/915497/framework-is-building-a-better-couch-keyboard-because-everyone-hates-the-logitech-one",
       "p": "https://www.theverge.com/tech/915497/framework-is-building-a-better-couch-keyboard-because-everyone-hates-the-logitech-one",
@@ -1097,7 +1372,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-11",
+      "i": "rs-14",
       "t": "The AirPods are Tim Cook\u2019s most underrated achievement",
       "u": "https://www.theverge.com/tech/916031/tim-cook-apple-airpods-legacy",
       "p": "https://www.theverge.com/tech/916031/tim-cook-apple-airpods-legacy",
@@ -1108,7 +1383,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-12",
+      "i": "rs-15",
       "t": "Celebrities will be able to find and request removal of AI deepfakes on YouTube",
       "u": "https://www.theverge.com/ai-artificial-intelligence/915872/celebrities-will-be-able-to-find-and-request-removal-of-ai-deepfakes-on-youtube",
       "p": "https://www.theverge.com/ai-artificial-intelligence/915872/celebrities-will-be-able-to-find-and-request-removal-of-ai-deepfakes-on-youtube",
@@ -1119,7 +1394,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-13",
+      "i": "rs-16",
       "t": "Twelve South\u2019s magnetic PowerBug charger is down to just $35",
       "u": "https://www.theverge.com/gadgets/915978/twelve-south-powerbug-deal-sale",
       "p": "https://www.theverge.com/gadgets/915978/twelve-south-powerbug-deal-sale",
@@ -1130,7 +1405,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-14",
+      "i": "rs-17",
       "t": "Govee\u2019s new rechargeable table lamp is less than half the price of Hue\u2019s",
       "u": "https://www.theverge.com/tech/915959/govee-table-smart-lamp-classic-battery-rechargeable-matter-pricing",
       "p": "https://www.theverge.com/tech/915959/govee-table-smart-lamp-classic-battery-rechargeable-matter-pricing",
@@ -1141,7 +1416,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-15",
+      "i": "rs-18",
       "t": "The Mac is in good hands in Apple\u2019s post-Cook era",
       "u": "https://www.theverge.com/tech/915896/john-ternus-apple-ceo-tim-cook-johny-srouji-mac-future",
       "p": "https://www.theverge.com/tech/915896/john-ternus-apple-ceo-tim-cook-johny-srouji-mac-future",
@@ -1152,7 +1427,18 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-16",
+      "i": "rs-19",
+      "t": "Wearable health tech might be Tim Cook\u2019s greatest legacy",
+      "u": "https://www.theverge.com/tech/915976/tim-cook-john-ternus-apple-watch-health-tech-wearables",
+      "p": "https://www.theverge.com/tech/915976/tim-cook-john-ternus-apple-watch-health-tech-wearables",
+      "b": "An apple a day keeps the doctor away. Granted, 19th-century proverb writers were talking about the fruit, but Tim Cook helped give new meaning to the adage with the release of the very first Apple Watch. In fact, I'd argue that when he hands the reins to John Ternus in September,",
+      "s": 0,
+      "c": 0,
+      "a": "Victoria Song",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-20",
       "t": "Anthropic gets $5B investment from Amazon, will use it to buy Amazon chips",
       "u": "https://arstechnica.com/ai/2026/04/anthropic-gets-5b-investment-from-amazon-will-use-it-to-buy-amazon-chips/",
       "p": "https://arstechnica.com/ai/2026/04/anthropic-gets-5b-investment-from-amazon-will-use-it-to-buy-amazon-chips/",
@@ -1163,7 +1449,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-17",
+      "i": "rs-21",
       "t": "CATL's new LFP battery can charge from 10 to 98% in less than 7 minutes",
       "u": "https://arstechnica.com/cars/2026/04/catls-new-lfp-battery-can-charge-from-10-to-98-in-less-than-7-minutes/",
       "p": "https://arstechnica.com/cars/2026/04/catls-new-lfp-battery-can-charge-from-10-to-98-in-less-than-7-minutes/",
@@ -1174,7 +1460,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-18",
+      "i": "rs-22",
       "t": "AMD Ryzen 9 9950X3D2 Dual Edition review: Tons of cache for tons of dollars",
       "u": "https://arstechnica.com/gadgets/2026/04/amd-ryzen-9-9950x3d2-dual-edition-review-tons-of-cache-for-tons-of-dollars/",
       "p": "https://arstechnica.com/gadgets/2026/04/amd-ryzen-9-9950x3d2-dual-edition-review-tons-of-cache-for-tons-of-dollars/",
@@ -1185,7 +1471,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-19",
+      "i": "rs-23",
       "t": "What's the deal with spacesuits for the Moon? Will they be ready in time?",
       "u": "https://arstechnica.com/space/2026/04/whats-the-deal-with-spacesuits-for-the-moon-will-they-be-ready-in-time/",
       "p": "https://arstechnica.com/space/2026/04/whats-the-deal-with-spacesuits-for-the-moon-will-they-be-ready-in-time/",
@@ -1196,7 +1482,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-20",
+      "i": "rs-24",
       "t": "Loneliness in older adults can often lead to memory impairment",
       "u": "https://arstechnica.com/health/2026/04/loneliness-in-older-adults-can-often-lead-to-memory-impairment/",
       "p": "https://arstechnica.com/health/2026/04/loneliness-in-older-adults-can-often-lead-to-memory-impairment/",
@@ -1207,7 +1493,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-21",
+      "i": "rs-25",
       "t": "Contrary to popular superstition, AES 128 is just fine in a post-quantum world",
       "u": "https://arstechnica.com/security/2026/04/contrary-to-popular-superstition-aes-128-is-just-fine-in-a-post-quantum-world/",
       "p": "https://arstechnica.com/security/2026/04/contrary-to-popular-superstition-aes-128-is-just-fine-in-a-post-quantum-world/",
@@ -1218,7 +1504,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-22",
+      "i": "rs-26",
       "t": "Global growth in solar \"the largest ever observed for any source\"",
       "u": "https://arstechnica.com/science/2026/04/global-growth-in-solar-the-largest-ever-observed-for-any-source/",
       "p": "https://arstechnica.com/science/2026/04/global-growth-in-solar-the-largest-ever-observed-for-any-source/",
@@ -1229,7 +1515,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-23",
+      "i": "rs-27",
       "t": "Pentagon pulls the plug on one of the military's most troubled space programs",
       "u": "https://arstechnica.com/space/2026/04/pentagon-pulls-the-plug-on-one-of-the-militarys-most-troubled-space-programs/",
       "p": "https://arstechnica.com/space/2026/04/pentagon-pulls-the-plug-on-one-of-the-militarys-most-troubled-space-programs/",
@@ -1240,7 +1526,40 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-24",
+      "i": "rs-28",
+      "t": "John Ternus will replace Tim Cook as Apple CEO",
+      "u": "https://arstechnica.com/apple/2026/04/john-ternus-will-replace-tim-cook-as-apple-ceo/",
+      "p": "https://arstechnica.com/apple/2026/04/john-ternus-will-replace-tim-cook-as-apple-ceo/",
+      "b": "Cook will be executive chairman but will no longer run the company day to day.",
+      "s": 0,
+      "c": 0,
+      "a": "Samuel Axon",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-29",
+      "t": "Absurd study suggests eating fruits and vegetables leads to cancer",
+      "u": "https://arstechnica.com/health/2026/04/absurdly-bad-study-spurs-headlines-linking-healthy-diet-to-lung-cancer/",
+      "p": "https://arstechnica.com/health/2026/04/absurdly-bad-study-spurs-headlines-linking-healthy-diet-to-lung-cancer/",
+      "b": "Experts point out a series of flaws, including small size and no control group.",
+      "s": 0,
+      "c": 0,
+      "a": "Beth Mole",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-30",
+      "t": "Mozilla Used Anthropic\u2019s Mythos to Find and Fix 151 Bugs in Firefox",
+      "u": "https://www.wired.com/story/mozilla-used-anthropics-mythos-to-find-151-bugs-in-firefox/",
+      "p": "https://www.wired.com/story/mozilla-used-anthropics-mythos-to-find-151-bugs-in-firefox/",
+      "b": "The Firefox team doesn\u2019t think emerging AI capabilities will upend cybersecurity long term, but they warn that software developers are likely in for a rocky transition.",
+      "s": 0,
+      "c": 0,
+      "a": "Lily Hay Newman",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-31",
       "t": "Tim Cook\u2019s Legacy Is Turning Apple Into a Subscription",
       "u": "https://www.wired.com/story/apple-tim-cook-subscription-business/",
       "p": "https://www.wired.com/story/apple-tim-cook-subscription-business/",
@@ -1251,7 +1570,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-25",
+      "i": "rs-32",
       "t": "Meta Is Sued Over Scam Ads on Facebook and Instagram",
       "u": "https://www.wired.com/story/meta-is-sued-over-scam-ads-on-facebook-and-instagram/",
       "p": "https://www.wired.com/story/meta-is-sued-over-scam-ads-on-facebook-and-instagram/",
@@ -1262,7 +1581,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-26",
+      "i": "rs-33",
       "t": "TAG Heuer Has Dropped New Polylight-Powered F1s",
       "u": "https://www.wired.com/story/tag-heuer-has-dropped-new-pastel-powered-f1s/",
       "p": "https://www.wired.com/story/tag-heuer-has-dropped-new-pastel-powered-f1s/",
@@ -1273,7 +1592,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-27",
+      "i": "rs-34",
       "t": "The Best Casio Watches You Can Wear Anywhere",
       "u": "https://www.wired.com/gallery/best-casio-watches/",
       "p": "https://www.wired.com/gallery/best-casio-watches/",
@@ -1284,7 +1603,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-28",
+      "i": "rs-35",
       "t": "The 10 Best Electrolyte Powders (We Tested Nearly 20)",
       "u": "https://www.wired.com/story/best-electrolyte-powders/",
       "p": "https://www.wired.com/story/best-electrolyte-powders/",
@@ -1295,7 +1614,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-29",
+      "i": "rs-36",
       "t": "Best Gaming Laptops (2026): Razer, Asus, Dell, and More",
       "u": "https://www.wired.com/story/best-gaming-laptops/",
       "p": "https://www.wired.com/story/best-gaming-laptops/",
@@ -1306,7 +1625,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-30",
+      "i": "rs-37",
       "t": "This Scammer Used an AI-Generated MAGA Girl to Grift \u2018Super Dumb\u2019 Men",
       "u": "https://www.wired.com/story/ai-generated-maga-girls/",
       "p": "https://www.wired.com/story/ai-generated-maga-girls/",
@@ -1317,7 +1636,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-31",
+      "i": "rs-38",
       "t": "H2O Audio Tri Run Workout Headphones Review: A Little Underwhelming",
       "u": "https://www.wired.com/review/h2o-audio-tri-run-workout-headphones/",
       "p": "https://www.wired.com/review/h2o-audio-tri-run-workout-headphones/",
@@ -1328,7 +1647,18 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-32",
+      "i": "rs-39",
+      "t": "The Internet\u2019s Favorite Lawyer Says We\u2019re Living Through \u2018Multiple Watergates per Week\u2019",
+      "u": "https://www.wired.com/story/the-big-interview-podcast-legal-eagle-devin-stone/",
+      "p": "https://www.wired.com/story/the-big-interview-podcast-legal-eagle-devin-stone/",
+      "b": "Devin Stone turned punchy legal explainers into a YouTube empire. Now he\u2019s warning that the sheer volume of Trump administration scandals is distorting reality itself.",
+      "s": 0,
+      "c": 0,
+      "a": "Katie Drummond",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-40",
       "t": "Google's Internal Politics Leave It Playing Catch-Up On AI Coding",
       "u": "https://developers.slashdot.org/story/26/04/21/1655253/googles-internal-politics-leave-it-playing-catch-up-on-ai-coding?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://developers.slashdot.org/story/26/04/21/1655253/googles-internal-politics-leave-it-playing-catch-up-on-ai-coding?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1339,7 +1669,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-33",
+      "i": "rs-41",
       "t": "Xbox Game Pass Ultimate Gets a Price Cut",
       "u": "https://games.slashdot.org/story/26/04/21/1639222/xbox-game-pass-ultimate-gets-a-price-cut?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://games.slashdot.org/story/26/04/21/1639222/xbox-game-pass-ultimate-gets-a-price-cut?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1350,7 +1680,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-34",
+      "i": "rs-42",
       "t": "Global Growth In Solar 'the Largest Ever Observed For Any Source'",
       "u": "https://hardware.slashdot.org/story/26/04/21/1549243/global-growth-in-solar-the-largest-ever-observed-for-any-source?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://hardware.slashdot.org/story/26/04/21/1549243/global-growth-in-solar-the-largest-ever-observed-for-any-source?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1361,7 +1691,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-35",
+      "i": "rs-43",
       "t": "Maryland Becomes First State To Pass Bill Banning 'Surveillance Pricing'",
       "u": "https://yro.slashdot.org/story/26/04/21/0115210/maryland-becomes-first-state-to-pass-bill-banning-surveillance-pricing?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://yro.slashdot.org/story/26/04/21/0115210/maryland-becomes-first-state-to-pass-bill-banning-surveillance-pricing?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1372,7 +1702,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-36",
+      "i": "rs-44",
       "t": "Amazon To Invest Up To Another $25 Billion In Anthropic",
       "u": "https://slashdot.org/story/26/04/21/014228/amazon-to-invest-up-to-another-25-billion-in-anthropic?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://slashdot.org/story/26/04/21/014228/amazon-to-invest-up-to-another-25-billion-in-anthropic?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1383,7 +1713,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-37",
+      "i": "rs-45",
       "t": "iPhone Video Shows 'Earthset' From Space",
       "u": "https://science.slashdot.org/story/26/04/21/0012245/iphone-video-shows-earthset-from-space?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://science.slashdot.org/story/26/04/21/0012245/iphone-video-shows-earthset-from-space?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1394,7 +1724,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-38",
+      "i": "rs-46",
       "t": "PlayStation To Require Age Verification For Messages and Voice Chat",
       "u": "https://games.slashdot.org/story/26/04/20/2357225/playstation-to-require-age-verification-for-messages-and-voice-chat?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://games.slashdot.org/story/26/04/20/2357225/playstation-to-require-age-verification-for-messages-and-voice-chat?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1405,7 +1735,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-39",
+      "i": "rs-47",
       "t": "Mobile Phones To Be Banned In Schools In England Under New Plans",
       "u": "https://mobile.slashdot.org/story/26/04/20/2014246/mobile-phones-to-be-banned-in-schools-in-england-under-new-plans?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://mobile.slashdot.org/story/26/04/20/2014246/mobile-phones-to-be-banned-in-schools-in-england-under-new-plans?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1416,7 +1746,29 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-40",
+      "i": "rs-48",
+      "t": "Apple CEO Tim Cook Is Stepping Down",
+      "u": "https://apple.slashdot.org/story/26/04/20/221244/apple-ceo-tim-cook-is-stepping-down?utm_source=rss1.0mainlinkanon&utm_medium=feed",
+      "p": "https://apple.slashdot.org/story/26/04/20/221244/apple-ceo-tim-cook-is-stepping-down?utm_source=rss1.0mainlinkanon&utm_medium=feed",
+      "b": "Apple announced that Tim Cook will step down as CEO in September after 15 years in the role, handing the job to hardware chief John Ternus. Longtime Slashdot reader sinij shares the news from MarketWatch: Cook leaves an impressive legacy after growing the company to a $4 trillion",
+      "s": 0,
+      "c": 0,
+      "a": "BeauHD",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-49",
+      "t": "Former Palantir Employee Running For Congress Unveils 'AI Dividend' Plan",
+      "u": "https://yro.slashdot.org/story/26/04/20/204204/former-palantir-employee-running-for-congress-unveils-ai-dividend-plan?utm_source=rss1.0mainlinkanon&utm_medium=feed",
+      "p": "https://yro.slashdot.org/story/26/04/20/204204/former-palantir-employee-running-for-congress-unveils-ai-dividend-plan?utm_source=rss1.0mainlinkanon&utm_medium=feed",
+      "b": "Alex Bores, a former Palantir employee and current Democratic House candidate in New York, is proposing an \"AI dividend\" that would send direct payments to Americans if AI drives major job losses. \"At its core, the AI Dividend is simple: if AI dramatically increases productivity ",
+      "s": 0,
+      "c": 0,
+      "a": "BeauHD",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-50",
       "t": "DeepER-Med: Advancing Deep Evidence-Based Research in Medicine Through Agentic AI",
       "u": "https://arxiv.org/abs/2604.15456",
       "p": "https://arxiv.org/abs/2604.15456",
@@ -1427,7 +1779,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-41",
+      "i": "rs-51",
       "t": "GIST: Multimodal Knowledge Extraction and Spatial Grounding via Intelligent Semantic Topology",
       "u": "https://arxiv.org/abs/2604.15495",
       "p": "https://arxiv.org/abs/2604.15495",
@@ -1438,7 +1790,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-42",
+      "i": "rs-52",
       "t": "Bureaucratic Silences: What the Canadian AI Register Reveals, Omits, and Obscures",
       "u": "https://arxiv.org/abs/2604.15514",
       "p": "https://arxiv.org/abs/2604.15514",
@@ -1449,7 +1801,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-43",
+      "i": "rs-53",
       "t": "LACE: Lattice Attention for Cross-thread Exploration",
       "u": "https://arxiv.org/abs/2604.15529",
       "p": "https://arxiv.org/abs/2604.15529",
@@ -1460,7 +1812,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-44",
+      "i": "rs-54",
       "t": "Preregistered Belief Revision Contracts",
       "u": "https://arxiv.org/abs/2604.15558",
       "p": "https://arxiv.org/abs/2604.15558",
@@ -1471,7 +1823,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-45",
+      "i": "rs-55",
       "t": "Subliminal Transfer of Unsafe Behaviors in AI Agent Distillation",
       "u": "https://arxiv.org/abs/2604.15559",
       "p": "https://arxiv.org/abs/2604.15559",
@@ -1482,7 +1834,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-46",
+      "i": "rs-56",
       "t": "Bilevel Optimization of Agent Skills via Monte Carlo Tree Search",
       "u": "https://arxiv.org/abs/2604.15709",
       "p": "https://arxiv.org/abs/2604.15709",
@@ -1493,7 +1845,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-47",
+      "i": "rs-57",
       "t": "The World Leaks the Future: Harness Evolution for Future Prediction Agents",
       "u": "https://arxiv.org/abs/2604.15719",
       "p": "https://arxiv.org/abs/2604.15719",
@@ -1504,7 +1856,29 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-48",
+      "i": "rs-58",
+      "t": "LLM Reasoning Is Latent, Not the Chain of Thought",
+      "u": "https://arxiv.org/abs/2604.15726",
+      "p": "https://arxiv.org/abs/2604.15726",
+      "b": "arXiv:2604.15726v1 Announce Type: new \nAbstract: This position paper argues that large language model (LLM) reasoning should be studied as latent-state trajectory formation rather than as faithful surface chain-of-thought (CoT). This matters because claims about faithfulness, int",
+      "s": 0,
+      "c": 0,
+      "a": "Wenshuo Wang",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rs-59",
+      "t": "Structured Abductive-Deductive-Inductive Reasoning for LLMs via Algebraic Invariants",
+      "u": "https://arxiv.org/abs/2604.15727",
+      "p": "https://arxiv.org/abs/2604.15727",
+      "b": "arXiv:2604.15727v1 Announce Type: new \nAbstract: Large language models exhibit systematic limitations in structured logical reasoning: they conflate hypothesis generation with verification, cannot distinguish conjecture from validated knowledge, and allow weak reasoning steps to ",
+      "s": 0,
+      "c": 0,
+      "a": "Sankalp Gilda, Shlok Gilda",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rs-60",
       "t": "BASIS: Balanced Activation Sketching with Invariant Scalars for \"Ghost Backpropagation\"",
       "u": "https://arxiv.org/abs/2604.16324",
       "p": "https://arxiv.org/abs/2604.16324",
@@ -1515,7 +1889,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-49",
+      "i": "rs-61",
       "t": "UniMamba: A Unified Spatial-Temporal Modeling Framework with State-Space and Attention Integration",
       "u": "https://arxiv.org/abs/2604.16325",
       "p": "https://arxiv.org/abs/2604.16325",
@@ -1526,7 +1900,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-50",
+      "i": "rs-62",
       "t": "Annotation Entropy Predicts Per-Example Learning Dynamics in LoRA Fine-Tuning",
       "u": "https://arxiv.org/abs/2604.16332",
       "p": "https://arxiv.org/abs/2604.16332",
@@ -1537,7 +1911,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-51",
+      "i": "rs-63",
       "t": "A Discordance-Aware Multimodal Framework with Multi-Agent Clinical Reasoning",
       "u": "https://arxiv.org/abs/2604.16333",
       "p": "https://arxiv.org/abs/2604.16333",
@@ -1548,7 +1922,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-52",
+      "i": "rs-64",
       "t": "Preventing overfitting in deep learning using differential privacy",
       "u": "https://arxiv.org/abs/2604.16334",
       "p": "https://arxiv.org/abs/2604.16334",
@@ -1559,7 +1933,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-53",
+      "i": "rs-65",
       "t": "Beyond Verifiable Rewards: Rubric-Based GRM for Reinforced Fine-Tuning SWE Agents",
       "u": "https://arxiv.org/abs/2604.16335",
       "p": "https://arxiv.org/abs/2604.16335",
@@ -1570,7 +1944,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-54",
+      "i": "rs-66",
       "t": "SaFeR-Steer: Evolving Multi-Turn MLLMs via Synthetic Bootstrapping and Feedback Dynamics",
       "u": "https://arxiv.org/abs/2604.16358",
       "p": "https://arxiv.org/abs/2604.16358",
@@ -1581,7 +1955,7 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-55",
+      "i": "rs-67",
       "t": "SetFlow: Generating Structured Sets of Representations for Multiple Instance Learning",
       "u": "https://arxiv.org/abs/2604.16362",
       "p": "https://arxiv.org/abs/2604.16362",
@@ -1592,7 +1966,29 @@
       "cat": "AI & ML"
     },
     {
-      "i": "rs-56",
+      "i": "rs-68",
+      "t": "Matched-Learning-Rate Analysis of Attention Drift and Transfer Retention in Fine-Tuned CLIP",
+      "u": "https://arxiv.org/abs/2604.16410",
+      "p": "https://arxiv.org/abs/2604.16410",
+      "b": "arXiv:2604.16410v1 Announce Type: new \nAbstract: CLIP adaptation can improve in-domain accuracy while degrading out-of-domain transfer, but comparisons between Full Fine-Tuning (Full FT) and LoRA are often confounded by different learning-rate conventions. We study how adaptation",
+      "s": 0,
+      "c": 0,
+      "a": "Ruize Xia",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rs-69",
+      "t": "CGCMA: Conditionally-Gated Cross-Modal Attention for Event-Conditioned Asynchronous Fusion",
+      "u": "https://arxiv.org/abs/2604.16411",
+      "p": "https://arxiv.org/abs/2604.16411",
+      "b": "arXiv:2604.16411v1 Announce Type: new \nAbstract: We study asynchronous alignment, a first-class multimodal learning setting in which a dense primary stream must be fused with sporadic external context whose value depends on when it arrives. Unlike standard multimodal benchmarks t",
+      "s": 0,
+      "c": 0,
+      "a": "Yunxiang Guo",
+      "cat": "AI & ML"
+    },
+    {
+      "i": "rs-70",
       "t": "Building agent-first governance and security",
       "u": "https://www.technologyreview.com/2026/04/21/1136158/building-agent-first-governance-and-security/",
       "p": "https://www.technologyreview.com/2026/04/21/1136158/building-agent-first-governance-and-security/",
@@ -1603,7 +1999,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-57",
+      "i": "rs-71",
       "t": "The Download: turning down human noise, and LA\u2019s stunning subway upgrade",
       "u": "https://www.technologyreview.com/2026/04/21/1136246/the-download-human-noise-la-subway-upgrade/",
       "p": "https://www.technologyreview.com/2026/04/21/1136246/the-download-human-noise-la-subway-upgrade/",
@@ -1614,7 +2010,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-58",
+      "i": "rs-72",
       "t": "Digging for clues about the North Pole\u2019s past",
       "u": "https://www.technologyreview.com/2026/04/21/1135231/digging-for-truth-north-pole-past-seabed/",
       "p": "https://www.technologyreview.com/2026/04/21/1135231/digging-for-truth-north-pole-past-seabed/",
@@ -1625,7 +2021,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-59",
+      "i": "rs-73",
       "t": "The Download: murderous \u2018mirror\u2019 bacteria, and Chinese workers fighting AI doubles",
       "u": "https://www.technologyreview.com/2026/04/20/1136154/the-download-murderous-mirror-bacteria-chinese-workers-fight-ai-agents/",
       "p": "https://www.technologyreview.com/2026/04/20/1136154/the-download-murderous-mirror-bacteria-chinese-workers-fight-ai-agents/",
@@ -1636,7 +2032,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-60",
+      "i": "rs-74",
       "t": "Colossal Biosciences said it cloned red wolves. Is it for real?",
       "u": "https://www.technologyreview.com/2026/04/20/1135222/red-wolves-colossal-biosciences-clones/",
       "p": "https://www.technologyreview.com/2026/04/20/1135222/red-wolves-colossal-biosciences-clones/",
@@ -1647,7 +2043,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-61",
+      "i": "rs-75",
       "t": "Chinese tech workers are starting to train their AI doubles\u2014and pushing back",
       "u": "https://www.technologyreview.com/2026/04/20/1136149/chinese-tech-workers-ai-colleagues/",
       "p": "https://www.technologyreview.com/2026/04/20/1136149/chinese-tech-workers-ai-colleagues/",
@@ -1658,7 +2054,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-62",
+      "i": "rs-76",
       "t": "Pie Day 2026",
       "u": "https://www.technologyreview.com/2026/04/17/1136121/pie-day-links/",
       "p": "https://www.technologyreview.com/2026/04/17/1136121/pie-day-links/",
@@ -1669,7 +2065,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-63",
+      "i": "rs-77",
       "t": "The Download: bad news for inner Neanderthals, and AI warfare\u2019s human illusion",
       "u": "https://www.technologyreview.com/2026/04/17/1136112/the-download-inner-neanderthal-ai-war-human-in-the-loop/",
       "p": "https://www.technologyreview.com/2026/04/17/1136112/the-download-inner-neanderthal-ai-war-human-in-the-loop/",
@@ -1680,7 +2076,29 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-64",
+      "i": "rs-78",
+      "t": "The case for fixing everything",
+      "u": "https://www.technologyreview.com/2026/04/17/1135408/book-review-stewart-brand-fixing-everything-maintenance/",
+      "p": "https://www.technologyreview.com/2026/04/17/1135408/book-review-stewart-brand-fixing-everything-maintenance/",
+      "b": "The handsome new book Maintenance: Of Everything, Part One, by the tech industry legend Stewart Brand, promises to be the first in a series offering \u201ca comprehensive overview of the civilizational importance of maintenance.\u201d One of Brand\u2019s several biographers described him as a m",
+      "s": 0,
+      "c": 0,
+      "a": "Lee Vinsel",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-79",
+      "t": "How robots learn: A brief, contemporary history",
+      "u": "https://www.technologyreview.com/2026/04/17/1135416/how-robots-learn-brief-contemporary-history/",
+      "p": "https://www.technologyreview.com/2026/04/17/1135416/how-robots-learn-brief-contemporary-history/",
+      "b": "Roboticists used to dream big but build small. They\u2019d hope to match or exceed the extraordinary complexity of the human body, and then they\u2019d spend their career refining robotic arms for auto plants. Aim for C-3P0; end up with the Roomba.&#160; The real ambition for many of these",
+      "s": 0,
+      "c": 0,
+      "a": "James O'Donnell",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-80",
       "t": "Ofcom investigating Telegram over child sexual abuse material concerns",
       "u": "https://www.bbc.com/news/articles/c4gxj049wljo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/c4gxj049wljo?at_medium=RSS&at_campaign=rss",
@@ -1691,7 +2109,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-65",
+      "i": "rs-81",
       "t": "How will Apple change under 'product guy' John Ternus?",
       "u": "https://www.bbc.com/news/articles/cn4vkye71ypo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/cn4vkye71ypo?at_medium=RSS&at_campaign=rss",
@@ -1702,7 +2120,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-66",
+      "i": "rs-82",
       "t": "New era as Apple names new boss to replace Tim Cook after 15 years",
       "u": "https://www.bbc.com/news/articles/c1kr19lry18o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/c1kr19lry18o?at_medium=RSS&at_campaign=rss",
@@ -1713,7 +2131,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-67",
+      "i": "rs-83",
       "t": "The 'dumb machine' promising a clean energy breakthrough",
       "u": "https://www.bbc.com/news/articles/c5yvm11xrn6o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/c5yvm11xrn6o?at_medium=RSS&at_campaign=rss",
@@ -1724,7 +2142,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-68",
+      "i": "rs-84",
       "t": "Blue Origin rocket grounded after satellite 'mishap'",
       "u": "https://www.bbc.com/news/articles/cjr9vwz48npo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/cjr9vwz48npo?at_medium=RSS&at_campaign=rss",
@@ -1735,7 +2153,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-69",
+      "i": "rs-85",
       "t": "Elon Musk snubs interview summons by French prosecutors amid X probe",
       "u": "https://www.bbc.com/news/articles/crk151nn7j3o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/crk151nn7j3o?at_medium=RSS&at_campaign=rss",
@@ -1746,7 +2164,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-70",
+      "i": "rs-86",
       "t": "White House and Anthropic hold 'productive' meeting amid fears over Mythos model",
       "u": "https://www.bbc.com/news/articles/cyv10e1d13po?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/cyv10e1d13po?at_medium=RSS&at_campaign=rss",
@@ -1757,7 +2175,7 @@
       "cat": "Tech"
     },
     {
-      "i": "rs-71",
+      "i": "rs-87",
       "t": "Tinder and Zoom offer 'proof of humanity' eye-scans to combat AI",
       "u": "https://www.bbc.com/news/articles/cp9vppem4evo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.com/news/articles/cp9vppem4evo?at_medium=RSS&at_campaign=rss",
@@ -1766,56 +2184,82 @@
       "c": 0,
       "a": "",
       "cat": "Tech"
+    },
+    {
+      "i": "rs-88",
+      "t": "What is Claude Mythos and what risks does it pose?",
+      "u": "https://www.bbc.com/news/articles/crk1py1jgzko?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.com/news/articles/crk1py1jgzko?at_medium=RSS&at_campaign=rss",
+      "b": "The company's claim the AI tool can outperform humans at some hacking and cyber-security tasks has sparked fears in the financial world.",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "cat": "Tech"
+    },
+    {
+      "i": "rs-89",
+      "t": "Could a digital twin make you into a 'superworker'?",
+      "u": "https://www.bbc.com/news/articles/c1d907lq6nyo?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.com/news/articles/c1d907lq6nyo?at_medium=RSS&at_campaign=rss",
+      "b": "Firms say digital twins make staff more productive, but are they a potential legal minefield?",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "cat": "Tech"
     }
   ],
   "summary": {
     "schema_version": "2",
-    "simple": "Local LLM communities debate rapid replacement cycles for models, while enterprise AI pivots toward licensing AI agents as digital labor. Meanwhile, global tech policy tightens as AI surveillance expands and Bezos's secretive AI firm nears a $38B valuation.",
+    "simple": "Local AI tool makers push smaller yet capable vision and reasoning models, while Big Tech doubles down on gargantuan funding rounds and new image-generation benchmarks. Communities debate whether today\u2019s rapid-fire releases obsolete yesterday\u2019s models, and regulators grapple with AI-powered scams, surveillance pricing and content authenticity.",
     "structured": {
       "themes": [
-        "Local LLM model churn",
-        "AI agents as licensed software",
-        "AI-powered surveillance & policy backlash"
+        "Compact frontier models",
+        "Funding mega-rounds & valuation spikes",
+        "AI ethics, scams & regulation"
       ],
-      "breaking": "Jeff Bezos stealth AI startup Project Prometheus is reportedly raising $10B at a $38B valuation, signaling the largest private AI funding round to date.",
+      "breaking": "Jeff Bezos\u2019 stealth AI startup Project Prometheus raises $10 B at a ~$38 B valuation, becoming one of the largest private AI deals on record.",
       "mustRead": [
         {
-          "id": "rd-6",
-          "title": "Kimi K2.6 is a legit Opus 4.7 replacement",
+          "id": "rd-32",
+          "title": "Jeff Bezos' secretive AI startup is set to be valued at around $38 billion after raising a $10 billion mega round",
+          "url": "https://www.businessinsider.com/jeff-bezos-project-prometheus-valued-at-38-billion-2026-4",
+          "reason": "Symbolizes the staggering capital concentration in AI and the influence of tech billionaires shaping the next wave of infrastructure."
+        },
+        {
+          "id": "rd-7",
+          "title": "Kimi K2.K2.6 is a legit Opus 4.7 replacement",
           "url": "https://www.reddit.com/r/LocalLLaMA/comments/1sr8p49/kimi_k26_is_a_legit_opus_47_replacement/",
-          "reason": "Community consensus that open-lesser-known Chinese models now rival top-tier Western ones, altering local-llm hardware cost calculations."
+          "reason": "Shows open/Chinese labs rapidly closing the gap on premium Western models, shifting price-performance expectations for developers."
         },
         {
-          "id": "hn-1",
-          "title": "Laws of Software Engineering",
-          "url": "https://lawsofsoftwareengineering.com",
-          "reason": "A concise, widely-shared checklist capturing hard-won truths that engineers can apply to the AI tooling boom."
-        },
-        {
-          "id": "rd-25",
-          "title": "Google Starts Scanning All Your Photos As New Update Goes Live",
-          "url": "https://www.forbes.com/sites/zakdoffman/2026/04/20/google-starts-scanning-all-your-photos-as-new-update-goes-live/",
-          "reason": "Shows big-tech AI moving from optional features to mandatory, cloud-side analysis of personal data, raising privacy stakes."
+          "id": "hn-5",
+          "title": "Show HN: GoModel \u2013 an open-source AI gateway in Go",
+          "url": "https://github.com/ENTERPILOT/GOModel/",
+          "reason": "Developer tooling that could lower the barrier for plugging local or hosted models into apps, accelerating grassroots AI adoption."
         }
       ]
     },
     "fullBrief": {
-      "intro": "Today's digest highlights two colliding trajectories: small open-source models maturing so quickly that hobbyists feel last-month releases are obsolete, and enterprise vendors treating AI agents like human employees that require seats and licenses. Beneath this, governments and platforms are expanding AI surveillance, inflating valuations, and sparking user push-back.",
+      "intro": "Funding headlines dominated today as Bezos-backed Project Prometheus reportedly secured a $10 billion round at a $38 billion valuation, reinforcing the arms-race dynamic in foundation-model development. Simultaneously, power users in LocalLLaMA crowned Kimi K2.6 a cost-effective substitute for flagship models, underscoring how quickly capabilities diffuse beyond Western labs. Across subreddits and Hacker News, practitioners questioned the half-life of each new release, debated the real-world utility of GUI wrappers like OpenClaw, and swapped tips for training smaller models on single GPUs, all while scams leveraging AI-generated personas and JetBlue\u2019s alleged surveillance-pricing experiment raised fresh regulatory red flags.",
       "sections": [
         {
-          "heading": "Local Model Fever",
-          "body": "Reddit's LocalLLaMA crowd celebrates Gemma-4 Vision, debates Kimi K2.6 vs. Opus-4.7, and jokes that every new drop instantly retires its predecessor, underscoring break-neck innovation amid consumer GPU limits."
+          "heading": "Model Proliferation & Community Fatigue",
+          "body": "Posts mocking the manic cadence of new drops (rd-2) sit alongside sincere benchmarks showing Kimi K2.6 matching or beating Opus 4.7 at a fraction of the cost (rd-7, rd-83) and a 235 M-parameter model trained from scratch on one RTX 5080 (rd-9). The ferment reveals a community oscillating between excitement and exhaustion, hunting for good-enough local options while lamenting how each launch instantly deprecates the last."
         },
         {
-          "heading": "AI Workforce Licensing",
-          "body": "A Microsoft exec floats charging per-agent software licenses, Meta is reportedly building a Zuckerberg meeting-clone, and startups like Trellis AI recruit engineers for self-improving agents, formalizing the idea that autonomous code will sit on corporate org-charts."
+          "heading": "Capital & Corporate Moves",
+          "body": "Beyond the Bezos mega-round, Google\u2019s photo-scanning AI rollout (rd-31), Microsoft\u2019s suggestion that future AI agents will need software licenses (rd-74), and Apple\u2019s surprise CEO transition to John Ternus (rd-39) signal incumbent strategies to embed AI deeper into platforms and monetization layers. The money flowing into stealth startups and hyperscaler roadmaps dwarfs grassroots budgets, widening the resource gulf."
         },
         {
-          "heading": "Backlash & Regulatory Heat",
-          "body": "Google's on-device photo scanning triggers privacy alarms, 2,000 AI road-camera fines were withdrawn in Western Australia, and JetBlue faces viral outrage over alleged surveillance pricing, illustrating growing friction as AI monitoring scales faster than oversight."
+          "heading": "Scams, Content Integrity & Algorithmic Pricing",
+          "body": "A Wired expos\u00e9 details how an AI-generated MAGA persona conned \u2018super-dumb\u2019 donors (rd-30), while JetBlue denied using AI for surveillance-driven ticket pricing after a viral tweet (rd-35). Deezer\u2019s claim that 44% of new uploads are AI-generated and mostly fraudulent (rd-87) underscores how synthetic media floods channels faster than platforms can verify authenticity, inviting regulatory scrutiny and new authentication tools."
+        },
+        {
+          "heading": "Research Culture & Engineering Tools",
+          "body": "Machine-learning subreddits debated whether acceptance-chasing papers erode long-term value (rd-24) and how to stay current amid 100-plus daily arXiv drops (rd-25), whereas HN readers up-voted Laws of Software Engineering (hn-2) and an open Go-based AI gateway (hn-5). The split perspective\u2014researchers worrying about incentives while engineers embrace lightweight tooling\u2014illustrates the widening pipeline from lab insight to shipping code."
         }
       ],
-      "closing": "Expect next-month model releases to outpace buyer budgets while regulators race to set per-agent rules and data-scanning guardrails."
+      "closing": "Expect sharper competition between budget-conscious local models and cash-flush hyperscalers, with regulators increasingly asked to police authenticity, pricing algorithms and data privacy in an AI-saturated media landscape."
     }
   }
 }
