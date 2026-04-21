@@ -1,140 +1,241 @@
-# AI News Digest Aggregator
+# DailyDigest
 
-Quick daily digest of hot AI content from Reddit + Hacker News with AI-generated summaries.
+Automated AI news digest aggregating content from Reddit, Hacker News, and RSS feeds — with AI-powered summaries via OpenRouter and a mobile-first PWA reader.
 
-## Prerequisites
+## Features
 
-- **Python 3.8+**
-- **pip** for installing dependencies
-- **Claude CLI** (optional, for AI summaries)
+- **Multi-source aggregation** — 11 Reddit subs + HN front page + 10 RSS feeds (TechCrunch, Wired, Ars Technica, MIT Tech Review, ArXiv AI/ML, and more)
+- **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
+- **Story categories** — AI & ML, Tech, Science, World News, Futurology, Startups
+- **Schema v3** — Compact keys, per-source category metadata, optional RSS stories
+- **Automation** — GitHub Actions runs twice daily (7am + 6pm UTC); manual trigger also available
+- **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support
 
-### Install Claude CLI
-
-For AI-powered summaries, install the Claude CLI:
+## Quick Start
 
 ```bash
-# macOS
-brew install anthropic/anthropic/claude
+# 1. Clone and run setup
+git clone <repo-url> dailydigest
+cd dailydigest
+./scripts/setup.sh
 
-# or via npm
-npm install -g @anthropic-ai/claude
+# 2. Add your OpenRouter key
+echo "OPENROUTER_API_KEY=sk-or-v1-..." >> .env
 
-# Verify installation
-claude --version
+# 3. Generate today's digest
+source venv/bin/activate
+python digest.py
+
+# 4. Preview the reader
+cd ai-digest-reader
+npm run dev
 ```
 
 ## Setup
 
+### Prerequisites
+
+- Python 3.8+
+- Node 18+
+- An [OpenRouter](https://openrouter.ai) API key (for AI summaries)
+
+### One-command setup
+
 ```bash
+./scripts/setup.sh
+```
+
+This creates a Python venv, installs all dependencies (Python + npm), and copies `.env.example` to `.env`.
+
+### Manual setup
+
+```bash
+# Python
+python3 -m venv venv
+source venv/bin/activate
 pip install -r requirements.txt
+
+# Frontend
+cd ai-digest-reader && npm install
+
+# Environment
+cp .env.example .env
+# Edit .env and add OPENROUTER_API_KEY
 ```
 
 ## Usage
 
+### Generate a digest
+
 ```bash
-# Generate today's digest with AI summary (requires Claude CLI)
+source venv/bin/activate
+
+# Full run with AI summary
 python digest.py
 
-# Generate without AI summary
+# Skip AI (faster, no API key needed)
 python digest.py --no-ai
-
-# Custom output directory
-python digest.py --output-dir my-digests/
 
 # Limit posts per source
 python digest.py --limit 5
 
-# Fetch specific subreddits only
-python digest.py --subreddits ArtificialIntelligence LocalLLaMA
+# Custom output directory
+python digest.py --output-dir ./my-digests/
 
-# Combine options
-python digest.py --no-ai --limit 10 --output-dir ./output
+# Specific subreddits only
+python digest.py --subreddits ArtificialIntelligence LocalLLaMA
 ```
+
+### Deploy to the reader
+
+```bash
+# Copy latest digest to the frontend
+cp output/$(date +%Y-%m-%d)/digest.json ai-digest-reader/public/data/digest.json
+
+# Build and preview
+cd ai-digest-reader
+npm run build && npm run preview
+```
+
+Or use the automated script:
+
+```bash
+./scripts/generate-and-deploy.sh
+```
+
+This runs the digest, copies JSON, builds the site, and commits + pushes.
+
+## Automation
+
+### GitHub Actions (recommended)
+
+Set the following repository secrets:
+
+| Secret | Description |
+|--------|-------------|
+| `OPENROUTER_API_KEY` | OpenRouter API key |
+| `VERCEL_TOKEN` | Vercel deploy token |
+| `VERCEL_ORG_ID` | Vercel org ID |
+| `VERCEL_PROJECT_ID` | Vercel project ID |
+
+The workflow (`.github/workflows/daily-digest.yml`) runs at 07:00 and 18:00 UTC. Trigger manually via **Actions → Daily Digest → Run workflow**.
+
+### Local cron
+
+```bash
+./scripts/cron-install.sh
+```
+
+Installs crontab entries to run `generate-and-deploy.sh` at 7am and 6pm.
 
 ## Output
 
-Two files are generated per run:
-
 ```
 output/
-└── 2026-04-15/
-    ├── digest-2026-04-15-090000.md   ← Human-readable digest
-    └── digest.json                   ← Structured data (for web reader)
+└── 2026-04-20/
+    ├── digest-2026-04-20-070000.md    ← Human-readable digest
+    └── digest.json                    ← Structured data (v3 schema)
 ```
 
-### Deploy to frontend
-
-After generating, copy the JSON to the web reader:
-
-```bash
-cp output/$(date +%Y-%m-%d)/digest.json ai-digest-reader/public/data/digest.json
-```
-
-### JSON Output (digest.json)
-
-The JSON file contains structured data including:
-
-- Schema version (`v: 2`)
-- Stories from Reddit and Hacker News
-- AI-generated summary (if Claude CLI is available)
-
-Each story object now includes discussion/source links and optional body text:
-
-- `u`: original external URL (or fallback discussion URL)
-- `p`: discussion permalink (`reddit.com/...` or `news.ycombinator.com/item?...`)
-- `b`: plain-text body excerpt (`selftext` on Reddit or `text` on HN)
-
-Frontend behavior uses `p` as the primary click target and keeps `u` as a visible secondary external link.
+### digest.json schema (v3)
 
 ```json
 {
-  "v": 2,
-  "d": "2026-04-15",
-  "g": "2026-04-15T08:30:00+00:00",
-  "r": [...],
-  "h": [...],
+  "v": 3,
+  "d": "2026-04-20",
+  "g": "2026-04-20T07:00:00",
+  "r": [ /* Reddit stories */ ],
+  "h": [ /* HN stories */ ],
+  "rs": [ /* RSS stories */ ],
   "summary": {
     "schema_version": "2",
     "simple": "2-3 sentence TL;DR",
     "structured": {
       "themes": ["Theme 1", "Theme 2", "Theme 3"],
-      "breaking": "One sentence.",
-      "mustRead": [{"id": "rd-0", "title": "Story title", "url": "https://...", "reason": "Why it matters."}]
+      "breaking": "Most significant story.",
+      "mustRead": [{ "id": "rd-0", "title": "...", "url": "...", "reason": "..." }]
     },
     "fullBrief": {
-      "intro": "Opening paragraph.",
-      "sections": [{"heading": "Section Title", "body": "Paragraph text."}],
-      "closing": "One-sentence takeaway."
+      "intro": "...",
+      "sections": [{ "heading": "...", "body": "..." }],
+      "closing": "..."
     }
   }
 }
 ```
 
-### Markdown Output (digest.md)
+Each story object:
 
-Human-readable format with:
-- Quick overview
-- Key themes
-- Breaking news
-- Must-read articles
-- Full story list
+| Key | Type | Description |
+|-----|------|-------------|
+| `i` | string | ID with prefix: `rd-N` (Reddit), `hn-N` (HN), `rs-N` (RSS) |
+| `t` | string | Title |
+| `u` | string | Article URL |
+| `p` | string | Discussion permalink |
+| `b` | string | Body excerpt (max ~280 chars) |
+| `s` | number | Score / upvotes |
+| `c` | number | Comment count |
+| `a` | string | Author |
+| `cat` | string | Category: `AI & ML`, `Tech`, `Science`, `World News`, `Futurology`, `Startups` |
+
+## Sources
+
+**Reddit** (11 subreddits)
+
+| Subreddit | Category |
+|-----------|----------|
+| r/ArtificialIntelligence | AI & ML |
+| r/LocalLLaMA | AI & ML |
+| r/ChatGPT | AI & ML |
+| r/MachineLearning | AI & ML |
+| r/technology | Tech |
+| r/programming | Tech |
+| r/science | Science |
+| r/worldnews | World News |
+| r/Futurology | Futurology |
+| r/startups | Startups |
+| r/singularity | AI & ML |
+
+**Hacker News** — Front page (Tech)
+
+**RSS Feeds** (10 feeds)
+
+| Feed | Category |
+|------|----------|
+| TechCrunch | Tech |
+| The Verge | Tech |
+| Ars Technica | Tech |
+| Wired | Tech |
+| Slashdot | Tech |
+| ArXiv CS.AI | AI & ML |
+| ArXiv CS.LG | AI & ML |
+| MIT Tech Review | Tech |
+| BBC Technology | Tech |
+| Reuters Technology | World News |
 
 ## Scripts
 
 | Script | Purpose |
 |--------|---------|
-| `digest.py` | Main entry point - generates digest with AI summary |
-| `analyzer.py` | Generate AI summaries via Claude CLI; validates output with one-retry on schema failure |
-| `schema.py` | Single source of truth: `DigestSummary` TypedDict contract and `validate_summary()` |
-| `fetchers/` | Reddit and HN API integration |
+| `scripts/setup.sh` | One-time setup: venv, deps, .env |
+| `scripts/generate-and-deploy.sh` | Full pipeline: generate → copy → build → push |
+| `scripts/cron-install.sh` | Install local crontab for scheduled runs |
+| `digest.py` | Main entry point |
+| `analyzer.py` | OpenRouter AI summarization (Kimi K2 + Claude CLI fallback) |
+| `schema.py` | TypedDict contracts + validators for v2/v3 schema |
+| `fetchers/` | Reddit, HN, and RSS API integration |
 | `formatter.py` | Markdown output formatting |
-| `config.py` | Configuration (subreddits, limits) |
+| `config.py` | Subreddits, RSS feeds, categories, limits |
 
-## Sources
+## Tests
 
-- Reddit: r/ArtificialIntelligence, r/LocalLLaMA, r/ChatGPT, r/MachineLearning
-- Hacker News: Front page
+```bash
+source venv/bin/activate
+pytest tests/ -v
+```
+
+96 tests covering fetchers, schema validation, config, and RSS parsing.
 
 ## Troubleshooting
 
-See [TROUBLESHOOTING.md](ai-digest-reader/docs/TROUBLESHOOTING.md) for common issues.
+See [ai-digest-reader/docs/TROUBLESHOOTING.md](ai-digest-reader/docs/TROUBLESHOOTING.md).
