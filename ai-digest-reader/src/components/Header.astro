@@ -59,15 +59,17 @@ const today = new Date().toLocaleDateString('en-US', {
 </header>
 
 <script>
+  import { loadTheme, saveTheme } from '../lib/storage';
+
   const themeToggle = document.getElementById('theme-toggle');
 
-  function getThemePreference(): string {
-    const stored = localStorage.getItem('theme');
+  function getThemePreference(): 'dark' | 'light' {
+    const stored = loadTheme();
     if (stored) return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 
-  function applyTheme(theme: string): void {
+  function applyTheme(theme: 'dark' | 'light'): void {
     if (theme === 'dark') {
       document.documentElement.classList.add('dark');
     } else {
@@ -77,8 +79,8 @@ const today = new Date().toLocaleDateString('en-US', {
 
   function toggleTheme(): void {
     const current = getThemePreference();
-    const next = current === 'dark' ? 'light' : 'dark';
-    localStorage.setItem('theme', next);
+    const next: 'dark' | 'light' = current === 'dark' ? 'light' : 'dark';
+    saveTheme(next);
     applyTheme(next);
   }
 

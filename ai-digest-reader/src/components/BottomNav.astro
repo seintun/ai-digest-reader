@@ -35,6 +35,8 @@
 </style>
 
 <script>
+  import type {} from '../lib/window-hooks';
+
   document.querySelectorAll('.nav-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const nav = btn.getAttribute('data-nav') ?? 'home';
@@ -42,7 +44,7 @@
     });
   });
 
-  (window as any).setNavActive = (nav: string) => {
+  window.setNavActive = (nav: string) => {
     document.querySelectorAll('.nav-btn').forEach(btn => {
       const active = btn.getAttribute('data-nav') === nav;
       btn.setAttribute('aria-pressed', String(active));
@@ -50,7 +52,7 @@
     });
   };
 
-  (window as any).updateBookmarkBadge = (count: number) => {
+  window.updateBookmarkBadge = (count: number) => {
     const badge = document.getElementById('bookmark-badge');
     if (!badge) return;
     if (count > 0) {

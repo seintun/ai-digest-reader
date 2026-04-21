@@ -96,6 +96,9 @@ import BottomNav from '../components/BottomNav.astro';
   import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, Category, MustReadItem, FullBriefSection } from '../types';
   import { getStorySource } from '../types';
   import { rankStories } from '../lib/ranking';
+  import { escapeHtml, safeExternalUrl, getDiscussionUrl, getSourceCounts } from '../lib/utils';
+  import { loadBookmarks, saveBookmarks } from '../lib/storage';
+  import type {} from '../lib/window-hooks';
 
   interface AppState {
     stories: Story[];
@@ -120,7 +123,7 @@ import BottomNav from '../components/BottomNav.astro';
     error: null,
     searchQuery: '',
     category: 'all',
-    bookmarks: new Set(JSON.parse(localStorage.getItem('bookmarks') ?? '[]')),
+    bookmarks: loadBookmarks(),
   };
 
   const elements = {
@@ -136,13 +139,6 @@ import BottomNav from '../components/BottomNav.astro';
     pullRefreshHint: document.getElementById('pull-refresh-hint'),
     summaryContainer: document.getElementById('summary-container'),
   };
-
-  function getSourceCounts(stories: Story[]): { reddit: number; hn: number; rss: number; total: number } {
-    const reddit = stories.filter(s => s.i.startsWith('rd-')).length;
-    const hn = stories.filter(s => s.i.startsWith('hn-')).length;
-    const rss = stories.filter(s => s.i.startsWith('rs-')).length;
-    return { reddit, hn, rss, total: stories.length };
-  }
 
   function filterStories(stories: Story[], source: Source, category: Category, searchQuery: string): Story[] {
     let filtered = stories;
@@ -175,29 +171,6 @@ import BottomNav from '../components/BottomNav.astro';
       return rankStories(filtered);
     }
     return filtered;
-  }
-
-  function getDiscussionUrl(story: Story): string {
-    const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
-    if (story.p) return story.p;
-    if (source === 'hn') return '';
-    return story.u;
-  }
-
-  function safeExternalUrl(input: string | undefined): string {
-    if (!input) {
-      return '#';
-    }
-
-    try {
-      const parsed = new URL(input, window.location.origin);
-      if (parsed.protocol === 'http:' || parsed.protocol === 'https:') {
-        return parsed.href;
-      }
-      return '#';
-    } catch {
-      return '#';
-    }
   }
 
   function renderStories() {
@@ -531,15 +504,6 @@ import BottomNav from '../components/BottomNav.astro';
     }
   }
 
-  function escapeHtml(input: string): string {
-    return input
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
-  }
-
   function getStoryUrl(stories: Story[], id: string): string {
     const story = stories.find(s => s.i === id);
     return safeExternalUrl(story?.u);
@@ -785,7 +749,7 @@ import BottomNav from '../components/BottomNav.astro';
       updateSourceFilter();
       renderStories();
       hideLoading();
-      (window as any).updateBookmarkBadge?.(state.bookmarks.size);
+      window.updateBookmarkBadge?.(state.bookmarks.size);
     } catch (error) {
       console.error('Error fetching digest:', error);
       showError(error instanceof Error ? error.message : 'Failed to load stories');
@@ -865,24 +829,24 @@ import BottomNav from '../components/BottomNav.astro';
   document.addEventListener('viewchange', handleViewChange);
   document.addEventListener('sourcechange', handleSourceChange);
 
-  document.addEventListener('searchchange', (e: Event) => {
-    const { query } = (e as CustomEvent).detail;
+  document.addEventListener('searchchange', ((e: CustomEvent<{ query: string }>) => {
+    const { query } = e.detail;
     state.searchQuery = query;
     state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
     renderStories();
-    (window as any).updateSearchInfo?.(state.filteredStories.length, query);
-  });
+    window.updateSearchInfo?.(state.filteredStories.length, query);
+  }) as EventListener);
 
-  document.addEventListener('categorychange', (e: Event) => {
-    const { category } = (e as CustomEvent).detail;
+  document.addEventListener('categorychange', ((e: CustomEvent<{ category: string }>) => {
+    const { category } = e.detail;
     state.category = category as Category;
     state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
     renderStories();
-  });
+  }) as EventListener);
 
-  document.addEventListener('navchange', (e: Event) => {
-    const { nav } = (e as CustomEvent).detail;
-    (window as any).setNavActive?.(nav);
+  document.addEventListener('navchange', ((e: CustomEvent<{ nav: string }>) => {
+    const { nav } = e.detail;
+    window.setNavActive?.(nav);
     const searchWrapper = document.getElementById('search-wrapper');
     if (nav === 'search') {
       searchWrapper?.classList.remove('hidden');
@@ -894,7 +858,7 @@ import BottomNav from '../components/BottomNav.astro';
     if (nav === 'home') {
       renderStories();
     }
-  });
+  }) as EventListener);
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement | null;
     const link = target?.closest('a[data-comment-link="true"]') as HTMLAnchorElement | null;
@@ -921,8 +885,8 @@ import BottomNav from '../components/BottomNav.astro';
       btn.setAttribute('aria-pressed', 'true');
       btn.querySelector('svg')?.setAttribute('fill', 'currentColor');
     }
-    localStorage.setItem('bookmarks', JSON.stringify([...state.bookmarks]));
-    (window as any).updateBookmarkBadge?.(state.bookmarks.size);
+    saveBookmarks(state.bookmarks);
+    window.updateBookmarkBadge?.(state.bookmarks.size);
   });
 
   elements.retryButton?.addEventListener('click', fetchDigest);
