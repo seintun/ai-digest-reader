@@ -52,3 +52,21 @@ def test_get_cached_content_respects_ttl(tmp_path, monkeypatch):
         conn.close()
 
     assert scraper.get_cached_content(url) is None
+
+
+def test_scrape_articles_with_stats_uses_cache(tmp_path, monkeypatch):
+    cache_path = tmp_path / "cache.sqlite3"
+    monkeypatch.setattr(scraper, "CACHE_PATH", cache_path)
+    monkeypatch.setattr(scraper, "_fetch_and_extract", lambda _url: "network text")
+
+    url_cached = "https://example.com/cached"
+    url_fresh = "https://example.com/fresh"
+    scraper._set_cached_content(url_cached, "cached content")
+
+    content, stats = scraper.scrape_articles_with_stats([url_cached, url_fresh], max_concurrent=1)
+    assert content[url_cached] == "cached content"
+    assert content[url_fresh] == "network text"
+    assert stats["requested"] == 2
+    assert stats["cache_hits"] == 1
+    assert stats["network_success"] == 1
+    assert stats["failures"] == 0

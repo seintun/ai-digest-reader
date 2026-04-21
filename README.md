@@ -7,7 +7,7 @@ Automated AI news digest aggregating content from Reddit, Hacker News, and RSS f
 - **Multi-source aggregation** — 24 Reddit subs + HN front page + 14 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
 - **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
 - **Story categories** — AI & ML, Tech, Security, Science, World News, Business, Futurology, Startups
-- **Schema v3** — Compact keys, per-source category metadata, optional RSS stories
+- **Schema v4** — Ranked stories, content-quality metadata, optional RSS stories, run metrics
 - **Automation** — GitHub Actions runs twice daily (7am + 6pm UTC); manual trigger also available
 - **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support
 
@@ -134,19 +134,34 @@ Installs crontab entries to run `generate-and-deploy.sh` at 7am and 6pm.
 output/
 └── 2026-04-20/
     ├── digest-2026-04-20-070000.md    ← Human-readable digest
-    └── digest.json                    ← Structured data (v3 schema)
+    ├── digest.json                    ← Structured data (v4 schema)
+    ├── metrics.json                   ← Runtime/scrape/cost metrics
+    └── monitoring-dashboard.md        ← Markdown monitoring dashboard
 ```
 
-### digest.json schema (v3)
+### digest.json schema (v4)
 
 ```json
 {
-  "v": 3,
+  "v": 4,
   "d": "2026-04-20",
   "g": "2026-04-20T07:00:00",
   "r": [ /* Reddit stories */ ],
   "h": [ /* HN stories */ ],
   "rs": [ /* RSS stories */ ],
+  "metrics": {
+    "runtime": {"total_seconds": 72.4, "within_budget": true},
+    "scraping": {"candidate_urls": 40, "success_rate": 82.5, "cache_hit_rate": 35.0},
+    "ranking": {"total_posts": 120, "llm_quality_used": true},
+    "summary": {"source": "openrouter", "generated": true},
+    "cost": {"estimated_usd": 0.17, "within_budget": true},
+    "degradation": {
+      "scraping_fallback_used": false,
+      "ranking_fallback_used": false,
+      "summary_fallback_used": false,
+      "no_summary_fallback_used": false
+    }
+  },
   "summary": {
     "schema_version": "2",
     "simple": "2-3 sentence TL;DR",
@@ -177,6 +192,22 @@ Each story object:
 | `c` | number | Comment count |
 | `a` | string | Author |
 | `cat` | string | Category: `AI & ML`, `Tech`, `Security`, `Science`, `World News`, `Business`, `Futurology`, `Startups` |
+| `rank` | number | Importance score (0-100) |
+| `content_available` | boolean | Whether full article content was scraped |
+| `content_quality` | number | LLM-rated substance score (1-10, or 0 when fallback used) |
+| `excerpt` | string | First 200 chars of scraped content (or body fallback) |
+
+## Degradation Procedures
+
+The pipeline degrades safely in this order when dependencies fail:
+
+1. **Full pipeline**: scraping + ranking + content-aware summary.
+2. **Scraping fallback**: if content extraction fails for a URL, ranking uses post snippets.
+3. **Ranking fallback**: if LLM quality scoring fails, ranking uses engagement + recency + cross-source only.
+4. **Summary fallback**: if `analyzer_v2` fails, fallback to legacy `analyzer.py`.
+5. **No-summary fallback**: if all LLM paths fail, digest still outputs stories without `summary`.
+
+Every run records which fallback paths were used in `digest.json.metrics.degradation`.
 
 ## Sources
 

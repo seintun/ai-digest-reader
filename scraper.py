@@ -7,7 +7,7 @@ import sqlite3
 import threading
 import time
 from pathlib import Path
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -166,6 +166,17 @@ def _scrape_one(url: str) -> Optional[str]:
     return extracted
 
 
+def _scrape_one_with_source(url: str) -> Tuple[Optional[str], str]:
+    cached = get_cached_content(url)
+    if cached:
+        return cached, "cache"
+    extracted = _fetch_and_extract(url)
+    if extracted:
+        _set_cached_content(url, extracted)
+        return extracted, "network"
+    return None, "failed"
+
+
 def scrape_articles(urls: List[str], max_concurrent: int = 5) -> Dict[str, Optional[str]]:
     """Scrape articles with caching and fallbacks."""
     if not urls:
@@ -178,6 +189,33 @@ def scrape_articles(urls: List[str], max_concurrent: int = 5) -> Dict[str, Optio
     with ThreadPoolExecutor(max_workers=workers) as pool:
         contents = list(pool.map(_scrape_one, unique_urls))
     return {url: content for url, content in zip(unique_urls, contents)}
+
+
+def scrape_articles_with_stats(
+    urls: List[str], max_concurrent: int = 5
+) -> Tuple[Dict[str, Optional[str]], Dict[str, int]]:
+    """Scrape articles and return content with cache/network outcome stats."""
+    if not urls:
+        return {}, {"requested": 0, "cache_hits": 0, "network_success": 0, "failures": 0}
+
+    from concurrent.futures import ThreadPoolExecutor
+
+    unique_urls = list(dict.fromkeys(urls))
+    workers = max(1, min(max_concurrent, len(unique_urls)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        results = list(pool.map(_scrape_one_with_source, unique_urls))
+
+    mapping = {url: content for url, (content, _) in zip(unique_urls, results)}
+    cache_hits = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "cache")
+    network_success = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "network")
+    failures = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "failed")
+    stats = {
+        "requested": len(unique_urls),
+        "cache_hits": cache_hits,
+        "network_success": network_success,
+        "failures": failures,
+    }
+    return mapping, stats
 
 
 def is_external_story_url(url: str) -> bool:

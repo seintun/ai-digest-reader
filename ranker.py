@@ -168,8 +168,8 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     return ratings or None
 
 
-def rank_posts(posts: List[Dict], scraped_content: Dict[str, str]) -> List[Dict]:
-    """Score and rank posts with rank/content metadata."""
+def rank_posts_with_metrics(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[List[Dict], Dict]:
+    """Score and rank posts with rank/content metadata and ranking metrics."""
     ranked = [dict(post) for post in posts]
     cross_source_scores = _compute_cross_source_scores(ranked)
     llm_quality = _rate_content_quality(ranked, scraped_content)
@@ -195,4 +195,14 @@ def rank_posts(posts: List[Dict], scraped_content: Dict[str, str]) -> List[Dict]
         post["excerpt"] = (content or post.get("b", "") or "")[:200]
 
     ranked.sort(key=lambda p: p.get("rank", 0), reverse=True)
+    metrics = {
+        "total_posts": len(ranked),
+        "llm_quality_used": llm_quality is not None,
+    }
+    return ranked, metrics
+
+
+def rank_posts(posts: List[Dict], scraped_content: Dict[str, str]) -> List[Dict]:
+    """Backwards-compatible ranking entrypoint."""
+    ranked, _ = rank_posts_with_metrics(posts, scraped_content)
     return ranked

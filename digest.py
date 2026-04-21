@@ -4,13 +4,20 @@ import argparse
 import json
 from datetime import date, datetime
 from pathlib import Path
+import time
 from typing import Dict, List
 
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
 from fetchers import fetch_reddit_posts, fetch_hn_posts
 from formatter import format_digest
-from ranker import rank_posts
-from scraper import scrape_articles, select_scrape_candidates
+from pipeline_metrics import (
+    count_ranking_chars,
+    count_summary_chars,
+    estimate_llm_cost_usd,
+    render_dashboard,
+)
+from ranker import rank_posts_with_metrics
+from scraper import scrape_articles_with_stats, select_scrape_candidates
 
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
@@ -30,6 +37,11 @@ try:
     from analyzer_v2 import generate_summary as generate_summary_v2
 except ImportError:
     generate_summary_v2 = None
+
+try:
+    from analyzer_v2 import generate_summary_with_meta
+except ImportError:
+    generate_summary_with_meta = None
 
 
 def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[Dict]:
@@ -52,6 +64,7 @@ def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[
 
 
 def main():
+    run_started = time.perf_counter()
     parser = argparse.ArgumentParser(description="AI News Digest Generator")
     parser.add_argument("--limit", type=int, default=POST_LIMIT, help="Posts per source")
     parser.add_argument("--output-dir", type=str, help="Output directory (default: output/YYYY-MM-DD)")
@@ -62,6 +75,7 @@ def main():
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
 
     print("Fetching Reddit posts...")
+    fetch_started = time.perf_counter()
     all_reddit_posts = []
     for subreddit in subreddits:
         print(f"  - {subreddit}")
@@ -88,17 +102,26 @@ def main():
         rss_raw = fetch_all_rss_feeds(RSS_FEEDS, limit=args.limit)
         rss_posts = normalize_posts(rss_raw, "rs")
         print(f"Found {len(rss_posts)} RSS stories")
+    fetch_seconds = time.perf_counter() - fetch_started
 
     all_posts = reddit_normalized + hn_normalized + rss_posts
     scraped_content = {}
+    scrape_stats = {"requested": 0, "cache_hits": 0, "network_success": 0, "failures": 0}
+    scrape_started = time.perf_counter()
     if all_posts:
         candidates = select_scrape_candidates(all_posts, limit=40)
         candidate_urls = [post.get("u", "") for post in candidates if post.get("u")]
         if candidate_urls:
             print(f"Scraping article content for {len(candidate_urls)} candidates...")
-            scraped_content = scrape_articles(candidate_urls)
+            scraped_content, scrape_stats = scrape_articles_with_stats(candidate_urls)
+    scrape_seconds = time.perf_counter() - scrape_started
 
-    ranked_posts = rank_posts(all_posts, scraped_content) if all_posts else []
+    ranking_started = time.perf_counter()
+    ranked_posts = []
+    ranking_metrics = {"total_posts": 0, "llm_quality_used": False}
+    if all_posts:
+        ranked_posts, ranking_metrics = rank_posts_with_metrics(all_posts, scraped_content)
+    ranking_seconds = time.perf_counter() - ranking_started
     for post in ranked_posts:
         post["content"] = scraped_content.get(post.get("u", ""), "") or ""
 
@@ -107,20 +130,28 @@ def main():
     rss_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rs-")]
 
     summary = None
-    if generate_summary_v2 and ranked_posts and not args.no_ai:
+    summary_meta = {"source": "none", "generated": False}
+    summary_started = time.perf_counter()
+    if generate_summary_with_meta and ranked_posts and not args.no_ai:
         print("Generating content-aware AI summary...")
-        summary = generate_summary_v2(ranked_posts[:15])
+        summary, summary_meta = generate_summary_with_meta(ranked_posts[:15])
         if summary:
             print("AI summary generated successfully")
         else:
             print("Content-aware summary unavailable, trying fallback summary...")
+    elif generate_summary_v2 and ranked_posts and not args.no_ai:
+        summary = generate_summary_v2(ranked_posts[:15])
+        summary_meta = {"source": "openrouter_or_cli", "generated": bool(summary)}
 
     if summary is None and generate_summary and not args.no_ai:
         summary = generate_summary(all_reddit_posts, hn_posts)
         if summary:
             print("Fallback AI summary generated")
+            summary_meta = {"source": "analyzer_v1", "generated": True}
         else:
             print("AI summary unavailable, continuing without it")
+            summary_meta = {"source": "none", "generated": False}
+    summary_seconds = time.perf_counter() - summary_started
 
     digest_date = date.today().strftime(DATE_FORMAT)
     digest_time = datetime.now().strftime("%H%M%S")
@@ -136,6 +167,58 @@ def main():
 
     if summary:
         digest["summary"] = summary
+
+    scrape_requested = scrape_stats.get("requested", 0)
+    scrape_success = scrape_stats.get("cache_hits", 0) + scrape_stats.get("network_success", 0)
+    scrape_success_rate = (scrape_success / scrape_requested * 100.0) if scrape_requested else 0.0
+    cache_hit_rate = (scrape_stats.get("cache_hits", 0) / scrape_requested * 100.0) if scrape_requested else 0.0
+
+    ranking_chars = count_ranking_chars([post.get("excerpt", "") for post in ranked_posts[:40]])
+    summary_chars = count_summary_chars([post.get("content", "") or post.get("excerpt", "") for post in ranked_posts[:15]])
+    estimated_cost = estimate_llm_cost_usd(ranking_chars, summary_chars)
+
+    total_seconds = time.perf_counter() - run_started
+    metrics = {
+        "runtime": {
+            "fetch_seconds": round(fetch_seconds, 2),
+            "scrape_seconds": round(scrape_seconds, 2),
+            "ranking_seconds": round(ranking_seconds, 2),
+            "summary_seconds": round(summary_seconds, 2),
+            "total_seconds": round(total_seconds, 2),
+            "within_budget": total_seconds < 180,
+        },
+        "scraping": {
+            "candidate_urls": scrape_requested,
+            "cache_hits": scrape_stats.get("cache_hits", 0),
+            "network_success": scrape_stats.get("network_success", 0),
+            "failures": scrape_stats.get("failures", 0),
+            "success_rate": round(scrape_success_rate, 1),
+            "cache_hit_rate": round(cache_hit_rate, 1),
+        },
+        "ranking": ranking_metrics,
+        "summary": summary_meta,
+        "cost": {
+            "ranking_input_chars": ranking_chars,
+            "summary_input_chars": summary_chars,
+            "estimated_usd": estimated_cost,
+            "within_budget": estimated_cost < 0.25,
+        },
+        "degradation": {
+            "scraping_fallback_used": scrape_stats.get("failures", 0) > 0,
+            "ranking_fallback_used": not ranking_metrics.get("llm_quality_used", False),
+            "summary_fallback_used": summary_meta.get("source") == "analyzer_v1",
+            "no_summary_fallback_used": not summary_meta.get("generated", False),
+        },
+    }
+    digest["metrics"] = metrics
+
+    print("Pipeline metrics:")
+    print(f"  - runtime: {metrics['runtime']['total_seconds']}s")
+    print(f"  - scrape success: {metrics['scraping']['success_rate']}%")
+    print(f"  - cache hit rate: {metrics['scraping']['cache_hit_rate']}%")
+    print(f"  - ranking LLM used: {metrics['ranking']['llm_quality_used']}")
+    print(f"  - summary source: {metrics['summary']['source']}")
+    print(f"  - estimated LLM cost: ${metrics['cost']['estimated_usd']}")
 
     markdown_reddit = [
         {
@@ -168,6 +251,15 @@ def main():
     with open(json_path, "w") as f:
         json.dump(digest, f, indent=2)
     print(f"\nSaved JSON to {json_path}")
+
+    metrics_path = output_dir / "metrics.json"
+    with open(metrics_path, "w") as f:
+        json.dump(metrics, f, indent=2)
+    print(f"Saved metrics to {metrics_path}")
+
+    dashboard_path = output_dir / "monitoring-dashboard.md"
+    dashboard_path.write_text(render_dashboard(metrics))
+    print(f"Saved dashboard to {dashboard_path}")
 
     filename = f"digest-{digest_date}-{digest_time}.md"
     output_path = output_dir / filename
