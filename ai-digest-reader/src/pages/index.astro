@@ -2,6 +2,9 @@
 import Base from '../layouts/Base.astro';
 import Header from '../components/Header.astro';
 import Controls from '../components/Controls.astro';
+import SearchBar from '../components/SearchBar.astro';
+import CategoryFilter from '../components/CategoryFilter.astro';
+import BottomNav from '../components/BottomNav.astro';
 ---
 
 <Base title="AI Digest - Your Daily AI News">
@@ -13,6 +16,9 @@ import Controls from '../components/Controls.astro';
     <div id="controls-container" class="mb-3">
       <Controls />
     </div>
+
+    <SearchBar />
+    <CategoryFilter />
 
     <div id="pull-refresh-hint" class="flex items-center justify-center gap-2 mb-3 text-xs text-slate-400 dark:text-slate-500 opacity-0 transition-opacity duration-300">
       <svg class="w-3 h-3 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -83,10 +89,12 @@ import Controls from '../components/Controls.astro';
       </div>
     </div>
   </main>
+  <BottomNav />
 </Base>
 
 <script>
-  import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, MustReadItem, FullBriefSection } from '../types';
+  import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, Category, MustReadItem, FullBriefSection } from '../types';
+  import { getStorySource } from '../types';
   import { rankStories } from '../lib/ranking';
 
   interface AppState {
@@ -97,6 +105,9 @@ import Controls from '../components/Controls.astro';
     source: Source;
     isLoading: boolean;
     error: string | null;
+    searchQuery: string;
+    category: Category;
+    bookmarks: Set<string>;
   }
 
   const state: AppState = {
@@ -107,6 +118,9 @@ import Controls from '../components/Controls.astro';
     source: 'all',
     isLoading: true,
     error: null,
+    searchQuery: '',
+    category: 'all',
+    bookmarks: new Set(JSON.parse(localStorage.getItem('bookmarks') ?? '[]')),
   };
 
   const elements = {
@@ -123,18 +137,44 @@ import Controls from '../components/Controls.astro';
     summaryContainer: document.getElementById('summary-container'),
   };
 
-  function getSourceCounts(stories: Story[]): { reddit: number; hn: number; total: number } {
+  function getSourceCounts(stories: Story[]): { reddit: number; hn: number; rss: number; total: number } {
     const reddit = stories.filter(s => s.i.startsWith('rd-')).length;
     const hn = stories.filter(s => s.i.startsWith('hn-')).length;
-    return { reddit, hn, total: stories.length };
+    const rss = stories.filter(s => s.i.startsWith('rs-')).length;
+    return { reddit, hn, rss, total: stories.length };
   }
 
-  function filterStories(stories: Story[], source: Source): Story[] {
-    if (source === 'all') return rankStories(stories);
-    return stories.filter(story => {
-      const storySource = story.i.startsWith('rd-') ? 'reddit' : 'hn';
-      return storySource === source;
-    });
+  function filterStories(stories: Story[], source: Source, category: Category, searchQuery: string): Story[] {
+    let filtered = stories;
+
+    // Source filter
+    if (source !== 'all') {
+      filtered = filtered.filter(story => {
+        if (source === 'reddit') return story.i.startsWith('rd-');
+        if (source === 'hn') return story.i.startsWith('hn-');
+        if (source === 'rss') return story.i.startsWith('rs-');
+        return true;
+      });
+    }
+
+    // Category filter
+    if (category !== 'all') {
+      filtered = filtered.filter(story => story.cat === category);
+    }
+
+    // Search filter
+    if (searchQuery) {
+      filtered = filtered.filter(story =>
+        story.t.toLowerCase().includes(searchQuery) ||
+        (story.b ?? '').toLowerCase().includes(searchQuery)
+      );
+    }
+
+    // Rank for "all" source with no filters active
+    if (source === 'all' && category === 'all' && !searchQuery) {
+      return rankStories(filtered);
+    }
+    return filtered;
   }
 
   function getDiscussionUrl(story: Story): string {
@@ -212,7 +252,7 @@ import Controls from '../components/Controls.astro';
   }
 
   function renderStoryCard(story: Story, index: number): string {
-    const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+    const source = getStorySource(story);
     const discussionUrl = getDiscussionUrl(story);
     const safeDiscussionUrl = safeExternalUrl(discussionUrl);
     const safeArticleUrl = safeExternalUrl(story.u);
@@ -221,10 +261,15 @@ import Controls from '../components/Controls.astro';
     const safeBody = story.b ? escapeHtml(story.b) : '';
     const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
     const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
-    const platformName = source === 'reddit' ? 'Reddit' : 'Hacker News';
+    const platformName = source === 'reddit' ? 'Reddit' : source === 'hn' ? 'Hacker News' : 'RSS';
+    const readTime = story.b ? Math.max(1, Math.ceil(story.b.split(' ').length / 200)) : null;
+    const readTimeLabel = readTime ? `${readTime} min read` : null;
+    const isBookmarked = state.bookmarks.has(story.i);
     const platformIcon = source === 'reddit'
       ? '<svg class="w-3.5 h-3.5 text-[#FF4500]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
-      : '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>';
+      : source === 'hn'
+        ? '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+        : '<svg class="w-3.5 h-3.5 text-blue-500" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>';
 
     return `
       <article
@@ -237,7 +282,9 @@ import Controls from '../components/Controls.astro';
             <div class="flex-shrink-0 mt-0.5" aria-label="${platformName}" role="img">
               ${source === 'reddit'
                 ? '<svg class="w-4 h-4 text-[#FF4500] opacity-90" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
-                : '<svg class="w-4 h-4 text-[#FF6600] opacity-90" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                : source === 'hn'
+                  ? '<svg class="w-4 h-4 text-[#FF6600] opacity-90" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                  : '<svg class="w-4 h-4 text-blue-500 opacity-90" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>'
               }
             </div>
             <h3 class="text-base font-bold leading-snug text-slate-900 dark:text-slate-100 line-clamp-2 group-hover:text-amber-700 dark:group-hover:text-amber-200 transition-colors duration-200">
@@ -261,21 +308,35 @@ import Controls from '../components/Controls.astro';
               </svg>
               ${scoreFormatted}
             </span>
+            ${readTimeLabel ? `<span class="text-slate-400 dark:text-slate-500">· ${readTimeLabel}</span>` : ''}
           </div>
-          <a
-            href="${safeDiscussionUrl}"
-            target="_blank"
-            rel="noopener noreferrer"
-            data-comment-link="true"
-            data-source="${source}"
-            data-story-url="${safeArticleUrl}"
-            data-discussion-url="${safeDiscussionUrl}"
-            class="w-full inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-500/10 hover:text-amber-700 dark:hover:text-amber-300 hover:border-amber-300 dark:hover:border-amber-500/40 transition-all duration-200 cursor-pointer"
-            aria-label="${commentsFormatted} comments on ${platformName}, opens in new tab"
-          >
-            ${platformIcon}
-            <span>${commentsFormatted} comments on ${platformName}</span>
-          </a>
+          <div class="flex items-center gap-2">
+            <a
+              href="${safeDiscussionUrl}"
+              target="_blank"
+              rel="noopener noreferrer"
+              data-comment-link="true"
+              data-source="${source}"
+              data-story-url="${safeArticleUrl}"
+              data-discussion-url="${safeDiscussionUrl}"
+              class="flex-1 inline-flex items-center justify-center gap-2 px-3 py-2 rounded-lg text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 border border-slate-200 dark:border-slate-700 hover:bg-amber-50 dark:hover:bg-amber-500/10 hover:text-amber-700 dark:hover:text-amber-300 hover:border-amber-300 dark:hover:border-amber-500/40 transition-all duration-200 cursor-pointer"
+              aria-label="${commentsFormatted} comments on ${platformName}, opens in new tab"
+            >
+              ${platformIcon}
+              <span>${commentsFormatted} comments on ${platformName}</span>
+            </a>
+            <button
+              type="button"
+              class="bookmark-btn p-2 rounded-lg text-slate-400 hover:text-primary-500 dark:hover:text-primary-400 transition-colors"
+              data-story-id="${story.i}"
+              aria-label="${isBookmarked ? 'Remove bookmark' : 'Bookmark this story'}"
+              aria-pressed="${isBookmarked}"
+            >
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="${isBookmarked ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z" />
+              </svg>
+            </button>
+          </div>
         </div>
       </article>
     `;
@@ -441,12 +502,15 @@ import Controls from '../components/Controls.astro';
 
   function updateSourceFilter() {
     const counts = getSourceCounts(state.stories);
-    const counts_els = document.querySelectorAll('.source-badge .count');
-    if (counts_els.length >= 3) {
-      counts_els[0].textContent = counts.total.toString();
-      counts_els[1].textContent = counts.reddit.toString();
-      counts_els[2].textContent = counts.hn.toString();
-    }
+    document.querySelectorAll('.source-btn').forEach(btn => {
+      const src = btn.getAttribute('data-source');
+      const countEl = btn.querySelector('.count');
+      if (!countEl) return;
+      if (src === 'all') countEl.textContent = counts.total.toString();
+      else if (src === 'reddit') countEl.textContent = counts.reddit.toString();
+      else if (src === 'hn') countEl.textContent = counts.hn.toString();
+      else if (src === 'rss') countEl.textContent = counts.rss.toString();
+    });
   }
 
   function showLoading() {
@@ -691,6 +755,20 @@ import Controls from '../components/Controls.astro';
     }
   }
 
+  function renderBookmarks() {
+    const bookmarked = state.stories.filter(s => state.bookmarks.has(s.i));
+    if (!elements.storiesCards) return;
+    elements.storiesCards.innerHTML = bookmarked.length > 0
+      ? `<div class="mb-2 text-sm font-medium text-slate-500 dark:text-slate-400">${bookmarked.length} saved stor${bookmarked.length !== 1 ? 'ies' : 'y'}</div>
+         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+           ${bookmarked.map((story, i) => renderStoryCard(story, i)).join('')}
+         </div>`
+      : '<div class="text-center py-12 text-slate-400 dark:text-slate-500">No bookmarks yet. Tap the bookmark icon on any story.</div>';
+    [elements.storiesList, elements.storiesGlance].forEach(el => el?.classList.add('hidden'));
+    elements.storiesCards.classList.remove('hidden');
+    elements.emptyContainer?.classList.add('hidden');
+  }
+
   async function fetchDigest() {
     showLoading();
     try {
@@ -700,13 +778,14 @@ import Controls from '../components/Controls.astro';
       }
       const data: Digest = await response.json();
 
-      state.stories = [...data.r, ...data.h];
-      state.filteredStories = filterStories(state.stories, state.source);
+      state.stories = [...data.r, ...(data.rs ?? []), ...data.h];
+      state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
       state.summary = data.summary || null;
 
       updateSourceFilter();
       renderStories();
       hideLoading();
+      (window as any).updateBookmarkBadge?.(state.bookmarks.size);
     } catch (error) {
       console.error('Error fetching digest:', error);
       showError(error instanceof Error ? error.message : 'Failed to load stories');
@@ -731,7 +810,7 @@ import Controls from '../components/Controls.astro';
   function handleSourceChange(event: Event) {
     const customEvent = event as CustomEvent<{ source: Source }>;
     state.source = customEvent.detail.source;
-    state.filteredStories = filterStories(state.stories, state.source);
+    state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
     renderStories();
   }
 
@@ -785,6 +864,37 @@ import Controls from '../components/Controls.astro';
 
   document.addEventListener('viewchange', handleViewChange);
   document.addEventListener('sourcechange', handleSourceChange);
+
+  document.addEventListener('searchchange', (e: Event) => {
+    const { query } = (e as CustomEvent).detail;
+    state.searchQuery = query;
+    state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
+    renderStories();
+    (window as any).updateSearchInfo?.(state.filteredStories.length, query);
+  });
+
+  document.addEventListener('categorychange', (e: Event) => {
+    const { category } = (e as CustomEvent).detail;
+    state.category = category as Category;
+    state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
+    renderStories();
+  });
+
+  document.addEventListener('navchange', (e: Event) => {
+    const { nav } = (e as CustomEvent).detail;
+    (window as any).setNavActive?.(nav);
+    const searchWrapper = document.getElementById('search-wrapper');
+    if (nav === 'search') {
+      searchWrapper?.classList.remove('hidden');
+      document.getElementById('search-input')?.focus();
+    }
+    if (nav === 'bookmarks') {
+      renderBookmarks();
+    }
+    if (nav === 'home') {
+      renderStories();
+    }
+  });
   document.addEventListener('click', (event) => {
     const target = event.target as HTMLElement | null;
     const link = target?.closest('a[data-comment-link="true"]') as HTMLAnchorElement | null;
@@ -795,6 +905,24 @@ import Controls from '../components/Controls.astro';
       event.preventDefault();
       void handleCommentLinkClick(link);
     }
+  });
+
+  document.addEventListener('click', (e: Event) => {
+    const btn = (e.target as Element).closest('.bookmark-btn') as HTMLElement | null;
+    if (!btn) return;
+    const id = btn.getAttribute('data-story-id');
+    if (!id) return;
+    if (state.bookmarks.has(id)) {
+      state.bookmarks.delete(id);
+      btn.setAttribute('aria-pressed', 'false');
+      btn.querySelector('svg')?.setAttribute('fill', 'none');
+    } else {
+      state.bookmarks.add(id);
+      btn.setAttribute('aria-pressed', 'true');
+      btn.querySelector('svg')?.setAttribute('fill', 'currentColor');
+    }
+    localStorage.setItem('bookmarks', JSON.stringify([...state.bookmarks]));
+    (window as any).updateBookmarkBadge?.(state.bookmarks.size);
   });
 
   elements.retryButton?.addEventListener('click', fetchDigest);
