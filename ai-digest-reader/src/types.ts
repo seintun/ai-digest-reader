@@ -1,5 +1,5 @@
 /**
- * DailyDigest TypeScript Types — v3 Schema
+ * DailyDigest TypeScript Types — v4 Schema
  *
  * Story ID prefixes:
  *   rd- = Reddit
@@ -22,6 +22,10 @@ export interface Story {
   c: number;       // comment count (0 for RSS)
   a: string;       // author
   cat?: string;    // category: "AI & ML" | "Tech" | "Security" | "Science" | "World News" | "Business" | "Futurology" | "Startups"
+  rank?: number;   // v4 ranking score (0-100)
+  content_available?: boolean; // v4 scrape success indicator
+  content_quality?: number;    // v4 content quality rating (1-10, 0 when fallback)
+  excerpt?: string; // v4 scraped content excerpt
 }
 
 export type StorySource = 'reddit' | 'hn' | 'rss';
@@ -62,12 +66,13 @@ export interface DigestSummary {
 }
 
 export interface Digest {
-  v: 2 | 3;
+  v: 2 | 3 | 4;
   d: string;
   g: string;
   r: Story[];      // Reddit stories
   h: Story[];      // HackerNews stories
   rs?: Story[];    // RSS stories (v3+)
+  metrics?: Record<string, unknown>; // v4 run metrics
   summary?: DigestSummary;
 }
 

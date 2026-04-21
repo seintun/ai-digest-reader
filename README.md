@@ -270,7 +270,7 @@ Every run records which fallback paths were used in `digest.json.metrics.degrada
 | `scripts/cron-install.sh` | Install local crontab for scheduled runs |
 | `digest.py` | Main entry point |
 | `analyzer.py` | OpenRouter AI summarization (Kimi K2 + Claude CLI fallback) |
-| `schema.py` | TypedDict contracts + validators for v2/v3 schema |
+| `schema.py` | TypedDict contracts + validators for v2/v3/v4 schema |
 | `fetchers/` | Reddit, HN, and RSS API integration |
 | `formatter.py` | Markdown output formatting |
 | `config.py` | Subreddits, RSS feeds, categories, limits |

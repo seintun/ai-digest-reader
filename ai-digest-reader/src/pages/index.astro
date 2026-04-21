@@ -742,7 +742,12 @@ import BottomNav from '../components/BottomNav.astro';
       }
       const data: Digest = await response.json();
 
-      state.stories = [...data.r, ...(data.rs ?? []), ...data.h];
+      state.stories = [...data.r, ...(data.rs ?? []), ...data.h].sort((a, b) => {
+        const ar = typeof a.rank === 'number' ? a.rank : Number.NEGATIVE_INFINITY;
+        const br = typeof b.rank === 'number' ? b.rank : Number.NEGATIVE_INFINITY;
+        if (ar !== br) return br - ar;
+        return (b.s ?? 0) - (a.s ?? 0);
+      });
       state.filteredStories = filterStories(state.stories, state.source, state.category, state.searchQuery);
       state.summary = data.summary || null;
 
