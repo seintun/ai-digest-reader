@@ -6,6 +6,10 @@ import scraper
 
 def test_is_external_story_url_filters_reddit_self_posts():
     assert scraper.is_external_story_url("https://reddit.com/r/test/comments/abc123/foo") is False
+    assert scraper.is_external_story_url("https://www.reddit.com/live/18hnzysb1elcs") is False
+    assert scraper.is_external_story_url("https://i.redd.it/example.jpeg") is False
+    assert scraper.is_external_story_url("https://v.redd.it/example") is False
+    assert scraper.is_external_story_url("https://example.com/image.png") is False
     assert scraper.is_external_story_url("https://example.com/story") is True
 
 
@@ -57,7 +61,7 @@ def test_get_cached_content_respects_ttl(tmp_path, monkeypatch):
 def test_scrape_articles_with_stats_uses_cache(tmp_path, monkeypatch):
     cache_path = tmp_path / "cache.sqlite3"
     monkeypatch.setattr(scraper, "CACHE_PATH", cache_path)
-    monkeypatch.setattr(scraper, "_fetch_and_extract", lambda _url: "network text")
+    monkeypatch.setattr(scraper, "_fetch_and_extract", lambda _url: ("network text", ""))
 
     url_cached = "https://example.com/cached"
     url_fresh = "https://example.com/fresh"
@@ -70,3 +74,36 @@ def test_scrape_articles_with_stats_uses_cache(tmp_path, monkeypatch):
     assert stats["cache_hits"] == 1
     assert stats["network_success"] == 1
     assert stats["failures"] == 0
+
+
+def test_scrape_articles_with_stats_emits_progress_events(monkeypatch):
+    outcomes = {
+        "https://example.com/a": ("a", "network", ""),
+        "https://example.com/b": ("b", "cache", ""),
+        "https://example.com/c": (None, "failed", "http_429"),
+    }
+
+    def fake_scrape(url):
+        return outcomes[url]
+
+    monkeypatch.setattr(scraper, "_scrape_one_with_source", fake_scrape)
+
+    events = []
+    content, stats = scraper.scrape_articles_with_stats(
+        list(outcomes.keys()),
+        max_concurrent=1,
+        progress_callback=events.append,
+    )
+
+    assert len(events) == 3
+    assert [event["done"] for event in events] == [1, 2, 3]
+    assert [event["total"] for event in events] == [3, 3, 3]
+    assert [event["status"] for event in events] == ["network", "cache", "failed"]
+    assert events[-1]["error"] == "http_429"
+    assert content["https://example.com/a"] == "a"
+    assert content["https://example.com/b"] == "b"
+    assert content["https://example.com/c"] is None
+    assert stats["requested"] == 3
+    assert stats["cache_hits"] == 1
+    assert stats["network_success"] == 1
+    assert stats["failures"] == 1

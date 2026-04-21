@@ -2,12 +2,14 @@
 from __future__ import annotations
 
 import hashlib
+import html
+import json
 import random
 import sqlite3
 import threading
 import time
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Any, Callable, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 import requests
@@ -16,11 +18,13 @@ USER_AGENT = "DailyDigestBot/1.0 (+https://dailydigest.vercel.app)"
 CACHE_TTL_SECONDS = 24 * 60 * 60
 CACHE_PATH = Path(".cache") / "scraper_cache.sqlite3"
 REQUEST_TIMEOUT = 10
-BACKOFF_SECONDS = (5, 15)
+BACKOFF_SECONDS = (2, 5)
 RATE_LIMIT_SECONDS = 2.5
+HOST_BLOCK_TTL_SECONDS = 60 * 60
 
 _rate_lock = threading.Lock()
 _last_request_at = 0.0
+_blocked_hosts: Dict[str, float] = {}
 
 
 def _ensure_cache_db() -> None:
@@ -96,6 +100,26 @@ def _throttle() -> None:
         _last_request_at = time.time()
 
 
+def _is_host_temporarily_blocked(host: str) -> bool:
+    if not host:
+        return False
+    with _rate_lock:
+        blocked_at = _blocked_hosts.get(host, 0.0)
+        if not blocked_at:
+            return False
+        if time.time() - blocked_at > HOST_BLOCK_TTL_SECONDS:
+            _blocked_hosts.pop(host, None)
+            return False
+        return True
+
+
+def _mark_host_blocked(host: str) -> None:
+    if not host:
+        return
+    with _rate_lock:
+        _blocked_hosts[host] = time.time()
+
+
 def _extract_with_trafilatura(html: str, url: str) -> Optional[str]:
     try:
         import trafilatura
@@ -134,47 +158,136 @@ def _extract_with_readability(html: str) -> Optional[str]:
     return None
 
 
-def _fetch_and_extract(url: str) -> Optional[str]:
+def _extract_with_lxml_fallback(page_html: str) -> Optional[str]:
+    try:
+        from lxml import html as lxml_html
+
+        doc = lxml_html.fromstring(page_html)
+        text = " ".join(doc.xpath("//main//text()")) or doc.text_content()
+        normalized = " ".join(text.split()).strip()
+        if len(normalized) >= 140:
+            return normalized
+    except Exception:
+        return None
+    return None
+
+
+def _extract_with_metadata_fallback(page_html: str) -> Optional[str]:
+    try:
+        from lxml import html as lxml_html
+
+        doc = lxml_html.fromstring(page_html)
+
+        # Prefer machine-readable metadata when article extraction fails.
+        candidates: List[str] = []
+        candidates.extend(doc.xpath("//meta[@property='og:description']/@content"))
+        candidates.extend(doc.xpath("//meta[@name='description']/@content"))
+        candidates.extend(doc.xpath("//meta[@name='twitter:description']/@content"))
+
+        for raw in candidates:
+            text = " ".join((raw or "").split()).strip()
+            if len(text) >= 80:
+                return text
+
+        # Try JSON-LD articleBody/description fields as last resort.
+        for script_body in doc.xpath("//script[@type='application/ld+json']/text()"):
+            try:
+                payload = json.loads(script_body)
+            except Exception:
+                continue
+            items = payload if isinstance(payload, list) else [payload]
+            for item in items:
+                if not isinstance(item, dict):
+                    continue
+                article_body = item.get("articleBody")
+                description = item.get("description")
+                for raw in (article_body, description):
+                    text = " ".join((raw or "").split()).strip()
+                    if len(text) >= 80:
+                        return text
+    except Exception:
+        return None
+    return None
+
+
+def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
+    url = html.unescape(url or "").strip()
+    if not url:
+        return None, "invalid_url"
+    host = (urlparse(url).netloc or "").lower()
+    if _is_host_temporarily_blocked(host):
+        return None, "host_blocked_skip"
     headers = {"User-Agent": USER_AGENT}
+    last_error = "unknown_error"
 
     for attempt in range(1 + len(BACKOFF_SECONDS)):
         try:
             _throttle()
             response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
-            if response.status_code != 200 or not response.text:
-                return None
-            html = response.text
-            text = _extract_with_trafilatura(html, url)
+            status_code = int(response.status_code or 0)
+            if status_code != 200 or not response.text:
+                last_error = f"http_{status_code}"
+                if status_code in {403, 429}:
+                    _mark_host_blocked(host)
+                if status_code in {403, 429, 500, 502, 503, 504} and attempt < len(BACKOFF_SECONDS):
+                    time.sleep(BACKOFF_SECONDS[attempt])
+                    continue
+                return None, last_error
+            content_type = (response.headers.get("Content-Type") or "").lower()
+            if "text/html" not in content_type and "application/xhtml+xml" not in content_type:
+                return None, "unsupported_content_type"
+            page_html = response.text
+            lowered = page_html.lower()
+            if any(token in lowered for token in ("cf-browser-verification", "just a moment...", "captcha", "access denied")):
+                _mark_host_blocked(host)
+                return None, "botwall_detected"
+            text = _extract_with_trafilatura(page_html, url)
             if text:
-                return text
-            return _extract_with_readability(html)
-        except requests.RequestException:
+                return text, ""
+            fallback_text = _extract_with_readability(page_html)
+            if fallback_text:
+                return fallback_text, ""
+            lxml_text = _extract_with_lxml_fallback(page_html)
+            if lxml_text:
+                return lxml_text, ""
+            meta_text = _extract_with_metadata_fallback(page_html)
+            if meta_text:
+                return meta_text, ""
+            return None, "extract_failed"
+        except requests.Timeout:
+            last_error = "timeout"
             if attempt < len(BACKOFF_SECONDS):
                 time.sleep(BACKOFF_SECONDS[attempt])
             else:
-                return None
-    return None
+                return None, last_error
+        except requests.RequestException:
+            last_error = "network_error"
+            if attempt < len(BACKOFF_SECONDS):
+                time.sleep(BACKOFF_SECONDS[attempt])
+            else:
+                return None, last_error
+    return None, last_error
 
 
 def _scrape_one(url: str) -> Optional[str]:
     cached = get_cached_content(url)
     if cached:
         return cached
-    extracted = _fetch_and_extract(url)
+    extracted, _ = _fetch_and_extract(url)
     if extracted:
         _set_cached_content(url, extracted)
     return extracted
 
 
-def _scrape_one_with_source(url: str) -> Tuple[Optional[str], str]:
+def _scrape_one_with_source(url: str) -> Tuple[Optional[str], str, str]:
     cached = get_cached_content(url)
     if cached:
-        return cached, "cache"
-    extracted = _fetch_and_extract(url)
+        return cached, "cache", ""
+    extracted, error = _fetch_and_extract(url)
     if extracted:
         _set_cached_content(url, extracted)
-        return extracted, "network"
-    return None, "failed"
+        return extracted, "network", ""
+    return None, "failed", error
 
 
 def scrape_articles(urls: List[str], max_concurrent: int = 5) -> Dict[str, Optional[str]]:
@@ -192,23 +305,56 @@ def scrape_articles(urls: List[str], max_concurrent: int = 5) -> Dict[str, Optio
 
 
 def scrape_articles_with_stats(
-    urls: List[str], max_concurrent: int = 5
+    urls: List[str],
+    max_concurrent: int = 5,
+    progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
 ) -> Tuple[Dict[str, Optional[str]], Dict[str, int]]:
     """Scrape articles and return content with cache/network outcome stats."""
     if not urls:
         return {}, {"requested": 0, "cache_hits": 0, "network_success": 0, "failures": 0}
 
-    from concurrent.futures import ThreadPoolExecutor
+    from concurrent.futures import ThreadPoolExecutor, as_completed
 
     unique_urls = list(dict.fromkeys(urls))
     workers = max(1, min(max_concurrent, len(unique_urls)))
-    with ThreadPoolExecutor(max_workers=workers) as pool:
-        results = list(pool.map(_scrape_one_with_source, unique_urls))
+    future_to_url = {}
+    results_by_url: Dict[str, Tuple[Optional[str], str, str]] = {}
+    cache_hits = 0
+    network_success = 0
+    failures = 0
+    done = 0
+    total = len(unique_urls)
 
-    mapping = {url: content for url, (content, _) in zip(unique_urls, results)}
-    cache_hits = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "cache")
-    network_success = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "network")
-    failures = sum(1 for _, (_, source) in zip(unique_urls, results) if source == "failed")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        for url in unique_urls:
+            future_to_url[pool.submit(_scrape_one_with_source, url)] = url
+
+        for future in as_completed(future_to_url):
+            url = future_to_url[future]
+            content, source, error = future.result()
+            results_by_url[url] = (content, source, error)
+            done += 1
+            if source == "cache":
+                cache_hits += 1
+            elif source == "network":
+                network_success += 1
+            else:
+                failures += 1
+            if progress_callback:
+                progress_callback(
+                    {
+                        "done": done,
+                        "total": total,
+                        "status": source,
+                        "url": url,
+                        "error": error,
+                        "cache_hits": cache_hits,
+                        "network_success": network_success,
+                        "failures": failures,
+                    }
+                )
+
+    mapping = {url: results_by_url.get(url, (None, "failed", "missing_result"))[0] for url in unique_urls}
     stats = {
         "requested": len(unique_urls),
         "cache_hits": cache_hits,
@@ -222,11 +368,17 @@ def is_external_story_url(url: str) -> bool:
     """Return True for non-self-post URLs that are worth scraping."""
     if not url:
         return False
-    parsed = urlparse(url)
+    parsed = urlparse(html.unescape(url))
     if parsed.scheme not in ("http", "https"):
         return False
     host = (parsed.netloc or "").lower()
     path = (parsed.path or "").lower()
+    if host in {"i.redd.it", "v.redd.it", "preview.redd.it", "redditmedia.com"}:
+        return False
+    if path.endswith((".jpg", ".jpeg", ".png", ".gif", ".webp", ".svg", ".mp4", ".mov", ".avi", ".m3u8")):
+        return False
+    if "reddit.com" in host and path.startswith("/live/"):
+        return False
     if "reddit.com" in host and "/comments/" in path:
         return False
     return True

@@ -5,6 +5,21 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
+TODAY="$(date '+%Y-%m-%d')"
+RUN_TIME="$(date '+%H%M%S')"
+RUN_LOG_DIR="output/$TODAY"
+RUN_LOG="$RUN_LOG_DIR/run-$RUN_TIME.log"
+mkdir -p "$RUN_LOG_DIR"
+
+exec > >(tee -a "$RUN_LOG") 2>&1
+
+on_error() {
+  echo ""
+  echo "ERROR: pipeline failed at $(date '+%Y-%m-%d %H:%M:%S')"
+  echo "Run log: $RUN_LOG"
+}
+trap on_error ERR
+
 # Load .env if present
 if [ -f ".env" ]; then
   set -a
@@ -15,6 +30,7 @@ fi
 
 echo "=== DailyDigest: Generate & Deploy ==="
 echo "Started: $(date '+%Y-%m-%d %H:%M:%S')"
+echo "Run log: $RUN_LOG"
 echo ""
 
 # Step 1: Generate
@@ -24,7 +40,6 @@ echo ""
 
 # Step 2: Copy to frontend
 echo "[2/4] Copying digest to frontend..."
-TODAY=$(date '+%Y-%m-%d')
 DIGEST_SRC="output/$TODAY/digest.json"
 DIGEST_DST="ai-digest-reader/public/data/digest.json"
 
