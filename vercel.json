@@ -1,0 +1,8 @@
+{
+  "buildCommand": "cd ai-digest-reader && npm install && npm run build",
+  "outputDirectory": "ai-digest-reader/dist",
+  "framework": "astro",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
