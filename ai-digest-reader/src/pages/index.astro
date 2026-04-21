@@ -96,7 +96,7 @@ import BottomNav from '../components/BottomNav.astro';
   import type { Story, Digest, DigestSummary as DigestSummaryType, ViewMode, Source, Category, MustReadItem, FullBriefSection } from '../types';
   import { getStorySource } from '../types';
   import { rankStories } from '../lib/ranking';
-  import { escapeHtml, safeExternalUrl, getDiscussionUrl, getSourceCounts } from '../lib/utils';
+  import { escapeHtml, safeExternalUrl, getDiscussionUrl, getSourceCounts, getStoryAttribution } from '../lib/utils';
   import { loadBookmarks, saveBookmarks } from '../lib/storage';
   import type {} from '../lib/window-hooks';
 
@@ -231,6 +231,7 @@ import BottomNav from '../components/BottomNav.astro';
     const safeArticleUrl = safeExternalUrl(story.u);
     const safeTitle = escapeHtml(story.t);
     const safeAuthor = escapeHtml(story.a);
+    const safeAttribution = escapeHtml(getStoryAttribution(story));
     const safeBody = story.b ? escapeHtml(story.b) : '';
     const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
     const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
@@ -274,6 +275,12 @@ import BottomNav from '../components/BottomNav.astro';
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.121 17.804A10.97 10.97 0 0112 15.5c2.6 0 4.99.9 6.879 2.304M15 9a3 3 0 11-6 0 3 3 0 016 0z" />
               </svg>
               <span class="truncate">${safeAuthor}</span>
+            </span>
+            <span class="inline-flex items-center gap-1 truncate max-w-[110px] sm:max-w-[130px]" title="${safeAttribution}">
+              <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h9l7 7v9a2 2 0 01-2 2z" />
+              </svg>
+              <span class="truncate">${safeAttribution}</span>
             </span>
             <span class="font-mono-data flex items-center gap-0.5" aria-label="Score: ${story.s}">
               <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -320,16 +327,17 @@ import BottomNav from '../components/BottomNav.astro';
       <div class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl overflow-hidden">
         <div class="sm:hidden divide-y divide-slate-200 dark:divide-slate-800">
           ${stories.map(story => {
-            const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+            const source = getStorySource(story);
             const discussionUrl = getDiscussionUrl(story);
             const safeDiscussionUrl = safeExternalUrl(discussionUrl);
             const safeArticleUrl = safeExternalUrl(story.u);
             const safeTitle = escapeHtml(story.t);
             const safeAuthor = escapeHtml(story.a);
+            const safeAttribution = escapeHtml(getStoryAttribution(story));
             const safeBody = story.b ? escapeHtml(story.b) : '';
             const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
             const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
-            const platformName = source === 'reddit' ? 'Reddit' : 'Hacker News';
+            const platformName = source === 'reddit' ? 'Reddit' : source === 'hn' ? 'Hacker News' : 'RSS';
 
             return `
               <article class="p-4" aria-label="${safeTitle}">
@@ -338,7 +346,9 @@ import BottomNav from '../components/BottomNav.astro';
                     <div class="flex-shrink-0 mt-0.5" aria-label="${platformName}" role="img">
                       ${source === 'reddit'
                         ? '<svg class="w-4 h-4 text-[#FF4500] opacity-80" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
-                        : '<svg class="w-4 h-4 text-[#FF6600] opacity-80" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                        : source === 'hn'
+                          ? '<svg class="w-4 h-4 text-[#FF6600] opacity-80" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                          : '<svg class="w-4 h-4 text-blue-500 opacity-80" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>'
                       }
                     </div>
                     <h3 class="text-base font-bold text-slate-900 dark:text-slate-100 line-clamp-2 leading-snug">${safeTitle}</h3>
@@ -348,6 +358,7 @@ import BottomNav from '../components/BottomNav.astro';
                 <div class="mt-3 pt-3 border-t border-slate-200 dark:border-slate-800/50">
                   <div class="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-400 mb-2">
                     <span class="truncate max-w-[130px]">${safeAuthor}</span>
+                    <span class="truncate max-w-[130px]">· ${safeAttribution}</span>
                     <span class="font-mono-data" aria-label="Score: ${story.s}">↑ ${scoreFormatted}</span>
                   </div>
                   <a
@@ -363,7 +374,9 @@ import BottomNav from '../components/BottomNav.astro';
                   >
                     ${source === 'reddit'
                       ? '<svg class="w-3.5 h-3.5 text-[#FF4500]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
-                      : '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                      : source === 'hn'
+                        ? '<svg class="w-3.5 h-3.5 text-[#FF6600]" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                        : '<svg class="w-3.5 h-3.5 text-blue-500" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>'
                     }
                     <span>${commentsFormatted} comments on ${platformName}</span>
                   </a>
@@ -384,16 +397,17 @@ import BottomNav from '../components/BottomNav.astro';
             </thead>
             <tbody class="divide-y divide-slate-200 dark:divide-slate-800">
               ${stories.map(story => {
-                const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+                const source = getStorySource(story);
                 const discussionUrl = getDiscussionUrl(story);
                 const safeDiscussionUrl = safeExternalUrl(discussionUrl);
                 const safeArticleUrl = safeExternalUrl(story.u);
                 const safeTitle = escapeHtml(story.t);
                 const safeAuthor = escapeHtml(story.a);
+                const safeAttribution = escapeHtml(getStoryAttribution(story));
                 const safeBody = story.b ? escapeHtml(story.b) : '';
                 const scoreFormatted = story.s >= 1000 ? `${(story.s / 1000).toFixed(1)}k` : story.s.toString();
                 const commentsFormatted = story.c >= 1000 ? `${(story.c / 1000).toFixed(1)}k` : story.c.toString();
-                const platformName = source === 'reddit' ? 'Reddit' : 'Hacker News';
+                const platformName = source === 'reddit' ? 'Reddit' : source === 'hn' ? 'Hacker News' : 'RSS';
                 return `
                   <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/70 transition-colors duration-150 group/row">
                     <td class="px-4 py-3">
@@ -418,6 +432,9 @@ import BottomNav from '../components/BottomNav.astro';
                         </svg>
                         <span class="truncate">${safeAuthor}</span>
                       </span>
+                      <div class="text-xs text-slate-500 dark:text-slate-500 truncate mt-0.5" title="${safeAttribution}">
+                        ${safeAttribution}
+                      </div>
                     </td>
                     <td class="px-4 py-3 text-right text-sm text-slate-700 dark:text-slate-300 tabular-nums font-mono-data" aria-label="Score: ${story.s}">${scoreFormatted}</td>
                     <td class="px-4 py-3 text-right">
@@ -447,21 +464,25 @@ import BottomNav from '../components/BottomNav.astro';
     return `
       <div class="flex flex-wrap gap-2">
         ${stories.map(story => {
-          const source = story.i.startsWith('rd-') ? 'reddit' : 'hn';
+          const source = getStorySource(story);
           const safeArticleUrl = safeExternalUrl(story.u);
           const safeTitle = escapeHtml(story.t);
+          const safeAttribution = escapeHtml(getStoryAttribution(story));
+          const platformName = source === 'reddit' ? 'Reddit' : source === 'hn' ? 'Hacker News' : 'RSS';
           return `
             <a href="${safeArticleUrl}" target="_blank" rel="noopener noreferrer"
-              aria-label="${safeTitle}, ${story.s} points on ${source === 'reddit' ? 'Reddit' : 'Hacker News'}"
+              aria-label="${safeTitle}, ${story.s} points on ${platformName}, source ${safeAttribution}"
               class="group inline-flex items-center gap-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-full px-3 py-1.5 text-sm text-slate-700 dark:text-slate-300 hover:border-amber-400 dark:hover:border-amber-500/50 hover:text-amber-700 dark:hover:text-amber-200 transition-all duration-150 cursor-pointer">
-              <span class="flex-shrink-0 ${source === 'reddit' ? 'text-orange-500' : 'text-orange-600 dark:text-orange-400'}">
+              <span class="flex-shrink-0 ${source === 'reddit' ? 'text-orange-500' : source === 'hn' ? 'text-orange-600 dark:text-orange-400' : 'text-blue-500'}">
                 ${source === 'reddit'
                   ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.512-.73a.326.326 0 0 0-.232-.095z"/></svg>'
-                  : '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                  : source === 'hn'
+                    ? '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0L1.5 6v12L12 24l10.5-6V6L12 0zm0 2.3l8.3 5v9.4l-8.3 5-8.3-5V7.3l8.3-5z"/></svg>'
+                    : '<svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M6.18 15.64a2.18 2.18 0 0 1 2.18 2.18C8.36 19.01 7.38 20 6.18 20C4.98 20 4 19.01 4 17.82a2.18 2.18 0 0 1 2.18-2.18M4 4.44A15.56 15.56 0 0 1 19.56 20h-2.83A12.73 12.73 0 0 0 4 7.27V4.44m0 5.66a9.9 9.9 0 0 1 9.9 9.9h-2.83A7.07 7.07 0 0 0 4 12.93V10.1z"/></svg>'
                 }
               </span>
               <span class="truncate max-w-[200px] sm:max-w-[300px] transition-colors">
-                ${safeTitle}
+                ${safeTitle} · ${safeAttribution}
               </span>
               <span class="flex-shrink-0 text-slate-400 dark:text-slate-500 tabular-nums text-xs">
                 ${story.s}

@@ -15,6 +15,17 @@ from urllib.parse import urlparse
 import requests
 
 USER_AGENT = "DailyDigestBot/1.0 (+https://dailydigest.vercel.app)"
+REQUEST_HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/124.0.0.0 Safari/537.36 DailyDigestBot/1.0"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Cache-Control": "no-cache",
+}
+JINA_PROXY_PREFIX = "https://r.jina.ai/http://"
 CACHE_TTL_SECONDS = 24 * 60 * 60
 CACHE_PATH = Path(".cache") / "scraper_cache.sqlite3"
 REQUEST_TIMEOUT = 10
@@ -210,6 +221,34 @@ def _extract_with_metadata_fallback(page_html: str) -> Optional[str]:
     return None
 
 
+def _normalize_text(text: str, min_length: int = 80) -> Optional[str]:
+    normalized = " ".join((text or "").split()).strip()
+    if len(normalized) >= min_length:
+        return normalized
+    return None
+
+
+def _fetch_via_jina_proxy(url: str) -> Tuple[Optional[str], str]:
+    try:
+        proxy_url = f"{JINA_PROXY_PREFIX}{url}"
+        response = requests.get(
+            proxy_url,
+            headers={"User-Agent": USER_AGENT, "Accept": "text/plain, text/markdown, */*"},
+            timeout=REQUEST_TIMEOUT + 5,
+        )
+        status_code = int(response.status_code or 0)
+        if status_code != 200:
+            return None, f"jina_http_{status_code}"
+        text = _normalize_text(response.text)
+        if text:
+            return text, ""
+        return None, "jina_extract_failed"
+    except requests.Timeout:
+        return None, "jina_timeout"
+    except requests.RequestException:
+        return None, "jina_network_error"
+
+
 def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
     url = html.unescape(url or "").strip()
     if not url:
@@ -217,7 +256,7 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
     host = (urlparse(url).netloc or "").lower()
     if _is_host_temporarily_blocked(host):
         return None, "host_blocked_skip"
-    headers = {"User-Agent": USER_AGENT}
+    headers = REQUEST_HEADERS
     last_error = "unknown_error"
 
     for attempt in range(1 + len(BACKOFF_SECONDS)):
@@ -229,6 +268,10 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
                 last_error = f"http_{status_code}"
                 if status_code in {403, 429}:
                     _mark_host_blocked(host)
+                    proxy_text, proxy_error = _fetch_via_jina_proxy(url)
+                    if proxy_text:
+                        return proxy_text, ""
+                    last_error = f"{last_error}|{proxy_error}"
                 if status_code in {403, 429, 500, 502, 503, 504} and attempt < len(BACKOFF_SECONDS):
                     time.sleep(BACKOFF_SECONDS[attempt])
                     continue
@@ -240,7 +283,10 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
             lowered = page_html.lower()
             if any(token in lowered for token in ("cf-browser-verification", "just a moment...", "captcha", "access denied")):
                 _mark_host_blocked(host)
-                return None, "botwall_detected"
+                proxy_text, proxy_error = _fetch_via_jina_proxy(url)
+                if proxy_text:
+                    return proxy_text, ""
+                return None, f"botwall_detected|{proxy_error}"
             text = _extract_with_trafilatura(page_html, url)
             if text:
                 return text, ""
@@ -253,19 +299,28 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
             meta_text = _extract_with_metadata_fallback(page_html)
             if meta_text:
                 return meta_text, ""
-            return None, "extract_failed"
+            proxy_text, proxy_error = _fetch_via_jina_proxy(url)
+            if proxy_text:
+                return proxy_text, ""
+            return None, f"extract_failed|{proxy_error}"
         except requests.Timeout:
             last_error = "timeout"
             if attempt < len(BACKOFF_SECONDS):
                 time.sleep(BACKOFF_SECONDS[attempt])
             else:
-                return None, last_error
+                proxy_text, proxy_error = _fetch_via_jina_proxy(url)
+                if proxy_text:
+                    return proxy_text, ""
+                return None, f"{last_error}|{proxy_error}"
         except requests.RequestException:
             last_error = "network_error"
             if attempt < len(BACKOFF_SECONDS):
                 time.sleep(BACKOFF_SECONDS[attempt])
             else:
-                return None, last_error
+                proxy_text, proxy_error = _fetch_via_jina_proxy(url)
+                if proxy_text:
+                    return proxy_text, ""
+                return None, f"{last_error}|{proxy_error}"
     return None, last_error
 
 
