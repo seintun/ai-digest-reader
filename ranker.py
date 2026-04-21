@@ -5,6 +5,7 @@ import json
 import math
 import os
 import re
+import subprocess
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
@@ -14,7 +15,11 @@ from urllib.parse import urlparse
 
 from model_pricing import usage_to_dict
 
+QUALITY_MAX_RETRIES = int(os.environ.get("RANKER_AI_MAX_RETRIES", "0") or "0")
 QUALITY_RETRY_SECONDS = (2, 5)
+OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "moonshotai/kimi-k2.6")
+RANKER_AI_CONNECT_TIMEOUT = float(os.environ.get("RANKER_AI_CONNECT_TIMEOUT", "10") or "10")
+RANKER_AI_READ_TIMEOUT = float(os.environ.get("RANKER_AI_READ_TIMEOUT", "12") or "12")
 
 
 def _source_from_id(story_id: str) -> str:
@@ -130,7 +135,7 @@ def _quality_prompt(candidates: List[Tuple[str, str]]) -> str:
     return "\n".join(lines)
 
 
-def _request_quality_ratings(candidates: List[Tuple[str, str]]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int]]:
+def _request_quality_ratings(candidates: List[Tuple[str, str]]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key or not candidates:
         return None, usage_to_dict(0, 0)
@@ -138,56 +143,83 @@ def _request_quality_ratings(candidates: List[Tuple[str, str]]) -> Tuple[Optiona
 
     input_tokens = 0
     output_tokens = 0
+    usage_payload = usage_to_dict(0, 0)
     raw = ""
-    try:
-        from openai import OpenAI
-
-        client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=api_key,
-            default_headers={
-                "HTTP-Referer": "https://dailydigest.vercel.app",
-                "X-Title": "DailyDigest",
-            },
-        )
-    except Exception as exc:
-        print(f"Ranking AI setup failed: {exc}")
-        return None, usage_to_dict(0, 0)
-
     last_error = ""
-    for attempt in range(1 + len(QUALITY_RETRY_SECONDS)):
+    retries = max(0, min(QUALITY_MAX_RETRIES, len(QUALITY_RETRY_SECONDS)))
+    for attempt in range(1 + retries):
         try:
-            response = client.chat.completions.create(
-                model="moonshotai/kimi-k2.6",
-                messages=[{"role": "user", "content": prompt}],
-                timeout=45,
+            body = json.dumps(
+                {
+                    "model": OPENROUTER_MODEL,
+                    "messages": [{"role": "user", "content": prompt}],
+                }
             )
-            raw = response.choices[0].message.content or ""
-            usage = response.usage
-            input_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
-            output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
+            max_time = max(1, int(RANKER_AI_CONNECT_TIMEOUT + RANKER_AI_READ_TIMEOUT))
+            result = subprocess.run(
+                [
+                    "curl",
+                    "-sS",
+                    "--max-time",
+                    str(max_time),
+                    "-X",
+                    "POST",
+                    "https://openrouter.ai/api/v1/chat/completions",
+                    "-H",
+                    f"Authorization: Bearer {api_key}",
+                    "-H",
+                    "Content-Type: application/json",
+                    "-H",
+                    "HTTP-Referer: https://dailydigest.vercel.app",
+                    "-H",
+                    "X-Title: DailyDigest",
+                    "--data",
+                    body,
+                ],
+                capture_output=True,
+                text=True,
+                timeout=max_time + 3,
+            )
+            if result.returncode != 0:
+                raise RuntimeError(result.stderr.strip() or f"curl_exit_{result.returncode}")
+            payload = json.loads(result.stdout or "{}")
+            if payload.get("error"):
+                raise RuntimeError(str(payload.get("error")))
+            choices = payload.get("choices", [])
+            raw = ((choices[0] or {}).get("message") or {}).get("content") if choices else ""
+            usage = payload.get("usage", {}) or {}
+            # Keep token accounting simple and explicit.
+            input_tokens = int(usage.get("prompt_tokens", 0) or 0)
+            output_tokens = int(usage.get("completion_tokens", 0) or 0)
+            usage_payload = usage_to_dict(
+                input_tokens,
+                output_tokens,
+                openrouter_usage=usage,
+                cost_source="openrouter_usage",
+            )
+            usage_payload["total_tokens"] = int(usage.get("total_tokens", input_tokens + output_tokens) or (input_tokens + output_tokens))
             break
         except Exception as exc:
             last_error = str(exc)
             is_retryable = any(token in last_error.lower() for token in ("429", "rate", "timeout", "503", "504"))
-            if attempt < len(QUALITY_RETRY_SECONDS) and is_retryable:
-                print(f"Ranking AI batch retry {attempt + 1}/{len(QUALITY_RETRY_SECONDS)} after error: {exc}")
+            if attempt < retries and is_retryable:
+                print(f"Ranking AI batch retry {attempt + 1}/{retries} after error: {exc}")
                 time.sleep(QUALITY_RETRY_SECONDS[attempt])
                 continue
             print(f"Ranking AI batch failed: {exc}")
-            return None, usage_to_dict(input_tokens, output_tokens)
+            return None, usage_payload
 
     if not raw:
         if last_error:
             print(f"Ranking AI batch empty response after retries: {last_error}")
-        return None, usage_to_dict(input_tokens, output_tokens)
+        return None, usage_payload
 
     parsed = _parse_json_object(raw)
     if not parsed:
-        return None, usage_to_dict(input_tokens, output_tokens)
+        return None, usage_payload
     items = parsed.get("ratings")
     if not isinstance(items, list):
-        return None, usage_to_dict(input_tokens, output_tokens)
+        return None, usage_payload
 
     ratings: Dict[str, int] = {}
     for item in items:
@@ -202,7 +234,7 @@ def _request_quality_ratings(candidates: List[Tuple[str, str]]) -> Tuple[Optiona
         except (TypeError, ValueError):
             continue
         ratings[story_id] = max(1, min(10, rating_int))
-    return ratings or None, usage_to_dict(input_tokens, output_tokens)
+    return ratings or None, usage_payload
 
 
 def _chunk_candidates(items: List[Tuple[str, str]], chunks: int) -> List[List[Tuple[str, str]]]:
@@ -219,10 +251,13 @@ def _estimate_quality_cost_usd(candidates: List[Tuple[str, str]], workers: int) 
     overhead_input = batch_count * 60
     estimated_input_tokens = base_input + overhead_input
     estimated_output_tokens = max(20 * batch_count, 6 * len(candidates))
-    return float(usage_to_dict(estimated_input_tokens, estimated_output_tokens).get("cost_usd", 0.0))
+    # Generic budget estimate: configurable and model-agnostic (no model-specific hardcoded rates).
+    usd_per_1k_tokens = float(os.environ.get("RANKER_AI_ESTIMATE_USD_PER_1K_TOKENS", "0.01") or "0.01")
+    estimated_total_tokens = estimated_input_tokens + estimated_output_tokens
+    return round((estimated_total_tokens / 1000.0) * usd_per_1k_tokens, 6)
 
 
-def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int]]:
+def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         usage = usage_to_dict(0, 0)
@@ -260,12 +295,20 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     ratings: Dict[str, int] = {}
     input_tokens = 0
     output_tokens = 0
+    summed_cost_usd = 0.0
+    saw_provider_cost = False
+    saw_estimated_cost = False
     batch_count = len(batches)
 
     if workers == 1:
         batch_ratings, usage = _request_quality_ratings(batches[0])
         input_tokens += int(usage.get("input_tokens", 0) or 0)
         output_tokens += int(usage.get("output_tokens", 0) or 0)
+        summed_cost_usd += float(usage.get("cost_usd", 0.0) or 0.0)
+        if usage.get("cost_source") == "openrouter_usage" and usage.get("openrouter_reported_cost_credits") is not None:
+            saw_provider_cost = True
+        else:
+            saw_estimated_cost = True
         if batch_ratings:
             ratings.update(batch_ratings)
     else:
@@ -275,10 +318,27 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
                 batch_ratings, usage = future.result()
                 input_tokens += int(usage.get("input_tokens", 0) or 0)
                 output_tokens += int(usage.get("output_tokens", 0) or 0)
+                summed_cost_usd += float(usage.get("cost_usd", 0.0) or 0.0)
+                if usage.get("cost_source") == "openrouter_usage" and usage.get("openrouter_reported_cost_credits") is not None:
+                    saw_provider_cost = True
+                else:
+                    saw_estimated_cost = True
                 if batch_ratings:
                     ratings.update(batch_ratings)
 
-    usage = usage_to_dict(input_tokens, output_tokens)
+    if saw_provider_cost and saw_estimated_cost:
+        cost_source = "mixed_openrouter_and_estimate"
+    elif saw_provider_cost:
+        cost_source = "openrouter_usage"
+    else:
+        cost_source = "static_pricing_estimate"
+    usage = usage_to_dict(
+        input_tokens,
+        output_tokens,
+        openrouter_usage={"cost": summed_cost_usd},
+        cost_source=cost_source,
+    )
+    usage["total_tokens"] = input_tokens + output_tokens
     usage.update({
         "ai_parallel_enabled": workers > 1,
         "ai_parallel_workers": workers,

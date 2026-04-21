@@ -4,7 +4,13 @@ import os
 import subprocess
 from typing import Dict, Any, List, Optional, Tuple
 
+from model_pricing import usage_to_dict
 from schema import validate_summary
+
+OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "moonshotai/kimi-k2.6")
+SUMMARY_AI_CONNECT_TIMEOUT = float(os.environ.get("SUMMARY_AI_CONNECT_TIMEOUT", "10") or "10")
+SUMMARY_AI_READ_TIMEOUT = float(os.environ.get("SUMMARY_AI_READ_TIMEOUT", "20") or "20")
+CLAUDE_CLI_TIMEOUT_SECONDS = int(os.environ.get("CLAUDE_CLI_TIMEOUT_SECONDS", "20") or "20")
 
 
 def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional[Dict[str, Any]]:
@@ -56,39 +62,67 @@ def _call_openrouter(prompt: str) -> Optional[str]:
     return raw
 
 
-def _call_openrouter_with_usage(prompt: str) -> Tuple[Optional[str], Dict[str, int]]:
+def _call_openrouter_with_usage(prompt: str) -> Tuple[Optional[str], Dict[str, float | int | str]]:
     """Call OpenRouter API. Returns (raw response text or None, token usage)."""
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
-        return None, {"input_tokens": 0, "output_tokens": 0}
+        return None, usage_to_dict(0, 0)
     try:
-        from openai import OpenAI
-        client = OpenAI(
-            base_url="https://openrouter.ai/api/v1",
-            api_key=api_key,
-            default_headers={
-                "HTTP-Referer": "https://dailydigest.vercel.app",
-                "X-Title": "DailyDigest",
-            },
+        body = json.dumps(
+            {
+                "model": OPENROUTER_MODEL,
+                "messages": [{"role": "user", "content": prompt}],
+            }
         )
-        response = client.chat.completions.create(
-            model="moonshotai/kimi-k2.6",
-            messages=[{"role": "user", "content": prompt}],
-            timeout=90,
+        max_time = max(1, int(SUMMARY_AI_CONNECT_TIMEOUT + SUMMARY_AI_READ_TIMEOUT))
+        result = subprocess.run(
+            [
+                "curl",
+                "-sS",
+                "--max-time",
+                str(max_time),
+                "-X",
+                "POST",
+                "https://openrouter.ai/api/v1/chat/completions",
+                "-H",
+                f"Authorization: Bearer {api_key}",
+                "-H",
+                "Content-Type: application/json",
+                "-H",
+                "HTTP-Referer: https://dailydigest.vercel.app",
+                "-H",
+                "X-Title: DailyDigest",
+                "--data",
+                body,
+            ],
+            capture_output=True,
+            text=True,
+            timeout=max_time + 3,
         )
-        usage = response.usage
-        input_tokens = int(getattr(usage, "prompt_tokens", 0) or 0)
-        output_tokens = int(getattr(usage, "completion_tokens", 0) or 0)
-        return response.choices[0].message.content, {
-            "input_tokens": input_tokens,
-            "output_tokens": output_tokens,
-        }
-    except ImportError:
-        print("openai package not installed, falling back to Claude CLI")
-        return None, {"input_tokens": 0, "output_tokens": 0}
+        if result.returncode != 0:
+            raise RuntimeError(result.stderr.strip() or f"curl_exit_{result.returncode}")
+        payload = json.loads(result.stdout or "{}")
+        if payload.get("error"):
+            raise RuntimeError(str(payload.get("error")))
+        usage = payload.get("usage", {}) or {}
+        # Token accounting is intentionally direct and explicit.
+        input_tokens = int(usage.get("prompt_tokens", 0) or 0)
+        output_tokens = int(usage.get("completion_tokens", 0) or 0)
+        usage_payload = usage_to_dict(
+            input_tokens,
+            output_tokens,
+            openrouter_usage=usage,
+            cost_source="openrouter_usage",
+        )
+        usage_payload["total_tokens"] = int(usage.get("total_tokens", input_tokens + output_tokens) or (input_tokens + output_tokens))
+        choices = payload.get("choices", [])
+        content = ""
+        if choices:
+            content = ((choices[0] or {}).get("message") or {}).get("content") or ""
+        return content or None, usage_payload
     except Exception as e:
         print(f"OpenRouter API error: {e}")
-        return None, {"input_tokens": 0, "output_tokens": 0}
+        return None, usage_to_dict(0, 0)
 
 
 def _call_claude_cli(prompt: str) -> Optional[str]:
@@ -98,7 +132,7 @@ def _call_claude_cli(prompt: str) -> Optional[str]:
             ["claude", "--print", prompt],
             capture_output=True,
             text=True,
-            timeout=60,
+            timeout=CLAUDE_CLI_TIMEOUT_SECONDS,
         )
         if result.returncode != 0:
             print(f"Claude CLI error: {result.stderr}")
@@ -108,7 +142,7 @@ def _call_claude_cli(prompt: str) -> Optional[str]:
         print("Warning: claude CLI not found. Install with: npm install -g @anthropic-ai/claude-code")
         return None
     except subprocess.TimeoutExpired:
-        print("Warning: Claude CLI timed out after 60s")
+        print(f"Warning: Claude CLI timed out after {CLAUDE_CLI_TIMEOUT_SECONDS}s")
         return None
     except Exception as e:
         print(f"Warning: Claude CLI failed: {e}")
