@@ -47,6 +47,14 @@ npm run dev
 
 This creates a Python venv, installs all dependencies (Python + npm), and copies `.env.example` to `.env`.
 
+### Required environment
+
+`OPENROUTER_API_KEY` is required for:
+- content-quality ranking in `ranker.py`
+- AI summary generation (`analyzer_v2.py`, fallback `analyzer.py`)
+
+Without it, digest generation still works with ranking/summarization fallbacks.
+
 ### Manual setup
 
 ```bash
@@ -85,6 +93,29 @@ python digest.py --output-dir ./my-digests/
 # Specific subreddits only
 python digest.py --subreddits ArtificialIntelligence LocalLLaMA
 ```
+
+### Run End-to-End Locally
+
+```bash
+# 1) Generate digest artifacts
+source .venv/bin/activate
+python digest.py
+
+# 2) Copy latest digest into reader public data
+cp output/$(date +%Y-%m-%d)/digest.json ai-digest-reader/public/data/digest.json
+
+# 3) Start frontend
+cd ai-digest-reader
+npm install
+npm run dev
+```
+
+### Generated Artifacts Per Run
+
+- `digest.json` — v4 digest payload with ranked stories and summary
+- `metrics.json` — runtime, scraping, ranking, summary, and cost metrics
+- `monitoring-dashboard.md` — markdown dashboard for quick run inspection
+- `digest-<date>-<time>.md` — human-readable markdown digest
 
 ### Deploy to the reader
 
@@ -269,7 +300,11 @@ Every run records which fallback paths were used in `digest.json.metrics.degrada
 | `scripts/generate-and-deploy.sh` | Full pipeline: generate → copy → build → push |
 | `scripts/cron-install.sh` | Install local crontab for scheduled runs |
 | `digest.py` | Main entry point |
-| `analyzer.py` | OpenRouter AI summarization (Kimi K2 + Claude CLI fallback) |
+| `analyzer_v2.py` | Content-aware top-15 summary generation |
+| `analyzer.py` | Legacy summary fallback (OpenRouter + Claude CLI) |
+| `ranker.py` | Multi-signal ranking with optional LLM quality score |
+| `scraper.py` | Article scraping, fallback extraction, and SQLite cache |
+| `pipeline_metrics.py` | Runtime/cost metrics and monitoring dashboard renderer |
 | `schema.py` | TypedDict contracts + validators for v2/v3/v4 schema |
 | `fetchers/` | Reddit, HN, and RSS API integration |
 | `formatter.py` | Markdown output formatting |

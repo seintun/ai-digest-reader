@@ -10,8 +10,8 @@
    - `output/<date>/digest.json` (v4 data + metrics)
    - `output/<date>/metrics.json` (monitoring metrics)
    - `output/<date>/monitoring-dashboard.md` (human-readable dashboard)
-2. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend.
-3. Frontend merges all sources and sorts globally by `rank` (fallback to score), so users see most important stories first.
+6. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend.
+7. Frontend merges all sources and sorts globally by `rank` (fallback to score), so users see most important stories first.
 
 ## Security and Validation Hardening
 
