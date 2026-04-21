@@ -31,5 +31,9 @@ fi
 
 echo ""
 echo "✓ Setup complete!"
-echo "  Run digest: ./scripts/generate-and-deploy.sh"
-echo "  Dev server: cd ai-digest-reader && npm run dev"
+echo ""
+echo "  Activate venv : source .venv/bin/activate"
+echo "  Run digest    : python digest.py"
+echo "  Full pipeline : ./scripts/generate-and-deploy.sh"
+echo "  Dev server    : cd ai-digest-reader && npm run dev"
+echo "  Run tests     : PYTHONPATH=\$(pwd) pytest tests/ -v"

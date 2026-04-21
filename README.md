@@ -4,9 +4,9 @@ Automated AI news digest aggregating content from Reddit, Hacker News, and RSS f
 
 ## Features
 
-- **Multi-source aggregation** — 11 Reddit subs + HN front page + 10 RSS feeds (TechCrunch, Wired, Ars Technica, MIT Tech Review, ArXiv AI/ML, and more)
+- **Multi-source aggregation** — 24 Reddit subs + HN front page + 14 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
 - **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
-- **Story categories** — AI & ML, Tech, Science, World News, Futurology, Startups
+- **Story categories** — AI & ML, Tech, Security, Science, World News, Business, Futurology, Startups
 - **Schema v3** — Compact keys, per-source category metadata, optional RSS stories
 - **Automation** — GitHub Actions runs twice daily (7am + 6pm UTC); manual trigger also available
 - **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support
@@ -23,7 +23,7 @@ cd dailydigest
 echo "OPENROUTER_API_KEY=sk-or-v1-..." >> .env
 
 # 3. Generate today's digest
-source venv/bin/activate
+source .venv/bin/activate
 python digest.py
 
 # 4. Preview the reader
@@ -51,8 +51,8 @@ This creates a Python venv, installs all dependencies (Python + npm), and copies
 
 ```bash
 # Python
-python3 -m venv venv
-source venv/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 pip install -r requirements.txt
 
 # Frontend
@@ -68,7 +68,7 @@ cp .env.example .env
 ### Generate a digest
 
 ```bash
-source venv/bin/activate
+source .venv/bin/activate
 
 # Full run with AI summary
 python digest.py
@@ -176,11 +176,11 @@ Each story object:
 | `s` | number | Score / upvotes |
 | `c` | number | Comment count |
 | `a` | string | Author |
-| `cat` | string | Category: `AI & ML`, `Tech`, `Science`, `World News`, `Futurology`, `Startups` |
+| `cat` | string | Category: `AI & ML`, `Tech`, `Security`, `Science`, `World News`, `Business`, `Futurology`, `Startups` |
 
 ## Sources
 
-**Reddit** (11 subreddits)
+**Reddit** (24 subreddits)
 
 | Subreddit | Category |
 |-----------|----------|
@@ -188,17 +188,30 @@ Each story object:
 | r/LocalLLaMA | AI & ML |
 | r/ChatGPT | AI & ML |
 | r/MachineLearning | AI & ML |
+| r/singularity | AI & ML |
+| r/artificial | AI & ML |
+| r/OpenAI | AI & ML |
+| r/ClaudeAI | AI & ML |
+| r/GeminiAI | AI & ML |
 | r/technology | Tech |
 | r/programming | Tech |
+| r/ExperiencedDevs | Tech |
+| r/selfhosted | Tech |
+| r/devops | Tech |
+| r/netsec | Security |
 | r/science | Science |
+| r/space | Science |
+| r/EverythingScience | Science |
 | r/worldnews | World News |
-| r/Futurology | Futurology |
+| r/geopolitics | World News |
 | r/startups | Startups |
-| r/singularity | AI & ML |
+| r/YCombinator | Startups |
+| r/economics | Business |
+| r/Futurology | Futurology |
 
 **Hacker News** — Front page (Tech)
 
-**RSS Feeds** (10 feeds)
+**RSS Feeds** (14 feeds)
 
 | Feed | Category |
 |------|----------|
@@ -212,6 +225,10 @@ Each story object:
 | MIT Tech Review | Tech |
 | BBC Technology | Tech |
 | Reuters Technology | World News |
+| TLDR Tech | Tech |
+| TLDR AI | AI & ML |
+| The Batch (DeepLearning.AI) | AI & ML |
+| Import AI (Jack Clark) | AI & ML |
 
 ## Scripts
 
@@ -230,11 +247,11 @@ Each story object:
 ## Tests
 
 ```bash
-source venv/bin/activate
-pytest tests/ -v
+source .venv/bin/activate
+PYTHONPATH=$(pwd) pytest tests/ -v
 ```
 
-96 tests covering fetchers, schema validation, config, and RSS parsing.
+100 tests covering fetchers, schema validation, config, RSS parsing, and source expansion.
 
 ## Troubleshooting
 
