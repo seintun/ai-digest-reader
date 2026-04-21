@@ -1,5 +1,6 @@
 """RSS/Atom feed fetcher for DailyDigest."""
 import re
+import time
 from typing import Dict, List
 
 import feedparser
@@ -27,6 +28,11 @@ def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int =
             body_raw = getattr(entry, 'summary', '') or getattr(entry, 'description', '') or ''
             body = _strip_html(body_raw)[:280]
             author = getattr(entry, 'author', '') or ''
+            ts_struct = getattr(entry, 'published_parsed', None) or getattr(entry, 'updated_parsed', None)
+            try:
+                ts = int(time.mktime(ts_struct)) if ts_struct else None
+            except (TypeError, ValueError):
+                ts = None
             posts.append({
                 'title': title,
                 'url': url,
@@ -37,6 +43,7 @@ def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int =
                 'author': author,
                 'source_name': source_name,
                 'category': category,
+                'ts': ts,
             })
         return posts
     except Exception as e:

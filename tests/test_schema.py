@@ -308,7 +308,7 @@ def test_sections_with_5_fails():
 
 def test_schema_version_constant():
     from schema import SCHEMA_VERSION
-    assert SCHEMA_VERSION == "3"
+    assert SCHEMA_VERSION == "4"
 
 
 def test_validate_v3_digest_valid():
@@ -341,3 +341,18 @@ def test_validate_v3_digest_not_dict():
     assert validate_v3_digest(None) is False
     assert validate_v3_digest("string") is False
     assert validate_v3_digest([]) is False
+
+
+def test_validate_v4_digest_valid():
+    from schema import validate_v4_digest
+    valid = {
+        "v": 4, "d": "2026-04-21", "g": "2026-04-21T10:00:00",
+        "r": [], "h": [], "rs": []
+    }
+    assert validate_v4_digest(valid) is True
+
+
+def test_validate_v4_digest_wrong_version():
+    from schema import validate_v4_digest
+    invalid = {"v": 3, "d": "x", "g": "x", "r": [], "h": [], "rs": []}
+    assert validate_v4_digest(invalid) is False

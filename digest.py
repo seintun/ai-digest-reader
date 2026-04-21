@@ -9,6 +9,8 @@ from typing import Dict, List
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
 from fetchers import fetch_reddit_posts, fetch_hn_posts
 from formatter import format_digest
+from ranker import rank_posts
+from scraper import scrape_articles, select_scrape_candidates
 
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
@@ -24,9 +26,14 @@ try:
 except ImportError:
     generate_summary = None
 
+try:
+    from analyzer_v2 import generate_summary as generate_summary_v2
+except ImportError:
+    generate_summary_v2 = None
+
 
 def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[Dict]:
-    """Convert raw post data to v3 schema format with short keys."""
+    """Convert raw post data to digest schema format with short keys."""
     normalized = []
     for i, post in enumerate(posts):
         normalized.append({
@@ -39,6 +46,7 @@ def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[
             "c": post.get("comments", 0),
             "a": post.get("author", post.get("by", "")),
             "cat": post.get("category", "") or category,
+            "ts": post.get("ts"),
         })
     return normalized
 
@@ -81,12 +89,36 @@ def main():
         rss_posts = normalize_posts(rss_raw, "rs")
         print(f"Found {len(rss_posts)} RSS stories")
 
+    all_posts = reddit_normalized + hn_normalized + rss_posts
+    scraped_content = {}
+    if all_posts:
+        candidates = select_scrape_candidates(all_posts, limit=40)
+        candidate_urls = [post.get("u", "") for post in candidates if post.get("u")]
+        if candidate_urls:
+            print(f"Scraping article content for {len(candidate_urls)} candidates...")
+            scraped_content = scrape_articles(candidate_urls)
+
+    ranked_posts = rank_posts(all_posts, scraped_content) if all_posts else []
+    for post in ranked_posts:
+        post["content"] = scraped_content.get(post.get("u", ""), "") or ""
+
+    reddit_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rd-")]
+    hn_ranked = [post for post in ranked_posts if post.get("i", "").startswith("hn-")]
+    rss_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rs-")]
+
     summary = None
-    if generate_summary and not args.no_ai:
-        print("Generating AI summary...")
-        summary = generate_summary(all_reddit_posts, hn_posts)
+    if generate_summary_v2 and ranked_posts and not args.no_ai:
+        print("Generating content-aware AI summary...")
+        summary = generate_summary_v2(ranked_posts[:15])
         if summary:
             print("AI summary generated successfully")
+        else:
+            print("Content-aware summary unavailable, trying fallback summary...")
+
+    if summary is None and generate_summary and not args.no_ai:
+        summary = generate_summary(all_reddit_posts, hn_posts)
+        if summary:
+            print("Fallback AI summary generated")
         else:
             print("AI summary unavailable, continuing without it")
 
@@ -94,18 +126,35 @@ def main():
     digest_time = datetime.now().strftime("%H%M%S")
 
     digest = {
-        "v": 3,
+        "v": 4,
         "d": digest_date,
         "g": datetime.now().isoformat(),
-        "r": reddit_normalized,
-        "h": hn_normalized,
-        "rs": rss_posts,
+        "r": reddit_ranked,
+        "h": hn_ranked,
+        "rs": rss_ranked,
     }
 
     if summary:
         digest["summary"] = summary
 
-    content = format_digest(all_reddit_posts, hn_posts, digest_date)
+    markdown_reddit = [
+        {
+            "title": post.get("t", ""),
+            "url": post.get("u", ""),
+            "score": post.get("s", 0),
+            "subreddit": post.get("cat", ""),
+        }
+        for post in reddit_ranked
+    ]
+    markdown_hn = [
+        {
+            "title": post.get("t", ""),
+            "url": post.get("u", ""),
+            "score": post.get("s", 0),
+        }
+        for post in hn_ranked
+    ]
+    content = format_digest(markdown_reddit, markdown_hn, digest_date)
     print("\n" + content)
 
     if args.output_dir:

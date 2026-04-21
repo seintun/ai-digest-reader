@@ -13,6 +13,7 @@ def _normalize_reddit_post(post: dict, subreddit: str) -> dict:
         "subreddit": post.get("subreddit", subreddit),
         "author": post.get("author", ""),
         "comments": post.get("num_comments", 0),
+        "ts": post.get("created_utc"),
     }
 
 
