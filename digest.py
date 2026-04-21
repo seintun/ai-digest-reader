@@ -4,7 +4,7 @@ import argparse
 import json
 from datetime import date, datetime
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List
 
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
 from fetchers import fetch_reddit_posts, fetch_hn_posts

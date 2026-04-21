@@ -1,5 +1,5 @@
 """Typed contract for Claude AI summary output. Single source of truth."""
-from typing import TypedDict, List
+from typing import Any, TypedDict, List
 
 
 class MustReadItem(TypedDict):
@@ -33,7 +33,7 @@ class DigestSummary(TypedDict):
     fullBrief: FullBrief
 
 
-def validate_summary(data: dict) -> bool:
+def validate_summary(data: Any) -> bool:
     """
     Validates that data conforms to DigestSummary shape.
     Returns False on any missing key or wrong type.
@@ -108,7 +108,7 @@ def validate_summary(data: dict) -> bool:
 SCHEMA_VERSION = "3"
 
 
-def validate_v3_digest(digest: dict) -> bool:
+def validate_v3_digest(digest: Any) -> bool:
     """Validate top-level structure of a v3 digest envelope."""
     required = {"v", "d", "g", "r", "h"}
     if not all(k in digest for k in required):
