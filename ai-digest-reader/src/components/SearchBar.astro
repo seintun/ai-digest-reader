@@ -1,0 +1,72 @@
+---
+// SearchBar — real-time story search, dispatches 'searchchange' custom events
+---
+<div id="search-wrapper" class="relative mb-3">
+  <div class="relative">
+    <div class="absolute inset-y-0 left-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+      </svg>
+    </div>
+    <input
+      id="search-input"
+      type="search"
+      placeholder="Search stories..."
+      autocomplete="off"
+      class="w-full pl-10 pr-10 py-2.5 text-sm bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-700 rounded-xl text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500/50 focus:border-primary-500 transition-colors duration-200"
+      aria-label="Search stories"
+    />
+    <button
+      id="search-clear"
+      type="button"
+      class="absolute inset-y-0 right-3 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 opacity-0 pointer-events-none transition-opacity"
+      aria-label="Clear search"
+    >
+      <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+      </svg>
+    </button>
+  </div>
+  <div id="search-results-info" class="hidden mt-1.5 text-xs text-slate-500 dark:text-slate-400 pl-1"></div>
+</div>
+
+<script>
+  const searchInput = document.getElementById('search-input') as HTMLInputElement | null;
+  const searchClear = document.getElementById('search-clear') as HTMLButtonElement | null;
+  const searchInfo = document.getElementById('search-results-info');
+
+  function updateClear() {
+    const hasValue = Boolean(searchInput?.value);
+    if (searchClear) {
+      searchClear.style.opacity = hasValue ? '1' : '0';
+      searchClear.style.pointerEvents = hasValue ? 'auto' : 'none';
+    }
+  }
+
+  searchInput?.addEventListener('input', () => {
+    updateClear();
+    document.dispatchEvent(new CustomEvent('searchchange', {
+      detail: { query: searchInput!.value.trim().toLowerCase() }
+    }));
+  });
+
+  searchClear?.addEventListener('click', () => {
+    if (searchInput) {
+      searchInput.value = '';
+      updateClear();
+      searchInput.focus();
+      document.dispatchEvent(new CustomEvent('searchchange', { detail: { query: '' } }));
+    }
+  });
+
+  // Called from index.astro after filtering
+  (window as any).updateSearchInfo = (count: number, query: string) => {
+    if (!searchInfo) return;
+    if (query) {
+      searchInfo.textContent = `${count} result${count !== 1 ? 's' : ''} for "${query}"`;
+      searchInfo.classList.remove('hidden');
+    } else {
+      searchInfo.classList.add('hidden');
+    }
+  };
+</script>

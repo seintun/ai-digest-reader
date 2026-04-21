@@ -1,0 +1,75 @@
+---
+const categories = [
+  { id: 'all', label: 'All' },
+  { id: 'AI & ML', label: 'AI & ML' },
+  { id: 'Tech', label: 'Tech' },
+  { id: 'Science', label: 'Science' },
+  { id: 'World News', label: 'World News' },
+  { id: 'Futurology', label: 'Futurology' },
+  { id: 'Startups', label: 'Startups' },
+];
+---
+<div
+  id="category-filter"
+  class="flex items-center gap-1.5 overflow-x-auto pb-1 mb-3 scrollbar-hide"
+  role="group"
+  aria-label="Filter by category"
+>
+  {categories.map((cat) => (
+    <button
+      type="button"
+      data-category={cat.id}
+      aria-pressed={cat.id === 'all' ? 'true' : 'false'}
+      class="category-btn flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-all duration-150 border"
+    >
+      {cat.label}
+    </button>
+  ))}
+</div>
+
+<style>
+  .scrollbar-hide::-webkit-scrollbar { display: none; }
+  .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+  .category-btn {
+    background: rgba(255,255,255,0.5);
+    border-color: rgba(226,232,240,0.8);
+    color: #475569;
+  }
+  :global(.dark) .category-btn {
+    background: rgba(51,65,85,0.5);
+    border-color: rgba(71,85,105,0.5);
+    color: #94a3b8;
+  }
+  .category-btn[aria-pressed="true"] {
+    background: #6366f1;
+    border-color: #6366f1;
+    color: #fff;
+  }
+  @media (hover: hover) {
+    .category-btn:not([aria-pressed="true"]):hover {
+      background: #e0e7ff;
+      border-color: #a5b4fc;
+      color: #4f46e5;
+    }
+    :global(.dark) .category-btn:not([aria-pressed="true"]):hover {
+      background: rgba(99,102,241,0.2);
+      border-color: rgba(99,102,241,0.4);
+      color: #a5b4fc;
+    }
+  }
+</style>
+
+<script>
+  function initCategoryFilter() {
+    document.querySelectorAll('.category-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const category = btn.getAttribute('data-category') ?? 'all';
+        document.querySelectorAll('.category-btn').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        document.dispatchEvent(new CustomEvent('categorychange', { detail: { category } }));
+      });
+    });
+  }
+  document.addEventListener('DOMContentLoaded', initCategoryFilter);
+</script>

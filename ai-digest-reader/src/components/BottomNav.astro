@@ -1,0 +1,65 @@
+---
+// Mobile-only bottom navigation bar. Hidden on sm+ screens.
+---
+<nav
+  id="bottom-nav"
+  class="sm:hidden fixed bottom-0 left-0 right-0 z-50 bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border-t border-slate-200 dark:border-slate-700/50"
+  aria-label="Mobile navigation"
+  style="padding-bottom: env(safe-area-inset-bottom, 0px)"
+>
+  <div class="flex items-center justify-around h-14 px-2 max-w-lg mx-auto">
+    <button type="button" data-nav="home" class="nav-btn active flex flex-col items-center gap-0.5 flex-1 py-2 rounded-lg" aria-label="Home" aria-pressed="true">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" /></svg>
+      <span class="text-[10px] font-medium">Home</span>
+    </button>
+    <button type="button" data-nav="search" class="nav-btn flex flex-col items-center gap-0.5 flex-1 py-2 rounded-lg" aria-label="Search" aria-pressed="false">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+      <span class="text-[10px] font-medium">Search</span>
+    </button>
+    <button type="button" data-nav="bookmarks" class="nav-btn relative flex flex-col items-center gap-0.5 flex-1 py-2 rounded-lg" aria-label="Bookmarks" aria-pressed="false">
+      <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-4-7 4V5z" /></svg>
+      <span class="text-[10px] font-medium">Saved</span>
+      <span id="bookmark-badge" class="hidden absolute top-1.5 right-[calc(50%-14px)] bg-primary-500 text-white text-[9px] font-bold rounded-full min-w-[16px] h-4 flex items-center justify-center px-0.5"></span>
+    </button>
+  </div>
+</nav>
+<div class="sm:hidden h-16"></div>
+
+<style>
+  .nav-btn { color: #94a3b8; transition: color 0.15s; }
+  .nav-btn.active,
+  .nav-btn[aria-pressed="true"] { color: #6366f1; }
+  :global(.dark) .nav-btn { color: #64748b; }
+  :global(.dark) .nav-btn.active,
+  :global(.dark) .nav-btn[aria-pressed="true"] { color: #818cf8; }
+</style>
+
+<script>
+  document.querySelectorAll('.nav-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const nav = btn.getAttribute('data-nav') ?? 'home';
+      document.dispatchEvent(new CustomEvent('navchange', { detail: { nav } }));
+    });
+  });
+
+  (window as any).setNavActive = (nav: string) => {
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      const active = btn.getAttribute('data-nav') === nav;
+      btn.setAttribute('aria-pressed', String(active));
+      btn.classList.toggle('active', active);
+    });
+  };
+
+  (window as any).updateBookmarkBadge = (count: number) => {
+    const badge = document.getElementById('bookmark-badge');
+    if (!badge) return;
+    if (count > 0) {
+      badge.textContent = count > 9 ? '9+' : String(count);
+      badge.classList.remove('hidden');
+      badge.classList.add('flex');
+    } else {
+      badge.classList.add('hidden');
+      badge.classList.remove('flex');
+    }
+  };
+</script>
