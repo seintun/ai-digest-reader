@@ -1,27 +1,7 @@
 """Run metrics and cost estimation for content-aware pipeline."""
 from __future__ import annotations
 
-from typing import Dict, List
-
-RANKING_COST_PER_CHAR = 0.05 / (40 * 200)
-SUMMARY_COST_PER_CHAR = 0.12 / (15 * 2000)
-
-
-def estimate_llm_cost_usd(ranking_chars: int, summary_chars: int) -> float:
-    """Estimate LLM run cost in USD using spec baseline rates."""
-    ranking_cost = max(0, ranking_chars) * RANKING_COST_PER_CHAR
-    summary_cost = max(0, summary_chars) * SUMMARY_COST_PER_CHAR
-    return round(ranking_cost + summary_cost, 4)
-
-
-def count_ranking_chars(excerpts: List[str]) -> int:
-    """Count bounded ranking input chars (200 chars per story)."""
-    return sum(len((excerpt or "")[:200]) for excerpt in excerpts)
-
-
-def count_summary_chars(contents: List[str]) -> int:
-    """Count bounded summary input chars (2000 chars per story)."""
-    return sum(len((content or "")[:2000]) for content in contents)
+from typing import Dict
 
 
 def render_dashboard(metrics: Dict) -> str:
@@ -37,7 +17,7 @@ def render_dashboard(metrics: Dict) -> str:
         "# Content-Aware Pipeline Monitoring",
         "",
         f"- Runtime (s): `{runtime.get('total_seconds', 0):.2f}`",
-        f"- Estimated LLM Cost (USD): `${cost.get('estimated_usd', 0):.4f}`",
+        f"- Session Model Cost (USD): `${cost.get('session_model_usd', 0):.6f}`",
         f"- Cost Budget Pass (<$0.25): `{cost.get('within_budget', False)}`",
         f"- Runtime Budget Pass (<180s): `{runtime.get('within_budget', False)}`",
         "",

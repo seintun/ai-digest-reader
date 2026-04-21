@@ -3,7 +3,8 @@ from __future__ import annotations
 
 from typing import Any, Dict, List, Optional
 
-from analyzer import _call_claude_cli, _call_openrouter, _parse_claude_response
+from analyzer import _call_claude_cli, _call_openrouter_with_usage, _parse_claude_response
+from model_pricing import usage_to_dict
 from schema import validate_summary
 
 
@@ -48,18 +49,19 @@ def generate_summary(ranked_posts: List[Dict]) -> Optional[Dict[str, Any]]:
 def generate_summary_with_meta(ranked_posts: List[Dict]) -> tuple[Optional[Dict[str, Any]], Dict[str, Any]]:
     """Generate schema-v2 summary with metadata about source/fallback behavior."""
     if not ranked_posts:
-        return None, {"source": "none", "generated": False}
+        return None, {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
 
     prompt = _build_prompt(ranked_posts)
-    raw = _call_openrouter(prompt)
+    raw, usage = _call_openrouter_with_usage(prompt)
     source = "openrouter"
     if raw is None:
         raw = _call_claude_cli(prompt)
         source = "claude_cli"
+        usage = {"input_tokens": 0, "output_tokens": 0}
     if raw is None:
-        return None, {"source": "none", "generated": False}
+        return None, {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
 
     parsed = _parse_claude_response(raw)
     if parsed and validate_summary(parsed):
-        return parsed, {"source": source, "generated": True}
-    return None, {"source": source, "generated": False}
+        return parsed, {"source": source, "generated": True, "usage": usage_to_dict(usage["input_tokens"], usage["output_tokens"])}
+    return None, {"source": source, "generated": False, "usage": usage_to_dict(usage["input_tokens"], usage["output_tokens"])}

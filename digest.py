@@ -11,9 +11,6 @@ from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
 from fetchers import fetch_reddit_posts, fetch_hn_posts
 from formatter import format_digest
 from pipeline_metrics import (
-    count_ranking_chars,
-    count_summary_chars,
-    estimate_llm_cost_usd,
     render_dashboard,
 )
 from ranker import rank_posts_with_metrics
@@ -173,9 +170,9 @@ def main():
     scrape_success_rate = (scrape_success / scrape_requested * 100.0) if scrape_requested else 0.0
     cache_hit_rate = (scrape_stats.get("cache_hits", 0) / scrape_requested * 100.0) if scrape_requested else 0.0
 
-    ranking_chars = count_ranking_chars([post.get("excerpt", "") for post in ranked_posts[:40]])
-    summary_chars = count_summary_chars([post.get("content", "") or post.get("excerpt", "") for post in ranked_posts[:15]])
-    estimated_cost = estimate_llm_cost_usd(ranking_chars, summary_chars)
+    ranking_usage = ranking_metrics.get("llm_usage", {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0})
+    summary_usage = summary_meta.get("usage", {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0})
+    session_model_cost = round(float(ranking_usage.get("cost_usd", 0.0)) + float(summary_usage.get("cost_usd", 0.0)), 6)
 
     total_seconds = time.perf_counter() - run_started
     metrics = {
@@ -198,10 +195,11 @@ def main():
         "ranking": ranking_metrics,
         "summary": summary_meta,
         "cost": {
-            "ranking_input_chars": ranking_chars,
-            "summary_input_chars": summary_chars,
-            "estimated_usd": estimated_cost,
-            "within_budget": estimated_cost < 0.25,
+            "pricing_source": "https://platform.kimi.ai/docs/pricing/chat-k26 (static rates: input=$0.213/M, output=$4.00/M)",
+            "session_model_usd": session_model_cost,
+            "ranking_llm": ranking_usage,
+            "summary_llm": summary_usage,
+            "within_budget": session_model_cost < 0.25,
         },
         "degradation": {
             "scraping_fallback_used": scrape_stats.get("failures", 0) > 0,
@@ -218,7 +216,7 @@ def main():
     print(f"  - cache hit rate: {metrics['scraping']['cache_hit_rate']}%")
     print(f"  - ranking LLM used: {metrics['ranking']['llm_quality_used']}")
     print(f"  - summary source: {metrics['summary']['source']}")
-    print(f"  - estimated LLM cost: ${metrics['cost']['estimated_usd']}")
+    print(f"  - session model cost: ${metrics['cost']['session_model_usd']}")
 
     markdown_reddit = [
         {
