@@ -1,4 +1,5 @@
 from ranker import rank_posts
+import ranker
 
 
 def test_rank_posts_adds_expected_fields():
@@ -34,3 +35,10 @@ def test_cross_source_signal_applies_to_same_story_across_sources():
     by_id = {p["i"]: p for p in ranked}
     assert by_id["rd-0"]["rank"] > by_id["rs-0"]["rank"]
     assert by_id["hn-0"]["rank"] > by_id["rs-0"]["rank"]
+
+
+def test_ranker_falls_back_when_llm_quality_unavailable(monkeypatch):
+    monkeypatch.setattr(ranker, "_rate_content_quality", lambda _posts, _content: None)
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 100, "c": 20, "b": "body"}]
+    ranked = rank_posts(posts, {})
+    assert ranked[0]["content_quality"] == 0

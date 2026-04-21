@@ -2,9 +2,16 @@
 
 ## Data Flow
 
-1. `digest.py` orchestrates Reddit and HN fetchers, normalizes payloads, and writes `output/<date>/digest.json`.
+1. `digest.py` orchestrates Reddit, HN, and RSS fetchers, normalizes payloads, and builds a unified post list.
+2. `scraper.py` selects top candidates (`score > 10 OR comments > 5`, max 40), scrapes article content with cache + fallbacks.
+3. `ranker.py` scores posts with engagement, recency, cross-source matching, and optional LLM content quality.
+4. `analyzer_v2.py` summarizes the top 15 ranked stories with content-aware prompts.
+5. `digest.py` writes:
+   - `output/<date>/digest.json` (v4 data + metrics)
+   - `output/<date>/metrics.json` (monitoring metrics)
+   - `output/<date>/monitoring-dashboard.md` (human-readable dashboard)
 2. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend.
-3. Frontend state merges Reddit and HN stories and applies ranked ordering for the `all` source view.
+3. Frontend merges all sources and sorts globally by `rank` (fallback to score), so users see most important stories first.
 
 ## Security and Validation Hardening
 
@@ -33,11 +40,11 @@
   - `ai-digest-reader/src/components/SourceFilter.astro`
 - Removed stale unused interfaces from `ai-digest-reader/src/types.ts`.
 
-## Story Schema (v2)
+## Story Schema (v4)
 
 Each story uses compact keys:
 
-- `i`: stable id (`rd-<index>` or `hn-<index>`)
+- `i`: stable id (`rd-<index>`, `hn-<index>`, or `rs-<index>`)
 - `t`: title
 - `u`: external/original article URL
 - `p`: discussion permalink (Reddit thread or HN item URL)
@@ -45,6 +52,10 @@ Each story uses compact keys:
 - `s`: score/upvotes
 - `c`: comment count
 - `a`: author
+- `rank`: 0-100 importance score
+- `content_available`: boolean scrape availability flag
+- `content_quality`: LLM quality score (1-10, `0` when fallback used)
+- `excerpt`: first 200 chars of scraped content (or body fallback)
 
 ## Link Routing Rules
 
@@ -52,16 +63,18 @@ Each story uses compact keys:
 - Secondary external link uses `u` in the same tab when `u !== p`.
 - This preserves swipe-back behavior on mobile browsers.
 
-## Ranking Strategy (`all` feed)
+## Ranking Strategy
 
-- Stories are grouped by source prefix (`rd`, `hn`, extensible for future sources).
-- Score and comment signals are min-max normalized per source.
-- Dynamic weights adapt to available signals:
-  - score + comments present: `0.4 + 0.3` (+ recency baseline `0.3`)
-  - only score: `0.7`
-  - only comments: `0.7`
-  - no engagement signals: recency only
-- Current recency is neutral (`0.5`) until per-story timestamps are added.
+- **Engagement (40%)**: normalized score + comments.
+- **Content quality (30%)**: batched LLM rating on 200-char excerpts.
+- **Recency (15%)**: exponential decay with 24-hour half-life.
+- **Cross-source (15%)**: same-story detection across Reddit/HN/RSS via domain+path similarity.
+
+Fallback behavior:
+- If scraping fails for a URL: use post body/snippet.
+- If LLM quality fails: use engagement + recency + cross-source only.
+- If content-aware summarization fails: fallback to legacy analyzer.
+- If all summary paths fail: emit digest without summary.
 
 ## Mobile UX Decisions
 
