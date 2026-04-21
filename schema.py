@@ -102,3 +102,17 @@ def validate_summary(data: dict) -> bool:
         return True
     except (AttributeError, TypeError):
         return False
+
+
+# v3 schema additions
+SCHEMA_VERSION = "3"
+
+
+def validate_v3_digest(digest: dict) -> bool:
+    """Validate top-level structure of a v3 digest envelope."""
+    required = {"v", "d", "g", "r", "h"}
+    if not all(k in digest for k in required):
+        return False
+    if digest.get("v") != 3:
+        return False
+    return True

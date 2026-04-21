@@ -11,13 +11,22 @@ from fetchers import fetch_reddit_posts, fetch_hn_posts
 from formatter import format_digest
 
 try:
+    from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
+    from fetchers import fetch_all_rss_feeds
+except ImportError:
+    SUBREDDIT_CATEGORIES = {}
+    HN_CATEGORY = "Tech"
+    RSS_FEEDS = []
+    fetch_all_rss_feeds = None
+
+try:
     from analyzer import generate_summary
 except ImportError:
     generate_summary = None
 
 
-def normalize_posts(posts: List[Dict], prefix: str) -> List[Dict]:
-    """Convert raw post data to v2 schema format with short keys."""
+def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[Dict]:
+    """Convert raw post data to v3 schema format with short keys."""
     normalized = []
     for i, post in enumerate(posts):
         normalized.append({
@@ -29,6 +38,7 @@ def normalize_posts(posts: List[Dict], prefix: str) -> List[Dict]:
             "s": post.get("score", 0),
             "c": post.get("comments", 0),
             "a": post.get("author", post.get("by", "")),
+            "cat": category or post.get("category", ""),
         })
     return normalized
 
@@ -40,72 +50,96 @@ def main():
     parser.add_argument("--subreddits", nargs="*", help="Specific subreddits to fetch")
     parser.add_argument("--no-ai", action="store_true", help="Skip AI summary generation")
     args = parser.parse_args()
-    
+
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
-    
+
     print("Fetching Reddit posts...")
     all_reddit_posts = []
     for subreddit in subreddits:
         print(f"  - {subreddit}")
         posts = fetch_reddit_posts(subreddit, limit=args.limit)
         all_reddit_posts.extend(posts)
-    
+
     print(f"Found {len(all_reddit_posts)} Reddit posts")
-    
+
     print("Fetching Hacker News...")
     hn_posts = fetch_hn_posts(limit=args.limit)
     print(f"Found {len(hn_posts)} HN posts")
-    
-    reddit_normalized = normalize_posts(all_reddit_posts, "rd")
-    hn_normalized = normalize_posts(hn_posts, "hn")
-    
+
+    # Normalize Reddit posts with per-subreddit category
+    reddit_normalized = []
+    for i, post in enumerate(all_reddit_posts):
+        sub = post.get("subreddit", "")
+        cat = SUBREDDIT_CATEGORIES.get(sub, "Tech")
+        reddit_normalized.append({
+            "i": f"rd-{i}",
+            "t": post.get("title", ""),
+            "u": post.get("url", ""),
+            "p": post.get("permalink", ""),
+            "b": post.get("body", ""),
+            "s": post.get("score", 0),
+            "c": post.get("comments", 0),
+            "a": post.get("author", ""),
+            "cat": cat,
+        })
+
+    hn_normalized = normalize_posts(hn_posts, "hn", category=HN_CATEGORY)
+
+    rss_posts = []
+    if fetch_all_rss_feeds and RSS_FEEDS:
+        print("Fetching RSS feeds...")
+        rss_raw = fetch_all_rss_feeds(RSS_FEEDS, limit=args.limit)
+        rss_posts = normalize_posts(rss_raw, "rs")
+        print(f"Found {len(rss_posts)} RSS stories")
+
     summary = None
     if generate_summary and not args.no_ai:
-        print("Generating AI summary with Claude...")
+        print("Generating AI summary...")
         summary = generate_summary(all_reddit_posts, hn_posts)
         if summary:
             print("AI summary generated successfully")
         else:
             print("AI summary unavailable, continuing without it")
-    
+
     digest_date = date.today().strftime(DATE_FORMAT)
     digest_time = datetime.now().strftime("%H%M%S")
-    
+
     digest = {
-        "v": 2,
+        "v": 3,
         "d": digest_date,
         "g": datetime.now().isoformat(),
         "r": reddit_normalized,
         "h": hn_normalized,
+        "rs": rss_posts,
     }
-    
+
     if summary:
         digest["summary"] = summary
-    
+
     content = format_digest(all_reddit_posts, hn_posts, digest_date)
     print("\n" + content)
-    
+
     if args.output_dir:
         output_dir = Path(args.output_dir)
     else:
         output_dir = Path("output") / digest_date
-    
+
     output_dir.mkdir(parents=True, exist_ok=True)
-    
+
     json_path = output_dir / "digest.json"
     with open(json_path, "w") as f:
         json.dump(digest, f, indent=2)
     print(f"\nSaved JSON to {json_path}")
-    
+
     filename = f"digest-{digest_date}-{digest_time}.md"
     output_path = output_dir / filename
-    
+
     i = 1
     while output_path.exists():
         filename = f"digest-{digest_date}-{digest_time}_{i}.md"
         output_path = output_dir / filename
         i += 1
-    
+
     output_path.write_text(content)
     print(f"Saved markdown to {output_path}")
 
