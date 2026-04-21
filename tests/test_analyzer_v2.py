@@ -1,3 +1,4 @@
+import analyzer_v2
 from analyzer_v2 import _build_prompt
 
 
@@ -34,3 +35,13 @@ def test_build_prompt_truncates_content_to_2000_chars():
     prompt = _build_prompt(ranked_posts)
     assert "x" * 2000 in prompt
     assert "x" * 2100 not in prompt
+
+
+def test_generate_summary_with_meta_returns_none_when_calls_fail(monkeypatch):
+    monkeypatch.setattr(analyzer_v2, "_call_openrouter", lambda _prompt: None)
+    monkeypatch.setattr(analyzer_v2, "_call_claude_cli", lambda _prompt: None)
+    summary, meta = analyzer_v2.generate_summary_with_meta(
+        [{"i": "rd-0", "t": "Story", "rank": 90, "s": 1, "c": 1, "content_quality": 1, "content": "x"}]
+    )
+    assert summary is None
+    assert meta["generated"] is False
