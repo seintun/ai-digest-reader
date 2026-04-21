@@ -1,7 +1,7 @@
 {
-  "name": "AI Digest",
+  "name": "AI Digest - Daily News",
   "short_name": "AI Digest",
-  "description": "Daily AI news from Reddit and Hacker News",
+  "description": "Your curated daily digest of AI, tech, and world news",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#E0E7FF",

@@ -1,24 +1,47 @@
+/**
+ * DailyDigest TypeScript Types — v3 Schema
+ *
+ * Story ID prefixes:
+ *   rd- = Reddit
+ *   hn- = Hacker News
+ *   rs- = RSS feeds
+ *
+ * Source types map to digest.json keys:
+ *   reddit → digest.r[]
+ *   hn     → digest.h[]
+ *   rss    → digest.rs[]  (v3+, optional)
+ */
+
 export interface Story {
-  i: string;
-  t: string;
-  u: string;
-  p?: string;
-  b?: string;
-  s: number;
-  c: number;
-  a: string;
+  i: string;       // id: rd-N, hn-N, rs-N
+  t: string;       // title
+  u: string;       // article URL
+  p?: string;      // discussion permalink
+  b?: string;      // body excerpt (max 280 chars)
+  s: number;       // score (0 for RSS)
+  c: number;       // comment count (0 for RSS)
+  a: string;       // author
+  cat?: string;    // category: "AI & ML" | "Tech" | "Science" | "World News" | "Futurology" | "Startups"
+}
+
+export type StorySource = 'reddit' | 'hn' | 'rss';
+
+export function getStorySource(story: Story): StorySource {
+  if (story.i.startsWith('rd-')) return 'reddit';
+  if (story.i.startsWith('hn-')) return 'hn';
+  return 'rss';
 }
 
 export interface MustReadItem {
-  id: string;     // story reference e.g. "rd-0", "hn-2"
-  title: string;  // story title (plain text)
-  url: string;    // direct URL to story
-  reason: string; // one sentence why it matters
+  id: string;
+  title: string;
+  url: string;
+  reason: string;
 }
 
 export interface FullBriefSection {
-  heading: string; // plain text section title
-  body: string;    // plain text paragraph
+  heading: string;
+  body: string;
 }
 
 export interface FullBrief {
@@ -31,21 +54,25 @@ export interface DigestSummary {
   schema_version: string;
   simple: string;
   structured: {
-    themes: string[];       // exactly 3
+    themes: string[];
     breaking: string;
-    mustRead: MustReadItem[]; // exactly 3
+    mustRead: MustReadItem[];
   };
   fullBrief: FullBrief;
 }
 
 export interface Digest {
-  v: 1 | 2;
+  v: 2 | 3;
   d: string;
   g: string;
-  r: Story[];
-  h: Story[];
+  r: Story[];      // Reddit stories
+  h: Story[];      // HackerNews stories
+  rs?: Story[];    // RSS stories (v3+)
   summary?: DigestSummary;
 }
 
 export type ViewMode = 'cards' | 'list' | 'glance';
-export type Source = 'reddit' | 'hn' | 'all';
+export type Source = 'all' | 'reddit' | 'hn' | 'rss';
+export type Category = 'all' | 'AI & ML' | 'Tech' | 'Science' | 'World News' | 'Futurology' | 'Startups';
+
+export const CATEGORIES: Category[] = ['all', 'AI & ML', 'Tech', 'Science', 'World News', 'Futurology', 'Startups'];
