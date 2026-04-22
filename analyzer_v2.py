@@ -8,7 +8,7 @@ from analyzer import _call_claude_cli, _call_openrouter_with_usage, _parse_claud
 from model_pricing import usage_to_dict
 from schema import validate_summary
 
-SUMMARY_RETRY_ATTEMPTS = max(1, int(os.environ.get("SUMMARY_V2_RETRY_ATTEMPTS", "1") or "1"))
+SUMMARY_RETRY_ATTEMPTS = max(1, int(os.environ.get("SUMMARY_V2_RETRY_ATTEMPTS", "2") or "2"))
 
 
 def _build_prompt(ranked_posts: List[Dict]) -> str:

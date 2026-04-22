@@ -9,18 +9,22 @@ from schema import validate_summary
 
 OPENROUTER_MODEL = os.environ.get("OPENROUTER_MODEL", "moonshotai/kimi-k2.6")
 SUMMARY_AI_CONNECT_TIMEOUT = float(os.environ.get("SUMMARY_AI_CONNECT_TIMEOUT", "10") or "10")
-SUMMARY_AI_READ_TIMEOUT = float(os.environ.get("SUMMARY_AI_READ_TIMEOUT", "20") or "20")
-CLAUDE_CLI_TIMEOUT_SECONDS = int(os.environ.get("CLAUDE_CLI_TIMEOUT_SECONDS", "20") or "20")
+SUMMARY_AI_READ_TIMEOUT = float(os.environ.get("SUMMARY_AI_READ_TIMEOUT", "75") or "75")
+CLAUDE_CLI_TIMEOUT_SECONDS = int(os.environ.get("CLAUDE_CLI_TIMEOUT_SECONDS", "60") or "60")
 
 
-def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional[Dict[str, Any]]:
+def generate_summary(
+    reddit_posts: List[Dict],
+    hn_posts: List[Dict],
+    skip_openrouter: bool = False,
+) -> Optional[Dict[str, Any]]:
     """
     Calls OpenRouter API (with Claude CLI fallback), returns validated structured JSON.
     Retries once if validation fails. Returns None if analysis fails.
     """
     prompt = _build_prompt(reddit_posts, hn_posts)
 
-    raw = _call_openrouter(prompt)
+    raw = None if skip_openrouter else _call_openrouter(prompt)
     if raw is None:
         raw = _call_claude_cli(prompt)
     if raw is None:
@@ -41,7 +45,7 @@ def generate_summary(reddit_posts: List[Dict], hn_posts: List[Dict]) -> Optional
         "All values must be plain text strings — no markdown."
     )
 
-    raw2 = _call_openrouter(retry_prompt)
+    raw2 = None if skip_openrouter else _call_openrouter(retry_prompt)
     if raw2 is None:
         raw2 = _call_claude_cli(retry_prompt)
     if raw2 is None:
