@@ -5,6 +5,13 @@ set -euo pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$REPO_ROOT"
 
+LOCK_DIR="/tmp/dailydigest-generate-and-deploy.lock"
+if ! mkdir "$LOCK_DIR" 2>/dev/null; then
+  echo "Another generate-and-deploy run is already active (lock: $LOCK_DIR). Exiting."
+  exit 1
+fi
+trap 'rmdir "$LOCK_DIR" 2>/dev/null || true' EXIT
+
 TODAY="$(date '+%Y-%m-%d')"
 RUN_TIME="$(date '+%H%M%S')"
 RUN_LOG_DIR="output/$TODAY"

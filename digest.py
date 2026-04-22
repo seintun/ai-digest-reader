@@ -69,11 +69,6 @@ def main():
     parser.add_argument("--output-dir", type=str, help="Output directory (default: output/YYYY-MM-DD)")
     parser.add_argument("--subreddits", nargs="*", help="Specific subreddits to fetch")
     parser.add_argument("--no-ai", action="store_true", help="Skip AI summary generation")
-    parser.add_argument(
-        "--allow-v1-summary-fallback",
-        action="store_true",
-        help="Allow legacy analyzer v1 summary fallback when v2 fails (slower).",
-    )
     args = parser.parse_args()
 
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
@@ -152,6 +147,7 @@ def main():
                 print(f"  scrape failures by reason: {reason_summary}")
     scrape_seconds = time.perf_counter() - scrape_started
 
+    print("Scraping complete. Ranking stories...")
     ranking_started = time.perf_counter()
     ranked_posts = []
     ranking_metrics = {"total_posts": 0, "llm_quality_used": False}
@@ -179,17 +175,16 @@ def main():
         summary = generate_summary_v2(ranked_posts[:15])
         summary_meta = {"source": "openrouter_or_cli", "generated": bool(summary)}
 
-    if summary is None and generate_summary and not args.no_ai and args.allow_v1_summary_fallback:
+    if summary is None and generate_summary and not args.no_ai:
         prior_usage = summary_meta.get("usage", usage_to_dict(0, 0))
-        summary = generate_summary(all_reddit_posts, hn_posts)
+        # Avoid repeating OpenRouter timeout path; use CLI-only fallback here.
+        summary = generate_summary(all_reddit_posts, hn_posts, skip_openrouter=True)
         if summary:
             print("Fallback AI summary generated")
             summary_meta = {"source": "analyzer_v1", "generated": True, "usage": prior_usage}
         else:
             print("AI summary unavailable, continuing without it")
             summary_meta = {"source": "none", "generated": False, "usage": prior_usage}
-    elif summary is None and generate_summary and not args.no_ai:
-        print("Skipping legacy analyzer v1 fallback (use --allow-v1-summary-fallback to enable).")
     summary_seconds = time.perf_counter() - summary_started
 
     digest_date = date.today().strftime(DATE_FORMAT)

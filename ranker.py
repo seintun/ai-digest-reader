@@ -140,6 +140,7 @@ def ***REDACTED_RUBYGEMS_KEY***(candidates: List[Tuple[str, str]]) -> Tuple[Opti
     if not api_key or not candidates:
         return None, usage_to_dict(0, 0)
     prompt = _quality_prompt(candidates)
+    print(f"Ranking AI: scoring batch with {len(candidates)} excerpts...")
 
     input_tokens = 0
     output_tokens = 0
@@ -292,6 +293,7 @@ def ***REDACTED_RUBYGEMS_KEY***(posts: List[Dict], scraped_content: Dict[str, st
         fallback_reason = "projected_cost_exceeded"
 
     batches = _chunk_candidates(candidates, workers)
+    print(f"Ranking AI: {len(candidates)} excerpts in {len(batches)} batch(es), workers={workers}")
     ratings: Dict[str, int] = {}
     input_tokens = 0
     output_tokens = 0
