@@ -138,3 +138,61 @@ Output schema moved to `system` message — sent once per call, not repeated per
 | Cross-source match ops | O(n²) 14,400 | O(n) 120 | ~99% |
 | Est. cost per run | ~$0.20–0.25 | ~$0.07–0.12 | ~50–60% |
 | Est. total pipeline time | 3–5 min | 1.5–3 min | ~40–50% |
+
+---
+
+## 2026-04 Scraper Resilience + Pipeline Visibility
+
+### Scraper fallback chain
+
+The article scraper now has a three-stage fallback instead of two:
+
+```
+direct HTTP request
+  → Jina proxy (r.jina.ai)
+    → archive.today (archive.today/newest/{url})
+      → give up
+```
+
+**archive.today** (`_fetch_via_archive_today` in `scraper.py`) caches full rendered HTML of pages, including paywalled content. No API key required. Returns archived content for sites that block both direct requests and Jina (CNBC, WSJ, Bloomberg, Fortune, CBS News). Timeout is 10s, configurable via `SCRAPER_ARCHIVE_TIMEOUT`.
+
+The archive.today fallback is triggered in three situations:
+- Botwall detected (Cloudflare challenge, CAPTCHA, "Access Denied" page) and Jina fails
+- HTTP 401 (auth required — Reuters), 403 (forbidden), 429 (rate limit), or 451 (legal block — Fortune, TomHardware) and Jina fails
+- All local extractors fail (trafilatura → readability → lxml → metadata) and Jina fails
+
+### Better request headers
+
+Removed `DailyDigestBot/1.0` from the User-Agent string — many CDN-level bot detectors reject any UA containing non-browser tokens. Added browser-standard headers that all real Chrome navigations include:
+
+| Header | Value | Why |
+|--------|-------|-----|
+| `Sec-Fetch-Dest` | `document` | Chrome fetch metadata — signals top-level page load |
+| `Sec-Fetch-Mode` | `navigate` | Signals browser navigation, not XHR/fetch |
+| `Sec-Fetch-Site` | `none` | Direct URL navigation (no referrer) |
+| `Accept-Encoding` | `gzip, deflate, br` | Browsers always send this |
+| `Upgrade-Insecure-Requests` | `1` | Standard browser flag |
+| ~~`Cache-Control: no-cache`~~ | removed | Known bot signal; real navigations omit this |
+
+These changes happen at the first request — they reduce the number of URLs that reach the botwall detection path at all.
+
+### Pipeline visibility (no more silent hangs)
+
+After scraping completes (`40/40 (100.0%)`), the terminal previously went silent for minutes during ranking and summary generation. Three changes fix this:
+
+- **`digest.py`**: prints `"Ranking N stories (LLM quality scoring)..."` before calling `rank_posts_with_metrics`, so users know the pipeline didn't stall.
+- **`analyzer_v2.py`**: prints `"  summary attempt {n}/{total}..."` at the start of each retry loop iteration.
+- **`llm_client.py`**: prints `"  llm call (attempt {n}/2, {model})..."` before each OpenRouter API request.
+
+Additionally, `SUMMARY_RETRY_ATTEMPTS` default was reduced from 2 to 1. `LLMClient.complete()` already retries once internally with 2s backoff, so the previous setup was 2 outer × 2 inner = 4 total attempts. Now it's 1 outer × 2 inner = 2 total attempts, halving the worst-case silence from ~304s to ~152s. The environment variable `SUMMARY_V2_RETRY_ATTEMPTS` can still override.
+
+### Failure reason strings
+
+Error codes in scrape failure output now include the proxy chain that was tried:
+
+| Code | Meaning |
+|------|---------|
+| `botwall_detected\|jina_timeout\|archive_timeout` | All three paths exhausted |
+| `http_451\|jina_http_451\|archive_http_404` | Legal block site, no archive |
+| `http_401\|jina_http_401\|archive_extract_failed` | Auth-required, archive found page but couldn't extract |
+| `extract_failed\|jina_timeout\|archive_timeout` | Page loaded but unextractable across all paths |
