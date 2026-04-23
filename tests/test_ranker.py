@@ -51,7 +51,7 @@ def ***REDACTED_RUBYGEMS_KEY***(monkeypatch):
 
     calls = []
 
-    def fake_request(candidates):
+    def fake_request(candidates, client):
         calls.append([story_id for story_id, _ in candidates])
         ratings = {story_id: 8 for story_id, _ in candidates}
         usage = {"input_tokens": 10, "output_tokens": 5, "cost_usd": 0.0001}
@@ -79,7 +79,7 @@ def ***REDACTED_RUBYGEMS_KEY***(monkeypatch):
 
     calls = []
 
-    def fake_request(candidates):
+    def fake_request(candidates, client):
         calls.append(len(candidates))
         ratings = {story_id: 6 for story_id, _ in candidates}
         usage = {"input_tokens": 10, "output_tokens": 5, "cost_usd": 0.0001}
