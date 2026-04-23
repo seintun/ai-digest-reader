@@ -82,3 +82,59 @@ Fallback behavior:
 - Touch targets are increased for better tap accuracy.
 - List view switches to stacked cards on narrow screens to eliminate horizontal scrolling.
 - Optional body excerpts improve skimmability without AI-generated copy.
+
+---
+
+## 2026-04 Quality-First Overhaul
+
+Full design spec: [`docs/superpowers/specs/2026-04-22-quality-first-overhaul-design.md`](superpowers/specs/2026-04-22-quality-first-overhaul-design.md)
+
+### New module: `llm_client.py`
+
+Replaces the three previous LLM integration points (`analyzer.py` curl, `analyzer_v2.py` curl, `ranker.py` curl). Single `LLMClient` class with:
+- `requests.Session` persistent connection pool (no subprocess spawning)
+- In-memory response cache keyed by `sha256(system+prompt)` — deduplicates identical calls within a run
+- One retry with 2s backoff on OpenRouter failure
+- Claude CLI fallback
+
+### Deleted: `analyzer.py`
+
+270 lines of duplicated HTTP + retry + prompt logic consolidated into `llm_client.py` (transport) and `analyzer_v2.py` (prompt construction).
+
+### Ranking algorithm changes
+
+**Cross-source matching**: O(n²) nested loop replaced by O(n) hash-bucket grouping on `sha256(domain + path)`.
+
+**Freshness-adjusted engagement**: raw score replaced by `score × (1/√(age_hours + 1))` — penalizes stale viral posts.
+
+**Rebalanced weights**:
+
+| Signal | Before | After |
+|--------|--------|-------|
+| Engagement (freshness-adjusted) | 40% | 30% |
+| Recency | 15% | 15% |
+| Cross-source | 15% | 20% |
+| Content quality | 30% | 35% |
+
+### Prompt engineering changes
+
+New `extract_excerpt(content, max_chars=200)` in `schema.py` produces clean 200-char excerpts (strips HTML, collapses whitespace, truncates at sentence boundary).
+
+Compact story block format replaces full content dumps:
+```
+[{id}] [{rank}/100] {title} | src:{source} | age:{h}h | score:{n} | quality:{q}/10
+excerpt: "{200-char excerpt}"
+```
+
+Output schema moved to `system` message — sent once per call, not repeated per story.
+
+### Estimated savings per run
+
+| Area | Before | After | Savings |
+|------|--------|-------|---------|
+| Summarization prompt tokens | ~30,000 | ~9,000 | ~70% |
+| Ranking prompt tokens (per story) | ~800 | ~120 | ~85% |
+| Reddit fetch time | 24–48s | 6–12s | ~75% |
+| Cross-source match ops | O(n²) 14,400 | O(n) 120 | ~99% |
+| Est. cost per run | ~$0.20–0.25 | ~$0.07–0.12 | ~50–60% |
+| Est. total pipeline time | 3–5 min | 1.5–3 min | ~40–50% |
