@@ -40,6 +40,37 @@
   - `ai-digest-reader/src/components/SourceFilter.astro`
 - Removed stale unused interfaces from `ai-digest-reader/src/types.ts`.
 
+## Scraper Cache
+
+Article content is cached in a SQLite database at `.cache/scraper_cache.sqlite3` with a 24-hour TTL.
+
+**Schema** (`article_cache` table):
+
+| Column | Type | Description |
+|--------|------|-------------|
+| `url_hash` | TEXT (PK) | `sha256(url)` — fixed-length O(1) lookup key |
+| `url` | TEXT | Original URL (for debugging) |
+| `content` | TEXT | Extracted plain-text article body |
+| `scraped_at` | INTEGER | Unix timestamp of successful fetch |
+
+**Request flow** (`_scrape_one` in `scraper.py`):
+
+```
+get_cached_content(url)
+  ├── hit  + age < 24h  → return cached text  (no HTTP)
+  ├── hit  + age ≥ 24h  → treat as miss
+  └── miss              → fetch → extract → _set_cached_content → return text
+```
+
+**Why it matters**: the pipeline runs twice a day and pulls the same high-ranking domains (TechCrunch, Ars Technica, HN top stories) on every run. On the second run of the day, most URLs are already cached — a typical production run shows `cache=31 network=2` out of 40 candidates, meaning 31 fewer HTTP requests, zero Jina proxy calls, and zero archive.today attempts for those URLs.
+
+**What it does not do**:
+- Does not deduplicate different URLs pointing to the same article
+- Does not evict expired rows — they are overwritten on the next successful fetch of the same URL
+- Does not cache failed fetches — only successful extractions are stored
+
+---
+
 ## Story Schema (v4)
 
 Each story uses compact keys:
