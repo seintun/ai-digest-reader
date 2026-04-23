@@ -51,6 +51,7 @@ RATE_LIMIT_SECONDS: float = float(_os.environ.get("SCRAPER_RATE_LIMIT_SECONDS", 
 REQUEST_TIMEOUT: int = int(_os.environ.get("SCRAPER_REQUEST_TIMEOUT", "10") or "10")
 HOST_BLOCK_TTL_SECONDS: int = int(_os.environ.get("SCRAPER_HOST_BLOCK_TTL_SECONDS", "3600") or "3600")
 SCRAPER_MAX_WORKERS: int = int(_os.environ.get("SCRAPER_MAX_WORKERS", "6") or "6")
+ARCHIVE_TIMEOUT: float = float(_os.environ.get("SCRAPER_ARCHIVE_TIMEOUT", "10") or "10")
 
 del _os
 

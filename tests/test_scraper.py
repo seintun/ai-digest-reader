@@ -1,5 +1,6 @@
 import sqlite3
 import time
+from unittest.mock import MagicMock, patch  # noqa: F401
 
 import scraper
 
@@ -107,3 +108,33 @@ def test_scrape_articles_with_stats_emits_progress_events(monkeypatch):
     assert stats["cache_hits"] == 1
     assert stats["network_success"] == 1
     assert stats["failures"] == 1
+
+
+def test_fetch_via_archive_today_returns_text_on_success():
+    mock_response = MagicMock()
+    mock_response.status_code = 200
+    mock_response.text = (
+        "<html><body><article>" + ("word " * 200) + "</article></body></html>"
+    )
+    with patch("scraper.requests.get", return_value=mock_response):
+        with patch("scraper._extract_with_trafilatura", return_value="extracted text"):
+            text, err = scraper._fetch_via_archive_today("https://www.cnbc.com/article/123")
+    assert text == "extracted text"
+    assert err == ""
+
+
+def test_fetch_via_archive_today_returns_none_on_http_error():
+    mock_response = MagicMock()
+    mock_response.status_code = 404
+    with patch("scraper.requests.get", return_value=mock_response):
+        text, err = scraper._fetch_via_archive_today("https://www.cnbc.com/article/404")
+    assert text is None
+    assert "archive_http_404" in err
+
+
+def test_fetch_via_archive_today_returns_none_on_timeout():
+    import requests as req
+    with patch("scraper.requests.get", side_effect=req.Timeout):
+        text, err = scraper._fetch_via_archive_today("https://www.cnbc.com/article/slow")
+    assert text is None
+    assert err == "archive_timeout"

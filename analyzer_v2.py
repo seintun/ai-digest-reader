@@ -9,7 +9,7 @@ from llm_client import LLMClient
 from model_pricing import usage_to_dict
 from schema import extract_excerpt, parse_llm_json, validate_summary
 
-SUMMARY_RETRY_ATTEMPTS = max(1, int(os.environ.get("SUMMARY_V2_RETRY_ATTEMPTS", "2") or "2"))
+SUMMARY_RETRY_ATTEMPTS = max(1, int(os.environ.get("SUMMARY_V2_RETRY_ATTEMPTS", "1") or "1"))
 
 _SYSTEM_PROMPT = """\
 You are a tech news analyst. Output ONLY a single raw JSON object matching this schema exactly:
@@ -99,6 +99,7 @@ def generate_summary_with_meta(ranked_posts: List[Dict]) -> tuple[Optional[Dict[
     latest_usage: Dict[str, Any] = usage_to_dict(0, 0)
 
     for attempt in range(SUMMARY_RETRY_ATTEMPTS):
+        print(f"  summary attempt {attempt + 1}/{SUMMARY_RETRY_ATTEMPTS}...", flush=True)
         prompt = base_prompt
         if attempt > 0:
             prompt += (
