@@ -44,6 +44,16 @@ POST_LIMIT = 10
 
 DATE_FORMAT = "%Y-%m-%d"
 
+# Scraper tuning — all overridable via environment variables
+import os as _os
+
+RATE_LIMIT_SECONDS: float = float(_os.environ.get("SCRAPER_RATE_LIMIT_SECONDS", "2.5") or "2.5")
+REQUEST_TIMEOUT: int = int(_os.environ.get("SCRAPER_REQUEST_TIMEOUT", "10") or "10")
+HOST_BLOCK_TTL_SECONDS: int = int(_os.environ.get("SCRAPER_HOST_BLOCK_TTL_SECONDS", "3600") or "3600")
+SCRAPER_MAX_WORKERS: int = int(_os.environ.get("SCRAPER_MAX_WORKERS", "6") or "6")
+
+del _os
+
 RSS_FEEDS = [
     {"url": "https://techcrunch.com/feed/", "name": "TechCrunch", "category": "Tech"},
     {"url": "https://www.theverge.com/rss/index.xml", "name": "The Verge", "category": "Tech"},
