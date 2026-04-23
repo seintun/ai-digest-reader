@@ -5,6 +5,7 @@ import hashlib
 import math
 import os
 import re
+import time as _time
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
@@ -17,7 +18,7 @@ from schema import extract_excerpt, parse_llm_json
 QUALITY_MAX_RETRIES = int(os.environ.get("RANKER_AI_MAX_RETRIES", "0") or "0")
 QUALITY_RETRY_SECONDS = (2, 5)
 RANKER_AI_CONNECT_TIMEOUT = float(os.environ.get("RANKER_AI_CONNECT_TIMEOUT", "10") or "10")
-RANKER_AI_READ_TIMEOUT = float(os.environ.get("RANKER_AI_READ_TIMEOUT", "12") or "12")
+RANKER_AI_READ_TIMEOUT = float(os.environ.get("RANKER_AI_READ_TIMEOUT", "20") or "20")
 
 
 def _source_from_id(story_id: str) -> str:
@@ -234,8 +235,14 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         if batch_ratings:
             ratings.update(batch_ratings)
 
+    batch_start = _time.monotonic()
+    done_count = 0
+
     if workers == 1:
         batch_ratings, usage = _request_quality_ratings(batches[0], RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
+        done_count += 1
+        elapsed = round(_time.monotonic() - batch_start, 1)
+        print(f"Ranking AI: [{done_count}/{batch_count}] batch returned ({elapsed}s)", flush=True)
         _accumulate(batch_ratings, usage)
     else:
         with ThreadPoolExecutor(max_workers=workers) as pool:
@@ -245,6 +252,9 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
             ]
             for future in as_completed(futures):
                 batch_ratings, usage = future.result()
+                done_count += 1
+                elapsed = round(_time.monotonic() - batch_start, 1)
+                print(f"Ranking AI: [{done_count}/{batch_count}] batch returned ({elapsed}s)", flush=True)
                 _accumulate(batch_ratings, usage)
 
     if saw_provider_cost and saw_estimated_cost:
