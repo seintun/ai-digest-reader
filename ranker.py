@@ -6,7 +6,7 @@ import math
 import os
 import re
 import time as _time
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeoutError
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
@@ -19,6 +19,8 @@ QUALITY_MAX_RETRIES = int(os.environ.get("RANKER_AI_MAX_RETRIES", "0") or "0")
 QUALITY_RETRY_SECONDS = (2, 5)
 RANKER_AI_CONNECT_TIMEOUT = float(os.environ.get("RANKER_AI_CONNECT_TIMEOUT", "10") or "10")
 RANKER_AI_READ_TIMEOUT = float(os.environ.get("RANKER_AI_READ_TIMEOUT", "20") or "20")
+RANKER_BATCH_TIMEOUT_SECONDS = float(os.environ.get("RANKER_BATCH_TIMEOUT_SECONDS", "200") or "200")
+_MIN_EXCERPT_LEN = 80
 
 
 def _source_from_id(story_id: str) -> str:
@@ -104,7 +106,7 @@ def _quality_candidates(posts: List[Dict], scraped_content: Dict[str, str]) -> L
     for post in posts:
         content = scraped_content.get(post.get("u", ""), "") or ""
         excerpt = extract_excerpt(content, max_chars=150) or extract_excerpt(post.get("b", "") or "", max_chars=150)
-        if excerpt:
+        if excerpt and len(excerpt) >= _MIN_EXCERPT_LEN:
             candidates.append((post.get("i", ""), excerpt))
     return candidates
 
@@ -123,6 +125,7 @@ def _request_quality_ratings(
     candidates: List[Tuple[str, str]],
     connect_timeout: float,
     read_timeout: float,
+    batch_num: int = 0,
 ) -> Tuple[Optional[Dict[str, int]], Dict]:
     # Each worker creates its own LLMClient (and requests.Session) —
     # requests.Session is not thread-safe under concurrent use.
@@ -130,18 +133,19 @@ def _request_quality_ratings(
     if not candidates:
         return None, usage_to_dict(0, 0)
     prompt = _quality_prompt(candidates)
-    print(f"Ranking AI: scoring batch with {len(candidates)} excerpts...")
+    label = f"[batch {batch_num}] " if batch_num else ""
+    print(f"Ranking AI: {label}scoring {len(candidates)} excerpts...", flush=True)
     content, usage = client.complete(prompt)
     if not content:
-        print(f"Ranking AI: batch failed (no content from LLM)")
+        print(f"Ranking AI: {label}failed (no content from LLM)")
         return None, usage
     parsed = parse_llm_json(content)
     if not parsed:
-        print(f"Ranking AI: batch failed (JSON parse error)")
+        print(f"Ranking AI: {label}failed (JSON parse error)")
         return None, usage
     items = parsed.get("ratings")
     if not isinstance(items, list):
-        print(f"Ranking AI: batch failed (unexpected JSON shape)")
+        print(f"Ranking AI: {label}failed (unexpected JSON shape)")
         return None, usage
     ratings: Dict[str, int] = {}
     for item in items:
@@ -156,7 +160,7 @@ def _request_quality_ratings(
         except (TypeError, ValueError):
             continue
         ratings[story_id] = max(1, min(10, rating_int))
-    print(f"Ranking AI: batch done — {len(ratings)}/{len(candidates)} rated")
+    print(f"Ranking AI: {label}done — {len(ratings)}/{len(candidates)} rated")
     return ratings or None, usage
 
 
@@ -202,8 +206,8 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         })
         return None, usage
 
-    configured_workers = int(os.environ.get("RANKER_AI_PARALLEL_WORKERS", "4") or "4")
-    configured_workers = max(1, min(configured_workers, 8))
+    configured_workers = int(os.environ.get("RANKER_AI_PARALLEL_WORKERS", "8") or "8")
+    configured_workers = max(1, min(configured_workers, 16))
     max_usd = float(os.environ.get("RANKER_AI_PARALLEL_MAX_USD", "0.12") or "0.12")
     projected_usd = _estimate_quality_cost_usd(candidates, configured_workers)
 
@@ -214,7 +218,8 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         fallback_reason = "projected_cost_exceeded"
 
     batches = _chunk_candidates(candidates, workers)
-    print(f"Ranking AI: {len(candidates)} excerpts in {len(batches)} batch(es), workers={workers}")
+    avg_batch = math.ceil(len(candidates) / max(1, len(batches)))
+    print(f"Ranking AI: {len(candidates)} candidates → {len(batches)} batch(es) ×~{avg_batch} each, workers={workers}")
     ratings: Dict[str, int] = {}
     input_tokens = 0
     output_tokens = 0
@@ -239,23 +244,38 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     done_count = 0
 
     if workers == 1:
-        batch_ratings, usage = _request_quality_ratings(batches[0], RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
+        batch_ratings, usage = _request_quality_ratings(
+            batches[0], RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT, batch_num=1
+        )
         done_count += 1
         elapsed = round(_time.monotonic() - batch_start, 1)
-        print(f"Ranking AI: [{done_count}/{batch_count}] batch returned ({elapsed}s)", flush=True)
+        print(f"Ranking AI: [1/{batch_count}] returned ({elapsed}s)", flush=True)
         _accumulate(batch_ratings, usage)
     else:
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = [
-                pool.submit(_request_quality_ratings, batch, RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
-                for batch in batches
+                pool.submit(
+                    _request_quality_ratings, batch,
+                    RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT,
+                    batch_num=i + 1,
+                )
+                for i, batch in enumerate(batches)
             ]
-            for future in as_completed(futures):
-                batch_ratings, usage = future.result()
-                done_count += 1
+            try:
+                for future in as_completed(futures, timeout=RANKER_BATCH_TIMEOUT_SECONDS):
+                    batch_ratings, usage = future.result()
+                    done_count += 1
+                    elapsed = round(_time.monotonic() - batch_start, 1)
+                    print(f"Ranking AI: [{done_count}/{batch_count}] returned ({elapsed}s)", flush=True)
+                    _accumulate(batch_ratings, usage)
+            except FuturesTimeoutError:
+                remaining = batch_count - done_count
                 elapsed = round(_time.monotonic() - batch_start, 1)
-                print(f"Ranking AI: [{done_count}/{batch_count}] batch returned ({elapsed}s)", flush=True)
-                _accumulate(batch_ratings, usage)
+                print(
+                    f"Ranking AI: timed out after {elapsed}s — "
+                    f"{remaining}/{batch_count} batch(es) dropped, heuristics used for those",
+                    flush=True,
+                )
 
     if saw_provider_cost and saw_estimated_cost:
         cost_source = "mixed_openrouter_and_estimate"
