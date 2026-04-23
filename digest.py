@@ -2,6 +2,7 @@
 """AI News Digest Aggregator - Main CLI."""
 import argparse
 import json
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime
 from pathlib import Path
 import time
@@ -76,10 +77,16 @@ def main():
     print("Fetching Reddit posts...")
     fetch_started = time.perf_counter()
     all_reddit_posts = []
-    for subreddit in subreddits:
-        print(f"  - {subreddit}")
+
+    def _fetch_subreddit(subreddit: str) -> List[Dict]:
         posts = fetch_reddit_posts(subreddit, limit=args.limit)
-        all_reddit_posts.extend(posts)
+        print(f"  - {subreddit} ({len(posts)} posts)")
+        return posts
+
+    with ThreadPoolExecutor(max_workers=8) as pool:
+        futures = {pool.submit(_fetch_subreddit, sub): sub for sub in subreddits}
+        for future in as_completed(futures):
+            all_reddit_posts.extend(future.result())
 
     print(f"Found {len(all_reddit_posts)} Reddit posts")
 

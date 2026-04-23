@@ -14,6 +14,15 @@ from urllib.parse import urlparse
 
 import requests
 
+import os as _os
+
+from config import (
+    HOST_BLOCK_TTL_SECONDS,
+    RATE_LIMIT_SECONDS,
+    REQUEST_TIMEOUT,
+    SCRAPER_MAX_WORKERS,
+)
+
 USER_AGENT = "DailyDigestBot/1.0 (+https://dailydigest.vercel.app)"
 REQUEST_HEADERS = {
     "User-Agent": (
@@ -28,10 +37,9 @@ REQUEST_HEADERS = {
 JINA_PROXY_PREFIX = "https://r.jina.ai/http://"
 CACHE_TTL_SECONDS = 24 * 60 * 60
 CACHE_PATH = Path(".cache") / "scraper_cache.sqlite3"
-REQUEST_TIMEOUT = 10
 BACKOFF_SECONDS = (2, 5)
-RATE_LIMIT_SECONDS = 2.5
-HOST_BLOCK_TTL_SECONDS = 60 * 60
+
+del _os
 
 _rate_lock = threading.Lock()
 _last_request_at = 0.0
@@ -51,6 +59,9 @@ def _ensure_cache_db() -> None:
                 scraped_at INTEGER NOT NULL
             )
             """
+        )
+        conn.execute(
+            "CREATE INDEX IF NOT EXISTS idx_url_hash ON article_cache(url_hash)"
         )
         conn.commit()
     finally:
