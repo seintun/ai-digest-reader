@@ -120,20 +120,27 @@ def _quality_prompt(candidates: List[Tuple[str, str]]) -> str:
 
 def _request_quality_ratings(
     candidates: List[Tuple[str, str]],
-    client: LLMClient,
+    connect_timeout: float,
+    read_timeout: float,
 ) -> Tuple[Optional[Dict[str, int]], Dict]:
+    # Each worker creates its own LLMClient (and requests.Session) —
+    # requests.Session is not thread-safe under concurrent use.
+    client = LLMClient(connect_timeout=connect_timeout, read_timeout=read_timeout)
     if not candidates:
         return None, usage_to_dict(0, 0)
     prompt = _quality_prompt(candidates)
     print(f"Ranking AI: scoring batch with {len(candidates)} excerpts...")
     content, usage = client.complete(prompt)
     if not content:
+        print(f"Ranking AI: batch failed (no content from LLM)")
         return None, usage
     parsed = parse_llm_json(content)
     if not parsed:
+        print(f"Ranking AI: batch failed (JSON parse error)")
         return None, usage
     items = parsed.get("ratings")
     if not isinstance(items, list):
+        print(f"Ranking AI: batch failed (unexpected JSON shape)")
         return None, usage
     ratings: Dict[str, int] = {}
     for item in items:
@@ -148,6 +155,7 @@ def _request_quality_ratings(
         except (TypeError, ValueError):
             continue
         ratings[story_id] = max(1, min(10, rating_int))
+    print(f"Ranking AI: batch done — {len(ratings)}/{len(candidates)} rated")
     return ratings or None, usage
 
 
@@ -204,11 +212,6 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         workers = 1
         fallback_reason = "projected_cost_exceeded"
 
-    client = LLMClient(
-        connect_timeout=RANKER_AI_CONNECT_TIMEOUT,
-        read_timeout=RANKER_AI_READ_TIMEOUT,
-    )
-
     batches = _chunk_candidates(candidates, workers)
     print(f"Ranking AI: {len(candidates)} excerpts in {len(batches)} batch(es), workers={workers}")
     ratings: Dict[str, int] = {}
@@ -219,8 +222,8 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     saw_estimated_cost = False
     batch_count = len(batches)
 
-    if workers == 1:
-        batch_ratings, usage = _request_quality_ratings(batches[0], client)
+    def _accumulate(batch_ratings, usage):
+        nonlocal input_tokens, output_tokens, summed_cost_usd, saw_provider_cost, saw_estimated_cost
         input_tokens += int(usage.get("input_tokens", 0) or 0)
         output_tokens += int(usage.get("output_tokens", 0) or 0)
         summed_cost_usd += float(usage.get("cost_usd", 0.0) or 0.0)
@@ -230,20 +233,19 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
             saw_estimated_cost = True
         if batch_ratings:
             ratings.update(batch_ratings)
+
+    if workers == 1:
+        batch_ratings, usage = _request_quality_ratings(batches[0], RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
+        _accumulate(batch_ratings, usage)
     else:
         with ThreadPoolExecutor(max_workers=workers) as pool:
-            futures = [pool.submit(_request_quality_ratings, batch, client) for batch in batches]
+            futures = [
+                pool.submit(_request_quality_ratings, batch, RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
+                for batch in batches
+            ]
             for future in as_completed(futures):
                 batch_ratings, usage = future.result()
-                input_tokens += int(usage.get("input_tokens", 0) or 0)
-                output_tokens += int(usage.get("output_tokens", 0) or 0)
-                summed_cost_usd += float(usage.get("cost_usd", 0.0) or 0.0)
-                if usage.get("cost_source") == "openrouter_usage" and usage.get("openrouter_reported_cost_credits") is not None:
-                    saw_provider_cost = True
-                else:
-                    saw_estimated_cost = True
-                if batch_ratings:
-                    ratings.update(batch_ratings)
+                _accumulate(batch_ratings, usage)
 
     if saw_provider_cost and saw_estimated_cost:
         cost_source = "mixed_openrouter_and_estimate"
