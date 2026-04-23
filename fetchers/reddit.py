@@ -36,10 +36,10 @@ def _extract_post_list(data: dict, limit: int) -> list[dict]:
 def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
     """Fetch top posts from a subreddit. Uses multiple fallback methods."""
     posts = []
-    
+
     for url_template in [
-        "https://api.pushshift.io/reddit/search/submission/?subreddit={}&size={}&sort=desc&sort_type=score",
-        "https://api.reddit.com/r/{}/hot?limit={}",
+        "https://www.reddit.com/r/{}/hot.json?limit={}",
+        "https://www.reddit.com/r/{}/top.json?limit={}&t=day",
     ]:
         url = url_template.format(subreddit, limit)
         headers = {"User-Agent": "AIDigest/1.0"}
