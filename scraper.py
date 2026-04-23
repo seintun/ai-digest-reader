@@ -17,6 +17,7 @@ import requests
 import os as _os
 
 from config import (
+    ARCHIVE_TIMEOUT,
     HOST_BLOCK_TTL_SECONDS,
     RATE_LIMIT_SECONDS,
     REQUEST_TIMEOUT,
@@ -28,11 +29,15 @@ REQUEST_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
         "AppleWebKit/537.36 (KHTML, like Gecko) "
-        "Chrome/124.0.0.0 Safari/537.36 DailyDigestBot/1.0"
+        "Chrome/124.0.0.0 Safari/537.36"
     ),
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     "Accept-Language": "en-US,en;q=0.9",
-    "Cache-Control": "no-cache",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Upgrade-Insecure-Requests": "1",
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
 }
 JINA_PROXY_BASE = "https://r.jina.ai/"
 JINA_TIMEOUT = float(_os.environ.get("SCRAPER_JINA_TIMEOUT", "8") or "8")
@@ -262,6 +267,41 @@ def _fetch_via_jina_proxy(url: str) -> Tuple[Optional[str], str]:
         return None, "jina_network_error"
 
 
+def _fetch_via_archive_today(url: str) -> Tuple[Optional[str], str]:
+    """Fetch via archive.today as a second proxy fallback for paywalled/blocked pages."""
+    try:
+        archive_url = f"https://archive.today/newest/{url}"
+        response = requests.get(
+            archive_url,
+            headers={"User-Agent": USER_AGENT, "Accept": "text/html,*/*"},
+            timeout=ARCHIVE_TIMEOUT,
+            allow_redirects=True,
+        )
+        status_code = int(response.status_code or 0)
+        if status_code not in {200, 302}:
+            return None, f"archive_http_{status_code}"
+        page_html = response.text
+        if not page_html:
+            return None, "archive_empty_response"
+        text = _extract_with_trafilatura(page_html, url)
+        if text:
+            return text, ""
+        text = _extract_with_readability(page_html)
+        if text:
+            return text, ""
+        text = _extract_with_lxml_fallback(page_html)
+        if text:
+            return text, ""
+        text = _extract_with_metadata_fallback(page_html)
+        if text:
+            return text, ""
+        return None, "archive_extract_failed"
+    except requests.Timeout:
+        return None, "archive_timeout"
+    except requests.RequestException:
+        return None, "archive_network_error"
+
+
 def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
     url = html.unescape(url or "").strip()
     if not url:
@@ -279,12 +319,15 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
             status_code = int(response.status_code or 0)
             if status_code != 200 or not response.text:
                 last_error = f"http_{status_code}"
-                if status_code in {403, 429}:
+                if status_code in {401, 403, 429, 451}:
                     _mark_host_blocked(host)
                     proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                     if proxy_text:
                         return proxy_text, ""
-                    last_error = f"{last_error}|{proxy_error}"
+                    archive_text, archive_error = _fetch_via_archive_today(url)
+                    if archive_text:
+                        return archive_text, ""
+                    last_error = f"{last_error}|{proxy_error}|{archive_error}"
                 if status_code in {403, 429, 500, 502, 503, 504} and attempt < len(BACKOFF_SECONDS):
                     time.sleep(BACKOFF_SECONDS[attempt])
                     continue
@@ -299,7 +342,10 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
                 proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                 if proxy_text:
                     return proxy_text, ""
-                return None, f"botwall_detected|{proxy_error}"
+                archive_text, archive_error = _fetch_via_archive_today(url)
+                if archive_text:
+                    return archive_text, ""
+                return None, f"botwall_detected|{proxy_error}|{archive_error}"
             text = _extract_with_trafilatura(page_html, url)
             if text:
                 return text, ""
@@ -315,7 +361,10 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
             proxy_text, proxy_error = _fetch_via_jina_proxy(url)
             if proxy_text:
                 return proxy_text, ""
-            return None, f"extract_failed|{proxy_error}"
+            archive_text, archive_error = _fetch_via_archive_today(url)
+            if archive_text:
+                return archive_text, ""
+            return None, f"extract_failed|{proxy_error}|{archive_error}"
         except requests.Timeout:
             last_error = "timeout"
             if attempt < len(BACKOFF_SECONDS):

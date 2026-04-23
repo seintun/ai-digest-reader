@@ -66,6 +66,7 @@ class LLMClient:
             }
 
             for attempt in range(2):
+                print(f"  llm call (attempt {attempt + 1}/2, {self._model})...", flush=True)
                 try:
                     resp = self._session.post(
                         _OPENROUTER_URL,

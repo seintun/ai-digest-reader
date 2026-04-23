@@ -149,7 +149,8 @@ def main():
                 print(f"  scrape failures by reason: {reason_summary}")
     scrape_seconds = time.perf_counter() - scrape_started
 
-    print("Scraping complete. Ranking stories...")
+    print("Scraping complete.")
+    print(f"Ranking {len(all_posts)} stories (LLM quality scoring)...")
     ranking_started = time.perf_counter()
     ranked_posts = []
     ranking_metrics = {"total_posts": 0, "llm_quality_used": False}
