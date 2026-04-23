@@ -34,16 +34,17 @@ REQUEST_HEADERS = {
     "Accept-Language": "en-US,en;q=0.9",
     "Cache-Control": "no-cache",
 }
-JINA_PROXY_PREFIX = "https://r.jina.ai/http://"
+JINA_PROXY_BASE = "https://r.jina.ai/"
+JINA_TIMEOUT = float(_os.environ.get("SCRAPER_JINA_TIMEOUT", "8") or "8")
 CACHE_TTL_SECONDS = 24 * 60 * 60
 CACHE_PATH = Path(".cache") / "scraper_cache.sqlite3"
 BACKOFF_SECONDS = (2, 5)
 
 del _os
 
-_rate_lock = threading.Lock()
-_last_request_at = 0.0
 _blocked_hosts: Dict[str, float] = {}
+_host_last_request: Dict[str, float] = {}
+_host_lock = threading.Lock()
 
 
 def _ensure_cache_db() -> None:
@@ -111,21 +112,22 @@ def _set_cached_content(url: str, content: str) -> None:
         conn.close()
 
 
-def _throttle() -> None:
-    global _last_request_at
-    with _rate_lock:
+def _throttle(host: str = "") -> None:
+    """Per-host rate limiting — different hosts can be fetched in parallel."""
+    with _host_lock:
         now = time.time()
-        jitter = random.uniform(-0.4, 0.4)
-        wait_for = RATE_LIMIT_SECONDS + jitter - (now - _last_request_at)
-        if wait_for > 0:
-            time.sleep(wait_for)
-        _last_request_at = time.time()
+        jitter = random.uniform(-0.3, 0.3)
+        last = _host_last_request.get(host, 0.0)
+        wait_for = RATE_LIMIT_SECONDS + jitter - (now - last)
+        _host_last_request[host] = now + max(0.0, wait_for)
+    if wait_for > 0:
+        time.sleep(wait_for)
 
 
 def _is_host_temporarily_blocked(host: str) -> bool:
     if not host:
         return False
-    with _rate_lock:
+    with _host_lock:
         blocked_at = _blocked_hosts.get(host, 0.0)
         if not blocked_at:
             return False
@@ -138,7 +140,7 @@ def _is_host_temporarily_blocked(host: str) -> bool:
 def _mark_host_blocked(host: str) -> None:
     if not host:
         return
-    with _rate_lock:
+    with _host_lock:
         _blocked_hosts[host] = time.time()
 
 
@@ -241,11 +243,11 @@ def _normalize_text(text: str, min_length: int = 80) -> Optional[str]:
 
 def _fetch_via_jina_proxy(url: str) -> Tuple[Optional[str], str]:
     try:
-        proxy_url = f"{JINA_PROXY_PREFIX}{url}"
+        proxy_url = f"{JINA_PROXY_BASE}{url}"
         response = requests.get(
             proxy_url,
             headers={"User-Agent": USER_AGENT, "Accept": "text/plain, text/markdown, */*"},
-            timeout=REQUEST_TIMEOUT + 5,
+            timeout=JINA_TIMEOUT,
         )
         status_code = int(response.status_code or 0)
         if status_code != 200:
@@ -272,7 +274,7 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
 
     for attempt in range(1 + len(BACKOFF_SECONDS)):
         try:
-            _throttle()
+            _throttle(host)
             response = requests.get(url, headers=headers, timeout=REQUEST_TIMEOUT)
             status_code = int(response.status_code or 0)
             if status_code != 200 or not response.text:
