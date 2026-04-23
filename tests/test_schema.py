@@ -356,3 +356,76 @@ def test_validate_v4_digest_wrong_version():
     from schema import validate_v4_digest
     invalid = {"v": 3, "d": "x", "g": "x", "r": [], "h": [], "rs": []}
     assert validate_v4_digest(invalid) is False
+
+
+# extract_excerpt tests
+from schema import extract_excerpt
+
+
+def test_extract_excerpt_none_input():
+    assert extract_excerpt(None) == ""
+
+
+def test_extract_excerpt_empty_string():
+    assert extract_excerpt("") == ""
+
+
+def test_extract_excerpt_short_content_returned_as_is():
+    assert extract_excerpt("Hello world.") == "Hello world."
+
+
+def test_extract_excerpt_strips_html_tags():
+    assert extract_excerpt("<p>Hello <b>world</b>.</p>") == "Hello world."
+
+
+def test_extract_excerpt_collapses_whitespace():
+    assert extract_excerpt("Hello   \n  world.") == "Hello world."
+
+
+def test_extract_excerpt_truncates_at_sentence_boundary():
+    content = "First sentence. Second sentence. Third sentence."
+    result = extract_excerpt(content, max_chars=20)
+    assert result == "First sentence."
+
+
+def test_extract_excerpt_hard_truncates_with_ellipsis_when_no_boundary():
+    content = "Nopunctuationhereatallandthisiswaytoolong"
+    result = extract_excerpt(content, max_chars=10)
+    assert result == "Nopunctuat\u2026"
+
+
+def test_extract_excerpt_respects_max_chars_parameter():
+    content = "Short. But this part is longer than fifty characters total."
+    result = extract_excerpt(content, max_chars=50)
+    assert len(result) <= 50
+    assert result.endswith(".")
+
+
+# parse_llm_json tests
+from schema import parse_llm_json
+
+
+def test_parse_llm_json_plain_json():
+    assert parse_llm_json('{"key": "value"}') == {"key": "value"}
+
+
+def test_parse_llm_json_fenced_json():
+    text = "```json\n{\"key\": \"value\"}\n```"
+    assert parse_llm_json(text) == {"key": "value"}
+
+
+def test_parse_llm_json_embedded_in_prose():
+    text = 'Here is the result: {"key": "value"} and that is it.'
+    assert parse_llm_json(text) == {"key": "value"}
+
+
+def test_parse_llm_json_invalid_json_returns_none():
+    assert parse_llm_json("not json at all") is None
+
+
+def test_parse_llm_json_empty_string_returns_none():
+    assert parse_llm_json("") is None
+
+
+def test_parse_llm_json_array_returns_none():
+    assert parse_llm_json("[1, 2, 3]") is None

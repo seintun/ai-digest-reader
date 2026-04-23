@@ -1,5 +1,7 @@
 """Typed contract for Claude AI summary output. Single source of truth."""
-from typing import Any, TypedDict, List
+import json
+import re
+from typing import Any, Dict, Optional, TypedDict, List
 
 
 class MustReadItem(TypedDict):
@@ -130,3 +132,52 @@ def validate_v4_digest(digest: Any) -> bool:
     if digest.get("v") != 4:
         return False
     return True
+
+
+def extract_excerpt(content: Any, max_chars: int = 200) -> str:
+    if not content:
+        return ""
+    text = re.sub(r"<[^>]+>", "", content)
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) <= max_chars:
+        return text
+    window = text[:max_chars]
+    match = None
+    for m in re.finditer(r"[.!?]", window):
+        match = m
+    if match is not None:
+        return text[:match.end()]
+    return text[:max_chars] + "\u2026"
+
+
+def parse_llm_json(text: str) -> Optional[Dict[str, Any]]:
+    if not text:
+        return None
+    t = text.strip()
+    if t.startswith("```"):
+        parts = t.split("```")
+        for part in parts:
+            part = part.strip()
+            if part.startswith("json"):
+                part = part[4:].strip()
+            if part.startswith("{"):
+                t = part
+                break
+    try:
+        result = json.loads(t)
+        if isinstance(result, dict):
+            return result
+        return None
+    except json.JSONDecodeError:
+        pass
+    decoder = json.JSONDecoder()
+    start = t.find("{")
+    while start != -1:
+        try:
+            parsed, _ = decoder.raw_decode(t[start:])
+            if isinstance(parsed, dict):
+                return parsed
+        except json.JSONDecodeError:
+            pass
+        start = t.find("{", start + 1)
+    return None
