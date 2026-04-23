@@ -2,6 +2,7 @@
 import re
 import time
 from typing import Dict, List
+from urllib.parse import urlparse
 
 import feedparser
 
@@ -13,6 +14,32 @@ def _strip_html(text: str) -> str:
     return text.strip()
 
 
+_PROMO_URL_PATHS = re.compile(
+    r'/(?:gear|deals?|buying-guide|reviews?|coupons?|shop|affiliate)(?:/|$)|/best-',
+    re.IGNORECASE,
+)
+
+_PROMO_TITLE_PATTERNS = re.compile(
+    r'\bsponsored\b'
+    r'|\bdeals?\b.*\$'
+    r'|^\d+\s+best\b'
+    r'|^the\s+\d+\s+best\b'
+    r'|\b\d+%\s*off\b'
+    r'|\bsave\s+\$'
+    r'|\bbest\s+.{3,30}\s+(?:of|for|under|deals?)\b',
+    re.IGNORECASE,
+)
+
+
+def _is_promotional(title: str, url: str) -> bool:
+    path = urlparse(url).path
+    if _PROMO_URL_PATHS.search(path):
+        return True
+    if _PROMO_TITLE_PATTERNS.search(title):
+        return True
+    return False
+
+
 def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int = 10) -> List[Dict]:
     """Fetch and normalize posts from an RSS/Atom feed.
 
@@ -22,9 +49,11 @@ def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int =
     try:
         feed = feedparser.parse(feed_url, request_headers={'User-Agent': 'AIDigest/1.0'})
         posts = []
-        for entry in feed.entries[:limit]:
+        for entry in feed.entries[:limit * 3]:
             title = _strip_html(getattr(entry, 'title', '') or '')
             url = getattr(entry, 'link', '') or ''
+            if _is_promotional(title, url):
+                continue
             body_raw = getattr(entry, 'summary', '') or getattr(entry, 'description', '') or ''
             body = _strip_html(body_raw)[:280]
             author = getattr(entry, 'author', '') or ''
@@ -45,6 +74,8 @@ def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int =
                 'category': category,
                 'ts': ts,
             })
+            if len(posts) >= limit:
+                break
         return posts
     except Exception as e:
         print(f"RSS fetch error for {source_name} ({feed_url}): {e}")
