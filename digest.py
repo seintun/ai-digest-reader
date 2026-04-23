@@ -28,11 +28,6 @@ except ImportError:
     fetch_all_rss_feeds = None
 
 try:
-    from analyzer import generate_summary
-except ImportError:
-    generate_summary = None
-
-try:
     from analyzer_v2 import generate_summary as generate_summary_v2
 except ImportError:
     generate_summary_v2 = None
@@ -182,16 +177,9 @@ def main():
         summary = generate_summary_v2(ranked_posts[:15])
         summary_meta = {"source": "openrouter_or_cli", "generated": bool(summary)}
 
-    if summary is None and generate_summary and not args.no_ai:
-        prior_usage = summary_meta.get("usage", usage_to_dict(0, 0))
-        # Avoid repeating OpenRouter timeout path; use CLI-only fallback here.
-        summary = generate_summary(all_reddit_posts, hn_posts, skip_openrouter=True)
-        if summary:
-            print("Fallback AI summary generated")
-            summary_meta = {"source": "analyzer_v1", "generated": True, "usage": prior_usage}
-        else:
-            print("AI summary unavailable, continuing without it")
-            summary_meta = {"source": "none", "generated": False, "usage": prior_usage}
+    if summary is None and not args.no_ai:
+        print("AI summary unavailable, continuing without it")
+        summary_meta = {"source": "none", "generated": False, "usage": summary_meta.get("usage", usage_to_dict(0, 0))}
     summary_seconds = time.perf_counter() - summary_started
 
     digest_date = date.today().strftime(DATE_FORMAT)
