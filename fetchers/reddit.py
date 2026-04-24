@@ -1,3 +1,4 @@
+import feedparser
 import requests
 from config import POST_LIMIT
 
@@ -34,32 +35,55 @@ def _extract_post_list(data: dict, limit: int) -> list[dict]:
 
 
 def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
-    """Fetch top posts from a subreddit. Uses multiple fallback methods."""
+    """Fetch top posts from a subreddit. Uses JSON API with RSS fallback."""
     posts = []
+    headers = {"User-Agent": "AIDigest/1.0"}
 
     for url_template in [
         "https://www.reddit.com/r/{}/hot.json?limit={}",
         "https://www.reddit.com/r/{}/top.json?limit={}&t=day",
     ]:
         url = url_template.format(subreddit, limit)
-        headers = {"User-Agent": "AIDigest/1.0"}
-        
         try:
             response = requests.get(url, headers=headers, timeout=10)
             if response.status_code != 200:
+                print(f"Reddit JSON {response.status_code} for r/{subreddit}: {url}")
                 continue
-            
             data = response.json()
-
             post_list = _extract_post_list(data, limit)
             for post in post_list:
                 posts.append(_normalize_reddit_post(post, subreddit))
                 if len(posts) >= limit:
                     break
-            
             if posts:
                 break
-        except (requests.RequestException, ValueError):
+        except (requests.RequestException, ValueError) as e:
+            print(f"Reddit JSON error for r/{subreddit}: {e}")
             continue
-    
+
+    if posts:
+        return posts[:limit]
+
+    # RSS fallback — more permissive in CI environments (no auth required)
+    try:
+        rss_url = f"https://www.reddit.com/r/{subreddit}/hot.rss?limit={limit}"
+        feed = feedparser.parse(rss_url, request_headers={"User-Agent": "AIDigest/1.0"})
+        for entry in feed.entries[:limit]:
+            permalink = getattr(entry, "link", "")
+            posts.append({
+                "title": entry.get("title", ""),
+                "url": permalink,
+                "permalink": permalink,
+                "body": "",
+                "score": 0,
+                "subreddit": subreddit,
+                "author": "",
+                "comments": 0,
+                "ts": None,
+            })
+        if not posts:
+            print(f"Reddit RSS fallback also empty for r/{subreddit}")
+    except Exception as e:
+        print(f"Reddit RSS fallback error for r/{subreddit}: {e}")
+
     return posts[:limit]
