@@ -69,6 +69,7 @@ echo ""
 
 # Step 4: Commit & push (triggers Vercel auto-deploy)
 echo "[4/4] Committing..."
+git pull --rebase
 git add ai-digest-reader/public/data/digest.json
 if git diff --cached --quiet; then
   echo "No changes to digest.json, skipping commit"

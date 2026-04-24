@@ -15,7 +15,7 @@ def _strip_html(text: str) -> str:
 
 
 _PROMO_URL_PATHS = re.compile(
-    r'/(?:gear|deals?|buying-guide|reviews?|coupons?|shop|affiliate)(?:/|$)|/best-',
+    r'/(?:gear|deals?|buying-guide|reviews?|coupons?|shop|affiliate|promo)(?:/|$)|/best-',
     re.IGNORECASE,
 )
 
@@ -26,7 +26,10 @@ _PROMO_TITLE_PATTERNS = re.compile(
     r'|^the\s+\d+\s+best\b'
     r'|\b\d+%\s*off\b'
     r'|\bsave\s+\$'
-    r'|\bbest\s+.{3,30}\s+(?:of|for|under|deals?)\b',
+    r'|\bbest\s+.{3,30}\s+(?:of|for|under|deals?)\b'
+    r'|\bpromo\s*codes?\b'
+    r'|\bcoupon\s*codes?\b'
+    r'|\$\d[\d,.]*\s*off\b',
     re.IGNORECASE,
 )
 
