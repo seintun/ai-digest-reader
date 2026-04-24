@@ -56,6 +56,7 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add ai-digest-reader/public/data/digest.json
+          [ -f reddit-cache.json ] && git add reddit-cache.json
           git diff --cached --quiet || git commit -m "chore: auto-update digest $(date '+%Y-%m-%d %H:%M UTC')"
           git pull --rebase
           git push
