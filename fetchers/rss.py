@@ -21,7 +21,6 @@ _PROMO_URL_PATHS = re.compile(
 
 _PROMO_TITLE_PATTERNS = re.compile(
     r'\bsponsored\b'
-    r'|\bdeals?\b.*\$'
     r'|^\d+\s+best\b'
     r'|^the\s+\d+\s+best\b'
     r'|\b\d+%\s*off\b'
