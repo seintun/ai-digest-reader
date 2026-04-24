@@ -69,6 +69,8 @@ def main():
 
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
 
+    REDDIT_CACHE_PATH = Path("reddit-cache.json")
+
     print("Fetching Reddit posts...")
     fetch_started = time.perf_counter()
     all_reddit_posts = []
@@ -83,7 +85,26 @@ def main():
         for future in as_completed(futures):
             all_reddit_posts.extend(future.result())
 
-    print(f"Found {len(all_reddit_posts)} Reddit posts")
+    if all_reddit_posts:
+        # Save cache for CI environments where Reddit is blocked
+        try:
+            REDDIT_CACHE_PATH.parent.mkdir(parents=True, exist_ok=True)
+            with open(REDDIT_CACHE_PATH, "w") as f:
+                json.dump(all_reddit_posts, f)
+            print(f"Found {len(all_reddit_posts)} Reddit posts (cache updated)")
+        except Exception as e:
+            print(f"Found {len(all_reddit_posts)} Reddit posts (cache write failed: {e})")
+    else:
+        # Reddit blocked (common in CI) — use last known good cache
+        if REDDIT_CACHE_PATH.exists():
+            try:
+                with open(REDDIT_CACHE_PATH) as f:
+                    all_reddit_posts = json.load(f)
+                print(f"Found 0 live Reddit posts — using cache ({len(all_reddit_posts)} posts)")
+            except Exception as e:
+                print(f"Found 0 Reddit posts (cache read failed: {e})")
+        else:
+            print("Found 0 Reddit posts (no cache available)")
 
     print("Fetching Hacker News...")
     hn_posts = fetch_hn_posts(limit=args.limit)

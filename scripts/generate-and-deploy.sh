@@ -71,6 +71,7 @@ echo ""
 echo "[4/4] Committing..."
 git pull --rebase
 git add ai-digest-reader/public/data/digest.json
+[ -f reddit-cache.json ] && git add reddit-cache.json
 if git diff --cached --quiet; then
   echo "No changes to digest.json, skipping commit"
 else
