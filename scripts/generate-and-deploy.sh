@@ -27,13 +27,11 @@ on_error() {
 }
 trap on_error ERR
 
-# Load .env if present
-if [ -f ".env" ]; then
-  set -a
-  # shellcheck source=.env
-  source .env
-  set +a
-fi
+# Load .env if present, but do not let blank placeholder values clobber
+# real environment values supplied by the shell/cron/OpenClaw.
+# shellcheck source=scripts/load-env.sh
+source "$REPO_ROOT/scripts/load-env.sh"
+load_env_preserve_existing ".env"
 
 echo "=== DailyDigest: Generate & Deploy ==="
 echo "Started: $(date '+%Y-%m-%d %H:%M:%S')"
