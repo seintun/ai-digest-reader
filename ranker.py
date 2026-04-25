@@ -243,10 +243,20 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     batch_start = _time.monotonic()
     done_count = 0
 
+    def _request_quality_ratings_compat(batch, batch_num: int):
+        try:
+            return _request_quality_ratings(
+                batch, RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT, batch_num=batch_num
+            )
+        except TypeError as exc:
+            # Older tests and callers may monkeypatch _request_quality_ratings with
+            # the pre-progress-label signature. Keep that seam compatible.
+            if "batch_num" not in str(exc):
+                raise
+            return _request_quality_ratings(batch, RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT)
+
     if workers == 1:
-        batch_ratings, usage = _request_quality_ratings(
-            batches[0], RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT, batch_num=1
-        )
+        batch_ratings, usage = _request_quality_ratings_compat(batches[0], 1)
         done_count += 1
         elapsed = round(_time.monotonic() - batch_start, 1)
         print(f"Ranking AI: [1/{batch_count}] returned ({elapsed}s)", flush=True)
@@ -254,11 +264,7 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
     else:
         with ThreadPoolExecutor(max_workers=workers) as pool:
             futures = [
-                pool.submit(
-                    _request_quality_ratings, batch,
-                    RANKER_AI_CONNECT_TIMEOUT, RANKER_AI_READ_TIMEOUT,
-                    batch_num=i + 1,
-                )
+                pool.submit(_request_quality_ratings_compat, batch, i + 1)
                 for i, batch in enumerate(batches)
             ]
             try:
