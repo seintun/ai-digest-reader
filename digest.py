@@ -17,6 +17,8 @@ from pipeline_metrics import (
 from ranker import rank_posts_with_metrics
 from scraper import scrape_articles_with_stats, select_scrape_candidates
 from model_pricing import usage_to_dict
+from engine.config import load_engine_config, render_preflight
+from engine.openclaw import generate_summary_with_openclaw
 
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
@@ -66,6 +68,8 @@ def main():
     parser.add_argument("--subreddits", nargs="*", help="Specific subreddits to fetch")
     parser.add_argument("--no-ai", action="store_true", help="Skip AI summary generation")
     args = parser.parse_args()
+    engine_config = load_engine_config()
+    print(render_preflight(engine_config))
 
     subreddits = args.subreddits if args.subreddits else SUBREDDITS
 
@@ -188,7 +192,14 @@ def main():
     summary = None
     summary_meta = {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
     summary_started = time.perf_counter()
-    if generate_summary_with_meta and ranked_posts and not args.no_ai:
+    if ranked_posts and not args.no_ai and engine_config.uses_openclaw_summary:
+        print("Generating AI summary via OpenClaw engine...")
+        summary, summary_meta = generate_summary_with_openclaw(ranked_posts[:15], engine_config)
+        if summary:
+            print("OpenClaw AI summary generated successfully")
+        elif engine_config.openclaw_on_failure == "fail-no-deploy":
+            raise RuntimeError(f"OpenClaw summary unavailable: {summary_meta.get('error', 'unknown error')}")
+    elif generate_summary_with_meta and ranked_posts and not args.no_ai:
         print("Generating content-aware AI summary...")
         summary, summary_meta = generate_summary_with_meta(ranked_posts[:15])
         if summary:
@@ -264,6 +275,13 @@ def main():
             "ranking_llm": ranking_usage,
             "summary_llm": summary_usage,
             "within_budget": session_model_cost < 0.25,
+        },
+        "engine": {
+            "name": engine_config.engine,
+            "profile": engine_config.openclaw_profile if engine_config.engine == "openclaw" else None,
+            "stages": list(engine_config.openclaw_stages),
+            "credential_source": "openclaw_explicit" if engine_config.engine == "openclaw" else "project_env_or_none",
+            "failure_policy": engine_config.openclaw_on_failure if engine_config.engine == "openclaw" else "standalone default",
         },
         "degradation": {
             "scraping_fallback_used": scrape_stats.get("failures", 0) > 0,
