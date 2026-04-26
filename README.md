@@ -5,10 +5,10 @@ Automated AI news digest aggregating content from Reddit, Hacker News, and RSS f
 ## Features
 
 - **Multi-source aggregation** — 24 Reddit subs + HN front page + 14 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
-- **AI summaries** — Powered by OpenRouter (`moonshotai/kimi-k2.6`) with Claude CLI fallback; produces themes, breaking news, must-reads, and a full brief
+- **AI summaries** — Standalone mode can use an explicit project OpenRouter key; local OpenClaw mode can generate validated summaries through OpenClaw/research-engine without consuming AI Digest's OpenRouter key
 - **Story categories** — AI & ML, Tech, Security, Science, World News, Business, Futurology, Startups
 - **Schema v4** — Ranked stories, content-quality metadata, optional RSS stories, run metrics
-- **Automation** — GitHub Actions runs twice daily (7am + 6pm UTC); manual trigger also available
+- **Automation** — Local OpenClaw/Dexter cron runs twice daily at 8am and 5pm Pacific; GitHub Actions scheduling has been removed
 - **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support
 
 ## Quick Start
@@ -138,26 +138,24 @@ This runs the digest, copies JSON, builds the site, and commits + pushes.
 
 ## Automation
 
-### GitHub Actions (recommended)
+### OpenClaw/Dexter cron
 
-Set the following repository secrets:
+Production scheduling is owned by OpenClaw, not GitHub Actions. The intended schedule is 8:00 AM and 5:00 PM Pacific.
 
-| Secret | Description |
-|--------|-------------|
-| `OPENROUTER_API_KEY` | OpenRouter API key |
-| `VERCEL_TOKEN` | Vercel deploy token |
-| `VERCEL_ORG_ID` | Vercel org ID |
-| `VERCEL_PROJECT_ID` | Vercel project ID |
-
-The workflow (`.github/workflows/daily-digest.yml`) runs at 07:00 and 18:00 UTC. Trigger manually via **Actions → Daily Digest → Run workflow**.
-
-### Local cron
+The scheduled run should use explicit OpenClaw mode:
 
 ```bash
-./scripts/cron-install.sh
+AI_DIGEST_ENGINE=openclaw \
+AI_DIGEST_OPENCLAW_STAGES=summary \
+AI_DIGEST_REQUIRE_SUMMARY=1 \
+./scripts/generate-and-deploy.sh
 ```
 
-Installs crontab entries to run `generate-and-deploy.sh` at 7am and 6pm.
+OpenClaw/Dexter should report failures to Rickie if generation, validation, build, commit, or push fails. The runbook is [`scripts/openclaw-cron-run.md`](scripts/openclaw-cron-run.md).
+
+### Legacy local crontab
+
+`scripts/cron-install.sh` is kept for manual machine crontab installs, but OpenClaw cron is preferred because it can use Dexter's model routing and report failures.
 
 ## Output
 

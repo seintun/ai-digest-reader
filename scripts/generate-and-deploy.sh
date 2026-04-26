@@ -43,8 +43,8 @@ echo "[1/4] Generating digest..."
 .venv/bin/python digest.py
 echo ""
 
-# Step 2: Copy to frontend
-echo "[2/4] Copying digest to frontend..."
+# Step 2: Validate and copy to frontend
+echo "[2/4] Validating and copying digest to frontend..."
 DIGEST_SRC="output/$TODAY/digest.json"
 DIGEST_DST="ai-digest-reader/public/data/digest.json"
 
@@ -52,6 +52,12 @@ if [ ! -f "$DIGEST_SRC" ]; then
   echo "ERROR: Expected digest at $DIGEST_SRC but not found"
   exit 1
 fi
+
+VALIDATE_ARGS=()
+if [ "${AI_DIGEST_REQUIRE_SUMMARY:-1}" = "1" ]; then
+  VALIDATE_ARGS+=(--require-summary)
+fi
+.venv/bin/python scripts/validate-digest.py "$DIGEST_SRC" "${VALIDATE_ARGS[@]}"
 
 cp "$DIGEST_SRC" "$DIGEST_DST"
 echo "Copied: $DIGEST_SRC → $DIGEST_DST"

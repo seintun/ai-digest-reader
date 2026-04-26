@@ -1,7 +1,7 @@
 # Automation & CI/CD Architecture
 
 ## Overview
-DailyDigest can be run manually or automatically via GitHub Actions or system cron.
+DailyDigest can be run manually or automatically via OpenClaw/Dexter cron. GitHub Actions scheduling has been removed so scheduled production runs can use local OpenClaw model routing and reporting.
 
 ## Deployment Modes
 
@@ -12,16 +12,22 @@ DailyDigest can be run manually or automatically via GitHub Actions or system cr
 ```
 Vercel auto-deploys on git push (git integration configured in Vercel dashboard).
 
-### 2. GitHub Actions (recommended for production)
-`.github/workflows/daily-digest.yml` runs on schedule: 7:00 AM and 6:00 PM UTC.
+### 2. OpenClaw/Dexter cron (production)
 
-**Required GitHub secrets:**
-- `OPENROUTER_API_KEY` — for AI summaries (optional, falls back to no-AI mode)
-- `VERCEL_TOKEN`, `VERCEL_ORG_ID`, `VERCEL_PROJECT_ID` — only if NOT using Vercel's GitHub integration
+OpenClaw cron runs the digest at 8:00 AM and 5:00 PM Pacific. This is preferred over GitHub Actions because it can use Dexter/OpenClaw model routing and failure reporting.
 
-**Recommended:** Use Vercel's native GitHub integration (auto-deploys on push) instead of the Vercel CLI step. Then only `OPENROUTER_API_KEY` is needed.
+Required explicit mode:
 
-### 3. System cron (self-hosted)
+```bash
+AI_DIGEST_ENGINE=openclaw \
+AI_DIGEST_OPENCLAW_STAGES=summary \
+AI_DIGEST_REQUIRE_SUMMARY=1 \
+./scripts/generate-and-deploy.sh
+```
+
+Runbook: `scripts/openclaw-cron-run.md`.
+
+### 3. System cron (legacy/self-hosted)
 ```bash
 ./scripts/cron-install.sh   # Installs 7am + 6pm cron jobs
 ```
@@ -36,9 +42,9 @@ Logs: `logs/digest.log`
 ## Environment Variables
 See `.env.example` for full reference. Copy to `.env` for local use.
 
-## Future OpenClaw-backed operation
+## OpenClaw-backed operation
 
-AI Digest may support an explicit OpenClaw engine mode for Telegram and cron runs:
+AI Digest supports an explicit OpenClaw engine mode for Telegram and cron runs:
 
 ```bash
 AI_DIGEST_ENGINE=openclaw ./scripts/generate-and-deploy.sh
