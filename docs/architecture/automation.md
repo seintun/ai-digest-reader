@@ -35,3 +35,22 @@ Logs: `logs/digest.log`
 
 ## Environment Variables
 See `.env.example` for full reference. Copy to `.env` for local use.
+
+## Future OpenClaw-backed operation
+
+AI Digest may support an explicit OpenClaw engine mode for Telegram and cron runs:
+
+```bash
+AI_DIGEST_ENGINE=openclaw ./scripts/generate-and-deploy.sh
+```
+
+This mode should be opt-in only. It must not silently use OpenClaw-managed API keys, parent-shell credentials, or another project's environment. A run preflight should print the selected engine, stages, fallback policy, and credential source category without revealing secrets.
+
+Recommended cron rule:
+
+- use an explicit config/env file for cron
+- fail clearly if engine configuration is ambiguous
+- validate `digest.json` before copy/build/commit/push
+- do not deploy if OpenClaw mode was requested and the OpenClaw summary is missing or invalid
+
+Implementation plan: [`openclaw-engine-integration-plan.md`](openclaw-engine-integration-plan.md).

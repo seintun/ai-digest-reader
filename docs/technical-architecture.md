@@ -6,7 +6,8 @@
 2. `scraper.py` selects top candidates (`score > 10 OR comments > 5`, max 40), scrapes article content with cache + fallbacks.
 3. `ranker.py` scores posts with engagement, recency, cross-source matching, and optional LLM content quality.
 4. `analyzer_v2.py` summarizes the top 15 ranked stories with content-aware prompts.
-5. `digest.py` writes:
+5. Future optional engine adapter mode may delegate selected AI stages to OpenClaw while preserving this output schema. See [`docs/architecture/openclaw-engine-integration-plan.md`](architecture/openclaw-engine-integration-plan.md).
+6. `digest.py` writes:
    - `output/<date>/digest.json` (v4 data + metrics)
    - `output/<date>/metrics.json` (monitoring metrics)
    - `output/<date>/monitoring-dashboard.md` (human-readable dashboard)
@@ -93,6 +94,26 @@ Each story uses compact keys:
 - Primary card/title click navigates to `p || u` in the same tab.
 - Secondary external link uses `u` in the same tab when `u !== p`.
 - This preserves swipe-back behavior on mobile browsers.
+
+## Optional OpenClaw Engine Mode
+
+AI Digest is intended to remain independent, but it can grow an explicit `AI_DIGEST_ENGINE=openclaw` mode for selected expensive AI stages.
+
+Design rules:
+
+- standalone mode remains the default
+- OpenClaw mode must be selected explicitly
+- no inherited OpenClaw/parent-shell credentials are used silently
+- OpenClaw responses are adapted back into the existing `digest.json` schema
+- summary validation must reject missing, malformed, or ungrounded story references before deploy
+- digest cache/profile behavior must stay isolated from other OpenClaw research workflows
+
+Recommended adoption order:
+
+1. add the engine abstraction and preflight reporting
+2. delegate only summary generation to OpenClaw
+3. optionally delegate LLM quality scoring
+4. only later evaluate a full `research_engine.digest_adapter` mode
 
 ## Ranking Strategy
 
