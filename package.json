@@ -1,0 +1,10 @@
+{
+  "name": "ai-digest-reader-workspace",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix ai-digest-reader run dev",
+    "build": "npm --prefix ai-digest-reader run build",
+    "preview": "npm --prefix ai-digest-reader run preview",
+    "check": "npm --prefix ai-digest-reader run check"
+  }
+}
