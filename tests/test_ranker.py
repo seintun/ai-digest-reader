@@ -97,3 +97,18 @@ def test_ranker_parallel_falls_back_to_single_worker_on_budget(monkeypatch):
     assert metrics["llm_usage"]["ai_parallel_enabled"] is False
     assert metrics["llm_usage"]["ai_parallel_workers"] == 1
     assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "projected_cost_exceeded"
+
+
+def test_ranker_ai_can_be_disabled_even_with_openrouter_key(monkeypatch):
+    monkeypatch.setenv("OPENROUTER_API_KEY", "test-key")
+    monkeypatch.setenv("RANKER_AI_ENABLED", "0")
+
+    def fail_request(*_args, **_kwargs):
+        raise AssertionError("ranker should not call LLM when RANKER_AI_ENABLED=0")
+
+    monkeypatch.setattr(ranker, "_request_quality_ratings", fail_request)
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 100, "c": 20, "b": "body"}]
+    scraped = {"https://example.com/a": "article text " * 20}
+    _, metrics = rank_posts_with_metrics(posts, scraped)
+    assert metrics["llm_quality_used"] is False
+    assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "ranker_ai_disabled"

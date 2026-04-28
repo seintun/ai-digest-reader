@@ -183,7 +183,22 @@ def _estimate_quality_cost_usd(candidates: List[Tuple[str, str]], workers: int) 
     return round((estimated_total_tokens / 1000.0) * usd_per_1k_tokens, 6)
 
 
+def _ranker_ai_enabled() -> bool:
+    value = (os.environ.get("RANKER_AI_ENABLED") or "1").strip().lower()
+    return value not in {"0", "false", "no", "off"}
+
+
 def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
+    if not _ranker_ai_enabled():
+        usage = usage_to_dict(0, 0)
+        usage.update({
+            "ai_parallel_enabled": False,
+            "ai_parallel_workers": 0,
+            "ai_batches": 0,
+            "ai_parallel_fallback_reason": "ranker_ai_disabled",
+        })
+        return None, usage
+
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         usage = usage_to_dict(0, 0)
