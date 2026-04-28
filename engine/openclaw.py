@@ -77,7 +77,25 @@ def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineCo
         research_engine_root = Path.home() / ".openclaw" / "workspace" / "projects" / "research-engine"
         if not research_engine_root.exists():
             return {"error": f"research-engine not found at {research_engine_root}", "notebook_id": None, "notebook_url": None}
-        # Build command to call research-engine's notebooklm-ingest CLI
+        notebooklm_home = os.environ.get("AI_DIGEST_NOTEBOOKLM_HOME") or os.environ.get("NOTEBOOKLM_HOME")
+        default_profile = Path.home() / ".notebooklm-flyingbacon808"
+        if not notebooklm_home and default_profile.exists():
+            notebooklm_home = str(default_profile)
+        if not notebooklm_home:
+            return {
+                "error": "NotebookLM profile not configured; set AI_DIGEST_NOTEBOOKLM_HOME or create ~/.notebooklm-flyingbacon808",
+                "notebook_id": None,
+                "notebook_url": None,
+            }
+        if not Path(notebooklm_home).exists():
+            return {
+                "error": f"NotebookLM profile path does not exist: {notebooklm_home}",
+                "notebook_id": None,
+                "notebook_url": None,
+            }
+
+        # Build command to call research-engine's notebooklm-ingest CLI.
+        # Pass NOTEBOOKLM_HOME explicitly so production never writes to a stale ambient Google account.
         cmd = (
             f"cd {research_engine_root} && .venv/bin/python -m research_engine.cli notebooklm-ingest "
             f"--input {shlex.quote(str(input_path))} "
@@ -87,7 +105,9 @@ def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineCo
         )
         if dry_run:
             cmd += " --dry-run"
-        completed = subprocess.run(cmd, shell=True, text=True, capture_output=True, timeout=900)
+        child_env = os.environ.copy()
+        child_env["NOTEBOOKLM_HOME"] = notebooklm_home
+        completed = subprocess.run(cmd, shell=True, text=True, capture_output=True, timeout=900, env=child_env)
         if completed.returncode != 0:
             return {
                 "error": "notebooklm-ingest command failed",

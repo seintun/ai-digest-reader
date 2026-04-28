@@ -179,11 +179,26 @@ def _estimate_quality_cost_usd(candidates: List[Tuple[str, str]], workers: int) 
     estimated_input_tokens = base_input + overhead_input
     estimated_output_tokens = max(20 * batch_count, 6 * len(candidates))
     usd_per_1k_tokens = float(os.environ.get("RANKER_AI_ESTIMATE_USD_PER_1K_TOKENS", "0.01") or "0.01")
-    estimated_total_tokens = ***REDACTED_RUBYGEMS_KEY*** + ***REDACTED_RUBYGEMS_KEY***
-    return round((***REDACTED_RUBYGEMS_KEY*** / 1000.0) * usd_per_1k_tokens, 6)
+    estimated_total_tokens = estimated_input_tokens + estimated_output_tokens
+    return round((estimated_total_tokens / 1000.0) * usd_per_1k_tokens, 6)
 
 
-def ***REDACTED_RUBYGEMS_KEY***(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
+def _ranker_ai_enabled() -> bool:
+    value = (os.environ.get("RANKER_AI_ENABLED") or "1").strip().lower()
+    return value not in {"0", "false", "no", "off"}
+
+
+def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
+    if not _ranker_ai_enabled():
+        usage = usage_to_dict(0, 0)
+        usage.update({
+            "ai_parallel_enabled": False,
+            "ai_parallel_workers": 0,
+            "ai_batches": 0,
+            "***REDACTED_RUBYGEMS_KEY***": "ranker_ai_disabled",
+        })
+        return None, usage
+
     api_key = os.environ.get("OPENROUTER_API_KEY")
     if not api_key:
         usage = usage_to_dict(0, 0)

@@ -39,7 +39,14 @@ if [[ -n "$NOTEBOOKLM_HOME_ARG" ]]; then
 elif [[ -n "$ACCOUNT" && -d "$HOME/.notebooklm-$ACCOUNT" ]]; then
   export NOTEBOOKLM_HOME="$HOME/.notebooklm-$ACCOUNT"
 elif [[ -n "$ACCOUNT" ]]; then
-  echo "warning: $HOME/.notebooklm-$ACCOUNT not found; using current NotebookLM auth profile" >&2
+  echo "ERROR: requested NotebookLM account profile $HOME/.notebooklm-$ACCOUNT not found; refusing to use ambient auth" >&2
+  echo "Create/login that profile or pass --notebooklm-home PATH explicitly." >&2
+  exit 1
+fi
+
+if [[ -n "${NOTEBOOKLM_HOME:-}" && ! -d "$NOTEBOOKLM_HOME" ]]; then
+  echo "ERROR: NOTEBOOKLM_HOME does not exist: $NOTEBOOKLM_HOME" >&2
+  exit 1
 fi
 
 if [[ -z "$DIGEST_PATH" ]]; then

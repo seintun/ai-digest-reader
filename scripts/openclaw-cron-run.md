@@ -14,6 +14,7 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
    AI_DIGEST_ENGINE=openclaw \
    AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest \
    AI_DIGEST_REQUIRE_SUMMARY=1 \
+   RANKER_AI_ENABLED=0 \
    ./scripts/generate-and-deploy.sh
    ```
 3. Ensure the final digest has a schema-v2 `summary` and passes:
@@ -31,6 +32,8 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
 6. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
 
 ## NotebookLM ingest behavior
+
+Production runs must not spend project OpenRouter credits in OpenClaw mode. `generate-and-deploy.sh` defaults `RANKER_AI_ENABLED=0` when `AI_DIGEST_ENGINE=openclaw`, so ranking uses deterministic signals unless Rickie explicitly opts back in.
 
 Production runs use the robust NotebookLM path:
 
