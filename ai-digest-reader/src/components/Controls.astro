@@ -2,7 +2,7 @@
 const sources = [
   { id: 'all', label: 'All' },
   { id: 'reddit', label: 'Reddit' },
-  { id: 'hn', label: 'HN' },
+  { id: 'hn', label: 'HackerNews' },
   { id: 'rss', label: 'RSS' },
 ];
 ---
@@ -85,7 +85,8 @@ const sources = [
     background-color: rgba(51,65,85,0.5);
     color: #94a3b8; /* slate-400 */
   }
-  .source-btn:where([aria-pressed="true"]) {
+  .source-btn[aria-pressed="true"],
+  :global(.dark) .source-btn[aria-pressed="true"] {
     background-color: #6366f1;
     color: #ffffff;
   }
