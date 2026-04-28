@@ -34,7 +34,7 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
 
 ## NotebookLM ingest behavior
 
-Production runs must not spend project OpenRouter credits from the AI Digest app in OpenClaw mode. `generate-and-deploy.sh` defaults `AI_DIGEST_RANKER_PROVIDER=openclaw` and `RANKER_AI_ENABLED=1` when `AI_DIGEST_ENGINE=openclaw`, so semantic ranker quality scoring uses OpenClaw model routing and falls back to deterministic ranking if OpenClaw scoring fails. OpenRouter usage should come from the OpenClaw cron agent model (`openrouter/free`) or current OpenClaw routing, not from `llm_client.py` inside AI Digest. Ranker metrics include estimated input/output/total tokens and a static estimated USD value via `OPENCLAW_RANKER_ESTIMATE_USD_PER_1K_TOKENS` when OpenClaw does not report exact marginal cost.
+Production runs must not spend project OpenRouter credits from the AI Digest app in OpenClaw mode. `generate-and-deploy.sh` defaults `AI_DIGEST_RANKER_PROVIDER=openclaw` and `RANKER_AI_ENABLED=1` when `AI_DIGEST_ENGINE=openclaw`, so semantic ranker quality scoring uses OpenClaw model routing and falls back to deterministic ranking if OpenClaw scoring fails. OpenRouter usage should come from the OpenClaw cron agent model (`openrouter/free`) or current OpenClaw routing, not from `llm_client.py` inside AI Digest. Ranker metrics include estimated input/output/total tokens and a static estimated USD value via `OPENCLAW_RANKER_INPUT_USD_PER_MILLION_TOKENS` and `OPENCLAW_RANKER_OUTPUT_USD_PER_MILLION_TOKENS` when OpenClaw does not report exact marginal cost. Defaults mirror OpenRouter `openai/gpt-5.5` pricing as of 2026-04-28: $5/M input and $30/M output.
 
 Production runs use the robust NotebookLM path:
 

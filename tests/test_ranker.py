@@ -177,7 +177,8 @@ def test_ranker_unsupported_provider_falls_back(monkeypatch):
 def test_openclaw_ranker_provider_reports_token_and_cost_estimates(monkeypatch):
     monkeypatch.setenv("RANKER_AI_ENABLED", "1")
     monkeypatch.setenv("AI_DIGEST_RANKER_PROVIDER", "openclaw")
-    monkeypatch.setenv("OPENCLAW_RANKER_ESTIMATE_USD_PER_1K_TOKENS", "0.02")
+    monkeypatch.setenv("OPENCLAW_RANKER_INPUT_USD_PER_MILLION_TOKENS", "5")
+    monkeypatch.setenv("OPENCLAW_RANKER_OUTPUT_USD_PER_MILLION_TOKENS", "30")
 
     class Completed:
         returncode = 0
@@ -194,4 +195,5 @@ def test_openclaw_ranker_provider_reports_token_and_cost_estimates(monkeypatch):
     assert usage["output_tokens"] > 0
     assert usage["total_tokens"] == usage["input_tokens"] + usage["output_tokens"]
     assert usage["cost_usd"] > 0
-    assert usage["estimate_usd_per_1k_tokens"] == 0.02
+    assert usage["estimate_input_usd_per_million_tokens"] == 5
+    assert usage["estimate_output_usd_per_million_tokens"] == 30
