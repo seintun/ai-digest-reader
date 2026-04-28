@@ -327,10 +327,45 @@ def main():
 
     output_dir.mkdir(parents=True, exist_ok=True)
 
+    # NotebookLM ingestion stage (post-processing)
+    notebook_ingest_result = None
+    if engine_config.engine == "openclaw" and "notebooklm_ingest" in engine_config.openclaw_stages:
+        print("[NotebookLM Ingestion] Starting ingestion of digest links...")
+        from engine.openclaw import ingest_digest_into_notebooklm
+        dry_run = os.environ.get("AI_DIGEST_NOTEBOOK_DRY_RUN") == "1"
+        notebook_ingest_result = ingest_digest_into_notebooklm(digest, engine_config, dry_run=dry_run)
+        added = notebook_ingest_result.get("added", notebook_ingest_result.get("applied", 0))
+        skipped = len(notebook_ingest_result.get("to_skip", [])) + notebook_ingest_result.get("deferred_count", 0)
+        failed = notebook_ingest_result.get("failed_count", 0)
+        dry_run_flag = notebook_ingest_result.get("dry_run", False)
+        status = "(dry run)" if dry_run_flag else ""
+        print(f"NotebookLM ingestion: added={added} skipped={skipped} failed={failed} {status}")
+        if notebook_ingest_result.get("notebook_url"):
+            print(f"Notebook: {notebook_ingest_result['notebook_url']}")
+        # Append notebook info into digest metrics
+        digest.setdefault("metrics", {})["notebook_ingest"] = {
+            "enabled": True,
+            "added": added,
+            "skipped": skipped,
+            "failed": failed,
+            "dry_run": dry_run_flag,
+            "notebook_id": notebook_ingest_result.get("notebook_id"),
+            "notebook_url": notebook_ingest_result.get("notebook_url"),
+            "error": notebook_ingest_result.get("error"),
+        }
+    else:
+        digest.setdefault("metrics", {})["notebook_ingest"] = {"enabled": False}
+
     json_path = output_dir / "digest.json"
     with open(json_path, "w") as f:
         json.dump(digest, f, indent=2)
     print(f"\nSaved JSON to {json_path}")
+
+    # Write ingestion report if stage ran
+    if notebook_ingest_result is not None:
+        ingest_report_path = output_dir / "notebooklm-ingest.json"
+        ingest_report_path.write_text(json.dumps(notebook_ingest_result, indent=2), encoding="utf-8")
+        print(f"Saved ingestion report to {ingest_report_path}")
 
     metrics_path = output_dir / "metrics.json"
     with open(metrics_path, "w") as f:
