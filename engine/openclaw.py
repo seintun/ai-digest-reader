@@ -64,13 +64,7 @@ def generate_summary_with_openclaw(ranked_posts: list[dict[str, Any]], config: D
 def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineConfig, dry_run: bool = False) -> dict[str, Any]:
     """Ingest ranked digest links into a daily NotebookLM notebook.
 
-    Args:
-        digest: The full digest dict containing ranked lists under 'r', 'h', 'rs'.
-        config: Engine configuration (used to locate research-engine and stage flags).
-        dry_run: If True, only plan without calling NotebookLM API.
-
-    Returns:
-        Dict with ingestion result including notebook_id, notebook_url, counts, and dry_run flag.
+    Note: Requires `notebooklm login` to be completed previously. Dry-run bypasses auth.
     """
     posts = digest.get("r", []) + digest.get("h", []) + digest.get("rs", [])
     if not posts:
@@ -88,11 +82,11 @@ def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineCo
             f"cd {research_engine_root} && .venv/bin/python -m research_engine.cli notebooklm-ingest "
             f"--input {shlex.quote(str(input_path))} "
             f"--output {shlex.quote(str(output_path))} "
-            f"--max-sources 100"
+            f"--max-sources 50"
         )
         if dry_run:
             cmd += " --dry-run"
-        completed = subprocess.run(cmd, shell=True, text=True, capture_output=True, timeout=300)
+        completed = subprocess.run(cmd, shell=True, text=True, capture_output=True, timeout=900)
         if completed.returncode != 0:
             return {
                 "error": "notebooklm-ingest command failed",
