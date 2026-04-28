@@ -4,6 +4,9 @@ from __future__ import annotations
 import hashlib
 import math
 import os
+import json
+import shlex
+import subprocess
 import re
 import time as _time
 from concurrent.futures import ThreadPoolExecutor, as_completed, TimeoutError as FuturesTimeoutError
@@ -20,6 +23,7 @@ QUALITY_RETRY_SECONDS = (2, 5)
 RANKER_AI_CONNECT_TIMEOUT = float(os.environ.get("RANKER_AI_CONNECT_TIMEOUT", "10") or "10")
 RANKER_AI_READ_TIMEOUT = float(os.environ.get("RANKER_AI_READ_TIMEOUT", "20") or "20")
 RANKER_BATCH_TIMEOUT_SECONDS = float(os.environ.get("RANKER_BATCH_TIMEOUT_SECONDS", "200") or "200")
+OPENCLAW_RANKER_TIMEOUT_SECONDS = float(os.environ.get("OPENCLAW_RANKER_TIMEOUT_SECONDS", "120") or "120")
 _MIN_EXCERPT_LEN = 80
 
 
@@ -188,6 +192,94 @@ def _ranker_ai_enabled() -> bool:
     return value not in {"0", "false", "no", "off"}
 
 
+def _ranker_ai_provider() -> str:
+    return (os.environ.get("RANKER_AI_PROVIDER") or os.environ.get("AI_DIGEST_RANKER_PROVIDER") or "direct_openrouter").strip().lower()
+
+
+def _openclaw_quality_command() -> list[str]:
+    raw = (os.environ.get("AI_DIGEST_OPENCLAW_RANKER_COMMAND") or os.environ.get("OPENCLAW_RANKER_COMMAND") or "openclaw ai complete --json").strip()
+    return shlex.split(raw)
+
+
+def _parse_quality_ratings_payload(content: str, valid_ids: set[str]) -> tuple[Optional[Dict[str, int]], Dict[str, int]]:
+    try:
+        parsed = parse_llm_json(content) or json.loads(content)
+    except Exception:
+        return None, {"invalid_ignored": 1, "extras_ignored": 0}
+    items = parsed.get("ratings") if isinstance(parsed, dict) else parsed
+    if not isinstance(items, list):
+        return None, {"invalid_ignored": 1, "extras_ignored": 0}
+    ratings: Dict[str, int] = {}
+    invalid = 0
+    extras = 0
+    for item in items:
+        if not isinstance(item, dict):
+            invalid += 1
+            continue
+        story_id = str(item.get("id") or item.get("story_id") or "")
+        if story_id not in valid_ids:
+            extras += 1
+            continue
+        raw_rating = item.get("rating", item.get("quality"))
+        try:
+            rating_int = int(raw_rating)
+        except (TypeError, ValueError):
+            invalid += 1
+            continue
+        if not 1 <= rating_int <= 10:
+            invalid += 1
+            continue
+        ratings[story_id] = rating_int
+    return ratings or None, {"invalid_ignored": invalid, "extras_ignored": extras}
+
+
+def _request_openclaw_quality_ratings(candidates: List[Tuple[str, str]]) -> Tuple[Optional[Dict[str, int]], Dict]:
+    if not candidates:
+        return None, usage_to_dict(0, 0)
+    prompt = _quality_prompt(candidates)
+    usage = usage_to_dict(0, 0)
+    usage.update({
+        "cost_source": "openclaw_metrics",
+        "ranker_ai_provider": "openclaw",
+        "estimated_tokens": max(1, len(prompt) // 4),
+        "ai_parallel_enabled": False,
+        "ai_parallel_workers": 1,
+        "ai_batches": 1,
+        "ai_parallel_fallback_reason": "",
+    })
+    print(f"Ranking AI: OpenClaw scoring {len(candidates)} excerpts...", flush=True)
+    try:
+        completed = subprocess.run(
+            _openclaw_quality_command(),
+            input=prompt,
+            text=True,
+            capture_output=True,
+            timeout=OPENCLAW_RANKER_TIMEOUT_SECONDS,
+            check=False,
+        )
+    except FileNotFoundError:
+        usage["ai_parallel_fallback_reason"] = "openclaw_cli_missing"
+        return None, usage
+    except subprocess.TimeoutExpired:
+        usage["ai_parallel_fallback_reason"] = "openclaw_timeout"
+        return None, usage
+    except Exception as exc:
+        usage["ai_parallel_fallback_reason"] = f"openclaw_error:{type(exc).__name__}"
+        return None, usage
+    if completed.returncode != 0:
+        usage["ai_parallel_fallback_reason"] = "openclaw_nonzero_exit"
+        usage["openclaw_stderr"] = completed.stderr.strip()[:500]
+        return None, usage
+    ratings, parse_metrics = _parse_quality_ratings_payload(completed.stdout, {story_id for story_id, _ in candidates})
+    usage.update(parse_metrics)
+    if not ratings:
+        usage["ai_parallel_fallback_reason"] = "openclaw_parse_failed"
+        return None, usage
+    usage["rated"] = len(ratings)
+    print(f"Ranking AI: OpenClaw done — {len(ratings)}/{len(candidates)} rated")
+    return ratings, usage
+
+
 def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) -> Tuple[Optional[Dict[str, int]], Dict[str, float | int | str]]:
     if not _ranker_ai_enabled():
         usage = usage_to_dict(0, 0)
@@ -199,17 +291,6 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         })
         return None, usage
 
-    api_key = os.environ.get("OPENROUTER_API_KEY")
-    if not api_key:
-        usage = usage_to_dict(0, 0)
-        usage.update({
-            "ai_parallel_enabled": False,
-            "ai_parallel_workers": 0,
-            "ai_batches": 0,
-            "ai_parallel_fallback_reason": "missing_api_key",
-        })
-        return None, usage
-
     candidates = _quality_candidates(posts, scraped_content)
     if not candidates:
         usage = usage_to_dict(0, 0)
@@ -218,6 +299,32 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
             "ai_parallel_workers": 0,
             "ai_batches": 0,
             "ai_parallel_fallback_reason": "no_candidates",
+        })
+        return None, usage
+
+    provider = _ranker_ai_provider()
+    if provider == "openclaw":
+        return _request_openclaw_quality_ratings(candidates)
+    if provider not in {"direct_openrouter", "openrouter"}:
+        usage = usage_to_dict(0, 0)
+        usage.update({
+            "ai_parallel_enabled": False,
+            "ai_parallel_workers": 0,
+            "ai_batches": 0,
+            "ai_parallel_fallback_reason": f"unsupported_provider:{provider}",
+            "ranker_ai_provider": provider,
+        })
+        return None, usage
+
+    api_key = os.environ.get("OPENROUTER_API_KEY")
+    if not api_key:
+        usage = usage_to_dict(0, 0)
+        usage.update({
+            "ai_parallel_enabled": False,
+            "ai_parallel_workers": 0,
+            "ai_batches": 0,
+            "ai_parallel_fallback_reason": "missing_api_key",
+            "ranker_ai_provider": provider,
         })
         return None, usage
 
@@ -316,6 +423,7 @@ def _rate_content_quality(posts: List[Dict], scraped_content: Dict[str, str]) ->
         "ai_parallel_workers": workers,
         "ai_batches": batch_count,
         "ai_parallel_fallback_reason": fallback_reason,
+        "ranker_ai_provider": provider,
     })
     return ratings or None, usage
 

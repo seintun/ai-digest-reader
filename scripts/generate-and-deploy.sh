@@ -33,12 +33,16 @@ trap on_error ERR
 source "$REPO_ROOT/scripts/load-env.sh"
 load_env_preserve_existing ".env"
 
-# In OpenClaw-owned production mode, do not let the app's ranking step spend
-# project OpenRouter credits. Summary/NotebookLM stages are handled by OpenClaw;
-# ranking falls back to deterministic engagement/recency/cross-source signals
-# unless Rickie explicitly opts back in with RANKER_AI_ENABLED=1.
-if [ "${AI_DIGEST_ENGINE:-standalone}" = "openclaw" ] && [ -z "${RANKER_AI_ENABLED+x}" ]; then
-  export RANKER_AI_ENABLED=0
+# In OpenClaw-owned production mode, semantic ranker quality scoring should use
+# OpenClaw model routing, not the app's project OpenRouter key. Failures fall
+# back to deterministic engagement/recency/cross-source ranking.
+if [ "${AI_DIGEST_ENGINE:-standalone}" = "openclaw" ]; then
+  if [ -z "${AI_DIGEST_RANKER_PROVIDER+x}" ] && [ -z "${RANKER_AI_PROVIDER+x}" ]; then
+    export AI_DIGEST_RANKER_PROVIDER=openclaw
+  fi
+  if [ -z "${RANKER_AI_ENABLED+x}" ]; then
+    export RANKER_AI_ENABLED=1
+  fi
 fi
 
 echo "=== DailyDigest: Generate & Deploy ==="

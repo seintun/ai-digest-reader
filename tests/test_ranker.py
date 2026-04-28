@@ -112,3 +112,63 @@ def test_ranker_ai_can_be_disabled_even_with_openrouter_key(monkeypatch):
     _, metrics = rank_posts_with_metrics(posts, scraped)
     assert metrics["llm_quality_used"] is False
     assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "ranker_ai_disabled"
+
+
+def test_openclaw_ranker_provider_parses_valid_json(monkeypatch):
+    monkeypatch.setenv("RANKER_AI_ENABLED", "1")
+    monkeypatch.setenv("AI_DIGEST_RANKER_PROVIDER", "openclaw")
+
+    class Completed:
+        returncode = 0
+        stdout = '{"ratings":[{"story_id":"rd-0","quality":9},{"story_id":"hn-0","quality":4},{"story_id":"extra","quality":10},{"story_id":"rd-1","quality":99}]}'
+        stderr = ""
+
+    calls = []
+
+    def fake_run(command, **kwargs):
+        calls.append((command, kwargs))
+        return Completed()
+
+    monkeypatch.setattr(ranker.subprocess, "run", fake_run)
+    posts = [
+        {"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2, "b": "body"},
+        {"i": "hn-0", "u": "https://example.com/b", "s": 10, "c": 2, "b": "body"},
+    ]
+    scraped = {"https://example.com/a": "article text " * 20, "https://example.com/b": "article text " * 20}
+    ranked, metrics = rank_posts_with_metrics(posts, scraped)
+    by_id = {post["i"]: post for post in ranked}
+    assert calls
+    assert by_id["rd-0"]["content_quality"] == 9
+    assert by_id["hn-0"]["content_quality"] == 4
+    assert metrics["llm_quality_used"] is True
+    assert metrics["llm_usage"]["ranker_ai_provider"] == "openclaw"
+    assert metrics["llm_usage"]["extras_ignored"] == 2
+    assert metrics["llm_usage"]["invalid_ignored"] == 0
+
+
+def test_openclaw_ranker_provider_falls_back_on_failure(monkeypatch):
+    monkeypatch.setenv("RANKER_AI_ENABLED", "1")
+    monkeypatch.setenv("AI_DIGEST_RANKER_PROVIDER", "openclaw")
+
+    class Completed:
+        returncode = 7
+        stdout = ""
+        stderr = "boom"
+
+    monkeypatch.setattr(ranker.subprocess, "run", lambda *args, **kwargs: Completed())
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2, "b": "body"}]
+    scraped = {"https://example.com/a": "article text " * 20}
+    ranked, metrics = rank_posts_with_metrics(posts, scraped)
+    assert ranked[0]["content_quality"] == 0
+    assert metrics["llm_quality_used"] is False
+    assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "openclaw_nonzero_exit"
+
+
+def test_ranker_unsupported_provider_falls_back(monkeypatch):
+    monkeypatch.setenv("RANKER_AI_ENABLED", "1")
+    monkeypatch.setenv("AI_DIGEST_RANKER_PROVIDER", "mystery")
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2, "b": "body"}]
+    scraped = {"https://example.com/a": "article text " * 20}
+    _, metrics = rank_posts_with_metrics(posts, scraped)
+    assert metrics["llm_quality_used"] is False
+    assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "unsupported_provider:mystery"
