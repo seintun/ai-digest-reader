@@ -2,6 +2,7 @@
 """AI News Digest Aggregator - Main CLI."""
 import argparse
 import json
+import os
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime
 from pathlib import Path
