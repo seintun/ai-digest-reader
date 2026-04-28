@@ -12,7 +12,7 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
 2. Run with explicit OpenClaw mode:
    ```bash
    AI_DIGEST_ENGINE=openclaw \
-   AI_DIGEST_OPENCLAW_STAGES=summary \
+   AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest \
    AI_DIGEST_REQUIRE_SUMMARY=1 \
    ./scripts/generate-and-deploy.sh
    ```
@@ -29,6 +29,33 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
    - rebuild before committing/pushing
 5. Commit and push only after validation and frontend build pass.
 6. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
+
+## NotebookLM ingest behavior
+
+Production runs use the robust NotebookLM path:
+
+- cap: top 100 ranked digest sources
+- direct URL import first
+- automatic text fallback for URLs NotebookLM rejects
+- duplicate/error placeholder pruning
+- verification gate: 100/100 top sources covered, no extras, no duplicate URLs
+
+For manual repair or rerun without regenerating/reranking the digest:
+
+```bash
+./scripts/notebooklm-ingest-latest.sh --cap 100 --account flyingbacon808
+```
+
+If a separate auth profile exists, prefer:
+
+```bash
+./scripts/notebooklm-ingest-latest.sh --cap 100 --notebooklm-home ~/.notebooklm-flyingbacon808
+```
+
+The script updates `output/<date>/digest.json` metrics and writes:
+
+- `notebooklm-ingest.json`
+- `notebooklm-top100-verification.json`
 
 ## Success report
 

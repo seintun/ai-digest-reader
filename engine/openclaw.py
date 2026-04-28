@@ -82,7 +82,8 @@ def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineCo
             f"cd {research_engine_root} && .venv/bin/python -m research_engine.cli notebooklm-ingest "
             f"--input {shlex.quote(str(input_path))} "
             f"--output {shlex.quote(str(output_path))} "
-            f"--max-sources 100"
+            f"--max-sources 100 "
+            f"--robust"
         )
         if dry_run:
             cmd += " --dry-run"
