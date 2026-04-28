@@ -61,6 +61,7 @@ if [[ -z "$DIGEST_PATH" || ! -f "$DIGEST_PATH" ]]; then
   echo "No digest.json found. Provide --digest PATH or run the digest first." >&2
   exit 1
 fi
+DIGEST_PATH="$(cd "$(dirname "$DIGEST_PATH")" && pwd)/$(basename "$DIGEST_PATH")"
 
 if [[ ! -x "$RESEARCH_ENGINE_ROOT/.venv/bin/python" ]]; then
   echo "research-engine venv not found at $RESEARCH_ENGINE_ROOT/.venv/bin/python" >&2
