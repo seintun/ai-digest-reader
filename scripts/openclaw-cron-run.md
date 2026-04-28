@@ -14,7 +14,8 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
    ***REDACTED_RUBYGEMS_KEY*** \
    ***REDACTED_RUBYGEMS_KEY***,notebooklm_ingest \
    ***REDACTED_RUBYGEMS_KEY*** \
-   RANKER_AI_ENABLED=0 \
+   ***REDACTED_RUBYGEMS_KEY*** \
+   RANKER_AI_ENABLED=1 \
    ./scripts/generate-and-deploy.sh
    ```
 3. Ensure the final digest has a schema-v2 `summary` and passes:
@@ -33,7 +34,7 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
 
 ## NotebookLM ingest behavior
 
-Production runs must not spend project OpenRouter credits from the AI Digest app in OpenClaw mode. `generate-and-deploy.sh` defaults `RANKER_AI_ENABLED=0` when `AI_DIGEST_ENGINE=openclaw`, so ranking uses deterministic signals unless Rickie explicitly opts back in. OpenRouter usage should come from the OpenClaw cron agent model (`openrouter/free`) or current OpenClaw routing, not from `llm_client.py` inside AI Digest.
+Production runs must not spend project OpenRouter credits from the AI Digest app in OpenClaw mode. `generate-and-deploy.sh` defaults `AI_DIGEST_RANKER_PROVIDER=openclaw` and `RANKER_AI_ENABLED=1` when `AI_DIGEST_ENGINE=openclaw`, so semantic ranker quality scoring uses OpenClaw model routing and falls back to deterministic ranking if OpenClaw scoring fails. OpenRouter usage should come from the OpenClaw cron agent model (`openrouter/free`) or current OpenClaw routing, not from `llm_client.py` inside AI Digest.
 
 Production runs use the robust NotebookLM path:
 
