@@ -239,21 +239,30 @@ def _request_openclaw_quality_ratings(candidates: List[Tuple[str, str]]) -> Tupl
     prompt = _quality_prompt(candidates)
     estimated_input_tokens = max(1, len(prompt) // 4)
     estimated_output_tokens = max(20, 12 * len(candidates))
-    estimate_rate = float(os.environ.get("OPENCLAW_RANKER_ESTIMATE_USD_PER_1K_TOKENS", os.environ.get("RANKER_AI_ESTIMATE_USD_PER_1K_TOKENS", "0.01")) or "0.01")
+    # OpenRouter pricing for openai/gpt-5.5 is $5/M input and $30/M output tokens.
+    # Override these if OpenClaw routes the ranker through a different paid model.
+    input_rate = float(os.environ.get("OPENCLAW_RANKER_INPUT_USD_PER_MILLION_TOKENS", os.environ.get("RANKER_AI_INPUT_USD_PER_MILLION_TOKENS", "5")) or "5")
+    output_rate = float(os.environ.get("OPENCLAW_RANKER_OUTPUT_USD_PER_MILLION_TOKENS", os.environ.get("RANKER_AI_OUTPUT_USD_PER_MILLION_TOKENS", "30")) or "30")
     usage = usage_to_dict(0, 0)
     usage.update({
         "input_tokens": estimated_input_tokens,
         "output_tokens": estimated_output_tokens,
         "total_tokens": estimated_input_tokens + estimated_output_tokens,
-        "cost_usd": estimate_llm_cost_usd(estimated_input_tokens, estimated_output_tokens, estimate_rate),
+        "cost_usd": estimate_llm_cost_usd(
+            estimated_input_tokens,
+            estimated_output_tokens,
+            input_usd_per_million_tokens=input_rate,
+            output_usd_per_million_tokens=output_rate,
+        ),
         "cost_source": "openclaw_static_estimate",
-        "cost_label": f"estimated at ${estimate_rate:.4f}/1K tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
+        "cost_label": f"estimated at ${input_rate:g}/M input + ${output_rate:g}/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": os.environ.get("OPENCLAW_RANKER_MODEL", "openclaw-current"),
         "estimated_tokens": estimated_input_tokens + estimated_output_tokens,
         "estimated_input_tokens": estimated_input_tokens,
         "estimated_output_tokens": estimated_output_tokens,
-        "estimate_usd_per_1k_tokens": estimate_rate,
+        "estimate_input_usd_per_million_tokens": input_rate,
+        "estimate_output_usd_per_million_tokens": output_rate,
         "ai_parallel_enabled": False,
         "ai_parallel_workers": 1,
         "ai_batches": 1,
