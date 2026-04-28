@@ -4,16 +4,16 @@ Use this runbook for the OpenClaw cron jobs that run AI Digest at 8:00 AM and 5:
 
 ## Intent
 
-AI Digest remains independent, but scheduled production runs are owned by OpenClaw/Dexter instead of GitHub Actions. OpenClaw may use its configured primary/fallback model routing for the rich summary because Rickie explicitly requested this mode.
+AI Digest remains independent, but scheduled production runs are owned by OpenClaw/Dexter instead of GitHub Actions. The 8 AM and 5 PM cron agent turns are pinned to `openrouter/free` when available so digest orchestration and any rich-summary repair prefer OpenRouter through OpenClaw routing, not direct AI Digest API keys.
 
 ## Required behavior
 
-1. Work in `/Users/rickie/code/ai-digest-reader`.
+1. Work in `***REDACTED_RUBYGEMS_KEY***`.
 2. Run with explicit OpenClaw mode:
    ```bash
-   AI_DIGEST_ENGINE=openclaw \
-   AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest \
-   AI_DIGEST_REQUIRE_SUMMARY=1 \
+   ***REDACTED_RUBYGEMS_KEY*** \
+   ***REDACTED_RUBYGEMS_KEY***,notebooklm_ingest \
+   ***REDACTED_RUBYGEMS_KEY*** \
    RANKER_AI_ENABLED=0 \
    ./scripts/generate-and-deploy.sh
    ```
@@ -33,7 +33,7 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
 
 ## NotebookLM ingest behavior
 
-Production runs must not spend project OpenRouter credits in OpenClaw mode. `generate-and-deploy.sh` defaults `RANKER_AI_ENABLED=0` when `AI_DIGEST_ENGINE=openclaw`, so ranking uses deterministic signals unless Rickie explicitly opts back in.
+Production runs must not spend project OpenRouter credits from the AI Digest app in OpenClaw mode. `generate-and-deploy.sh` defaults `RANKER_AI_ENABLED=0` when `AI_DIGEST_ENGINE=openclaw`, so ranking uses deterministic signals unless Rickie explicitly opts back in. OpenRouter usage should come from the OpenClaw cron agent model (`openrouter/free`) or current OpenClaw routing, not from `llm_client.py` inside AI Digest.
 
 Production runs use the robust NotebookLM path:
 
