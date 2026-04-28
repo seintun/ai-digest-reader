@@ -242,11 +242,15 @@ def main():
     ranking_cost_source = str(ranking_usage.get("cost_source", "unavailable"))
     summary_cost_source = str(summary_usage.get("cost_source", "unavailable"))
     openrouter_cost_used = "openrouter_usage" in {ranking_cost_source, summary_cost_source} or "mixed_openrouter_and_estimate" in {ranking_cost_source, summary_cost_source}
+    estimated_cost_used = "estimate" in ranking_cost_source or "estimate" in summary_cost_source
     cost_sources = sorted({ranking_cost_source, summary_cost_source})
     if openrouter_cost_used:
         pricing_source = "OpenRouter response usage accounting (`usage.cost`, credits treated as USD-equivalent)"
+    elif estimated_cost_used:
+        pricing_source = "Static token estimate for OpenClaw/subscription/free model usage; actual marginal cost may be lower, free, or unknown"
     else:
         pricing_source = "No OpenRouter reported cost for this run"
+    estimated_tokens = int(ranking_usage.get("total_tokens", ranking_usage.get("estimated_tokens", 0)) or 0) + int(summary_usage.get("total_tokens", summary_usage.get("estimated_tokens", 0)) or 0)
 
     total_seconds = time.perf_counter() - run_started
     metrics = {
@@ -272,6 +276,8 @@ def main():
             "pricing_source": pricing_source,
             "cost_sources": cost_sources,
             "openrouter_cost_used": openrouter_cost_used,
+            "estimated_cost_used": estimated_cost_used,
+            "estimated_tokens": estimated_tokens,
             "session_model_usd": session_model_cost,
             "ranking_llm": ranking_usage,
             "summary_llm": summary_usage,

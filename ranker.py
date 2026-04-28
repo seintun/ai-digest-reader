@@ -15,7 +15,7 @@ from typing import Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 from llm_client import LLMClient
-from model_pricing import usage_to_dict
+from model_pricing import estimate_llm_cost_usd, usage_to_dict
 from schema import extract_excerpt, parse_llm_json
 
 QUALITY_MAX_RETRIES = int(os.environ.get("RANKER_AI_MAX_RETRIES", "0") or "0")
@@ -237,11 +237,23 @@ def _request_openclaw_quality_ratings(candidates: List[Tuple[str, str]]) -> Tupl
     if not candidates:
         return None, usage_to_dict(0, 0)
     prompt = _quality_prompt(candidates)
+    estimated_input_tokens = max(1, len(prompt) // 4)
+    estimated_output_tokens = max(20, 12 * len(candidates))
+    estimate_rate = float(os.environ.get("OPENCLAW_RANKER_ESTIMATE_USD_PER_1K_TOKENS", os.environ.get("RANKER_AI_ESTIMATE_USD_PER_1K_TOKENS", "0.01")) or "0.01")
     usage = usage_to_dict(0, 0)
     usage.update({
-        "cost_source": "openclaw_metrics",
+        "input_tokens": estimated_input_tokens,
+        "output_tokens": estimated_output_tokens,
+        "total_tokens": estimated_input_tokens + estimated_output_tokens,
+        "cost_usd": estimate_llm_cost_usd(estimated_input_tokens, estimated_output_tokens, estimate_rate),
+        "cost_source": "openclaw_static_estimate",
+        "cost_label": f"estimated at ${estimate_rate:.4f}/1K tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
-        "estimated_tokens": max(1, len(prompt) // 4),
+        "requested_model": os.environ.get("OPENCLAW_RANKER_MODEL", "openclaw-current"),
+        "estimated_tokens": estimated_input_tokens + estimated_output_tokens,
+        "estimated_input_tokens": estimated_input_tokens,
+        "estimated_output_tokens": estimated_output_tokens,
+        "estimate_usd_per_1k_tokens": estimate_rate,
         "ai_parallel_enabled": False,
         "ai_parallel_workers": 1,
         "ai_batches": 1,
