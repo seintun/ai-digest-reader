@@ -3,6 +3,14 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
+
+def estimate_llm_cost_usd(input_tokens: int, output_tokens: int, usd_per_1k_tokens: float | None = None) -> float:
+    """Static cost estimate when provider/runtime does not report marginal cost."""
+    if usd_per_1k_tokens is None:
+        usd_per_1k_tokens = 0.01
+    total_tokens = max(0, int(input_tokens or 0)) + max(0, int(output_tokens or 0))
+    return round((total_tokens / 1000.0) * max(0.0, float(usd_per_1k_tokens)), 6)
+
 def usage_to_dict(
     input_tokens: int,
     output_tokens: int,

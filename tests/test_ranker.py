@@ -172,3 +172,26 @@ def test_ranker_unsupported_provider_falls_back(monkeypatch):
     _, metrics = rank_posts_with_metrics(posts, scraped)
     assert metrics["llm_quality_used"] is False
     assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "unsupported_provider:mystery"
+
+
+def test_openclaw_ranker_provider_reports_token_and_cost_estimates(monkeypatch):
+    monkeypatch.setenv("RANKER_AI_ENABLED", "1")
+    monkeypatch.setenv("AI_DIGEST_RANKER_PROVIDER", "openclaw")
+    monkeypatch.setenv("OPENCLAW_RANKER_ESTIMATE_USD_PER_1K_TOKENS", "0.02")
+
+    class Completed:
+        returncode = 0
+        stdout = '{"ratings":[{"story_id":"rd-0","quality":8}]}'
+        stderr = ""
+
+    monkeypatch.setattr(ranker.subprocess, "run", lambda *args, **kwargs: Completed())
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2, "b": "body"}]
+    scraped = {"https://example.com/a": "article text " * 20}
+    _, metrics = rank_posts_with_metrics(posts, scraped)
+    usage = metrics["llm_usage"]
+    assert usage["cost_source"] == "openclaw_static_estimate"
+    assert usage["input_tokens"] > 0
+    assert usage["output_tokens"] > 0
+    assert usage["total_tokens"] == usage["input_tokens"] + usage["output_tokens"]
+    assert usage["cost_usd"] > 0
+    assert usage["estimate_usd_per_1k_tokens"] == 0.02
