@@ -1,9 +1,11 @@
 from __future__ import annotations
 
 import json
+import os
 import shlex
 import subprocess
 import tempfile
+from datetime import date
 from pathlib import Path
 from typing import Any
 
@@ -57,3 +59,51 @@ def generate_summary_with_openclaw(ranked_posts: list[dict[str, Any]], config: D
             return None, {"source": "openclaw", "generated": False, "error": "; ".join(warnings)}
         metrics = payload.get("metrics", {}) if isinstance(payload, dict) else {}
         return summary, {"source": "openclaw", "generated": True, "usage": {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0, "cost_source": "openclaw_metrics"}, "openclaw": metrics, "validation_warnings": warnings}
+
+
+def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineConfig, dry_run: bool = False) -> dict[str, Any]:
+    """Ingest ranked digest links into a daily NotebookLM notebook.
+
+    Args:
+        digest: The full digest dict containing ranked lists under 'r', 'h', 'rs'.
+        config: Engine configuration (used to locate research-engine and stage flags).
+        dry_run: If True, only plan without calling NotebookLM API.
+
+    Returns:
+        Dict with ingestion result including notebook_id, notebook_url, counts, and dry_run flag.
+    """
+    posts = digest.get("r", []) + digest.get("h", []) + digest.get("rs", [])
+    if not posts:
+        return {"error": "no posts to ingest", "notebook_id": None, "notebook_url": None}
+    with tempfile.TemporaryDirectory(prefix="digest-notebooklm-") as tmp:
+        tmp_path = Path(tmp)
+        input_path = tmp_path / "posts.json"
+        output_path = tmp_path / "ingest-report.json"
+        input_path.write_text(json.dumps(posts), encoding="utf-8")
+        research_engine_root = Path.home() / ".openclaw" / "workspace" / "projects" / "research-engine"
+        if not research_engine_root.exists():
+            return {"error": f"research-engine not found at {research_engine_root}", "notebook_id": None, "notebook_url": None}
+        # Build command to call research-engine's notebooklm-ingest CLI
+        cmd = (
+            f"cd {research_engine_root} && .venv/bin/python -m research_engine.cli notebooklm-ingest "
+            f"--input {shlex.quote(str(input_path))} "
+            f"--output {shlex.quote(str(output_path))} "
+            f"--max-sources 100"
+        )
+        if dry_run:
+            cmd += " --dry-run"
+        completed = subprocess.run(cmd, shell=True, text=True, capture_output=True, timeout=300)
+        if completed.returncode != 0:
+            return {
+                "error": "notebooklm-ingest command failed",
+                "exit_code": completed.returncode,
+                "stderr": completed.stderr.strip(),
+                "stdout": completed.stdout.strip(),
+                "notebook_id": None,
+                "notebook_url": None,
+            }
+        try:
+            report = json.loads(output_path.read_text(encoding="utf-8"))
+        except Exception as e:
+            return {"error": f"Failed to parse ingestion report: {e}", "notebook_id": None, "notebook_url": None}
+        return report

@@ -73,9 +73,10 @@ echo ""
 
 # Step 4: Commit & push (triggers Vercel auto-deploy)
 echo "[4/4] Committing..."
-git pull --rebase
+# Stage changes first so pull --rebase won't fail on dirty worktree
 git add ai-digest-reader/public/data/digest.json
 [ -f reddit-cache.json ] && git add reddit-cache.json
+git pull --rebase
 if git diff --cached --quiet; then
   echo "No changes to digest.json, skipping commit"
 else

@@ -36,7 +36,7 @@ def load_engine_config(env: dict[str, str] | None = None) -> DigestEngineConfig:
     if engine not in {"standalone", "openclaw"}:
         raise ValueError("AI_DIGEST_ENGINE must be 'standalone' or 'openclaw'")
     stages = _split_stages(env.get("AI_DIGEST_OPENCLAW_STAGES") or "summary") if engine == "openclaw" else ()
-    unsupported = set(stages) - {"summary"}
+    unsupported = set(stages) - {"summary", "notebooklm_ingest"}
     if unsupported:
         raise ValueError(f"Unsupported AI_DIGEST_OPENCLAW_STAGES: {', '.join(sorted(unsupported))}")
     return DigestEngineConfig(
