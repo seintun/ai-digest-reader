@@ -79,3 +79,25 @@ Include:
 - log path
 - concise error
 - whether anything was committed/pushed
+
+## Lock and preflight behavior
+
+`generate-and-deploy.sh` owns `/tmp/dailydigest-generate-and-deploy.lock` by default. The lock now writes owner metadata (`pid`, start time, host, cwd, command) and refuses to run if the owner PID is still alive.
+
+If the owner PID is gone and the lock is older than `AI_DIGEST_LOCK_STALE_AFTER_SECONDS` (default: 4 hours), the script renames it to a `.stale.<timestamp>` forensic path and continues. To override for tests or emergency maintenance:
+
+```bash
+AI_DIGEST_LOCK_DIR=/tmp/some-test-lock \
+AI_DIGEST_LOCK_STALE_AFTER_SECONDS=60 \
+./scripts/generate-and-deploy.sh
+```
+
+The script also fails early before expensive work if:
+
+- `.venv/bin/python`, validation script, or frontend directory is missing
+- OpenClaw engine/stage config is invalid
+- NotebookLM ingest is requested but no NotebookLM profile path exists
+- git working tree is dirty before generation
+- git remote is unreachable or `git pull --rebase` fails
+
+Current run status is written to `output/latest-run.json` and detailed logs remain under `output/<date>/run-*.log`.

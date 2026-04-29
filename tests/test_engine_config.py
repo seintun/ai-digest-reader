@@ -15,6 +15,13 @@ def test_load_engine_config_openclaw_summary_is_explicit():
     assert "credential source category: openclaw_explicit" in render_preflight(config)
 
 
+def test_load_engine_config_openclaw_notebooklm_ingest_stage_is_supported():
+    config = load_engine_config({"AI_DIGEST_ENGINE": "openclaw", "AI_DIGEST_OPENCLAW_STAGES": "summary,notebooklm_ingest"})
+    assert config.engine == "openclaw"
+    assert config.openclaw_stages == ("summary", "notebooklm_ingest")
+    assert config.uses_openclaw_summary
+
+
 def test_load_engine_config_rejects_unknown_stage():
     try:
         load_engine_config({"AI_DIGEST_ENGINE": "openclaw", "AI_DIGEST_OPENCLAW_STAGES": "rank"})
