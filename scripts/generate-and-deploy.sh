@@ -197,6 +197,10 @@ PYCONF
 
 preflight
 
+latest_valid_digest() {
+  find output -path '*/digest.json' -type f -print0 2>/dev/null |     xargs -0 ls -t 2>/dev/null | head -1 || true
+}
+
 echo "=== DailyDigest: Generate & Deploy ==="
 echo "Started: $(date '+%Y-%m-%d %H:%M:%S')"
 echo "Run log: $RUN_LOG"
@@ -206,7 +210,26 @@ echo ""
 CURRENT_PHASE="generate"
 write_latest_run "running" "$CURRENT_PHASE" "generating digest"
 echo "[1/4] Generating digest..."
-.venv/bin/python digest.py
+
+generate_attempt=1
+generate_ok=0
+while [ "$generate_attempt" -le 2 ]; do
+  if .venv/bin/python digest.py; then
+    generate_ok=1
+    break
+  fi
+  echo "[warn] digest.py failed on attempt $generate_attempt"
+  if [ "$generate_attempt" -lt 2 ]; then
+    echo "[warn] retrying once after a short backoff..."
+    sleep 2
+  fi
+  generate_attempt=$((generate_attempt + 1))
+done
+
+if [ "$generate_ok" -ne 1 ]; then
+  echo "[warn] digest generation did not complete cleanly; looking for last valid digest artifact..."
+fi
+
 echo ""
 
 # Step 2: Validate and copy to frontend
@@ -217,8 +240,12 @@ DIGEST_SRC="output/$TODAY/digest.json"
 DIGEST_DST="ai-digest-reader/public/data/digest.json"
 
 if [ ! -f "$DIGEST_SRC" ]; then
-  echo "ERROR: Expected digest at $DIGEST_SRC but not found"
-  exit 1
+  DIGEST_SRC="$(latest_valid_digest)"
+  if [ -z "$DIGEST_SRC" ] || [ ! -f "$DIGEST_SRC" ]; then
+    echo "ERROR: Expected digest at output/$TODAY/digest.json and no fallback digest was found"
+    exit 1
+  fi
+  echo "[warn] using fallback digest artifact: $DIGEST_SRC"
 fi
 
 VALIDATE_ARGS=()
