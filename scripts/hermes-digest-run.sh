@@ -8,22 +8,112 @@ cd "$REPO_ROOT"
 MODE="${AI_DIGEST_HERMES_MODE:-validate-only}"
 NO_AI="${AI_DIGEST_NO_AI:-0}"
 LIMIT="${AI_DIGEST_LIMIT:-}"
-STATUS="started"
+
+usage() {
+  cat <<'USAGE'
+Usage: scripts/hermes-digest-run.sh [--full|--validate-only|--check-only] [--no-ai] [--limit N]
+
+Modes:
+  --full           Run the full generate → validate → build → push flow.
+  --validate-only   Run generation and validation, but skip build and push.
+  --check-only      Skip generation and validate the latest existing digest artifact.
+
+Environment variables remain supported for compatibility:
+  AI_DIGEST_HERMES_MODE, AI_DIGEST_NO_AI, AI_DIGEST_LIMIT
+USAGE
+}
+
+while [ "$#" -gt 0 ]; do
+  case "$1" in
+    --full)
+      MODE="full"
+      ;;
+    --validate-only)
+      MODE="validate-only"
+      ;;
+    --check-only)
+      MODE="check-only"
+      ;;
+    --no-ai)
+      NO_AI=1
+      ;;
+    --limit)
+      shift
+      [ "$#" -gt 0 ] || { echo "ERROR: --limit requires a value"; exit 2; }
+      LIMIT="$1"
+      ;;
+    --help|-h)
+      usage
+      exit 0
+      ;;
+    *)
+      echo "ERROR: unknown argument: $1"
+      usage
+      exit 2
+      ;;
+  esac
+  shift
+done
 
 summary_json() {
   python3 - "$@" <<'PY'
-import json, sys, datetime
-mode, status, exit_code, run_log = sys.argv[1:5]
+import datetime
+import json
+import sys
+mode, phase, status, exit_code, run_log, validated, built, pushed, digest_path = sys.argv[1:10]
 payload = {
     "wrapper": "hermes-digest-run",
     "mode": mode,
+    "phase": phase,
     "status": status,
     "exit_code": int(exit_code),
+    "validated": validated == "1",
+    "built": built == "1",
+    "pushed": pushed == "1",
+    "digest_path": digest_path,
     "run_log": run_log,
     "timestamp": datetime.datetime.now(datetime.UTC).isoformat().replace("+00:00", "Z"),
 }
 print(json.dumps(payload, separators=(",", ":")))
 PY
+}
+
+latest_digest_path() {
+  python3 - <<'PY'
+from pathlib import Path
+candidates = []
+for path in Path('output').glob('*/digest.json'):
+    try:
+        candidates.append((path.stat().st_mtime, path))
+    except FileNotFoundError:
+        pass
+if not candidates:
+    print('')
+else:
+    candidates.sort()
+    print(candidates[-1][1])
+PY
+}
+
+run_check_only() {
+  local digest_path
+  digest_path="${AI_DIGEST_DIGEST_PATH:-ai-digest-reader/public/data/digest.json}"
+  if [ ! -f "$digest_path" ]; then
+    digest_path="$(latest_digest_path)"
+  fi
+  if [ -z "$digest_path" ] || [ ! -f "$digest_path" ]; then
+    echo "ERROR: no digest artifact found to validate"
+    return 1
+  fi
+
+  local validate_args=()
+  if [ "${AI_DIGEST_REQUIRE_SUMMARY:-1}" = "1" ]; then
+    validate_args+=(--require-summary)
+  fi
+
+  .venv/bin/python scripts/validate-digest.py "$digest_path" "${validate_args[@]}"
+  echo "[check-only] Validated existing digest: $digest_path"
+  echo "$(summary_json "$MODE" "check" "succeeded" 0 "$RUN_LOG" 1 0 0 "$digest_path")"
 }
 
 RUN_LOG="output/hermes-digest-run.$(date +%Y%m%d-%H%M%S).log"
@@ -32,6 +122,11 @@ exec > >(tee -a "$RUN_LOG") 2>&1
 
 echo "[hermes] digest wrapper starting"
 echo "[hermes] mode=$MODE"
+
+if [ "$MODE" = "check-only" ]; then
+  run_check_only
+  exit 0
+fi
 
 if [ "$MODE" = "validate-only" ]; then
   export AI_DIGEST_DEPLOY_MODE=validate-only
@@ -46,13 +141,29 @@ else
   export AI_DIGEST_DEPLOY_MODE=full
 fi
 
+EXIT_CODE=0
+STATUS="started"
+PHASE="generate"
+VALIDATED=0
+BUILT=0
+PUSHED=0
+DIGEST_PATH=""
+
 if ./scripts/generate-and-deploy.sh; then
   EXIT_CODE=0
   STATUS="succeeded"
+  VALIDATED=1
+  BUILT=1
+  PUSHED=1
 else
   EXIT_CODE=$?
   STATUS="failed"
 fi
 
-echo "$(summary_json "$MODE" "$STATUS" "$EXIT_CODE" "$RUN_LOG")"
+DIGEST_PATH="${AI_DIGEST_DIGEST_PATH:-ai-digest-reader/public/data/digest.json}"
+if [ ! -f "$DIGEST_PATH" ]; then
+  DIGEST_PATH="$(latest_digest_path)"
+fi
+
+echo "$(summary_json "$MODE" "$PHASE" "$STATUS" "$EXIT_CODE" "$RUN_LOG" "$VALIDATED" "$BUILT" "$PUSHED" "$DIGEST_PATH")"
 exit "$EXIT_CODE"

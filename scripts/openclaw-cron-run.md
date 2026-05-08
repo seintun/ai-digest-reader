@@ -24,19 +24,23 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
    AI_DIGEST_NO_AI=1 \
    ./scripts/hermes-digest-run.sh
    ```
-4. Ensure the final digest has a schema-v2 `summary` and passes:
+4. If you only want to validate the latest existing digest artifact, use:
+   ```bash
+   ./scripts/hermes-digest-run.sh --check-only
+   ```
+5. Ensure the final digest has a schema-v2 `summary` and passes:
    ```bash
    .venv/bin/python scripts/validate-digest.py ai-digest-reader/public/data/digest.json --require-summary
    ```
-5. If the generated OpenClaw summary is too extractive/flat, Dexter may replace it with a richer schema-v2 summary generated from the ranked stories, but must obey these rules:
+6. If the generated OpenClaw summary is too extractive/flat, Dexter may replace it with a richer schema-v2 summary generated from the ranked stories, but must obey these rules:
    - use only stories present in the digest
    - `mustRead[*].id` must match real story IDs
    - `mustRead[*].url` must match the source story URL
    - no invented sources, facts, or URLs
    - re-run `scripts/validate-digest.py --require-summary` after editing
    - rebuild before committing/pushing
-6. Commit and push only after validation and frontend build pass.
-7. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
+7. Commit and push only after validation and frontend build pass.
+8. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
 
 ## NotebookLM ingest behavior
 
