@@ -170,5 +170,24 @@ if [ ! -f "$DIGEST_PATH" ]; then
   DIGEST_PATH="$(latest_digest_path)"
 fi
 
-echo "$(summary_json "$MODE" "$PHASE" "$STATUS" "$EXIT_CODE" "$RUN_LOG" "$VALIDATED" "$BUILT" "$PUSHED" "$DIGEST_PATH")"
+SUMMARY_JSON="$(summary_json "$MODE" "$PHASE" "$STATUS" "$EXIT_CODE" "$RUN_LOG" "$VALIDATED" "$BUILT" "$PUSHED" "$DIGEST_PATH")"
+
+if [ "$EXIT_CODE" = "0" ] && [ -n "$DIGEST_PATH" ] && [ -f "$DIGEST_PATH" ]; then
+  report_path="output/benchmarks/$(date +%Y-%m-%d)/summary-report.md"
+  if [ -f "$REPO_ROOT/scripts/write_summary_benchmark_report.py" ]; then
+    .venv/bin/python "$REPO_ROOT/scripts/write_summary_benchmark_report.py" "$DIGEST_PATH" "$report_path" >/dev/null
+    echo "[benchmark] wrote report: $report_path"
+    SUMMARY_JSON="$SUMMARY_JSON" REPORT_PATH="$report_path" python3 - <<'PY'
+import json, os
+payload = json.loads(os.environ["SUMMARY_JSON"])
+payload["report_path"] = os.environ["REPORT_PATH"]
+print(json.dumps(payload, separators=(",", ":")))
+PY
+  else
+    echo "[benchmark] report generator unavailable; skipping report write"
+    echo "$SUMMARY_JSON"
+  fi
+else
+  echo "$SUMMARY_JSON"
+fi
 exit "$EXIT_CODE"
