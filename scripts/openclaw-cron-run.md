@@ -16,21 +16,27 @@ AI Digest remains independent, but scheduled production runs are owned by OpenCl
    AI_DIGEST_REQUIRE_SUMMARY=1 \
    AI_DIGEST_RANKER_PROVIDER=openclaw \
    RANKER_AI_ENABLED=1 \
-   ./scripts/generate-and-deploy.sh
+   ./scripts/hermes-digest-run.sh
    ```
-3. Ensure the final digest has a schema-v2 `summary` and passes:
+3. If Hermes is only validating the pipeline during a dry run, set:
+   ```bash
+   AI_DIGEST_HERMES_MODE=validate-only \
+   AI_DIGEST_NO_AI=1 \
+   ./scripts/hermes-digest-run.sh
+   ```
+4. Ensure the final digest has a schema-v2 `summary` and passes:
    ```bash
    .venv/bin/python scripts/validate-digest.py ai-digest-reader/public/data/digest.json --require-summary
    ```
-4. If the generated OpenClaw summary is too extractive/flat, Dexter may replace it with a richer schema-v2 summary generated from the ranked stories, but must obey these rules:
+5. If the generated OpenClaw summary is too extractive/flat, Dexter may replace it with a richer schema-v2 summary generated from the ranked stories, but must obey these rules:
    - use only stories present in the digest
    - `mustRead[*].id` must match real story IDs
    - `mustRead[*].url` must match the source story URL
    - no invented sources, facts, or URLs
    - re-run `scripts/validate-digest.py --require-summary` after editing
    - rebuild before committing/pushing
-5. Commit and push only after validation and frontend build pass.
-6. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
+6. Commit and push only after validation and frontend build pass.
+7. Report to Rickie if anything fails: generation, validation, build, git push, or deploy-triggering commit.
 
 ## NotebookLM ingest behavior
 

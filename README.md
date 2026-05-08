@@ -151,7 +151,7 @@ AI_DIGEST_REQUIRE_SUMMARY=1 \
 ./scripts/generate-and-deploy.sh
 ```
 
-OpenClaw/Dexter should report failures to Rickie if generation, validation, build, commit, or push fails. The runbook is [`scripts/openclaw-cron-run.md`](scripts/openclaw-cron-run.md).
+OpenClaw/Dexter should report failures to Rickie if generation, validation, build, commit, or push fails. Hermes can own the schedule by invoking [`scripts/hermes-digest-run.sh`](scripts/hermes-digest-run.sh), which defaults to validation-only mode unless `AI_DIGEST_HERMES_MODE=full` is set. The runbook is [`scripts/openclaw-cron-run.md`](scripts/openclaw-cron-run.md).
 
 ### Legacy local crontab
 
