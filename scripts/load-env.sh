@@ -26,7 +26,9 @@ load_env_preserve_existing() {
     fi
 
     existing="${!key-}"
-    if [ -n "$value" ] || [ -z "$existing" ]; then
+    if [ -z "${existing+x}" ]; then
+      export "$key=$value"
+    elif [ -z "$existing" ] && [ -n "$value" ]; then
       export "$key=$value"
     fi
   done < "$env_file"

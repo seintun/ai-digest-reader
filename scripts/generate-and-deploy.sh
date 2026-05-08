@@ -160,6 +160,8 @@ if [ "${AI_DIGEST_ENGINE:-standalone}" = "openclaw" ]; then
   fi
 fi
 
+DEPLOY_MODE="${AI_DIGEST_DEPLOY_MODE:-full}"
+
 preflight() {
   echo "[preflight] Checking runtime, config, git, and deployment prerequisites..."
   [ -x .venv/bin/python ] || { echo "ERROR: .venv/bin/python not found or not executable"; return 1; }
@@ -182,6 +184,11 @@ PYCONF
       return 1
     fi
     echo "NotebookLM profile: $notebooklm_home"
+  fi
+
+  if [ "$DEPLOY_MODE" = "validate-only" ]; then
+    echo "[preflight] validate-only mode: skipping git remote and worktree checks"
+    return 0
   fi
 
   if [ -n "$(git status --porcelain)" ]; then
@@ -213,8 +220,15 @@ echo "[1/4] Generating digest..."
 
 generate_attempt=1
 generate_ok=0
+digest_args=()
+if [ "${AI_DIGEST_NO_AI:-0}" = "1" ]; then
+  digest_args+=(--no-ai)
+fi
+if [ -n "${AI_DIGEST_LIMIT:-}" ]; then
+  digest_args+=(--limit "$AI_DIGEST_LIMIT")
+fi
 while [ "$generate_attempt" -le 2 ]; do
-  if .venv/bin/python digest.py; then
+  if .venv/bin/python digest.py "${digest_args[@]}"; then
     generate_ok=1
     break
   fi
@@ -257,6 +271,14 @@ fi
 cp "$DIGEST_SRC" "$DIGEST_DST"
 echo "Copied: $DIGEST_SRC → $DIGEST_DST"
 echo ""
+
+if [ "$DEPLOY_MODE" = "validate-only" ]; then
+  CURRENT_PHASE="done"
+  write_latest_run "succeeded" "$CURRENT_PHASE" "validation-only run completed"
+  echo "[validate-only] Skipping build and git push steps"
+  echo "✓ Validation-only done! $(date '+%H:%M:%S')"
+  exit 0
+fi
 
 # Step 3: Build
 CURRENT_PHASE="build"
