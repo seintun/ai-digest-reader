@@ -5,6 +5,7 @@ import os
 import shlex
 import subprocess
 import tempfile
+import time
 from datetime import date
 from pathlib import Path
 from typing import Any
@@ -32,6 +33,7 @@ def validate_grounded_summary(summary: Any, ranked_posts: list[dict[str, Any]]) 
 def generate_summary_with_openclaw(ranked_posts: list[dict[str, Any]], config: DigestEngineConfig) -> tuple[dict[str, Any] | None, dict[str, Any]]:
     if not ranked_posts:
         return None, {"source": "openclaw", "generated": False, "error": "no ranked posts"}
+    started = time.perf_counter()
     with tempfile.TemporaryDirectory(prefix="ai-digest-openclaw-") as tmp:
         tmp_path = Path(tmp)
         input_path = tmp_path / "ranked-posts.json"
@@ -46,19 +48,21 @@ def generate_summary_with_openclaw(ranked_posts: list[dict[str, Any]], config: D
             f"--metrics-json {shlex.quote(str(metrics_path))}"
         )
         completed = subprocess.run(command, shell=True, text=True, capture_output=True, timeout=120)
+        duration = round(time.perf_counter() - started, 3)
         if completed.returncode != 0:
             return None, {
                 "source": "openclaw",
                 "generated": False,
+                "duration_seconds": duration,
                 "error": completed.stderr.strip() or completed.stdout.strip() or f"exit {completed.returncode}",
             }
         payload = json.loads(output_path.read_text(encoding="utf-8"))
         summary = payload.get("summary")
         valid, warnings = validate_grounded_summary(summary, ranked_posts[:15])
         if not valid:
-            return None, {"source": "openclaw", "generated": False, "error": "; ".join(warnings)}
+            return None, {"source": "openclaw", "generated": False, "duration_seconds": duration, "error": "; ".join(warnings)}
         metrics = payload.get("metrics", {}) if isinstance(payload, dict) else {}
-        return summary, {"source": "openclaw", "generated": True, "usage": {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0, "cost_source": "openclaw_metrics"}, "openclaw": metrics, "validation_warnings": warnings}
+        return summary, {"source": "openclaw", "generated": True, "duration_seconds": duration, "usage": {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0, "cost_source": "openclaw_metrics"}, "openclaw": metrics, "validation_warnings": warnings}
 
 
 def ingest_digest_into_notebooklm(digest: dict[str, Any], config: DigestEngineConfig, dry_run: bool = False) -> dict[str, Any]:

@@ -19,7 +19,7 @@ from ranker import rank_posts_with_metrics
 from scraper import scrape_articles_with_stats, select_scrape_candidates
 from model_pricing import usage_to_dict
 from engine.config import load_engine_config, render_preflight
-from engine.openclaw import generate_summary_with_openclaw
+from engine.summary import generate_summary_with_provider
 
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
@@ -29,17 +29,6 @@ except ImportError:
     HN_CATEGORY = "Tech"
     RSS_FEEDS = []
     fetch_all_rss_feeds = None
-
-try:
-    from analyzer_v2 import generate_summary as generate_summary_v2
-except ImportError:
-    generate_summary_v2 = None
-
-try:
-    from analyzer_v2 import generate_summary_with_meta
-except ImportError:
-    generate_summary_with_meta = None
-
 
 def normalize_posts(posts: List[Dict], prefix: str, category: str = "") -> List[Dict]:
     """Convert raw post data to digest schema format with short keys."""
@@ -193,27 +182,19 @@ def main():
     summary = None
     summary_meta = {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
     summary_started = time.perf_counter()
-    if ranked_posts and not args.no_ai and engine_config.uses_openclaw_summary:
-        print("Generating AI summary via OpenClaw engine...")
-        summary, summary_meta = generate_summary_with_openclaw(ranked_posts[:15], engine_config)
+    if ranked_posts and not args.no_ai:
+        print(f"Generating AI summary via {engine_config.summary_provider} provider...")
+        summary, summary_meta = generate_summary_with_provider(ranked_posts[:15], engine_config)
         if summary:
-            print("OpenClaw AI summary generated successfully")
-        elif engine_config.openclaw_on_failure == "fail-no-deploy":
-            raise RuntimeError(f"OpenClaw summary unavailable: {summary_meta.get('error', 'unknown error')}")
-    elif generate_summary_with_meta and ranked_posts and not args.no_ai:
-        print("Generating content-aware AI summary...")
-        summary, summary_meta = generate_summary_with_meta(ranked_posts[:15])
-        if summary:
-            print("AI summary generated successfully")
+            print(f"{summary_meta.get('source', 'AI')} summary generated successfully")
         else:
-            print("Content-aware summary unavailable, trying fallback summary...")
-    elif generate_summary_v2 and ranked_posts and not args.no_ai:
-        summary = generate_summary_v2(ranked_posts[:15])
-        summary_meta = {"source": "openrouter_or_cli", "generated": bool(summary)}
-
-    if summary is None and not args.no_ai:
-        print("AI summary unavailable, continuing without it")
-        summary_meta = {"source": "none", "generated": False, "usage": summary_meta.get("usage", usage_to_dict(0, 0))}
+            print("AI summary unavailable, continuing without it")
+            if engine_config.uses_benchmark_summary:
+                print("[warn] benchmark mode had no successful summary; continuing without summary")
+            elif engine_config.uses_openclaw_summary and engine_config.openclaw_on_failure == "fail-no-deploy":
+                raise RuntimeError(f"OpenClaw summary unavailable: {summary_meta.get('error', 'unknown error')}")
+            elif engine_config.uses_hermes_summary:
+                raise RuntimeError(f"Hermes summary unavailable: {summary_meta.get('error', 'unknown error')}")
     summary_seconds = time.perf_counter() - summary_started
 
     digest_date = date.today().strftime(DATE_FORMAT)
@@ -289,11 +270,15 @@ def main():
             "stages": list(engine_config.openclaw_stages),
             "credential_source": "openclaw_explicit" if engine_config.engine == "openclaw" else "project_env_or_none",
             "failure_policy": engine_config.openclaw_on_failure if engine_config.engine == "openclaw" else "standalone default",
+            "summary_provider": engine_config.summary_provider,
+            "summary_primary": engine_config.summary_primary,
+            "summary_benchmark": engine_config.uses_benchmark_summary,
+            "hermes_model": engine_config.hermes_model,
         },
         "degradation": {
             "scraping_fallback_used": scrape_stats.get("failures", 0) > 0,
             "ranking_fallback_used": not ranking_metrics.get("llm_quality_used", False),
-            "summary_fallback_used": summary_meta.get("source") == "analyzer_v1",
+            "summary_fallback_used": summary_meta.get("source") in {"analyzer_v1", "legacy"},
             "no_summary_fallback_used": not summary_meta.get("generated", False),
         },
     }
