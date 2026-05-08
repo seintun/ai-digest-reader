@@ -153,8 +153,13 @@ if ./scripts/generate-and-deploy.sh; then
   EXIT_CODE=0
   STATUS="succeeded"
   VALIDATED=1
-  BUILT=1
-  PUSHED=1
+  if [ "$MODE" = "full" ]; then
+    BUILT=1
+    PUSHED=1
+  else
+    BUILT=0
+    PUSHED=0
+  fi
 else
   EXIT_CODE=$?
   STATUS="failed"
