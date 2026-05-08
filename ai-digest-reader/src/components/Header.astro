@@ -1,5 +1,5 @@
 ---
-const today = new Date().toLocaleDateString('en-US', {
+const fallbackToday = new Date().toLocaleDateString('en-US', {
   weekday: 'long',
   year: 'numeric',
   month: 'long',
@@ -9,12 +9,13 @@ const today = new Date().toLocaleDateString('en-US', {
 
 <header class="sticky top-0 z-50 border-b border-white/20 dark:border-slate-700/50 backdrop-blur-md bg-white/70 dark:bg-slate-800/60">
   <div class="max-w-5xl mx-auto px-3 sm:px-4">
-    <div class="flex items-center justify-between h-14">
-      <div class="flex flex-col gap-0.5">
+    <div class="flex items-center justify-between min-h-14 py-2 gap-3">
+      <div class="flex flex-col gap-0.5 min-w-0">
         <h1 class="text-lg sm:text-xl font-bold tracking-tight leading-none">
           <span class="text-amber-600 dark:text-amber-400">AI</span><span class="text-slate-900 dark:text-white"> Digest</span>
         </h1>
-        <span class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 tracking-wide">{today}</span>
+        <span id="digest-date" class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400 tracking-wide">{fallbackToday}</span>
+        <span id="digest-generated-at" class="text-[10px] sm:text-xs text-slate-400 dark:text-slate-500 tracking-wide"></span>
       </div>
 
       <div class="flex items-center gap-2">
