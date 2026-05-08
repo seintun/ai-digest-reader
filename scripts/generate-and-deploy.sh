@@ -180,10 +180,11 @@ PYCONF
       notebooklm_home="$HOME/.notebooklm-flyingbacon808"
     fi
     if [ -z "$notebooklm_home" ] || [ ! -d "$notebooklm_home" ]; then
-      echo "ERROR: NotebookLM ingest requested but profile path is missing. Set AI_DIGEST_NOTEBOOKLM_HOME or create ~/.notebooklm-flyingbacon808"
-      return 1
+      echo "[warn] NotebookLM ingest requested but profile path is missing; continuing without NotebookLM ingestion so summary can still run."
+      echo "[warn] Set AI_DIGEST_NOTEBOOKLM_HOME or create ~/.notebooklm-flyingbacon808 to re-enable it later."
+    else
+      echo "NotebookLM profile: $notebooklm_home"
     fi
-    echo "NotebookLM profile: $notebooklm_home"
   fi
 
   if [ "$DEPLOY_MODE" = "validate-only" ]; then
