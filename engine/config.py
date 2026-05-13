@@ -53,7 +53,7 @@ def load_engine_config(env: dict[str, str] | None = None) -> DigestEngineConfig:
     unsupported = set(stages) - {"summary", "notebooklm_ingest"}
     if unsupported:
         raise ValueError(f"Unsupported AI_DIGEST_OPENCLAW_STAGES: {', '.join(sorted(unsupported))}")
-    summary_provider = (env.get("AI_DIGEST_SUMMARY_PROVIDER") or ("openclaw" if engine == "openclaw" else "legacy")).strip().lower()
+    summary_provider = (env.get("AI_DIGEST_SUMMARY_PROVIDER") or "hermes").strip().lower()
     if summary_provider not in {"legacy", "openclaw", "hermes", "benchmark"}:
         raise ValueError("AI_DIGEST_SUMMARY_PROVIDER must be 'legacy', 'openclaw', 'hermes', or 'benchmark'")
     summary_benchmark = (env.get("AI_DIGEST_SUMMARY_BENCHMARK") or "0").strip() == "1"
