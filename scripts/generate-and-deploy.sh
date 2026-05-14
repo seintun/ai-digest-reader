@@ -192,9 +192,10 @@ PYCONF
     return 0
   fi
 
-  if [ -n "$(git status --porcelain)" ]; then
+  dirty_status="$(git status --porcelain -- . ':(exclude).hermes/plans/*' ':(exclude)ai-digest-reader/public/data/digest.json' ':(exclude)reddit-cache.json')"
+  if [ -n "$dirty_status" ]; then
     echo "ERROR: git working tree is dirty before generation. Commit/stash first so deploy cannot fail late."
-    git status --short
+    echo "$dirty_status"
     return 1
   fi
 
