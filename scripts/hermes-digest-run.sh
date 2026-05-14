@@ -133,6 +133,7 @@ if [ "$MODE" = "validate-only" ]; then
   export AI_DIGEST_OPENCLAW_STAGES=summary
   if [ "$NO_AI" = "1" ]; then
     export AI_DIGEST_NO_AI=1
+    export AI_DIGEST_REQUIRE_SUMMARY=0
   fi
   if [ -n "$LIMIT" ]; then
     export AI_DIGEST_LIMIT="$LIMIT"
