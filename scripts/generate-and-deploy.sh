@@ -192,6 +192,18 @@ PYCONF
     return 0
   fi
 
+  generated_paths=(
+    "ai-digest-reader/public/data/digest.json"
+    "reddit-cache.json"
+  )
+
+  for path in "${generated_paths[@]}"; do
+    if ! git diff --quiet -- "$path" || ! git diff --cached --quiet -- "$path"; then
+      echo "[preflight] restoring generated artifact to keep the worktree clean: $path"
+      git restore --staged --worktree -- "$path"
+    fi
+  done
+
   dirty_status="$(git status --porcelain -- . ':(exclude).hermes/plans/*' ':(exclude)ai-digest-reader/public/data/digest.json' ':(exclude)reddit-cache.json')"
   if [ -n "$dirty_status" ]; then
     echo "ERROR: git working tree is dirty before generation. Commit/stash first so deploy cannot fail late."
