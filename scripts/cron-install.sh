@@ -8,8 +8,11 @@ LOG_DIR="$REPO_ROOT/logs"
 
 mkdir -p "$LOG_DIR"
 
-ENTRY_MORNING="0 8 * * * AI_DIGEST_ENGINE=openclaw AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest AI_DIGEST_SUMMARY_PROVIDER=hermes AI_DIGEST_REQUIRE_SUMMARY=1 AI_DIGEST_RANKER_PROVIDER=openclaw RANKER_AI_ENABLED=1 AI_DIGEST_HERMES_COMMAND=hermes AI_DIGEST_HERMES_PROVIDER=omniroute AI_DIGEST_HERMES_MODEL=codex-combo $HERMES_SCRIPT --full >> $LOG_DIR/digest.log 2>&1"
-ENTRY_EVENING="0 17 * * * AI_DIGEST_ENGINE=openclaw AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest AI_DIGEST_SUMMARY_PROVIDER=hermes AI_DIGEST_REQUIRE_SUMMARY=1 AI_DIGEST_RANKER_PROVIDER=openclaw RANKER_AI_ENABLED=1 AI_DIGEST_HERMES_COMMAND=hermes AI_DIGEST_HERMES_PROVIDER=omniroute AI_DIGEST_HERMES_MODEL=codex-combo $HERMES_SCRIPT --full >> $LOG_DIR/digest.log 2>&1"
+HERMES_BIN="$(command -v hermes)"
+PATH_VALUE="$(dirname "$HERMES_BIN"):/usr/local/bin:/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+RUN_ENV="PATH=$PATH_VALUE AI_DIGEST_ENGINE=openclaw AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest AI_DIGEST_SUMMARY_PROVIDER=hermes AI_DIGEST_REQUIRE_SUMMARY=1 AI_DIGEST_RANKER_PROVIDER=openclaw RANKER_AI_ENABLED=1 AI_DIGEST_HERMES_COMMAND=$HERMES_BIN AI_DIGEST_HERMES_PROVIDER=omniroute AI_DIGEST_HERMES_MODEL=codex-combo AI_DIGEST_HERMES_TIMEOUT_SECONDS=300"
+ENTRY_MORNING="0 8 * * * $RUN_ENV $HERMES_SCRIPT --full >> $LOG_DIR/digest.log 2>&1"
+ENTRY_EVENING="0 17 * * * $RUN_ENV $HERMES_SCRIPT --full >> $LOG_DIR/digest.log 2>&1"
 
 # Remove old entries, add new ones
 (crontab -l 2>/dev/null | grep -v "generate-and-deploy\|hermes-digest-run"; echo "$ENTRY_MORNING"; echo "$ENTRY_EVENING") | crontab -
