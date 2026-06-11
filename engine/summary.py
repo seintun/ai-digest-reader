@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 import shlex
 import subprocess
 import time
@@ -14,9 +15,10 @@ from .openclaw import generate_summary_with_openclaw, validate_grounded_summary
 
 def _hermes_command(config: DigestEngineConfig, prompt: str) -> tuple[Optional[str], Dict[str, Any]]:
     cmd = [*shlex.split(config.hermes_command), "chat", "-Q", "--provider", config.hermes_provider, "--model", config.hermes_model, "-q", prompt]
+    timeout_seconds = max(1, int(os.environ.get("AI_DIGEST_HERMES_TIMEOUT_SECONDS", "300") or "300"))
     started = time.perf_counter()
     try:
-        completed = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+        completed = subprocess.run(cmd, capture_output=True, text=True, timeout=timeout_seconds)
     except FileNotFoundError:
         return None, {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0, "cost_source": "hermes_cli_missing", "command": cmd[0] if cmd else config.hermes_command, "duration_seconds": round(time.perf_counter() - started, 3)}
     except subprocess.TimeoutExpired:
