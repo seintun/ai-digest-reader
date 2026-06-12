@@ -1,5 +1,5 @@
-const CACHE_NAME = 'ai-digest-v2';
-const DATA_CACHE = 'ai-digest-data-v2';
+const CACHE_NAME = 'ai-digest-v3';
+const DATA_CACHE = 'ai-digest-data-v3';
 
 const PRECACHE_URLS = [
   '/',
