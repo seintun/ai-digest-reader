@@ -10,7 +10,7 @@ import time
 from typing import Any, Dict, List
 
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
-from fetchers import fetch_reddit_posts, fetch_hn_posts
+from fetchers import fetch_reddit_posts, fetch_hn_posts, reddit_live_fetch_globally_blocked
 from formatter import format_digest
 from pipeline_metrics import (
     render_dashboard,
@@ -68,16 +68,21 @@ def main():
     print("Fetching Reddit posts...")
     fetch_started = time.perf_counter()
     all_reddit_posts = []
+    reddit_live_skipped = reddit_live_fetch_globally_blocked(subreddits)
 
-    def _fetch_subreddit(subreddit: str) -> List[Dict]:
-        posts = fetch_reddit_posts(subreddit, limit=args.limit)
-        print(f"  - {subreddit} ({len(posts)} posts)")
-        return posts
+    if not reddit_live_skipped:
+        def _fetch_subreddit(subreddit: str) -> List[Dict]:
+            posts = fetch_reddit_posts(subreddit, limit=args.limit)
+            print(f"  - {subreddit} ({len(posts)} posts)")
+            return posts
 
-    with ThreadPoolExecutor(max_workers=8) as pool:
-        futures = {pool.submit(_fetch_subreddit, sub): sub for sub in subreddits}
-        for future in as_completed(futures):
-            all_reddit_posts.extend(future.result())
+        reddit_workers = max(1, min(int(os.environ.get("REDDIT_MAX_WORKERS", "8") or "8"), len(subreddits)))
+        with ThreadPoolExecutor(max_workers=reddit_workers) as pool:
+            futures = {pool.submit(_fetch_subreddit, sub): sub for sub in subreddits}
+            for future in as_completed(futures):
+                all_reddit_posts.extend(future.result())
+    else:
+        print("Reddit live fetch skipped after fail-fast probe")
 
     if all_reddit_posts:
         # Save cache for CI environments where Reddit is blocked
@@ -94,7 +99,8 @@ def main():
             try:
                 with open(REDDIT_CACHE_PATH) as f:
                     all_reddit_posts = json.load(f)
-                print(f"Found 0 live Reddit posts — using cache ({len(all_reddit_posts)} posts)")
+                reason = "live fetch skipped" if reddit_live_skipped else "0 live Reddit posts"
+                print(f"Found {reason} — using cache ({len(all_reddit_posts)} posts)")
             except Exception as e:
                 print(f"Found 0 Reddit posts (cache read failed: {e})")
         else:

@@ -139,7 +139,11 @@ def _request_quality_ratings(
     prompt = _quality_prompt(candidates)
     label = f"[batch {batch_num}] " if batch_num else ""
     print(f"Ranking AI: {label}scoring {len(candidates)} excerpts...", flush=True)
-    content, usage = client.complete(prompt)
+    content, usage = client.complete(
+        prompt,
+        max_tokens=int(os.environ.get("RANKER_AI_MAX_TOKENS", "512") or "512"),
+        temperature=float(os.environ.get("RANKER_AI_TEMPERATURE", "0") or "0"),
+    )
     if not content:
         print(f"Ranking AI: {label}failed (no content from LLM)")
         return None, usage

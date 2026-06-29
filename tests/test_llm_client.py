@@ -2,6 +2,8 @@
 import hashlib
 from unittest.mock import MagicMock, patch
 
+import requests
+
 from llm_client import LLMClient
 
 
@@ -19,8 +21,15 @@ def _make_mock_response(content="test content", prompt_tokens=100, completion_to
     return mock_response
 
 
-def _cache_key(prompt, system=None):
-    return hashlib.sha256(((system or "") + prompt).encode()).hexdigest()
+def _cache_key(prompt, system=None, max_tokens=None, temperature=None):
+    return hashlib.sha256(
+        "\0".join([
+            system or "",
+            prompt,
+            "" if max_tokens is None else str(max_tokens),
+            "" if temperature is None else str(temperature),
+        ]).encode()
+    ).hexdigest()
 
 
 def ***REDACTED_RUBYGEMS_KEY***():
@@ -121,3 +130,48 @@ def ***REDACTED_RUBYGEMS_KEY***():
     messages = captured_body.get("messages", [])
     assert any(m.get("role") == "system" and "helpful" in m.get("content", "") for m in messages)
     assert any(m.get("role") == "user" for m in messages)
+
+
+def ***REDACTED_RUBYGEMS_KEY***():
+    client = LLMClient(api_key="test-key")
+    captured_body = {}
+
+    def capture_post(*args, **kwargs):
+        captured_body.update(kwargs.get("json", {}))
+        return _make_mock_response()
+
+    with patch.object(client._session, "post", ***REDACTED_RUBYGEMS_KEY***):
+        client.complete("user prompt", max_tokens=123, temperature=0)
+
+    assert captured_body["max_tokens"] == 123
+    assert captured_body["temperature"] == 0
+
+
+def ***REDACTED_RUBYGEMS_KEY***():
+    client = LLMClient(api_key="test-key")
+    client._cache[_cache_key("user prompt")] = "uncapped cached"
+
+    with patch.object(client._session, "post", ***REDACTED_RUBYGEMS_KEY***("capped response")) as post:
+        content, _usage = client.complete("user prompt", max_tokens=123, temperature=0)
+
+    assert content == "capped response"
+    assert post.call_count == 1
+
+
+def ***REDACTED_RUBYGEMS_KEY***():
+    client = LLMClient(api_key="test-key")
+    error = requests.HTTPError("403 Client Error")
+    error.response = MagicMock(status_code=403)
+    response = MagicMock()
+    response.raise_for_status.side_effect = error
+
+    with patch.object(client._session, "post", ***REDACTED_RUBYGEMS_KEY***) as post:
+        with patch("llm_client.time.sleep") as sleep:
+            with patch("llm_client.subprocess.run") as cli:
+                content, usage = client.complete("test prompt")
+
+    assert content is None
+    assert usage["cost_source"] == "openrouter_http_403"
+    assert post.call_count == 1
+    sleep.assert_not_called()
+    cli.assert_not_called()

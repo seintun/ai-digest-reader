@@ -5,12 +5,16 @@ def test_load_engine_config_defaults_to_standalone():
     config = load_engine_config({})
     assert config.engine == "standalone"
     assert config.openclaw_stages == ()
-    assert config.summary_provider == "legacy"
-    assert "summary provider: legacy" in render_preflight(config)
+    assert config.summary_provider == "hermes"
+    assert "summary provider: hermes" in render_preflight(config)
 
 
 def test_load_engine_config_openclaw_summary_is_explicit():
-    config = load_engine_config({"AI_DIGEST_ENGINE": "openclaw", "AI_DIGEST_OPENCLAW_STAGES": "summary"})
+    config = load_engine_config({
+        "AI_DIGEST_ENGINE": "openclaw",
+        "AI_DIGEST_OPENCLAW_STAGES": "summary",
+        "AI_DIGEST_SUMMARY_PROVIDER": "openclaw",
+    })
     assert config.engine == "openclaw"
     assert config.uses_openclaw_summary
     assert config.summary_provider == "openclaw"
@@ -35,7 +39,11 @@ def test_load_engine_config_benchmark_mode_is_supported():
 
 
 def test_load_engine_config_openclaw_notebooklm_ingest_stage_is_supported():
-    config = load_engine_config({"AI_DIGEST_ENGINE": "openclaw", "AI_DIGEST_OPENCLAW_STAGES": "summary,notebooklm_ingest"})
+    config = load_engine_config({
+        "AI_DIGEST_ENGINE": "openclaw",
+        "AI_DIGEST_OPENCLAW_STAGES": "summary,notebooklm_ingest",
+        "AI_DIGEST_SUMMARY_PROVIDER": "openclaw",
+    })
     assert config.engine == "openclaw"
     assert config.openclaw_stages == ("summary", "notebooklm_ingest")
     assert config.uses_openclaw_summary

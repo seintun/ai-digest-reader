@@ -121,7 +121,7 @@ payload = {
     "phase": phase,
     "message": message,
     "run_log": run_log,
-    "updated_at": datetime.datetime.now(datetime.UTC).isoformat().replace("+00:00", "Z"),
+    "updated_at": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
 }
 with open(path, "w", encoding="utf-8") as f:
     json.dump(payload, f, indent=2)
