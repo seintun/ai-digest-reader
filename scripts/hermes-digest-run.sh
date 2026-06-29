@@ -72,7 +72,7 @@ payload = {
     "pushed": pushed == "1",
     "digest_path": digest_path,
     "run_log": run_log,
-    "timestamp": datetime.datetime.now(datetime.UTC).isoformat().replace("+00:00", "Z"),
+    "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z"),
 }
 print(json.dumps(payload, separators=(",", ":")))
 PY

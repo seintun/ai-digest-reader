@@ -2,6 +2,8 @@
 import hashlib
 from unittest.mock import MagicMock, patch
 
+import requests
+
 from llm_client import LLMClient
 
 
@@ -19,8 +21,15 @@ def _make_mock_response(content="test content", prompt_tokens=100, completion_to
     return mock_response
 
 
-def _cache_key(prompt, system=None):
-    return hashlib.sha256(((system or "") + prompt).encode()).hexdigest()
+def _cache_key(prompt, system=None, max_tokens=None, temperature=None):
+    return hashlib.sha256(
+        "\0".join([
+            system or "",
+            prompt,
+            "" if max_tokens is None else str(max_tokens),
+            "" if temperature is None else str(temperature),
+        ]).encode()
+    ).hexdigest()
 
 
 def test_cache_hit_skips_api_call():
@@ -121,3 +130,48 @@ def test_system_message_included_in_request():
     messages = captured_body.get("messages", [])
     assert any(m.get("role") == "system" and "helpful" in m.get("content", "") for m in messages)
     assert any(m.get("role") == "user" for m in messages)
+
+
+def test_generation_options_included_in_request():
+    client = LLMClient(api_key="test-key")
+    captured_body = {}
+
+    def capture_post(*args, **kwargs):
+        captured_body.update(kwargs.get("json", {}))
+        return _make_mock_response()
+
+    with patch.object(client._session, "post", side_effect=capture_post):
+        client.complete("user prompt", max_tokens=123, temperature=0)
+
+    assert captured_body["max_tokens"] == 123
+    assert captured_body["temperature"] == 0
+
+
+def test_generation_options_are_part_of_cache_key():
+    client = LLMClient(api_key="test-key")
+    client._cache[_cache_key("user prompt")] = "uncapped cached"
+
+    with patch.object(client._session, "post", return_value=_make_mock_response("capped response")) as post:
+        content, _usage = client.complete("user prompt", max_tokens=123, temperature=0)
+
+    assert content == "capped response"
+    assert post.call_count == 1
+
+
+def test_terminal_4xx_fail_fast_skips_retry_and_cli():
+    client = LLMClient(api_key="test-key")
+    error = requests.HTTPError("403 Client Error")
+    error.response = MagicMock(status_code=403)
+    response = MagicMock()
+    response.raise_for_status.side_effect = error
+
+    with patch.object(client._session, "post", return_value=response) as post:
+        with patch("llm_client.time.sleep") as sleep:
+            with patch("llm_client.subprocess.run") as cli:
+                content, usage = client.complete("test prompt")
+
+    assert content is None
+    assert usage["cost_source"] == "openrouter_http_403"
+    assert post.call_count == 1
+    sleep.assert_not_called()
+    cli.assert_not_called()

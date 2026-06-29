@@ -40,15 +40,28 @@ class LLMClient:
         self._session = requests.Session()
         self._cache: dict = {}
 
-    def complete(self, prompt: str, system: str = None) -> tuple[Optional[str], dict]:
+    def complete(
+        self,
+        prompt: str,
+        system: Optional[str] = None,
+        max_tokens: Optional[int] = None,
+        temperature: Optional[float] = None,
+    ) -> tuple[Optional[str], dict]:
         """
         Call the LLM with prompt and optional system message.
         Returns (content_str_or_None, usage_dict).
-        Tries OpenRouter first (with one retry on failure, 2s backoff),
+        Tries OpenRouter first (with one retry, fail-fast on terminal 4xx),
         then falls back to Claude CLI.
         Caches successful responses by content hash to avoid duplicate API calls.
         """
-        cache_key = hashlib.sha256(((system or "") + prompt).encode()).hexdigest()
+        cache_key = hashlib.sha256(
+            "\0".join([
+                system or "",
+                prompt,
+                "" if max_tokens is None else str(max_tokens),
+                "" if temperature is None else str(temperature),
+            ]).encode()
+        ).hexdigest()
         if cache_key in self._cache:
             return (self._cache[cache_key], usage_to_dict(0, 0))
 
@@ -59,6 +72,10 @@ class LLMClient:
             messages.append({"role": "user", "content": prompt})
 
             body = {"model": self._model, "messages": messages}
+            if max_tokens is not None:
+                body["max_tokens"] = int(max_tokens)
+            if temperature is not None:
+                body["temperature"] = float(temperature)
             headers = {
                 **_HEADERS_BASE,
                 "Authorization": f"Bearer {self._api_key}",
@@ -100,6 +117,16 @@ class LLMClient:
                         self._cache[cache_key] = content
                         return (content, usage_dict)
                     return (None, usage_dict)
+                except requests.HTTPError as e:
+                    status_code = getattr(getattr(e, "response", None), "status_code", None)
+                    if isinstance(status_code, int) and status_code in {400, 401, 403, 404, 422}:
+                        print(f"OpenRouter API terminal HTTP {status_code}; skipping retry and CLI fallback")
+                        usage = usage_to_dict(0, 0)
+                        usage["cost_source"] = f"openrouter_http_{status_code}"
+                        return None, usage
+                    print(f"OpenRouter API error: {e}")
+                    if attempt == 0:
+                        time.sleep(2)
                 except Exception as e:
                     print(f"OpenRouter API error: {e}")
                     if attempt == 0:

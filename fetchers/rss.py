@@ -1,10 +1,40 @@
 """RSS/Atom feed fetcher for DailyDigest."""
+from __future__ import annotations
+
+import os
 import re
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import Dict, List
 from urllib.parse import urlparse
 
 import feedparser
+import requests
+
+
+def _env_float(name: str, default: float) -> float:
+    try:
+        return float(os.environ.get(name, str(default)) or default)
+    except ValueError:
+        return default
+
+
+def _env_int(name: str, default: int) -> int:
+    try:
+        return int(os.environ.get(name, str(default)) or default)
+    except ValueError:
+        return default
+
+
+def _rss_timeout() -> tuple[float, float]:
+    return (
+        _env_float("RSS_CONNECT_TIMEOUT", 1.5),
+        _env_float("RSS_READ_TIMEOUT", 5.0),
+    )
+
+
+def _rss_headers() -> dict[str, str]:
+    return {"User-Agent": os.environ.get("RSS_USER_AGENT", os.environ.get("REDDIT_USER_AGENT", "AIDigest/1.0"))}
 
 
 def _strip_html(text: str) -> str:
@@ -45,11 +75,18 @@ def _is_promotional(title: str, url: str) -> bool:
 def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int = 10) -> List[Dict]:
     """Fetch and normalize posts from an RSS/Atom feed.
 
-    Returns list of dicts with keys: title, url, permalink, body, score, comments, author, source_name, category
-    Returns empty list on any error.
+    Returns list of dicts with keys: title, url, permalink, body, score,
+    comments, author, source_name, category. Returns empty list on any error.
+    Network is fetched with explicit connect/read timeouts before parsing so one
+    slow feed cannot stall the whole digest.
     """
     try:
-        feed = feedparser.parse(feed_url, request_headers={'User-Agent': 'AIDigest/1.0'})
+        response = requests.get(feed_url, headers=_rss_headers(), timeout=_rss_timeout())
+        status_code = int(response.status_code or 0)
+        if status_code != 200:
+            print(f"RSS fetch HTTP {status_code} for {source_name} ({feed_url})")
+            return []
+        feed = feedparser.parse(response.content)
         posts = []
         for entry in feed.entries[:limit * 3]:
             title = _strip_html(getattr(entry, 'title', '') or '')
@@ -85,21 +122,27 @@ def fetch_rss_posts(feed_url: str, source_name: str, category: str, limit: int =
 
 
 def fetch_all_rss_feeds(feeds: List[Dict], limit: int = 10) -> List[Dict]:
-    """Fetch from multiple RSS feeds and return combined list.
+    """Fetch from multiple RSS feeds and return combined list."""
+    if not feeds:
+        return []
 
-    Args:
-        feeds: List of dicts with keys: url, name, category
-        limit: Max stories per feed
-
-    Returns combined list of normalized posts from all feeds.
-    """
     all_posts = []
-    for feed_config in feeds:
-        posts = fetch_rss_posts(
-            feed_url=feed_config['url'],
-            source_name=feed_config['name'],
-            category=feed_config['category'],
-            limit=limit,
-        )
-        all_posts.extend(posts)
+    workers = max(1, min(_env_int("RSS_MAX_WORKERS", 8), len(feeds)))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        future_to_feed = {
+            pool.submit(
+                fetch_rss_posts,
+                feed_config['url'],
+                feed_config['name'],
+                feed_config['category'],
+                limit,
+            ): feed_config
+            for feed_config in feeds
+        }
+        for future in as_completed(future_to_feed):
+            feed_config = future_to_feed[future]
+            try:
+                all_posts.extend(future.result())
+            except Exception as exc:
+                print(f"RSS fetch worker error for {feed_config.get('name', 'unknown')}: {exc}")
     return all_posts
