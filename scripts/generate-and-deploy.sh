@@ -242,7 +242,7 @@ if [ -n "${AI_DIGEST_LIMIT:-}" ]; then
   digest_args+=(--limit "$AI_DIGEST_LIMIT")
 fi
 while [ "$generate_attempt" -le 2 ]; do
-  if .venv/bin/python digest.py "${digest_args[@]}"; then
+  if .venv/bin/python digest.py ${digest_args[@]+"${digest_args[@]}"}; then
     generate_ok=1
     break
   fi
@@ -280,7 +280,7 @@ VALIDATE_ARGS=()
 if [ "${AI_DIGEST_REQUIRE_SUMMARY:-1}" = "1" ]; then
   VALIDATE_ARGS+=(--require-summary)
 fi
-.venv/bin/python scripts/validate-digest.py "$DIGEST_SRC" "${VALIDATE_ARGS[@]}"
+.venv/bin/python scripts/validate-digest.py "$DIGEST_SRC" ${VALIDATE_ARGS[@]+"${VALIDATE_ARGS[@]}"}
 
 cp "$DIGEST_SRC" "$DIGEST_DST"
 echo "Copied: $DIGEST_SRC → $DIGEST_DST"
