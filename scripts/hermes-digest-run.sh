@@ -111,7 +111,7 @@ run_check_only() {
     validate_args+=(--require-summary)
   fi
 
-  .venv/bin/python scripts/validate-digest.py "$digest_path" "${validate_args[@]}"
+  .venv/bin/python scripts/validate-digest.py "$digest_path" ${validate_args[@]+"${validate_args[@]}"}
   echo "[check-only] Validated existing digest: $digest_path"
   echo "$(summary_json "$MODE" "check" "succeeded" 0 "$RUN_LOG" 1 0 0 "$digest_path")"
 }
