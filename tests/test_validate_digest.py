@@ -64,3 +64,13 @@ def test_validate_digest_file_rejects_invented_must_read_id(tmp_path):
     ok, errors = validate_digest_file(str(path), require_summary=True)
     assert not ok
     assert "fake-1" in errors[0]
+
+
+def test_validate_digest_file_accepts_matching_urls_with_utm_variants(tmp_path):
+    digest = _digest()
+    digest["rs"][0]["u"] = "https://example.com/c?utm_source=rss&utm_medium=feed"
+    path = tmp_path / "digest.json"
+    path.write_text(json.dumps(digest))
+    ok, errors = validate_digest_file(str(path), require_summary=True)
+    assert ok
+    assert errors == []

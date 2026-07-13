@@ -6,6 +6,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
+from urllib.parse import parse_qsl, urlencode, urlsplit, urlunsplit
 
 from schema import validate_summary, validate_v4_digest
 
@@ -17,6 +18,22 @@ def _all_posts(digest: dict[str, Any]) -> list[dict[str, Any]]:
         if isinstance(value, list):
             posts.extend(post for post in value if isinstance(post, dict))
     return posts
+
+
+def _canonical_url(url: str) -> str:
+    parsed = urlsplit(url)
+    query = [
+        (key, value)
+        for key, value in parse_qsl(parsed.query, keep_blank_values=True)
+        if not key.lower().startswith("utm_")
+    ]
+    return urlunsplit((
+        parsed.scheme.lower(),
+        parsed.netloc.lower(),
+        parsed.path.rstrip("/"),
+        urlencode(query, doseq=True),
+        "",
+    ))
 
 
 def validate_digest_file(path: str, *, require_summary: bool = False) -> tuple[bool, list[str]]:
@@ -48,7 +65,8 @@ def validate_digest_file(path: str, *, require_summary: bool = False) -> tuple[b
                     errors.append(f"summary mustRead references missing story id: {story_id}")
                     continue
                 expected_url = urls.get(story_id, "")
-                if expected_url and item.get("url") != expected_url:
+                actual_url = item.get("url", "")
+                if expected_url and _canonical_url(actual_url) != _canonical_url(expected_url):
                     errors.append(f"summary mustRead URL for {story_id} does not match source story")
     return not errors, errors
 
