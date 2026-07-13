@@ -190,7 +190,7 @@ def main():
     summary_started = time.perf_counter()
     if ranked_posts and not args.no_ai:
         print(f"Generating AI summary via {engine_config.summary_provider} provider...")
-        summary, summary_meta = generate_summary_with_provider(ranked_posts[:15], engine_config)
+        summary, summary_meta = generate_summary_with_provider(ranked_posts, engine_config)
         if summary:
             print(f"{summary_meta.get('source', 'AI')} summary generated successfully")
         else:
