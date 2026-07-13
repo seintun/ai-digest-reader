@@ -58,7 +58,7 @@ def _source_label(post: Dict) -> str:
     return {"rd": "Reddit", "hn": "HN", "rs": "RSS"}.get(prefix, prefix or "?")
 
 
-def _build_prompt(ranked_posts: List[Dict]) -> str:
+def _build_prompt(ranked_posts: List[Dict], excerpt_chars: int = 200) -> str:
     lines = ["Analyze these AI/tech news stories and return a JSON summary.", ""]
     lines.append("## Top Stories (Ranked by Importance)")
     for post in ranked_posts:
@@ -71,7 +71,7 @@ def _build_prompt(ranked_posts: List[Dict]) -> str:
         age = round(_age_hours(post))
         source = _source_label(post)
         raw_content = post.get("content", "") or post.get("excerpt", "") or post.get("b", "") or ""
-        excerpt = extract_excerpt(raw_content, max_chars=200)
+        excerpt = extract_excerpt(raw_content, max_chars=max(0, excerpt_chars))
         lines.append(
             f"[{story_id}] [{rank}/100] {title} | src:{source} | age:{age}h | score:{score} | quality:{quality}/10"
         )

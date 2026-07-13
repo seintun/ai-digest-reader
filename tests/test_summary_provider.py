@@ -47,6 +47,22 @@ def test_hermes_provider_uses_cli_and_validates_output():
     assert meta["generated"] is True
 
 
+def test_hermes_summary_bounds_prompt_and_records_timing():
+    posts = _posts()
+    posts[0]["content"] = "x" * 500
+    config = DigestEngineConfig(summary_provider="hermes", summary_limit=3, summary_excerpt_chars=10)
+    with patch("engine.summary.subprocess.run") as mock_run:
+        mock_run.return_value.returncode = 0
+        mock_run.return_value.stdout = json.dumps(_summary())
+        mock_run.return_value.stderr = ""
+        summary, meta = generate_summary_with_provider(posts, config)
+    assert summary is not None
+    assert meta["duration_seconds"] >= 0
+    assert meta["usage"]["story_count"] == 3
+    prompt = mock_run.call_args.args[0][-1]
+    assert "x" * 11 not in prompt
+
+
 def test_benchmark_mode_records_both_paths():
     config = DigestEngineConfig(summary_provider="benchmark", summary_primary="hermes", hermes_command="hermes", hermes_provider="omniroute", hermes_model="codex-combo")
     with patch("engine.summary.generate_summary_with_openclaw") as mock_openclaw, patch("engine.summary.generate_summary_with_hermes") as mock_hermes:

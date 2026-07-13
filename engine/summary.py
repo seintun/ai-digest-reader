@@ -34,8 +34,11 @@ def generate_summary_with_hermes(ranked_posts: List[Dict[str, Any]], config: Dig
     if not ranked_posts:
         return None, {"source": "hermes", "generated": False, "error": "no ranked posts"}
 
-    prompt = _SYSTEM_PROMPT + "\n\n" + _build_prompt(ranked_posts)
+    summary_posts = ranked_posts[: config.summary_limit]
+    prompt = _SYSTEM_PROMPT + "\n\n" + _build_prompt(summary_posts, config.summary_excerpt_chars)
     content, usage = _hermes_command(config, prompt)
+    usage["prompt_chars"] = len(prompt)
+    usage["story_count"] = len(summary_posts)
     if not content:
         return None, {"source": "hermes", "generated": False, "error": usage.get("stderr") or usage.get("cost_source") or "hermes returned no content", "usage": usage}
 
@@ -43,11 +46,17 @@ def generate_summary_with_hermes(ranked_posts: List[Dict[str, Any]], config: Dig
     if not parsed or not validate_summary(parsed):
         return None, {"source": "hermes", "generated": False, "error": "Hermes output did not validate against schema-v2", "usage": usage}
 
-    valid, warnings = validate_grounded_summary(parsed, ranked_posts[:15])
+    valid, warnings = validate_grounded_summary(parsed, summary_posts)
     if not valid:
         return None, {"source": "hermes", "generated": False, "error": "; ".join(warnings), "usage": usage}
 
-    return parsed, {"source": "hermes", "generated": True, "usage": usage, "validation_warnings": warnings}
+    return parsed, {
+        "source": "hermes",
+        "generated": True,
+        "usage": usage,
+        "duration_seconds": usage.get("duration_seconds", 0),
+        "validation_warnings": warnings,
+    }
 
 
 def _choose_primary(config: DigestEngineConfig, openclaw_ok: bool, hermes_ok: bool) -> str:
