@@ -1,7 +1,7 @@
 {
   "v": 4,
   "d": "2026-07-19",
-  "g": "2026-07-19T17:00:58.095062",
+  "g": "2026-07-19T17:01:24.053874",
   "r": [
     {
       "i": "rd-0",
@@ -407,8 +407,8 @@
       "u": "https://news.ycombinator.com/item?id=48968606",
       "p": "https://news.ycombinator.com/item?id=48968606",
       "b": "I might be the only SRE on Earth with his own bowling center. It&#x27;s a more in-depth gig than you&#x27;d think.My family and I bought an abandoned 8-lane bowling center in the rural mid-west. In our small town there weren&#x27;t many recreation options for families. You&#x27;v",
-      "s": 1301,
-      "c": 143,
+      "s": 1302,
+      "c": 144,
       "a": "section33",
       "sn": "",
       "cat": "Tech",
@@ -638,7 +638,7 @@
       "content": ""
     },
     {
-      "i": "rs-30",
+      "i": "rs-20",
       "t": "Netflix paid $587M for Ben Affleck\u2019s AI filmmaking startup",
       "u": "https://techcrunch.com/2026/07/19/netflix-paid-587m-for-ben-afflecks-ai-filmmaking-startup/",
       "p": "https://techcrunch.com/2026/07/19/netflix-paid-587m-for-ben-afflecks-ai-filmmaking-startup/",
@@ -656,7 +656,7 @@
       "content": ""
     },
     {
-      "i": "rs-31",
+      "i": "rs-21",
       "t": "What to watch for after Jensen Huang\u2019s Japan visit",
       "u": "https://techcrunch.com/2026/07/19/what-to-watch-for-after-jensen-huangs-japan-visit/",
       "p": "https://techcrunch.com/2026/07/19/what-to-watch-for-after-jensen-huangs-japan-visit/",
@@ -674,7 +674,7 @@
       "content": ""
     },
     {
-      "i": "rs-32",
+      "i": "rs-22",
       "t": "Can an Apple lawsuit derail OpenAI\u2019s hardware plans?",
       "u": "https://techcrunch.com/2026/07/19/can-an-apple-lawsuit-derail-openais-hardware-plans/",
       "p": "https://techcrunch.com/2026/07/19/can-an-apple-lawsuit-derail-openais-hardware-plans/",
@@ -692,7 +692,7 @@
       "content": ""
     },
     {
-      "i": "rs-33",
+      "i": "rs-23",
       "t": "TechCrunch Mobility: The battle over robotaxi rules",
       "u": "https://techcrunch.com/2026/07/19/techcrunch-mobility-the-battle-over-robotaxi-rules/",
       "p": "https://techcrunch.com/2026/07/19/techcrunch-mobility-the-battle-over-robotaxi-rules/",
@@ -854,7 +854,7 @@
       "content": ""
     },
     {
-      "i": "rs-34",
+      "i": "rs-24",
       "t": "\u2018Odyssey\u2019 director Christopher Nolan calls AI an obvious \u2018Trojan horse\u2019",
       "u": "https://techcrunch.com/2026/07/19/odyssey-director-christopher-nolan-calls-ai-an-obvious-trojan-horse/",
       "p": "https://techcrunch.com/2026/07/19/odyssey-director-christopher-nolan-calls-ai-an-obvious-trojan-horse/",
@@ -908,7 +908,7 @@
       "content": ""
     },
     {
-      "i": "rs-35",
+      "i": "rs-25",
       "t": "Nonprofit Current AI is racing to build the World Wide Web of AI, free for all",
       "u": "https://techcrunch.com/2026/07/19/nonprofit-current-ai-is-racing-to-build-the-world-wide-web-of-ai-free-for-all/",
       "p": "https://techcrunch.com/2026/07/19/nonprofit-current-ai-is-racing-to-build-the-world-wide-web-of-ai-free-for-all/",
@@ -1016,7 +1016,7 @@
       "content": ""
     },
     {
-      "i": "rs-20",
+      "i": "rs-30",
       "t": "How to Disable Music Videos in Spotify",
       "u": "https://www.wired.com/story/how-to-disable-all-the-music-videos-in-spotify/",
       "p": "https://www.wired.com/story/how-to-disable-all-the-music-videos-in-spotify/",
@@ -1034,7 +1034,7 @@
       "content": ""
     },
     {
-      "i": "rs-21",
+      "i": "rs-31",
       "t": "The Search for Another Earth-Like Planet Just Took a Big Step Forward",
       "u": "https://www.wired.com/story/search-for-earth-like-planet-step-forward/",
       "p": "https://www.wired.com/story/search-for-earth-like-planet-step-forward/",
@@ -1052,7 +1052,7 @@
       "content": ""
     },
     {
-      "i": "rs-22",
+      "i": "rs-32",
       "t": "FIFA\u2019s World Cup Halftime Show Puts American-Style Spectacle on the World Stage",
       "u": "https://www.wired.com/story/fifa-world-cup-halftime-show-what-to-expect/",
       "p": "https://www.wired.com/story/fifa-world-cup-halftime-show-what-to-expect/",
@@ -1070,7 +1070,7 @@
       "content": ""
     },
     {
-      "i": "rs-23",
+      "i": "rs-33",
       "t": "How To Watch the 2026 FIFA World Cup Finals: Spain vs. Argentina",
       "u": "https://www.wired.com/story/how-to-watch-the-fifa-2026-world-cup-07-19-2026/",
       "p": "https://www.wired.com/story/how-to-watch-the-fifa-2026-world-cup-07-19-2026/",
@@ -1099,7 +1099,7 @@
       "sn": "Slashdot",
       "cat": "Tech",
       "ts": 1784475240,
-      "rank": 10.6,
+      "rank": 10.5,
       "content_available": false,
       "content_quality": 0,
       "excerpt": "A new study by researchers at the University of California at San Francisco \"adds to growing research linking increased social media use to detrimental effects on attention, memory and cognition,\" rep",
@@ -1124,7 +1124,7 @@
       "content": ""
     },
     {
-      "i": "rs-36",
+      "i": "rs-26",
       "t": "Waymo says San Francisco service has resumed after one-hour pause",
       "u": "https://techcrunch.com/2026/07/18/waymo-appears-to-pause-san-francisco-service-amidst-power-outage/",
       "p": "https://techcrunch.com/2026/07/18/waymo-appears-to-pause-san-francisco-service-amidst-power-outage/",
@@ -1142,7 +1142,7 @@
       "content": ""
     },
     {
-      "i": "rs-37",
+      "i": "rs-27",
       "t": "Kimi: Threat or menace?",
       "u": "https://techcrunch.com/2026/07/18/kimi-threat-or-menace/",
       "p": "https://techcrunch.com/2026/07/18/kimi-threat-or-menace/",
@@ -1160,7 +1160,7 @@
       "content": ""
     },
     {
-      "i": "rs-38",
+      "i": "rs-28",
       "t": "All the EVs that were discontinued or killed off in the U.S. this year",
       "u": "https://techcrunch.com/2026/07/18/all-the-evs-that-were-discontinued-or-killed-off-in-the-u-s-this-year/",
       "p": "https://techcrunch.com/2026/07/18/all-the-evs-that-were-discontinued-or-killed-off-in-the-u-s-this-year/",
@@ -1178,7 +1178,7 @@
       "content": ""
     },
     {
-      "i": "rs-39",
+      "i": "rs-29",
       "t": "Federal employees can download TikTok on their work phones again",
       "u": "https://techcrunch.com/2026/07/18/federal-employees-can-download-tiktok-on-their-work-phones-again/",
       "p": "https://techcrunch.com/2026/07/18/federal-employees-can-download-tiktok-on-their-work-phones-again/",
@@ -1214,7 +1214,7 @@
       "content": ""
     },
     {
-      "i": "rs-24",
+      "i": "rs-34",
       "t": "Your Period Tracker Is (Probably) Spying on You",
       "u": "https://www.wired.com/story/security-news-this-week-your-period-tracker-is-probably-spying-on-you/",
       "p": "https://www.wired.com/story/security-news-this-week-your-period-tracker-is-probably-spying-on-you/",
@@ -1232,7 +1232,7 @@
       "content": ""
     },
     {
-      "i": "rs-25",
+      "i": "rs-35",
       "t": "FIFA Doesn\u2019t Have a Plan to Deal With Climate Change",
       "u": "https://www.wired.com/story/fifa-doesnt-have-plan-to-deal-with-climate-change/",
       "p": "https://www.wired.com/story/fifa-doesnt-have-plan-to-deal-with-climate-change/",
@@ -1250,7 +1250,7 @@
       "content": ""
     },
     {
-      "i": "rs-26",
+      "i": "rs-36",
       "t": "How Google\u2019s New Gemini Rates Work and How to Track Your Usage",
       "u": "https://www.wired.com/story/how-googles-new-gemini-rates-work-and-how-to-track-your-usage/",
       "p": "https://www.wired.com/story/how-googles-new-gemini-rates-work-and-how-to-track-your-usage/",
@@ -1268,7 +1268,7 @@
       "content": ""
     },
     {
-      "i": "rs-27",
+      "i": "rs-37",
       "t": "Prompt Injection Attacks Are Thwarting AI Hacking Agents",
       "u": "https://www.wired.com/story/prompt-injection-attacks-are-thwarting-ai-hacking-agents/",
       "p": "https://www.wired.com/story/prompt-injection-attacks-are-thwarting-ai-hacking-agents/",
@@ -1304,7 +1304,7 @@
       "content": ""
     },
     {
-      "i": "rs-28",
+      "i": "rs-38",
       "t": "AWS Billing Glitch Hits Customers With Billion-Dollar Fees",
       "u": "https://www.wired.com/story/amazon-web-services-glitch-oh-no/",
       "p": "https://www.wired.com/story/amazon-web-services-glitch-oh-no/",
@@ -1376,7 +1376,7 @@
       "content": ""
     },
     {
-      "i": "rs-29",
+      "i": "rs-39",
       "t": "What Cities From Chicago to Washington, DC, Look Like Under a Blanket of Wildfire Smoke",
       "u": "https://www.wired.com/story/cities-from-chicago-to-washington-dc-look-like-wildfire-smoke/",
       "p": "https://www.wired.com/story/cities-from-chicago-to-washington-dc-look-like-wildfire-smoke/",
@@ -1448,7 +1448,7 @@
       "content": ""
     },
     {
-      "i": "rs-60",
+      "i": "rs-100",
       "t": "China's Moonshot AI claims Kimi K3 can rival OpenAI and Anthropic",
       "u": "https://www.bbc.co.uk/news/articles/cy9w4q8pgp0o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/cy9w4q8pgp0o?at_medium=RSS&at_campaign=rss",
@@ -1466,7 +1466,7 @@
       "content": ""
     },
     {
-      "i": "rs-70",
+      "i": "rs-60",
       "t": "Measuring Models\u2019 Manipulation: Researchers at MIT and Carnegie Mellon built Puppet to gauge models' influence on users' beliefs",
       "u": "https://charonhub.deeplearning.ai/measuring-models-manipulation/",
       "p": "https://charonhub.deeplearning.ai/measuring-models-manipulation/",
@@ -1484,7 +1484,7 @@
       "content": ""
     },
     {
-      "i": "rs-71",
+      "i": "rs-61",
       "t": "Put the Lab in the Loop: Robin automates drug discovery, matching chemical processes of known drugs to research on diseases",
       "u": "https://charonhub.deeplearning.ai/404/",
       "p": "https://charonhub.deeplearning.ai/404/",
@@ -1502,7 +1502,7 @@
       "content": ""
     },
     {
-      "i": "rs-72",
+      "i": "rs-62",
       "t": "Google Found Responsible for AI-Generated Search Results: A German court ruled that Google's AI Overviews defamed two businesses",
       "u": "https://charonhub.deeplearning.ai/google-found-responsible-for-ai-generated-search-results/",
       "p": "https://charonhub.deeplearning.ai/google-found-responsible-for-ai-generated-search-results/",
@@ -1520,7 +1520,7 @@
       "content": ""
     },
     {
-      "i": "rs-73",
+      "i": "rs-63",
       "t": "One Model Talks, Another One Thinks: GPT-Live pairs full-duplex voice models with a reasoning model (GPT-5.5) on the backend",
       "u": "https://charonhub.deeplearning.ai/404/",
       "p": "https://charonhub.deeplearning.ai/404/",
@@ -1538,7 +1538,7 @@
       "content": ""
     },
     {
-      "i": "rs-74",
+      "i": "rs-64",
       "t": "AI Rewards Generalists Who Can Build New Skills: With AI assistance, full-stack engineers are joined by full-stack recruiters, full-cycle marketers, and more.",
       "u": "https://charonhub.deeplearning.ai/ai-rewards-generalists-who-can-build-new-skills/",
       "p": "https://charonhub.deeplearning.ai/ai-rewards-generalists-who-can-build-new-skills/",
@@ -1556,7 +1556,7 @@
       "content": ""
     },
     {
-      "i": "rs-75",
+      "i": "rs-65",
       "t": "AI Overviews Land Google In Hot Water, GPT-Live Puts Reasoning in the Background, How to Tell If Your Model is Manipulative",
       "u": "https://charonhub.deeplearning.ai/issue-362/",
       "p": "https://charonhub.deeplearning.ai/issue-362/",
@@ -1628,7 +1628,7 @@
       "content": ""
     },
     {
-      "i": "rs-61",
+      "i": "rs-101",
       "t": "Trump Media to sell instant access to 'market-moving' social posts",
       "u": "https://www.bbc.co.uk/news/articles/c79gw4lj89eo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c79gw4lj89eo?at_medium=RSS&at_campaign=rss",
@@ -1647,24 +1647,6 @@
     },
     {
       "i": "rs-80",
-      "t": "xAI chaos \ud83d\udd25, Gemini delays \u23f3, earning judgement \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-17",
-      "p": "https://tldr.tech/tech/2026-07-17",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784275200,
-      "rank": 1.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-100",
       "t": "Kimi K3 \ud83c\udf15, Gemini 3.5 delayed \u23f3, crushing ARC-AGI 3 \ud83e\udd16",
       "u": "https://tldr.tech/ai/2026-07-17",
       "p": "https://tldr.tech/ai/2026-07-17",
@@ -1674,6 +1656,24 @@
       "a": "TLDR",
       "sn": "TLDR AI",
       "cat": "AI & ML",
+      "ts": 1784275200,
+      "rank": 1.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-90",
+      "t": "xAI chaos \ud83d\udd25, Gemini delays \u23f3, earning judgement \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-17",
+      "p": "https://tldr.tech/tech/2026-07-17",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
       "ts": 1784275200,
       "rank": 1.0,
       "content_available": false,
@@ -1718,7 +1718,7 @@
       "content": ""
     },
     {
-      "i": "rs-62",
+      "i": "rs-102",
       "t": "TikTok faces Ofcom investigation over child age checks",
       "u": "https://www.bbc.co.uk/news/articles/ce8l1zk9dk9o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/ce8l1zk9dk9o?at_medium=RSS&at_campaign=rss",
@@ -1736,7 +1736,7 @@
       "content": ""
     },
     {
-      "i": "rs-63",
+      "i": "rs-103",
       "t": "Teen hackers who live streamed cyber-attack on TfL jailed",
       "u": "https://www.bbc.co.uk/news/articles/c4gyg0y6yg2o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c4gyg0y6yg2o?at_medium=RSS&at_campaign=rss",
@@ -1755,24 +1755,6 @@
     },
     {
       "i": "rs-81",
-      "t": "Stripe's PayPal bid \ud83d\udcb0, Uber vs Waymo \ud83d\ude97, against SDKs \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-16",
-      "p": "https://tldr.tech/tech/2026-07-16",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784188800,
-      "rank": 0.4,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-101",
       "t": "Thinking Machines Inkling \ud83e\udde0, GPT-Red \ud83d\udd12, Perplexity sandboxes \ud83d\udee1\ufe0f",
       "u": "https://tldr.tech/ai/2026-07-16",
       "p": "https://tldr.tech/ai/2026-07-16",
@@ -1782,6 +1764,24 @@
       "a": "TLDR",
       "sn": "TLDR AI",
       "cat": "AI & ML",
+      "ts": 1784188800,
+      "rank": 0.4,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-91",
+      "t": "Stripe's PayPal bid \ud83d\udcb0, Uber vs Waymo \ud83d\ude97, against SDKs \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-16",
+      "p": "https://tldr.tech/tech/2026-07-16",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
       "ts": 1784188800,
       "rank": 0.4,
       "content_available": false,
@@ -1808,25 +1808,7 @@
       "content": ""
     },
     {
-      "i": "rs-64",
-      "t": "SpaceX share price drops below stock market debut",
-      "u": "https://www.bbc.co.uk/news/articles/clyl33q0yl0o?at_medium=RSS&at_campaign=rss",
-      "p": "https://www.bbc.co.uk/news/articles/clyl33q0yl0o?at_medium=RSS&at_campaign=rss",
-      "b": "Share trading in Elon Musk\u2019s rocket company has been volatile since it went public a month ago.",
-      "s": 0,
-      "c": 0,
-      "a": "",
-      "sn": "BBC Tech",
-      "cat": "Tech",
-      "ts": 1784167917,
-      "rank": 0.3,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Share trading in Elon Musk\u2019s rocket company has been volatile since it went public a month ago.",
-      "content": ""
-    },
-    {
-      "i": "rs-76",
+      "i": "rs-66",
       "t": "PrismML fits 27B model on iPhone: Inside OpenAI\u2019s first AI-powered consumer device",
       "u": "https://charonhub.deeplearning.ai/404/",
       "p": "https://charonhub.deeplearning.ai/404/",
@@ -1841,6 +1823,24 @@
       "content_available": false,
       "content_quality": 0,
       "excerpt": "Claude models treat you differently by language. Cognition\u2019s SWE-1.7 boosts Devin\u2019s coding power. Nvidia\u2019s Audex handles audio and text with one transformer. OpenAI updates its prompting guide for GPT",
+      "content": ""
+    },
+    {
+      "i": "rs-104",
+      "t": "SpaceX share price drops below stock market debut",
+      "u": "https://www.bbc.co.uk/news/articles/clyl33q0yl0o?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.co.uk/news/articles/clyl33q0yl0o?at_medium=RSS&at_campaign=rss",
+      "b": "Share trading in Elon Musk\u2019s rocket company has been volatile since it went public a month ago.",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "sn": "BBC Tech",
+      "cat": "Tech",
+      "ts": 1784167917,
+      "rank": 0.3,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Share trading in Elon Musk\u2019s rocket company has been volatile since it went public a month ago.",
       "content": ""
     },
     {
@@ -1862,7 +1862,7 @@
       "content": ""
     },
     {
-      "i": "rs-65",
+      "i": "rs-105",
       "t": "Midnight social media curfew proposed for UK teens aged 16 and 17",
       "u": "https://www.bbc.co.uk/news/articles/c982857nlrlo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c982857nlrlo?at_medium=RSS&at_campaign=rss",
@@ -1917,42 +1917,6 @@
     },
     {
       "i": "rs-82",
-      "t": "OpenAI's first device \ud83d\udce2, Apple shrinking AI \ud83d\udcf1, vibecoding at scale \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-15",
-      "p": "https://tldr.tech/tech/2026-07-15",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784102400,
-      "rank": 0.1,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-83",
-      "t": "Siri AI beta \ud83d\udcf1, Starlink v3 \ud83d\udef0\ufe0f, Apple's new speech API \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-14",
-      "p": "https://tldr.tech/tech/2026-07-14",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784016000,
-      "rank": 0.1,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-102",
       "t": "DeepSeek IPO plans \ud83d\udcc8, Kalshi compute markets \u26a1,\u00a0 Bonsai phone model \ud83d\udcf1",
       "u": "https://tldr.tech/ai/2026-07-15",
       "p": "https://tldr.tech/ai/2026-07-15",
@@ -1970,7 +1934,7 @@
       "content": ""
     },
     {
-      "i": "rs-103",
+      "i": "rs-83",
       "t": "xAI uploads codebases \ud83d\udc68\u200d\ud83d\udcbb, Prime Intellect verifiers \ud83e\udde0, Sakana smart bricks \ud83e\uddf1",
       "u": "https://tldr.tech/ai/2026-07-14",
       "p": "https://tldr.tech/ai/2026-07-14",
@@ -1980,6 +1944,42 @@
       "a": "TLDR",
       "sn": "TLDR AI",
       "cat": "AI & ML",
+      "ts": 1784016000,
+      "rank": 0.1,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-92",
+      "t": "OpenAI's first device \ud83d\udce2, Apple shrinking AI \ud83d\udcf1, vibecoding at scale \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-15",
+      "p": "https://tldr.tech/tech/2026-07-15",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1784102400,
+      "rank": 0.1,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-93",
+      "t": "Siri AI beta \ud83d\udcf1, Starlink v3 \ud83d\udef0\ufe0f, Apple's new speech API \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-14",
+      "p": "https://tldr.tech/tech/2026-07-14",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
       "ts": 1784016000,
       "rank": 0.1,
       "content_available": false,
@@ -2006,79 +2006,7 @@
       "content": ""
     },
     {
-      "i": "rs-66",
-      "t": "10 years of Pok\u00e9mon Go and the millions still trying to catch 'em all",
-      "u": "https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss",
-      "p": "https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss",
-      "b": "Michael Steranka, vice president at the mobile game's owner Scopely, says it has always been about bringing people together.",
-      "s": 0,
-      "c": 0,
-      "a": "",
-      "sn": "BBC Tech",
-      "cat": "Tech",
-      "ts": 1783930020,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Michael Steranka, vice president at the mobile game's owner Scopely, says it has always been about bringing people together.",
-      "content": ""
-    },
-    {
       "i": "rs-67",
-      "t": "Meta pulls new AI image feature after days of backlash",
-      "u": "https://www.bbc.co.uk/news/articles/c2dy6e8klw0o?at_medium=RSS&at_campaign=rss",
-      "p": "https://www.bbc.co.uk/news/articles/c2dy6e8klw0o?at_medium=RSS&at_campaign=rss",
-      "b": "Meta's release this week of an AI feature that let people alter Instagram content drew swift blowback.",
-      "s": 0,
-      "c": 0,
-      "a": "",
-      "sn": "BBC Tech",
-      "cat": "Tech",
-      "ts": 1783763159,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Meta's release this week of an AI feature that let people alter Instagram content drew swift blowback.",
-      "content": ""
-    },
-    {
-      "i": "rs-68",
-      "t": "Is the Assassin's Creed Black Flag remake worth the 13 year wait?",
-      "u": "https://www.bbc.co.uk/news/articles/cjrg9r80908o?at_medium=RSS&at_campaign=rss",
-      "p": "https://www.bbc.co.uk/news/articles/cjrg9r80908o?at_medium=RSS&at_campaign=rss",
-      "b": "The BBC's Tom Gerken plays the much-anticipated pirate game which has been remade from the ground up.",
-      "s": 0,
-      "c": 0,
-      "a": "",
-      "sn": "BBC Tech",
-      "cat": "Tech",
-      "ts": 1783757331,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "The BBC's Tom Gerken plays the much-anticipated pirate game which has been remade from the ground up.",
-      "content": ""
-    },
-    {
-      "i": "rs-69",
-      "t": "Apple sues OpenAI, its employees claiming theft of trade secrets",
-      "u": "https://www.bbc.co.uk/news/articles/cy8w379e091o?at_medium=RSS&at_campaign=rss",
-      "p": "https://www.bbc.co.uk/news/articles/cy8w379e091o?at_medium=RSS&at_campaign=rss",
-      "b": "Apple said in a Friday lawsuit that OpenAI\u2019s nascent hardware business is \u201crotten to its core.\u201d",
-      "s": 0,
-      "c": 0,
-      "a": "",
-      "sn": "BBC Tech",
-      "cat": "Tech",
-      "ts": 1783752856,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Apple said in a Friday lawsuit that OpenAI\u2019s nascent hardware business is \u201crotten to its core.\u201d",
-      "content": ""
-    },
-    {
-      "i": "rs-77",
       "t": "Apple sues former partner OpenAI: Meta unveils cost-efficient Muse Spark 1.1",
       "u": "https://charonhub.deeplearning.ai/404/",
       "p": "https://charonhub.deeplearning.ai/404/",
@@ -2096,7 +2024,7 @@
       "content": ""
     },
     {
-      "i": "rs-78",
+      "i": "rs-68",
       "t": "Text Without Typing: Researchers at Meta and other institutions built Brain2Qwerty v2 to generate sentences from brain waves",
       "u": "https://charonhub.deeplearning.ai/text-without-typing/",
       "p": "https://charonhub.deeplearning.ai/text-without-typing/",
@@ -2114,7 +2042,7 @@
       "content": ""
     },
     {
-      "i": "rs-79",
+      "i": "rs-69",
       "t": "DeepSeek\u2019s DSpark Gains Velocity: DeepSeek open sourced a speculative decoding module that speeds up text generation without losing accuracy",
       "u": "https://charonhub.deeplearning.ai/deepseeks-dspark-gains-velocity/",
       "p": "https://charonhub.deeplearning.ai/deepseeks-dspark-gains-velocity/",
@@ -2132,115 +2060,7 @@
       "content": ""
     },
     {
-      "i": "rs-84",
-      "t": "Apple sues OpenAI \u2696\ufe0f, Apple's AI chips \ud83e\udd16, not understanding your codebase \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-13",
-      "p": "https://tldr.tech/tech/2026-07-13",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783929600,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-85",
-      "t": "ChatGPT Work \ud83e\udd16, Meta AI API \u2601\ufe0f, code review bottlenecks \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-10",
-      "p": "https://tldr.tech/tech/2026-07-10",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783670400,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-86",
-      "t": "GPT-Live \ud83d\udd0a, Grok matches Opus \ud83e\udd16, inside Bun's rewrite \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-09",
-      "p": "https://tldr.tech/tech/2026-07-09",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783584000,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-87",
-      "t": "Meta AI images \ud83d\uddbc\ufe0f, inside XBox layoffs \ud83d\udcc9, tech worker sentiment \ud83d\udcbc",
-      "u": "https://tldr.tech/tech/2026-07-08",
-      "p": "https://tldr.tech/tech/2026-07-08",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783497600,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-88",
-      "t": "Nvidia delays \u23f3, iPhone Ultra pricing \ud83d\udcf1, 100x engineers \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-07",
-      "p": "https://tldr.tech/tech/2026-07-07",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783411200,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-89",
-      "t": "Amazon's Starlink rival \ud83d\udef0\ufe0f, Nvidia revenue share \ud83d\udcb0, agentic autonomy levels \ud83e\udd16",
-      "u": "https://tldr.tech/tech/2026-07-06",
-      "p": "https://tldr.tech/tech/2026-07-06",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1783324800,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-90",
+      "i": "rs-70",
       "t": "Import AI 464: Fables writes GPU kernels; AI automation; and analog computation",
       "u": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
       "p": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
@@ -2258,7 +2078,7 @@
       "content": ""
     },
     {
-      "i": "rs-91",
+      "i": "rs-71",
       "t": "Import AI 463: Self-improving robots; a 10k Chinese GPU cluster; and an elegiac essay for the human era",
       "u": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
       "p": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
@@ -2276,7 +2096,7 @@
       "content": ""
     },
     {
-      "i": "rs-92",
+      "i": "rs-72",
       "t": "Import AI 462: Superpersuasion; self-sustaining AI; paths to ASI",
       "u": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
       "p": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
@@ -2294,7 +2114,7 @@
       "content": ""
     },
     {
-      "i": "rs-93",
+      "i": "rs-73",
       "t": "Import AI 461: \u201cAlignment is not on track\u201d; FrontierCode; and synthetic research interns",
       "u": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
       "p": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
@@ -2312,7 +2132,7 @@
       "content": ""
     },
     {
-      "i": "rs-94",
+      "i": "rs-74",
       "t": "Import AI 460: Reward hacking society, RSI data from Anthropic; and RL-based quadcopter racing",
       "u": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
       "p": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
@@ -2330,7 +2150,7 @@
       "content": ""
     },
     {
-      "i": "rs-95",
+      "i": "rs-75",
       "t": "Import AI 459: AI oversight is difficult; scaling laws for protein folding models; and pricing the extinction risk of AI systems",
       "u": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
       "p": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
@@ -2348,7 +2168,7 @@
       "content": ""
     },
     {
-      "i": "rs-96",
+      "i": "rs-76",
       "t": "Import AI 458: Reckoning with the future; and a singularity story",
       "u": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
       "p": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
@@ -2366,7 +2186,7 @@
       "content": ""
     },
     {
-      "i": "rs-97",
+      "i": "rs-77",
       "t": "Import AI 457: AI stuxnet; cursed Muon optimizer; and positive alignment",
       "u": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
       "p": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
@@ -2384,7 +2204,7 @@
       "content": ""
     },
     {
-      "i": "rs-98",
+      "i": "rs-78",
       "t": "Import AI 456: RSI and economic growth; radical optionality for AI regulation; and a neural computer",
       "u": "https://jack-clark.net/2026/05/11/import-ai-456-rsi-and-economic-growth-radical-optionality-for-ai-regulation-and-a-neural-computer/",
       "p": "https://jack-clark.net/2026/05/11/import-ai-456-rsi-and-economic-growth-radical-optionality-for-ai-regulation-and-a-neural-computer/",
@@ -2402,7 +2222,7 @@
       "content": ""
     },
     {
-      "i": "rs-99",
+      "i": "rs-79",
       "t": "Import AI 455: Automating AI Research",
       "u": "https://jack-clark.net/2026/05/04/import-ai-455-automating-ai-research/",
       "p": "https://jack-clark.net/2026/05/04/import-ai-455-automating-ai-research/",
@@ -2420,7 +2240,7 @@
       "content": ""
     },
     {
-      "i": "rs-104",
+      "i": "rs-84",
       "t": "Claude Code browser \ud83c\udf0d, Cursor general agent \ud83e\udd16, Claude Fable extension \u23f3",
       "u": "https://tldr.tech/ai/2026-07-13",
       "p": "https://tldr.tech/ai/2026-07-13",
@@ -2438,7 +2258,7 @@
       "content": ""
     },
     {
-      "i": "rs-105",
+      "i": "rs-85",
       "t": "GPT-5.6 \ud83d\ude80, Muse Spark 1.1 \u2728, ChatGPT Work \ud83d\udcbc",
       "u": "https://tldr.tech/ai/2026-07-10",
       "p": "https://tldr.tech/ai/2026-07-10",
@@ -2456,7 +2276,7 @@
       "content": ""
     },
     {
-      "i": "rs-106",
+      "i": "rs-86",
       "t": "Grok 4.5 \ud83e\udd16, GPT-Live \ud83c\udf99\ufe0f, SWE-1.7 \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/ai/2026-07-09",
       "p": "https://tldr.tech/ai/2026-07-09",
@@ -2474,7 +2294,7 @@
       "content": ""
     },
     {
-      "i": "rs-107",
+      "i": "rs-87",
       "t": "GPT-5.6 Thursday \u2b50\ufe0f, Claude Cowork mobile \ud83d\udcf1, Gemini API agents \ud83e\udd16",
       "u": "https://tldr.tech/ai/2026-07-08",
       "p": "https://tldr.tech/ai/2026-07-08",
@@ -2492,7 +2312,7 @@
       "content": ""
     },
     {
-      "i": "rs-108",
+      "i": "rs-88",
       "t": "Anthropic J-space research \ud83e\udde0, Apple + Broadcom \u26a1, continual agent learning \ud83e\udd16",
       "u": "https://tldr.tech/ai/2026-07-07",
       "p": "https://tldr.tech/ai/2026-07-07",
@@ -2510,7 +2330,7 @@
       "content": ""
     },
     {
-      "i": "rs-109",
+      "i": "rs-89",
       "t": "Seedance 2.5 \ud83c\udfa5, guide to Fable \u2728, OpenAI preps GPT-5.6 \ud83d\ude80",
       "u": "https://tldr.tech/ai/2026-07-06",
       "p": "https://tldr.tech/ai/2026-07-06",
@@ -2526,89 +2346,265 @@
       "content_quality": 0,
       "excerpt": "",
       "content": ""
+    },
+    {
+      "i": "rs-94",
+      "t": "Apple sues OpenAI \u2696\ufe0f, Apple's AI chips \ud83e\udd16, not understanding your codebase \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-13",
+      "p": "https://tldr.tech/tech/2026-07-13",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783929600,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-95",
+      "t": "ChatGPT Work \ud83e\udd16, Meta AI API \u2601\ufe0f, code review bottlenecks \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-10",
+      "p": "https://tldr.tech/tech/2026-07-10",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783670400,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-96",
+      "t": "GPT-Live \ud83d\udd0a, Grok matches Opus \ud83e\udd16, inside Bun's rewrite \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-09",
+      "p": "https://tldr.tech/tech/2026-07-09",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783584000,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-97",
+      "t": "Meta AI images \ud83d\uddbc\ufe0f, inside XBox layoffs \ud83d\udcc9, tech worker sentiment \ud83d\udcbc",
+      "u": "https://tldr.tech/tech/2026-07-08",
+      "p": "https://tldr.tech/tech/2026-07-08",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783497600,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-98",
+      "t": "Nvidia delays \u23f3, iPhone Ultra pricing \ud83d\udcf1, 100x engineers \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-07",
+      "p": "https://tldr.tech/tech/2026-07-07",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783411200,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-99",
+      "t": "Amazon's Starlink rival \ud83d\udef0\ufe0f, Nvidia revenue share \ud83d\udcb0, agentic autonomy levels \ud83e\udd16",
+      "u": "https://tldr.tech/tech/2026-07-06",
+      "p": "https://tldr.tech/tech/2026-07-06",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1783324800,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-106",
+      "t": "10 years of Pok\u00e9mon Go and the millions still trying to catch 'em all",
+      "u": "https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.co.uk/news/articles/cevlwk4nrm7o?at_medium=RSS&at_campaign=rss",
+      "b": "Michael Steranka, vice president at the mobile game's owner Scopely, says it has always been about bringing people together.",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "sn": "BBC Tech",
+      "cat": "Tech",
+      "ts": 1783930020,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Michael Steranka, vice president at the mobile game's owner Scopely, says it has always been about bringing people together.",
+      "content": ""
+    },
+    {
+      "i": "rs-107",
+      "t": "Meta pulls new AI image feature after days of backlash",
+      "u": "https://www.bbc.co.uk/news/articles/c2dy6e8klw0o?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.co.uk/news/articles/c2dy6e8klw0o?at_medium=RSS&at_campaign=rss",
+      "b": "Meta's release this week of an AI feature that let people alter Instagram content drew swift blowback.",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "sn": "BBC Tech",
+      "cat": "Tech",
+      "ts": 1783763159,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Meta's release this week of an AI feature that let people alter Instagram content drew swift blowback.",
+      "content": ""
+    },
+    {
+      "i": "rs-108",
+      "t": "Is the Assassin's Creed Black Flag remake worth the 13 year wait?",
+      "u": "https://www.bbc.co.uk/news/articles/cjrg9r80908o?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.co.uk/news/articles/cjrg9r80908o?at_medium=RSS&at_campaign=rss",
+      "b": "The BBC's Tom Gerken plays the much-anticipated pirate game which has been remade from the ground up.",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "sn": "BBC Tech",
+      "cat": "Tech",
+      "ts": 1783757331,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "The BBC's Tom Gerken plays the much-anticipated pirate game which has been remade from the ground up.",
+      "content": ""
+    },
+    {
+      "i": "rs-109",
+      "t": "Apple sues OpenAI, its employees claiming theft of trade secrets",
+      "u": "https://www.bbc.co.uk/news/articles/cy8w379e091o?at_medium=RSS&at_campaign=rss",
+      "p": "https://www.bbc.co.uk/news/articles/cy8w379e091o?at_medium=RSS&at_campaign=rss",
+      "b": "Apple said in a Friday lawsuit that OpenAI\u2019s nascent hardware business is \u201crotten to its core.\u201d",
+      "s": 0,
+      "c": 0,
+      "a": "",
+      "sn": "BBC Tech",
+      "cat": "Tech",
+      "ts": 1783752856,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Apple said in a Friday lawsuit that OpenAI\u2019s nascent hardware business is \u201crotten to its core.\u201d",
+      "content": ""
     }
   ],
   "summary": {
     "schema_version": "2",
-    "simple": "Qwen 3.8 launched with open-weight plans and a reported 2-million-token context, leading a busy day of AI and hardware news. A study found AI advice made people three times less accurate yet twice as confident, and a Show HN post detailed replacing a $120k bowling center system with $1,600 of ESP32s.",
+    "simple": "This batch highlights a rapidly expanding AI ecosystem, from Alibaba\u2019s forthcoming open-weight Qwen3.8 model to Claude Code\u2019s shift toward a Bun runtime written in Rust. It also shows the practical and social consequences of technology: AI advice can undermine judgment, while inexpensive ESP32 hardware can replace costly proprietary systems.",
     "structured": {
       "themes": [
-        "Frontier model releases and open weights",
-        "AI's effect on human judgment and confidence",
-        "Low-cost hardware hacking and engineering"
+        "Open-weight AI and developer tooling",
+        "AI reliability and human judgment",
+        "Low-cost hardware disruption"
       ],
-      "breaking": "Qwen 3.8 is launching and going open-weight soon, headlining the day's model releases.",
+      "breaking": "Alibaba says Qwen3.8 is launching soon as an open-weight model, potentially intensifying competition among openly released AI systems.",
       "mustRead": [
         {
           "id": "hn-2",
-          "title": "Qwen 3.8 is launching and going open-weight soon",
+          "title": "Qwen 3.8",
           "url": "https://twitter.com/Alibaba_Qwen/status/2078759124914098291",
-          "reason": "A major frontier model release with open-weight promise signals intensified competition among open and closed labs."
+          "reason": "The planned open-weight release could materially affect model availability, pricing, and the competitive balance in AI."
         },
         {
           "id": "hn-1",
           "title": "AI advice made people 3x less accurate but 2x confident, researchers found",
           "url": "https://thenextweb.com/news/ai-advice-suppresses-critical-thinking-wrong-answers-study",
-          "reason": "Findings cast fresh doubt on the reliability of AI-assisted decision making by quantifying confidence-accuracy gaps."
+          "reason": "The findings expose a dangerous gap between AI-assisted confidence and actual accuracy, with implications for education, work, and decision-making."
         },
         {
           "id": "hn-0",
           "title": "Show HN: I replaced a $120k bowling center system with $1,600 in ESP32s",
           "url": "https://news.ycombinator.com/item?id=48968606",
-          "reason": "A striking cost-reduction case study using microcontrollers that drew the highest raw HN engagement of the set."
+          "reason": "The project is a striking example of commodity hardware and software dismantling expensive specialized infrastructure."
         }
       ]
     },
     "fullBrief": {
-      "intro": "Today's tech news is anchored by another frontier-model release, as Alibaba's Qwen 3.8 arrives with open-weight intentions and a vast claimed context. Alongside the model news, research on AI's corrosive effect on human accuracy and confidence adds a counterweight to the hype, while engineers continue flexing cheap hardware as an antidote to expensive systems.",
+      "intro": "The strongest stories combine major platform shifts with clear evidence that cheaper, more accessible technology is changing how systems are built and used. Alibaba\u2019s Qwen3.8 announcement and Claude Code\u2019s Bun migration point to intense competition in models and developer infrastructure, while the AI-advice study warns that convenience can reduce critical thinking rather than improve it. The ESP32 bowling-center replacement provides a concrete example of bottom-up engineering beating legacy costs.",
       "sections": [
         {
-          "heading": "Qwen 3.8 and the open-weight push",
-          "body": "Alibaba announced Qwen 3.8 is launching and going open-weight soon, with excerpts referencing a massive 2-million-token context. The release keeps pressure on closed labs and reinforces the trend of capable models being shared openly, even as deployment economics and safety guardrails remain open questions."
+          "heading": "Open AI models and faster developer infrastructure",
+          "body": "Alibaba\u2019s announcement that Qwen3.8 will launch as an open-weight model could give developers another powerful option outside closed AI platforms and increase pressure on model pricing and access. Separately, Claude Code\u2019s move to Bun, whose runtime is written in Rust, signals continued investment in faster startup times, packaging, and execution for AI coding tools."
         },
         {
-          "heading": "AI advice may harm the humans using it",
-          "body": "A study highlighted on Hacker News found people given AI advice were three times less accurate but twice as confident, suggesting AI can suppress critical thinking and inflate self-assurance even when answers are wrong. The result is a cautionary data point for anyone handing decisions to assistants."
-        },
-        {
-          "heading": "Replacing $120k systems with $1,600 of ESP32s",
-          "body": "A Show HN post described swapping a $120,000 bowling center management system for $1,600 of ESP32 microcontrollers, drawing over 1,300 upvotes. It is the day's strongest example of scrappy engineering undercutting overpriced vertical software, alongside other notes about Claude Code's Bun-in-Rust toolchain and India's first privately-developed rocket reaching orbit."
+          "heading": "The promise and risk of accessible technology",
+          "body": "The AI-advice research suggests that people may accept incorrect recommendations while becoming more confident in their answers, making verification and domain expertise more important when using AI. The ESP32 bowling-center project offers the counterexample: with careful engineering, inexpensive commodity components can replace a six-figure system and make sophisticated automation accessible to smaller operators. India's privately developed rocket reaching orbit adds another sign that lower-cost, independent technology efforts are expanding beyond traditional incumbents."
         }
       ],
-      "closing": "The day pairs a flashy model launch with evidence that AI can erode the very judgment it promises to augment."
+      "closing": "The common thread is technology becoming more accessible, but its benefits depend on whether people verify outputs and build systems thoughtfully."
     }
   },
   "metrics": {
     "runtime": {
-      "fetch_seconds": 2.13,
-      "scrape_seconds": 1.47,
-      "ranking_seconds": 0.02,
-      "summary_seconds": 23.98,
-      "total_seconds": 27.6,
+      "fetch_seconds": 1.3,
+      "scrape_seconds": 0.0,
+      "ranking_seconds": 0.01,
+      "summary_seconds": 17.05,
+      "total_seconds": 18.36,
       "within_budget": true
     },
     "scraping": {
       "candidate_urls": 10,
-      "cache_hits": 2,
-      "network_success": 8,
+      "cache_hits": 10,
+      "network_success": 0,
       "failures": 0,
       "success_rate": 100.0,
-      "cache_hit_rate": 20.0
+      "cache_hit_rate": 100.0
     },
     "ranking": {
       "total_posts": 140,
       "llm_quality_used": false,
       "llm_usage": {
-        "input_tokens": 2894,
+        "input_tokens": 2897,
         "output_tokens": 1008,
-        "cost_usd": 0.04471,
+        "cost_usd": 0.044725,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 3902,
+        "total_tokens": 3905,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 3902,
-        "estimated_input_tokens": 2894,
+        "estimated_tokens": 3905,
+        "estimated_input_tokens": 2897,
         "estimated_output_tokens": 1008,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -2626,11 +2622,11 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 23.976,
+        "duration_seconds": 17.047,
         "prompt_chars": 3672,
         "story_count": 8
       },
-      "duration_seconds": 23.976,
+      "duration_seconds": 17.047,
       "validation_warnings": []
     },
     "cost": {
@@ -2641,19 +2637,19 @@
       ],
       "openrouter_cost_used": false,
       "estimated_cost_used": true,
-      "estimated_tokens": 3902,
-      "session_model_usd": 0.04471,
+      "estimated_tokens": 3905,
+      "session_model_usd": 0.044725,
       "ranking_llm": {
-        "input_tokens": 2894,
+        "input_tokens": 2897,
         "output_tokens": 1008,
-        "cost_usd": 0.04471,
+        "cost_usd": 0.044725,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 3902,
+        "total_tokens": 3905,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 3902,
-        "estimated_input_tokens": 2894,
+        "estimated_tokens": 3905,
+        "estimated_input_tokens": 2897,
         "estimated_output_tokens": 1008,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -2667,7 +2663,7 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 23.976,
+        "duration_seconds": 17.047,
         "prompt_chars": 3672,
         "story_count": 8
       },
