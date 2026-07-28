@@ -1,7 +1,7 @@
 {
   "v": 4,
   "d": "2026-07-28",
-  "g": "2026-07-28T08:00:43.806757",
+  "g": "2026-07-28T08:02:20.448651",
   "r": [
     {
       "i": "rd-0",
@@ -371,7 +371,7 @@
       "u": "https://www.anthropic.com/news/position-open-weights-models",
       "p": "https://news.ycombinator.com/item?id=49076057",
       "b": "",
-      "s": 1068,
+      "s": 1070,
       "c": 1541,
       "a": "surprisetalk",
       "sn": "",
@@ -389,8 +389,8 @@
       "u": "https://www.lji.org/news-events/news/post/new-hiv-vaccine-shows-unprecedented-success-in-preclinical-study/",
       "p": "https://news.ycombinator.com/item?id=49083314",
       "b": "",
-      "s": 177,
-      "c": 62,
+      "s": 178,
+      "c": 64,
       "a": "codebyaditya",
       "sn": "",
       "cat": "Tech",
@@ -443,7 +443,7 @@
       "u": "https://github.com/ctrlb-hq/ctrlb-decompose",
       "p": "https://news.ycombinator.com/item?id=49083336",
       "b": "",
-      "s": 34,
+      "s": 35,
       "c": 7,
       "a": "ruhani_grover",
       "sn": "",
@@ -461,8 +461,8 @@
       "u": "https://www.data.jma.go.jp/multi/quake/quake_detail.html?eventID=20260728163528&lang=en",
       "p": "https://news.ycombinator.com/item?id=49080664",
       "b": "",
-      "s": 549,
-      "c": 109,
+      "s": 551,
+      "c": 110,
       "a": "krembo",
       "sn": "",
       "cat": "Tech",
@@ -479,13 +479,13 @@
       "u": "https://arxiv.org/abs/2510.26692",
       "p": "https://news.ycombinator.com/item?id=49082022",
       "b": "",
-      "s": 84,
-      "c": 15,
+      "s": 86,
+      "c": 17,
       "a": "ronfriedhaber",
       "sn": "",
       "cat": "Tech",
       "ts": 1785235950,
-      "rank": 13.1,
+      "rank": 13.2,
       "content_available": true,
       "content_quality": 0,
       "excerpt": "Title: Kimi Linear: An Expressive, Efficient Attention Architecture URL Source: https://arxiv.org/abs/2510.26692 Published Time: Tue, 04 Nov 2025 01:30:51 GMT Markdown Content: Authors:[Kimi Team](htt",
@@ -497,7 +497,7 @@
       "u": "https://ciphercue.com/blog/dmarc-enforcement-gap-rua-fragmentation-2026",
       "p": "https://news.ycombinator.com/item?id=49081783",
       "b": "",
-      "s": 60,
+      "s": 62,
       "c": 40,
       "a": "adulion",
       "sn": "",
@@ -515,7 +515,7 @@
       "u": "https://spawn-queue.acm.org/doi/10.1145/3819083",
       "p": "https://news.ycombinator.com/item?id=49081644",
       "b": "",
-      "s": 76,
+      "s": 77,
       "c": 41,
       "a": "jordigg",
       "sn": "",
@@ -549,168 +549,6 @@
   "rs": [
     {
       "i": "rs-0",
-      "t": "As US measles cases rise, biotech firms start developing new treatments",
-      "u": "https://arstechnica.com/health/2026/07/as-us-measles-cases-rise-biotech-firms-start-developing-new-treatments/",
-      "p": "https://arstechnica.com/health/2026/07/as-us-measles-cases-rise-biotech-firms-start-developing-new-treatments/",
-      "b": "The US is making measles great again, so treatment options are needed for the most vulnerable.",
-      "s": 0,
-      "c": 0,
-      "a": "Emily Mullin, wired.com",
-      "sn": "Ars Technica",
-      "cat": "Tech",
-      "ts": 1785274343,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "The US is making measles great again, so treatment options are needed for the most vulnerable.",
-      "content": ""
-    },
-    {
-      "i": "rs-10",
-      "t": "Apple\u2019s reported \u2018HomePad\u2019 may launch as early as October",
-      "u": "https://www.theverge.com/tech/971790/apple-homepad-rumor-launch",
-      "p": "https://www.theverge.com/tech/971790/apple-homepad-rumor-launch",
-      "b": "For years, we've heard rumors of a new home hub device from Apple, meant to take on smart home devices like the Google Nest Hub Mini and Amazon's Echo Show. Besides \"HomePod with a screen,\" details have been sparse. But now, a new report from Bloomberg's Mark Gurman sheds some li",
-      "s": 0,
-      "c": 0,
-      "a": "David Imel",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785278382,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "For years, we've heard rumors of a new home hub device from Apple, meant to take on smart home devices like the Google Nest Hub Mini and Amazon's Echo Show. Besides \"HomePod with a screen,\" details ha",
-      "content": ""
-    },
-    {
-      "i": "rs-11",
-      "t": "Twelve South\u2019s stylish charging tray now delivers more wireless power with a smaller footprint",
-      "u": "https://www.theverge.com/tech/969957/twelve-south-valet-wireless-charger-qi2-25w-leather",
-      "p": "https://www.theverge.com/tech/969957/twelve-south-valet-wireless-charger-qi2-25w-leather",
-      "b": "Following the original's debut at CES earlier this year, Twelve South is introducing a new version of its leather-wrapped Valet charging tray designed for use in places where space is at a premium. While the original Valet was 7.5-inches deep and large enough to serve as a catcha",
-      "s": 0,
-      "c": 0,
-      "a": "Andrew Liszewski",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785272400,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Following the original's debut at CES earlier this year, Twelve South is introducing a new version of its leather-wrapped Valet charging tray designed for use in places where space is at a premium. Wh",
-      "content": ""
-    },
-    {
-      "i": "rs-12",
-      "t": "You don\u2019t need to splurge on an expensive handheld fan to beat the heat",
-      "u": "https://www.theverge.com/tech/970092/jisulife-10s-handheld-personal-fan",
-      "p": "https://www.theverge.com/tech/970092/jisulife-10s-handheld-personal-fan",
-      "b": "Despite what influencers may say, you don\u2019t need to spend $99.99 on Dyson\u2019s HushJet Mini Cool or $149.99 for the Shark ChillPill to survive the summer whenever you leave the comfort of air-conditioning. My family has found all the comfort it needs to survive humid baseball games,",
-      "s": 0,
-      "c": 0,
-      "a": "Andrew Liszewski",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785272400,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Despite what influencers may say, you don\u2019t need to spend $99.99 on Dyson\u2019s HushJet Mini Cool or $149.99 for the Shark ChillPill to survive the summer whenever you leave the comfort of air-conditionin",
-      "content": ""
-    },
-    {
-      "i": "rs-13",
-      "t": "Logitech\u2019s handheld plans are on ice \u2014 don\u2019t expect a G Cloud 2 soon",
-      "u": "https://www.theverge.com/games/971651/logitech-handheld-business-g-cloud-robin-piispanen-interview",
-      "p": "https://www.theverge.com/games/971651/logitech-handheld-business-g-cloud-robin-piispanen-interview",
-      "b": "Logitech's new gaming boss, Robin Piispanen, tells me he likes the idea of gaming handhelds. \"It's such a charming value proposition,\" he says, as we sip iced vanilla lattes at my local cafe. But he's not building one right now. He's not sure when or if Logitech should try again,",
-      "s": 0,
-      "c": 0,
-      "a": "Sean Hollister",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785270711,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Logitech's new gaming boss, Robin Piispanen, tells me he likes the idea of gaming handhelds. \"It's such a charming value proposition,\" he says, as we sip iced vanilla lattes at my local cafe. But he's",
-      "content": ""
-    },
-    {
-      "i": "rs-14",
-      "t": "Perplexity\u2019s Personal Computer turns Windows PCs into AI agents",
-      "u": "https://www.theverge.com/ai-artificial-intelligence/971750/perplexity-personal-computer-windows-ai-agents",
-      "p": "https://www.theverge.com/ai-artificial-intelligence/971750/perplexity-personal-computer-windows-ai-agents",
-      "b": "Perplexity has expanded its agentic Personal Computer tool to Windows, allowing computers running the world's most popular OS to be used as a locally run AI system. Like the Mac version that Perplexity launched in April, Personal Computer for Windows operates like a \"general-purp",
-      "s": 0,
-      "c": 0,
-      "a": "Jess Weatherbed",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785270600,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Perplexity has expanded its agentic Personal Computer tool to Windows, allowing computers running the world's most popular OS to be used as a locally run AI system. Like the Mac version that Perplexit",
-      "content": ""
-    },
-    {
-      "i": "rs-15",
-      "t": "Apple launches \u2018Upgrade\u2019 program to lease new devices",
-      "u": "https://www.theverge.com/tech/971220/apple-upgrade-program-iphone-mac-ipad-lease-launch",
-      "p": "https://www.theverge.com/tech/971220/apple-upgrade-program-iphone-mac-ipad-lease-launch",
-      "b": "Apple has officially introduced \"Apple Upgrade,\" a new leasing program that aims to make it easier to get your hands on the latest iPhone, Mac, iPad, and Apple Watch models. The service is launching today in the US, and works like a car lease - allowing users to keep a device at ",
-      "s": 0,
-      "c": 0,
-      "a": "Jess Weatherbed",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785270230,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Apple has officially introduced \"Apple Upgrade,\" a new leasing program that aims to make it easier to get your hands on the latest iPhone, Mac, iPad, and Apple Watch models. The service is launching t",
-      "content": ""
-    },
-    {
-      "i": "rs-16",
-      "t": "Smart rings are looking like my kind of AI gadget",
-      "u": "https://www.theverge.com/gadgets/971744/smart-ring-ai-gadget-stream-index",
-      "p": "https://www.theverge.com/gadgets/971744/smart-ring-ai-gadget-stream-index",
-      "b": "Over the last few months, I've spent a lot of time talking to my computer. One underrated feature of the LLM revolution has been a remarkable leap in all kinds of dictation technology - even the fastest, cheapest models are getting very good at understanding and processing speech",
-      "s": 0,
-      "c": 0,
-      "a": "David Pierce",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785268800,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Over the last few months, I've spent a lot of time talking to my computer. One underrated feature of the LLM revolution has been a remarkable leap in all kinds of dictation technology - even the faste",
-      "content": ""
-    },
-    {
-      "i": "rs-17",
-      "t": "Hugging Face is being used to easily undress women and children",
-      "u": "https://www.theverge.com/ai-artificial-intelligence/971723/hugging-face-nudify-deepfake-undress-women-children",
-      "p": "https://www.theverge.com/ai-artificial-intelligence/971723/hugging-face-nudify-deepfake-undress-women-children",
-      "b": "Hugging Face is being used to make nonconsensual deepfakes, and the popular open-source AI model repository is doing very little to prevent it. That's according to a new report published by the European nonprofit AI Forensics, which found that seven out of the top nine image edit",
-      "s": 0,
-      "c": 0,
-      "a": "Jess Weatherbed",
-      "sn": "The Verge",
-      "cat": "Tech",
-      "ts": 1785258434,
-      "rank": 15.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Hugging Face is being used to make nonconsensual deepfakes, and the popular open-source AI model repository is doing very little to prevent it. That's according to a new report published by the Europe",
-      "content": ""
-    },
-    {
-      "i": "rs-20",
       "t": "Is the Electric Trike the Next Big Thing in Shared Micromobility?",
       "u": "https://www.wired.com/story/is-the-electric-trike-the-next-big-thing-in-shared-micromobility-veo-rover/",
       "p": "https://www.wired.com/story/is-the-electric-trike-the-next-big-thing-in-shared-micromobility-veo-rover/",
@@ -728,7 +566,7 @@
       "content": ""
     },
     {
-      "i": "rs-21",
+      "i": "rs-1",
       "t": "A Two-Person Startup Has Fixed One of the Most Hated Sounds in Modern Life",
       "u": "https://www.wired.com/story/a-two-person-startup-has-fixed-one-of-the-most-hated-sounds-in-modern-life/",
       "p": "https://www.wired.com/story/a-two-person-startup-has-fixed-one-of-the-most-hated-sounds-in-modern-life/",
@@ -746,7 +584,7 @@
       "content": ""
     },
     {
-      "i": "rs-22",
+      "i": "rs-2",
       "t": "Can the New York Times Save Journalism From Our AI Overlords?",
       "u": "https://www.wired.com/story/the-big-interview-podcast-a-g-sulzberger-new-york-times/",
       "p": "https://www.wired.com/story/the-big-interview-podcast-a-g-sulzberger-new-york-times/",
@@ -764,7 +602,7 @@
       "content": ""
     },
     {
-      "i": "rs-23",
+      "i": "rs-3",
       "t": "Silicon Valley\u2019s Next IPO Billionaires Are Coming. Nonprofits Are Ready for Them",
       "u": "https://www.wired.com/story/nonprofits-are-getting-ready-for-the-funding-anthropalypse/",
       "p": "https://www.wired.com/story/nonprofits-are-getting-ready-for-the-funding-anthropalypse/",
@@ -782,7 +620,7 @@
       "content": ""
     },
     {
-      "i": "rs-24",
+      "i": "rs-4",
       "t": "7-OH Users Are Stockpiling Ahead of a DEA Ban",
       "u": "https://www.wired.com/story/7-oh-users-brace-for-dea-ban/",
       "p": "https://www.wired.com/story/7-oh-users-brace-for-dea-ban/",
@@ -800,7 +638,7 @@
       "content": ""
     },
     {
-      "i": "rs-25",
+      "i": "rs-5",
       "t": "An Extreme Solar Storm May Be Even More Devastating Than Previously Imagined",
       "u": "https://www.wired.com/story/an-extreme-solar-storm-may-be-even-more-devastating-than-previously-imagined/",
       "p": "https://www.wired.com/story/an-extreme-solar-storm-may-be-even-more-devastating-than-previously-imagined/",
@@ -818,7 +656,7 @@
       "content": ""
     },
     {
-      "i": "rs-30",
+      "i": "rs-10",
       "t": "Elon Musk\u2019s X Money app is rolling out in the U.S.",
       "u": "https://techcrunch.com/2026/07/28/elon-musks-x-money-app-is-rolling-out-in-the-u-s/",
       "p": "https://techcrunch.com/2026/07/28/elon-musks-x-money-app-is-rolling-out-in-the-u-s/",
@@ -836,7 +674,7 @@
       "content": ""
     },
     {
-      "i": "rs-31",
+      "i": "rs-11",
       "t": "WhatsApp now lets you make calls using its web app",
       "u": "https://techcrunch.com/2026/07/28/whatsapp-now-lets-you-make-calls-using-its-web-app/",
       "p": "https://techcrunch.com/2026/07/28/whatsapp-now-lets-you-make-calls-using-its-web-app/",
@@ -854,7 +692,7 @@
       "content": ""
     },
     {
-      "i": "rs-32",
+      "i": "rs-12",
       "t": "Fish Audio raises $50M seed to build AI voice models for creators and enterprises",
       "u": "https://techcrunch.com/2026/07/28/fish-audio-raises-50m-seed-to-build-ai-voice-models-for-creators-and-enterprises/",
       "p": "https://techcrunch.com/2026/07/28/fish-audio-raises-50m-seed-to-build-ai-voice-models-for-creators-and-enterprises/",
@@ -872,7 +710,7 @@
       "content": ""
     },
     {
-      "i": "rs-33",
+      "i": "rs-13",
       "t": "Apple launches \u2018Upgrade\u2019 device leasing program in partnership with Klarna",
       "u": "https://techcrunch.com/2026/07/28/apple-launches-upgrade-device-leasing-program-in-partnership-with-klarna/",
       "p": "https://techcrunch.com/2026/07/28/apple-launches-upgrade-device-leasing-program-in-partnership-with-klarna/",
@@ -890,7 +728,7 @@
       "content": ""
     },
     {
-      "i": "rs-34",
+      "i": "rs-14",
       "t": "Recursive Superintelligence signs $410 compute deal with Amazon",
       "u": "https://techcrunch.com/2026/07/28/recursive-superintelligence-signs-400-compute-deal-with-amazon/",
       "p": "https://techcrunch.com/2026/07/28/recursive-superintelligence-signs-400-compute-deal-with-amazon/",
@@ -908,7 +746,7 @@
       "content": ""
     },
     {
-      "i": "rs-35",
+      "i": "rs-15",
       "t": "Granola launches an Apple Watch app",
       "u": "https://techcrunch.com/2026/07/28/granola-launches-an-apple-watch-app/",
       "p": "https://techcrunch.com/2026/07/28/granola-launches-an-apple-watch-app/",
@@ -926,7 +764,7 @@
       "content": ""
     },
     {
-      "i": "rs-36",
+      "i": "rs-16",
       "t": "Lyft and Baidu enter London\u2019s robotaxi battleground as testing begins",
       "u": "https://techcrunch.com/2026/07/28/lyft-and-baidu-enter-londons-robotaxi-battleground-as-testing-begins/",
       "p": "https://techcrunch.com/2026/07/28/lyft-and-baidu-enter-londons-robotaxi-battleground-as-testing-begins/",
@@ -944,7 +782,151 @@
       "content": ""
     },
     {
-      "i": "rs-40",
+      "i": "rs-20",
+      "t": "Apple\u2019s reported \u2018HomePad\u2019 may launch as early as October",
+      "u": "https://www.theverge.com/tech/971790/apple-homepad-rumor-launch",
+      "p": "https://www.theverge.com/tech/971790/apple-homepad-rumor-launch",
+      "b": "For years, we've heard rumors of a new home hub device from Apple, meant to take on smart home devices like the Google Nest Hub Mini and Amazon's Echo Show. Besides \"HomePod with a screen,\" details have been sparse. But now, a new report from Bloomberg's Mark Gurman sheds some li",
+      "s": 0,
+      "c": 0,
+      "a": "David Imel",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785278382,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "For years, we've heard rumors of a new home hub device from Apple, meant to take on smart home devices like the Google Nest Hub Mini and Amazon's Echo Show. Besides \"HomePod with a screen,\" details ha",
+      "content": ""
+    },
+    {
+      "i": "rs-21",
+      "t": "Twelve South\u2019s stylish charging tray now delivers more wireless power with a smaller footprint",
+      "u": "https://www.theverge.com/tech/969957/twelve-south-valet-wireless-charger-qi2-25w-leather",
+      "p": "https://www.theverge.com/tech/969957/twelve-south-valet-wireless-charger-qi2-25w-leather",
+      "b": "Following the original's debut at CES earlier this year, Twelve South is introducing a new version of its leather-wrapped Valet charging tray designed for use in places where space is at a premium. While the original Valet was 7.5-inches deep and large enough to serve as a catcha",
+      "s": 0,
+      "c": 0,
+      "a": "Andrew Liszewski",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785272400,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Following the original's debut at CES earlier this year, Twelve South is introducing a new version of its leather-wrapped Valet charging tray designed for use in places where space is at a premium. Wh",
+      "content": ""
+    },
+    {
+      "i": "rs-22",
+      "t": "You don\u2019t need to splurge on an expensive handheld fan to beat the heat",
+      "u": "https://www.theverge.com/tech/970092/jisulife-10s-handheld-personal-fan",
+      "p": "https://www.theverge.com/tech/970092/jisulife-10s-handheld-personal-fan",
+      "b": "Despite what influencers may say, you don\u2019t need to spend $99.99 on Dyson\u2019s HushJet Mini Cool or $149.99 for the Shark ChillPill to survive the summer whenever you leave the comfort of air-conditioning. My family has found all the comfort it needs to survive humid baseball games,",
+      "s": 0,
+      "c": 0,
+      "a": "Andrew Liszewski",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785272400,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Despite what influencers may say, you don\u2019t need to spend $99.99 on Dyson\u2019s HushJet Mini Cool or $149.99 for the Shark ChillPill to survive the summer whenever you leave the comfort of air-conditionin",
+      "content": ""
+    },
+    {
+      "i": "rs-23",
+      "t": "Logitech\u2019s handheld plans are on ice \u2014 don\u2019t expect a G Cloud 2 soon",
+      "u": "https://www.theverge.com/games/971651/logitech-handheld-business-g-cloud-robin-piispanen-interview",
+      "p": "https://www.theverge.com/games/971651/logitech-handheld-business-g-cloud-robin-piispanen-interview",
+      "b": "Logitech's new gaming boss, Robin Piispanen, tells me he likes the idea of gaming handhelds. \"It's such a charming value proposition,\" he says, as we sip iced vanilla lattes at my local cafe. But he's not building one right now. He's not sure when or if Logitech should try again,",
+      "s": 0,
+      "c": 0,
+      "a": "Sean Hollister",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785270711,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Logitech's new gaming boss, Robin Piispanen, tells me he likes the idea of gaming handhelds. \"It's such a charming value proposition,\" he says, as we sip iced vanilla lattes at my local cafe. But he's",
+      "content": ""
+    },
+    {
+      "i": "rs-24",
+      "t": "Perplexity\u2019s Personal Computer turns Windows PCs into AI agents",
+      "u": "https://www.theverge.com/ai-artificial-intelligence/971750/perplexity-personal-computer-windows-ai-agents",
+      "p": "https://www.theverge.com/ai-artificial-intelligence/971750/perplexity-personal-computer-windows-ai-agents",
+      "b": "Perplexity has expanded its agentic Personal Computer tool to Windows, allowing computers running the world's most popular OS to be used as a locally run AI system. Like the Mac version that Perplexity launched in April, Personal Computer for Windows operates like a \"general-purp",
+      "s": 0,
+      "c": 0,
+      "a": "Jess Weatherbed",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785270600,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Perplexity has expanded its agentic Personal Computer tool to Windows, allowing computers running the world's most popular OS to be used as a locally run AI system. Like the Mac version that Perplexit",
+      "content": ""
+    },
+    {
+      "i": "rs-25",
+      "t": "Apple launches \u2018Upgrade\u2019 program to lease new devices",
+      "u": "https://www.theverge.com/tech/971220/apple-upgrade-program-iphone-mac-ipad-lease-launch",
+      "p": "https://www.theverge.com/tech/971220/apple-upgrade-program-iphone-mac-ipad-lease-launch",
+      "b": "Apple has officially introduced \"Apple Upgrade,\" a new leasing program that aims to make it easier to get your hands on the latest iPhone, Mac, iPad, and Apple Watch models. The service is launching today in the US, and works like a car lease - allowing users to keep a device at ",
+      "s": 0,
+      "c": 0,
+      "a": "Jess Weatherbed",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785270230,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Apple has officially introduced \"Apple Upgrade,\" a new leasing program that aims to make it easier to get your hands on the latest iPhone, Mac, iPad, and Apple Watch models. The service is launching t",
+      "content": ""
+    },
+    {
+      "i": "rs-26",
+      "t": "Smart rings are looking like my kind of AI gadget",
+      "u": "https://www.theverge.com/gadgets/971744/smart-ring-ai-gadget-stream-index",
+      "p": "https://www.theverge.com/gadgets/971744/smart-ring-ai-gadget-stream-index",
+      "b": "Over the last few months, I've spent a lot of time talking to my computer. One underrated feature of the LLM revolution has been a remarkable leap in all kinds of dictation technology - even the fastest, cheapest models are getting very good at understanding and processing speech",
+      "s": 0,
+      "c": 0,
+      "a": "David Pierce",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785268800,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Over the last few months, I've spent a lot of time talking to my computer. One underrated feature of the LLM revolution has been a remarkable leap in all kinds of dictation technology - even the faste",
+      "content": ""
+    },
+    {
+      "i": "rs-27",
+      "t": "Hugging Face is being used to easily undress women and children",
+      "u": "https://www.theverge.com/ai-artificial-intelligence/971723/hugging-face-nudify-deepfake-undress-women-children",
+      "p": "https://www.theverge.com/ai-artificial-intelligence/971723/hugging-face-nudify-deepfake-undress-women-children",
+      "b": "Hugging Face is being used to make nonconsensual deepfakes, and the popular open-source AI model repository is doing very little to prevent it. That's according to a new report published by the European nonprofit AI Forensics, which found that seven out of the top nine image edit",
+      "s": 0,
+      "c": 0,
+      "a": "Jess Weatherbed",
+      "sn": "The Verge",
+      "cat": "Tech",
+      "ts": 1785258434,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Hugging Face is being used to make nonconsensual deepfakes, and the popular open-source AI model repository is doing very little to prevent it. That's according to a new report published by the Europe",
+      "content": ""
+    },
+    {
+      "i": "rs-30",
       "t": "Arizona State Launches Influencer Degree Where Students Must Gain Real Followers",
       "u": "https://news.slashdot.org/story/26/07/28/012244/arizona-state-launches-influencer-degree-where-students-must-gain-real-followers?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://news.slashdot.org/story/26/07/28/012244/arizona-state-launches-influencer-degree-where-students-must-gain-real-followers?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -962,7 +944,7 @@
       "content": ""
     },
     {
-      "i": "rs-41",
+      "i": "rs-31",
       "t": "Earth's Biggest Disasters Strike In a Hidden Pattern Every 27 Million Years",
       "u": "https://science.slashdot.org/story/26/07/28/0047230/earths-biggest-disasters-strike-in-a-hidden-pattern-every-27-million-years?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://science.slashdot.org/story/26/07/28/0047230/earths-biggest-disasters-strike-in-a-hidden-pattern-every-27-million-years?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -980,7 +962,7 @@
       "content": ""
     },
     {
-      "i": "rs-50",
+      "i": "rs-40",
       "t": "The Download: OpenAI\u2019s predictable hack, and an AI stock sell-off",
       "u": "https://www.technologyreview.com/2026/07/28/1140868/the-download-openai-hack-ai-stock-sell-off/",
       "p": "https://www.technologyreview.com/2026/07/28/1140868/the-download-openai-hack-ai-stock-sell-off/",
@@ -998,7 +980,7 @@
       "content": ""
     },
     {
-      "i": "rs-51",
+      "i": "rs-41",
       "t": "Samsung\u2019s chip workers are jumping ship to rival SK Hynix",
       "u": "https://www.technologyreview.com/2026/07/28/1140853/samsung-chip-workers-exodus-sk-hynix/",
       "p": "https://www.technologyreview.com/2026/07/28/1140853/samsung-chip-workers-exodus-sk-hynix/",
@@ -1034,7 +1016,25 @@
       "content": ""
     },
     {
-      "i": "rs-26",
+      "i": "rs-110",
+      "t": "As US measles cases rise, biotech firms start developing new treatments",
+      "u": "https://arstechnica.com/health/2026/07/as-us-measles-cases-rise-biotech-firms-start-developing-new-treatments/",
+      "p": "https://arstechnica.com/health/2026/07/as-us-measles-cases-rise-biotech-firms-start-developing-new-treatments/",
+      "b": "The US is making measles great again, so treatment options are needed for the most vulnerable.",
+      "s": 0,
+      "c": 0,
+      "a": "Emily Mullin, wired.com",
+      "sn": "Ars Technica",
+      "cat": "Tech",
+      "ts": 1785274343,
+      "rank": 15.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "The US is making measles great again, so treatment options are needed for the most vulnerable.",
+      "content": ""
+    },
+    {
+      "i": "rs-6",
       "t": "Hugging Face Has a Deepfake Nudes Problem",
       "u": "https://www.wired.com/story/hugging-face-has-a-nonconsensual-deepfakes-problem/",
       "p": "https://www.wired.com/story/hugging-face-has-a-nonconsensual-deepfakes-problem/",
@@ -1052,7 +1052,7 @@
       "content": ""
     },
     {
-      "i": "rs-37",
+      "i": "rs-17",
       "t": "Cursor makes its biggest India push yet ahead of SpaceX acquisition with localized pricing",
       "u": "https://techcrunch.com/2026/07/27/cursor-makes-its-biggest-india-push-yet-ahead-of-spacex-acquisition-with-localized-pricing/",
       "p": "https://techcrunch.com/2026/07/27/cursor-makes-its-biggest-india-push-yet-ahead-of-spacex-acquisition-with-localized-pricing/",
@@ -1070,7 +1070,7 @@
       "content": ""
     },
     {
-      "i": "rs-110",
+      "i": "rs-90",
       "t": "Semalith v1.4: A Calibrated 184M Safety Classifier Achieving State-of-the-Art Prompt-Injection Detection at 44x Fewer Parameters than Llama-Guard-3-8B",
       "u": "https://arxiv.org/abs/2607.22545",
       "p": "https://arxiv.org/abs/2607.22545",
@@ -1088,7 +1088,7 @@
       "content": ""
     },
     {
-      "i": "rs-111",
+      "i": "rs-91",
       "t": "CORVUS: Context Optimization and Reduction Via Underlying Synchronization for LLM Coding Agents",
       "u": "https://arxiv.org/abs/2607.22711",
       "p": "https://arxiv.org/abs/2607.22711",
@@ -1106,7 +1106,7 @@
       "content": ""
     },
     {
-      "i": "rs-112",
+      "i": "rs-92",
       "t": "CausalGate: Causal Importance Distillation for Transformer Module Pruning",
       "u": "https://arxiv.org/abs/2607.22720",
       "p": "https://arxiv.org/abs/2607.22720",
@@ -1124,7 +1124,7 @@
       "content": ""
     },
     {
-      "i": "rs-113",
+      "i": "rs-93",
       "t": "Progress-conditioned Group Policy Optimization for Long-Horizon Agentic Tasks",
       "u": "https://arxiv.org/abs/2607.22724",
       "p": "https://arxiv.org/abs/2607.22724",
@@ -1142,7 +1142,7 @@
       "content": ""
     },
     {
-      "i": "rs-114",
+      "i": "rs-94",
       "t": "QFedPolyp: A Communication- and Inference-Efficient Federated Learning Framework for Polyp Segmentation",
       "u": "https://arxiv.org/abs/2607.22743",
       "p": "https://arxiv.org/abs/2607.22743",
@@ -1160,7 +1160,7 @@
       "content": ""
     },
     {
-      "i": "rs-115",
+      "i": "rs-95",
       "t": "Learning to Access Computation: Accessibility Plasticity as a Principle of Adaptive Intelligence",
       "u": "https://arxiv.org/abs/2607.22748",
       "p": "https://arxiv.org/abs/2607.22748",
@@ -1178,7 +1178,7 @@
       "content": ""
     },
     {
-      "i": "rs-116",
+      "i": "rs-96",
       "t": "Hierarchical Grading in Large Language Models",
       "u": "https://arxiv.org/abs/2607.22757",
       "p": "https://arxiv.org/abs/2607.22757",
@@ -1196,7 +1196,7 @@
       "content": ""
     },
     {
-      "i": "rs-117",
+      "i": "rs-97",
       "t": "An Integrated Deep Learning and Statistical Framework for Whole-Network Gene--Environment Association with Leaf Vascular Architecture",
       "u": "https://arxiv.org/abs/2607.22763",
       "p": "https://arxiv.org/abs/2607.22763",
@@ -1214,7 +1214,7 @@
       "content": ""
     },
     {
-      "i": "rs-118",
+      "i": "rs-98",
       "t": "Beyond Shapley: An Influence-Based Data Auditing Pipeline for LLM Alignment and Evaluation",
       "u": "https://arxiv.org/abs/2607.22766",
       "p": "https://arxiv.org/abs/2607.22766",
@@ -1232,7 +1232,7 @@
       "content": ""
     },
     {
-      "i": "rs-119",
+      "i": "rs-99",
       "t": "DomainPilot: Domain-Level Loss-Guided Two-Stage Data Mixture Optimization for Efficient Language Model Fine-Tuning",
       "u": "https://arxiv.org/abs/2607.22769",
       "p": "https://arxiv.org/abs/2607.22769",
@@ -1430,7 +1430,7 @@
       "content": ""
     },
     {
-      "i": "rs-42",
+      "i": "rs-32",
       "t": "A Missing Underscore Sent Innocent Man To Prison For 18 Months",
       "u": "https://yro.slashdot.org/story/26/07/28/0037231/a-missing-underscore-sent-innocent-man-to-prison-for-18-months?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://yro.slashdot.org/story/26/07/28/0037231/a-missing-underscore-sent-innocent-man-to-prison-for-18-months?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1441,14 +1441,14 @@
       "sn": "Slashdot",
       "cat": "Tech",
       "ts": 1785238200,
-      "rank": 13.0,
+      "rank": 12.9,
       "content_available": false,
       "content_quality": 0,
       "excerpt": "An anonymous reader quotes a report from Ars Technica: One missing underscore in a Skyrim-themed username put an innocent Nova Scotia man in prison for 18 months. A 2018 child-luring investigation, wh",
       "content": ""
     },
     {
-      "i": "rs-38",
+      "i": "rs-18",
       "t": "Anthropic\u2019s Dario Amodei responds: doesn\u2019t oppose open-weight models, but fears Chinese AI",
       "u": "https://techcrunch.com/2026/07/27/anthropics-dario-amodei-responds-doesnt-oppose-open-weight-models-but-fears-chinese-ai/",
       "p": "https://techcrunch.com/2026/07/27/anthropics-dario-amodei-responds-doesnt-oppose-open-weight-models-but-fears-chinese-ai/",
@@ -1466,25 +1466,7 @@
       "content": ""
     },
     {
-      "i": "rs-70",
-      "t": "Anthropic on open weights \ud83d\udd13, Kimi releases K3 weights \ud83e\udd16, MAI Cyber model \ud83d\udd10",
-      "u": "https://tldr.tech/ai/2026-07-28",
-      "p": "https://tldr.tech/ai/2026-07-28",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1785225600,
-      "rank": 11.2,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-80",
+      "i": "rs-60",
       "t": "OpenAI's $500B datacenter \u26a1, Amazon's Starlink rival \ud83d\udef0\ufe0f, Nvidia backs SSI \ud83d\udcb0",
       "u": "https://tldr.tech/tech/2026-07-28",
       "p": "https://tldr.tech/tech/2026-07-28",
@@ -1502,7 +1484,25 @@
       "content": ""
     },
     {
-      "i": "rs-27",
+      "i": "rs-80",
+      "t": "Anthropic on open weights \ud83d\udd13, Kimi releases K3 weights \ud83e\udd16, MAI Cyber model \ud83d\udd10",
+      "u": "https://tldr.tech/ai/2026-07-28",
+      "p": "https://tldr.tech/ai/2026-07-28",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1785225600,
+      "rank": 11.2,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-7",
       "t": "France Had Never Seen a \u2018Fire Cloud\u2019 Until This Month\u2019s Record-Smashing Blazes",
       "u": "https://www.wired.com/story/france-records-first-pyrocumulonimbus-cloud-wildfires/",
       "p": "https://www.wired.com/story/france-records-first-pyrocumulonimbus-cloud-wildfires/",
@@ -1520,7 +1520,7 @@
       "content": ""
     },
     {
-      "i": "rs-43",
+      "i": "rs-33",
       "t": "Peacock to Be Included With YouTube Premium In Major Streaming Tie-Up",
       "u": "https://news.slashdot.org/story/26/07/27/1942254/peacock-to-be-included-with-youtube-premium-in-major-streaming-tie-up?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://news.slashdot.org/story/26/07/27/1942254/peacock-to-be-included-with-youtube-premium-in-major-streaming-tie-up?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1556,7 +1556,7 @@
       "content": ""
     },
     {
-      "i": "rs-18",
+      "i": "rs-28",
       "t": "X Money is launching in the US starting today",
       "u": "https://www.theverge.com/tech/971649/x-money-launch-elon-musk",
       "p": "https://www.theverge.com/tech/971649/x-money-launch-elon-musk",
@@ -1574,25 +1574,7 @@
       "content": ""
     },
     {
-      "i": "rs-1",
-      "t": "Microsoft unveils AI security tools it says outperform competing platforms",
-      "u": "https://arstechnica.com/security/2026/07/microsoft-unveils-ai-security-tools-it-says-outperform-competing-platforms/",
-      "p": "https://arstechnica.com/security/2026/07/microsoft-unveils-ai-security-tools-it-says-outperform-competing-platforms/",
-      "b": "Microsoft says tools cost less than competing ones and outperform them, too.",
-      "s": 0,
-      "c": 0,
-      "a": "Dan Goodin",
-      "sn": "Ars Technica",
-      "cat": "Tech",
-      "ts": 1785218174,
-      "rank": 10.3,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "Microsoft says tools cost less than competing ones and outperform them, too.",
-      "content": ""
-    },
-    {
-      "i": "rs-44",
+      "i": "rs-34",
       "t": "Amazon Trying to Launch a Global Satellite Cellphone Network In 2028",
       "u": "https://tech.slashdot.org/story/26/07/27/1936209/amazon-trying-to-launch-a-global-satellite-cellphone-network-in-2028?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://tech.slashdot.org/story/26/07/27/1936209/amazon-trying-to-launch-a-global-satellite-cellphone-network-in-2028?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1610,7 +1592,25 @@
       "content": ""
     },
     {
-      "i": "rs-2",
+      "i": "rs-111",
+      "t": "Microsoft unveils AI security tools it says outperform competing platforms",
+      "u": "https://arstechnica.com/security/2026/07/microsoft-unveils-ai-security-tools-it-says-outperform-competing-platforms/",
+      "p": "https://arstechnica.com/security/2026/07/microsoft-unveils-ai-security-tools-it-says-outperform-competing-platforms/",
+      "b": "Microsoft says tools cost less than competing ones and outperform them, too.",
+      "s": 0,
+      "c": 0,
+      "a": "Dan Goodin",
+      "sn": "Ars Technica",
+      "cat": "Tech",
+      "ts": 1785218174,
+      "rank": 10.3,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "Microsoft says tools cost less than competing ones and outperform them, too.",
+      "content": ""
+    },
+    {
+      "i": "rs-112",
       "t": "Trump admin exempts SpaceX's Starlink from FCC ban on foreign-made routers",
       "u": "https://arstechnica.com/tech-policy/2026/07/starlink-gets-exemption-from-fcc-ban-on-routers-made-outside-the-us/",
       "p": "https://arstechnica.com/tech-policy/2026/07/starlink-gets-exemption-from-fcc-ban-on-routers-made-outside-the-us/",
@@ -1628,7 +1628,7 @@
       "content": ""
     },
     {
-      "i": "rs-19",
+      "i": "rs-29",
       "t": "Razer\u2019s analog Huntsman V3 Pro is over 20 percent off",
       "u": "https://www.theverge.com/gadgets/971557/razer-huntsman-v3-pro-tkl-optical-analog-gaming-keyboard-deal-sale",
       "p": "https://www.theverge.com/gadgets/971557/razer-huntsman-v3-pro-tkl-optical-analog-gaming-keyboard-deal-sale",
@@ -1646,7 +1646,7 @@
       "content": ""
     },
     {
-      "i": "rs-39",
+      "i": "rs-19",
       "t": "Satya Nadella says companies that trust one AI for everything may not survive",
       "u": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/",
       "p": "https://techcrunch.com/2026/07/27/satya-nadella-says-companies-that-trust-one-ai-for-everything-may-not-survive/",
@@ -1664,7 +1664,7 @@
       "content": ""
     },
     {
-      "i": "rs-28",
+      "i": "rs-8",
       "t": "New Firefighting Technologies Could Help Battle Blazes Like Those in France and Spain",
       "u": "https://www.wired.com/story/firefighting-technologies-battle-wildfires-france-spain/",
       "p": "https://www.wired.com/story/firefighting-technologies-battle-wildfires-france-spain/",
@@ -1682,7 +1682,7 @@
       "content": ""
     },
     {
-      "i": "rs-45",
+      "i": "rs-35",
       "t": "Nvidia, Tech Giants Launch AI Safety Initiative",
       "u": "https://it.slashdot.org/story/26/07/27/195206/nvidia-tech-giants-launch-ai-safety-initiative?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://it.slashdot.org/story/26/07/27/195206/nvidia-tech-giants-launch-ai-safety-initiative?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1700,7 +1700,7 @@
       "content": ""
     },
     {
-      "i": "rs-3",
+      "i": "rs-113",
       "t": "Epic diarrhea outbreak has 40% of Americans avoiding fruits and veggies",
       "u": "https://arstechnica.com/health/2026/07/epic-diarrhea-outbreak-has-40-of-americans-avoiding-fruits-and-veggies/",
       "p": "https://arstechnica.com/health/2026/07/epic-diarrhea-outbreak-has-40-of-americans-avoiding-fruits-and-veggies/",
@@ -1718,25 +1718,7 @@
       "content": ""
     },
     {
-      "i": "rs-4",
-      "t": "iOS and macOS 26.6 arrive today, paving the way for iOS and macOS 27",
-      "u": "https://arstechnica.com/gadgets/2026/07/ios-and-macos-26-6-arrive-today-paving-the-way-for-ios-and-macos-27/",
-      "p": "https://arstechnica.com/gadgets/2026/07/ios-and-macos-26-6-arrive-today-paving-the-way-for-ios-and-macos-27/",
-      "b": "These are likely the last updates of note before Apple's bigger fall updates.",
-      "s": 0,
-      "c": 0,
-      "a": "Samuel Axon",
-      "sn": "Ars Technica",
-      "cat": "Tech",
-      "ts": 1785213165,
-      "rank": 9.7,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "These are likely the last updates of note before Apple's bigger fall updates.",
-      "content": ""
-    },
-    {
-      "i": "rs-29",
+      "i": "rs-9",
       "t": "DHS Official Resigns, Citing \u2018War on Immigrants\u2019",
       "u": "https://www.wired.com/story/dhs-official-resigns-citing-war-on-immigrants/",
       "p": "https://www.wired.com/story/dhs-official-resigns-citing-war-on-immigrants/",
@@ -1754,7 +1736,25 @@
       "content": ""
     },
     {
-      "i": "rs-5",
+      "i": "rs-114",
+      "t": "iOS and macOS 26.6 arrive today, paving the way for iOS and macOS 27",
+      "u": "https://arstechnica.com/gadgets/2026/07/ios-and-macos-26-6-arrive-today-paving-the-way-for-ios-and-macos-27/",
+      "p": "https://arstechnica.com/gadgets/2026/07/ios-and-macos-26-6-arrive-today-paving-the-way-for-ios-and-macos-27/",
+      "b": "These are likely the last updates of note before Apple's bigger fall updates.",
+      "s": 0,
+      "c": 0,
+      "a": "Samuel Axon",
+      "sn": "Ars Technica",
+      "cat": "Tech",
+      "ts": 1785213165,
+      "rank": 9.7,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "These are likely the last updates of note before Apple's bigger fall updates.",
+      "content": ""
+    },
+    {
+      "i": "rs-115",
       "t": "A missing underscore sent innocent man to prison for 18 months",
       "u": "https://arstechnica.com/tech-policy/2026/07/police-missed-one-underscore-and-sent-the-wrong-man-to-prison/",
       "p": "https://arstechnica.com/tech-policy/2026/07/police-missed-one-underscore-and-sent-the-wrong-man-to-prison/",
@@ -1772,7 +1772,7 @@
       "content": ""
     },
     {
-      "i": "rs-6",
+      "i": "rs-116",
       "t": "\u201cGoogle and Reddit do not own the Internet,\" web scraper says after court win",
       "u": "https://arstechnica.com/tech-policy/2026/07/google-wont-give-up-odd-war-against-ai-web-scraping-despite-court-loss/",
       "p": "https://arstechnica.com/tech-policy/2026/07/google-wont-give-up-odd-war-against-ai-web-scraping-despite-court-loss/",
@@ -1790,7 +1790,7 @@
       "content": ""
     },
     {
-      "i": "rs-46",
+      "i": "rs-36",
       "t": "Codeberg Bans Cryptocurrency and LLM-Generated Code Projects",
       "u": "https://developers.slashdot.org/story/26/07/27/1842211/codeberg-bans-cryptocurrency-and-llm-generated-code-projects?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://developers.slashdot.org/story/26/07/27/1842211/codeberg-bans-cryptocurrency-and-llm-generated-code-projects?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1808,7 +1808,7 @@
       "content": ""
     },
     {
-      "i": "rs-7",
+      "i": "rs-117",
       "t": "5th Circuit blocks Texas law requiring websites to filter \"harmful\" speech",
       "u": "https://arstechnica.com/tech-policy/2026/07/5th-circuit-blocks-texas-law-requiring-websites-to-filter-harmful-speech/",
       "p": "https://arstechnica.com/tech-policy/2026/07/5th-circuit-blocks-texas-law-requiring-websites-to-filter-harmful-speech/",
@@ -1826,7 +1826,7 @@
       "content": ""
     },
     {
-      "i": "rs-47",
+      "i": "rs-37",
       "t": "China Begins Mass Production of Homegrown DUV Chip Tools",
       "u": "https://hardware.slashdot.org/story/26/07/27/1827257/china-begins-mass-production-of-homegrown-duv-chip-tools?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://hardware.slashdot.org/story/26/07/27/1827257/china-begins-mass-production-of-homegrown-duv-chip-tools?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1844,7 +1844,7 @@
       "content": ""
     },
     {
-      "i": "rs-8",
+      "i": "rs-118",
       "t": "Verizon touts $1B dark fiber deal for Google data centers as first of many",
       "u": "https://arstechnica.com/ai/2026/07/verizon-seeks-ai-profits-with-mini-data-centers-1b-dark-fiber-deal-with-google/",
       "p": "https://arstechnica.com/ai/2026/07/verizon-seeks-ai-profits-with-mini-data-centers-1b-dark-fiber-deal-with-google/",
@@ -1862,7 +1862,7 @@
       "content": ""
     },
     {
-      "i": "rs-9",
+      "i": "rs-119",
       "t": "Experts warn current Starship heat shield tech is a \"dead end\" for rapid reuse",
       "u": "https://arstechnica.com/space/2026/07/despite-recent-successes-rapid-reuse-of-starship-remains-a-tough-nut-to-crack/",
       "p": "https://arstechnica.com/space/2026/07/despite-recent-successes-rapid-reuse-of-starship-remains-a-tough-nut-to-crack/",
@@ -1880,7 +1880,7 @@
       "content": ""
     },
     {
-      "i": "rs-48",
+      "i": "rs-38",
       "t": "ChatGPT Starts Blocking Direct Requests To Copy an Author's Style",
       "u": "https://slashdot.org/story/26/07/27/185249/chatgpt-starts-blocking-direct-requests-to-copy-an-authors-style?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://slashdot.org/story/26/07/27/185249/chatgpt-starts-blocking-direct-requests-to-copy-an-authors-style?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1898,7 +1898,7 @@
       "content": ""
     },
     {
-      "i": "rs-52",
+      "i": "rs-42",
       "t": "OpenAI called the Hugging Face attack unprecedented. But we\u2019ve been here before.",
       "u": "https://www.technologyreview.com/2026/07/27/1140836/openai-hugging-face-attack-precedent/",
       "p": "https://www.technologyreview.com/2026/07/27/1140836/openai-hugging-face-attack-precedent/",
@@ -1916,7 +1916,7 @@
       "content": ""
     },
     {
-      "i": "rs-49",
+      "i": "rs-39",
       "t": "Apple Will 'Watch Everything Burn' When AI Bubble Bursts",
       "u": "https://apple.slashdot.org/story/26/07/27/1656234/apple-will-watch-everything-burn-when-ai-bubble-bursts?utm_source=rss1.0mainlinkanon&utm_medium=feed",
       "p": "https://apple.slashdot.org/story/26/07/27/1656234/apple-will-watch-everything-burn-when-ai-bubble-bursts?utm_source=rss1.0mainlinkanon&utm_medium=feed",
@@ -1934,7 +1934,7 @@
       "content": ""
     },
     {
-      "i": "rs-53",
+      "i": "rs-43",
       "t": "How lasers could help provide fuel for nuclear reactors",
       "u": "https://www.technologyreview.com/2026/07/27/1140798/laser-nuclear-enrichment/",
       "p": "https://www.technologyreview.com/2026/07/27/1140798/laser-nuclear-enrichment/",
@@ -1952,7 +1952,7 @@
       "content": ""
     },
     {
-      "i": "rs-90",
+      "i": "rs-70",
       "t": "Import AI 466: The bitter lesson for robotics, AIs complete week-long programming tasks; and OpenAI\u2019s accidental AI hacker",
       "u": "https://jack-clark.net/2026/07/27/import-ai-466-the-bitter-lesson-for-robotics-ais-complete-week-long-programming-tasks-and-openais-accidental-ai-hacker/",
       "p": "https://jack-clark.net/2026/07/27/import-ai-466-the-bitter-lesson-for-robotics-ais-complete-week-long-programming-tasks-and-openais-accidental-ai-hacker/",
@@ -1970,7 +1970,7 @@
       "content": ""
     },
     {
-      "i": "rs-54",
+      "i": "rs-44",
       "t": "The Download: lasers for nuclear fuel, and organ preservation advances",
       "u": "https://www.technologyreview.com/2026/07/27/1140833/the-download-lasers-nuclear-organ-preservation/",
       "p": "https://www.technologyreview.com/2026/07/27/1140833/the-download-lasers-nuclear-organ-preservation/",
@@ -1988,7 +1988,7 @@
       "content": ""
     },
     {
-      "i": "rs-55",
+      "i": "rs-45",
       "t": "The path to artificial superintelligence",
       "u": "https://www.technologyreview.com/2026/07/27/1140724/the-path-to-artificial-superintelligence/",
       "p": "https://www.technologyreview.com/2026/07/27/1140724/the-path-to-artificial-superintelligence/",
@@ -2006,7 +2006,7 @@
       "content": ""
     },
     {
-      "i": "rs-56",
+      "i": "rs-46",
       "t": "Closing the data loop in AI-driven drug discovery",
       "u": "https://www.technologyreview.com/2026/07/27/1139667/closing-the-data-loop-in-ai-driven-drug-discovery/",
       "p": "https://www.technologyreview.com/2026/07/27/1139667/closing-the-data-loop-in-ai-driven-drug-discovery/",
@@ -2024,7 +2024,7 @@
       "content": ""
     },
     {
-      "i": "rs-57",
+      "i": "rs-47",
       "t": "Building the enterprise environment for agentic AI",
       "u": "https://www.technologyreview.com/2026/07/27/1140668/building-the-enterprise-environment-for-agentic-ai/",
       "p": "https://www.technologyreview.com/2026/07/27/1140668/building-the-enterprise-environment-for-agentic-ai/",
@@ -2060,25 +2060,7 @@
       "content": ""
     },
     {
-      "i": "rs-71",
-      "t": "Claude Opus 5 \ud83e\udde0, inside OpenAI\u2019s hack \ud83d\udc68\u200d\ud83d\udcbb, NVIDIA open weights \ud83d\udd13",
-      "u": "https://tldr.tech/ai/2026-07-27",
-      "p": "https://tldr.tech/ai/2026-07-27",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1785139200,
-      "rank": 4.1,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-81",
+      "i": "rs-61",
       "t": "Nvidia's $250B OpenAI deal \ud83d\udcb0, Meta Seller \ud83e\udd1d, Google Maps travel time API \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-27",
       "p": "https://tldr.tech/tech/2026-07-27",
@@ -2088,6 +2070,24 @@
       "a": "TLDR",
       "sn": "TLDR Tech",
       "cat": "Tech",
+      "ts": 1785139200,
+      "rank": 4.1,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-81",
+      "t": "Claude Opus 5 \ud83e\udde0, inside OpenAI\u2019s hack \ud83d\udc68\u200d\ud83d\udcbb, NVIDIA open weights \ud83d\udd13",
+      "u": "https://tldr.tech/ai/2026-07-27",
+      "p": "https://tldr.tech/ai/2026-07-27",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
       "ts": 1785139200,
       "rank": 4.1,
       "content_available": false,
@@ -2150,7 +2150,7 @@
       "content": ""
     },
     {
-      "i": "rs-58",
+      "i": "rs-48",
       "t": "The quest to keep organs alive outside the body",
       "u": "https://www.technologyreview.com/2026/07/24/1140790/the-quest-to-keep-organs-alive-outside-the-body/",
       "p": "https://www.technologyreview.com/2026/07/24/1140790/the-quest-to-keep-organs-alive-outside-the-body/",
@@ -2168,7 +2168,7 @@
       "content": ""
     },
     {
-      "i": "rs-60",
+      "i": "rs-50",
       "t": "Web Retrieval Flusters LLMs: AI agents searching online can struggle to retrieve correct info, researchers find",
       "u": "https://charonhub.deeplearning.ai/web-retrieval-flusters-llms/",
       "p": "https://charonhub.deeplearning.ai/web-retrieval-flusters-llms/",
@@ -2186,7 +2186,7 @@
       "content": ""
     },
     {
-      "i": "rs-61",
+      "i": "rs-51",
       "t": "Cloudflare\u2019s Web Crawler Flare-Up: Cloudflare moves to block all AI training bots by default",
       "u": "https://charonhub.deeplearning.ai/cloudflares-web-crawler-flare-up/",
       "p": "https://charonhub.deeplearning.ai/cloudflares-web-crawler-flare-up/",
@@ -2204,7 +2204,7 @@
       "content": ""
     },
     {
-      "i": "rs-62",
+      "i": "rs-52",
       "t": "Meta Sparks A Price War: Muse Spark 1.1 makes a jump in intelligence at a lower price than peers",
       "u": "https://charonhub.deeplearning.ai/meta-sparks-a-price-war/",
       "p": "https://charonhub.deeplearning.ai/meta-sparks-a-price-war/",
@@ -2222,7 +2222,7 @@
       "content": ""
     },
     {
-      "i": "rs-63",
+      "i": "rs-53",
       "t": "Kimi K3 Reveals How A Giant Frontier AI Model Works: Moonshot's latest model outshines all but GPT-5.6 Sol and Claude 5 Fable",
       "u": "https://charonhub.deeplearning.ai/kimi-k3-reveals-how-a-giant-frontier-ai-model-works/",
       "p": "https://charonhub.deeplearning.ai/kimi-k3-reveals-how-a-giant-frontier-ai-model-works/",
@@ -2240,7 +2240,7 @@
       "content": ""
     },
     {
-      "i": "rs-64",
+      "i": "rs-54",
       "t": "When Guardrails Go Wrong: After a closed model went amok on a key vendor's system, an open weight model helped save the day",
       "u": "https://charonhub.deeplearning.ai/when-guardrails-go-wrong/",
       "p": "https://charonhub.deeplearning.ai/when-guardrails-go-wrong/",
@@ -2258,7 +2258,7 @@
       "content": ""
     },
     {
-      "i": "rs-65",
+      "i": "rs-55",
       "t": "Kimi K3 Redraws the Open Frontier, Muse Spark 1.1 Undercuts Competitors, Cloudflare Moves to Cut Off Crawlers",
       "u": "https://charonhub.deeplearning.ai/issue-363/",
       "p": "https://charonhub.deeplearning.ai/issue-363/",
@@ -2294,7 +2294,7 @@
       "content": ""
     },
     {
-      "i": "rs-59",
+      "i": "rs-49",
       "t": "The Download: an organ transplant breakthrough, and homegrown Chinese chips",
       "u": "https://www.technologyreview.com/2026/07/24/1140776/the-download-organ-transplant-breakthrough-chinese-chips/",
       "p": "https://www.technologyreview.com/2026/07/24/1140776/the-download-organ-transplant-breakthrough-chinese-chips/",
@@ -2312,25 +2312,7 @@
       "content": ""
     },
     {
-      "i": "rs-72",
-      "t": "ChatGPT Health \ud83e\ude7a, Fugu-Ultra 1.1 \ud83d\udc21, Runway Media Router \ud83c\udfac",
-      "u": "https://tldr.tech/ai/2026-07-24",
-      "p": "https://tldr.tech/ai/2026-07-24",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784880000,
-      "rank": 0.2,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-82",
+      "i": "rs-62",
       "t": "Stripe's OpenRouter talks \ud83d\udcb0, ChatGPT Health \u2695\ufe0f, why software factories fail \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-24",
       "p": "https://tldr.tech/tech/2026-07-24",
@@ -2340,6 +2322,24 @@
       "a": "TLDR",
       "sn": "TLDR Tech",
       "cat": "Tech",
+      "ts": 1784880000,
+      "rank": 0.2,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-82",
+      "t": "ChatGPT Health \ud83e\ude7a, Fugu-Ultra 1.1 \ud83d\udc21, Runway Media Router \ud83c\udfac",
+      "u": "https://tldr.tech/ai/2026-07-24",
+      "p": "https://tldr.tech/ai/2026-07-24",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
       "ts": 1784880000,
       "rank": 0.2,
       "content_available": false,
@@ -2402,25 +2402,7 @@
       "content": ""
     },
     {
-      "i": "rs-73",
-      "t": "Cursor Router \ud83d\udd00, OpenAI Presence \ud83e\udd16, AMD + Anthropic deal \ud83e\udd1d\ud83c\udffb",
-      "u": "https://tldr.tech/ai/2026-07-23",
-      "p": "https://tldr.tech/ai/2026-07-23",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784793600,
-      "rank": 0.1,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-83",
+      "i": "rs-63",
       "t": "OpenAI Presence \ud83e\udd16, Apple overhauls Macs \ud83d\udcbb, state of WebMCP \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-23",
       "p": "https://tldr.tech/tech/2026-07-23",
@@ -2438,7 +2420,25 @@
       "content": ""
     },
     {
-      "i": "rs-66",
+      "i": "rs-83",
+      "t": "Cursor Router \ud83d\udd00, OpenAI Presence \ud83e\udd16, AMD + Anthropic deal \ud83e\udd1d\ud83c\udffb",
+      "u": "https://tldr.tech/ai/2026-07-23",
+      "p": "https://tldr.tech/ai/2026-07-23",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784793600,
+      "rank": 0.1,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-56",
       "t": "Kimi K3 marks a big shift in AI development: Thinking Machines releases its first general-purpose model",
       "u": "https://charonhub.deeplearning.ai/kimi-k3-marks-a-big-shift-in-ai-development/",
       "p": "https://charonhub.deeplearning.ai/kimi-k3-marks-a-big-shift-in-ai-development/",
@@ -2456,7 +2456,7 @@
       "content": ""
     },
     {
-      "i": "rs-67",
+      "i": "rs-57",
       "t": "Measuring Models\u2019 Manipulation: Researchers at MIT and Carnegie Mellon built Puppet to gauge models' influence on users' beliefs",
       "u": "https://charonhub.deeplearning.ai/measuring-models-manipulation/",
       "p": "https://charonhub.deeplearning.ai/measuring-models-manipulation/",
@@ -2474,7 +2474,7 @@
       "content": ""
     },
     {
-      "i": "rs-68",
+      "i": "rs-58",
       "t": "Put the Lab in the Loop: Robin automates drug discovery, matching chemical processes of known drugs to research on diseases",
       "u": "https://charonhub.deeplearning.ai/put-the-lab-in-the-loop/",
       "p": "https://charonhub.deeplearning.ai/put-the-lab-in-the-loop/",
@@ -2492,7 +2492,7 @@
       "content": ""
     },
     {
-      "i": "rs-69",
+      "i": "rs-59",
       "t": "Google Found Responsible for AI-Generated Search Results: A German court ruled that Google's AI Overviews defamed two businesses",
       "u": "https://charonhub.deeplearning.ai/google-found-responsible-for-ai-generated-search-results/",
       "p": "https://charonhub.deeplearning.ai/google-found-responsible-for-ai-generated-search-results/",
@@ -2510,115 +2510,7 @@
       "content": ""
     },
     {
-      "i": "rs-74",
-      "t": "Gemini 3.6 Flash \u2728, OpenAI security escape \ud83d\udea8, Devin Outposts \ud83d\udef0\ufe0f",
-      "u": "https://tldr.tech/ai/2026-07-22",
-      "p": "https://tldr.tech/ai/2026-07-22",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784707200,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-75",
-      "t": "Ramp Router \u26a1, Kimi Work \ud83d\udcbc , AMD Helios \ud83e\uddf1",
-      "u": "https://tldr.tech/ai/2026-07-21",
-      "p": "https://tldr.tech/ai/2026-07-21",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784620800,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-76",
-      "t": "Qwen 3.8 \u2728, Kimi Code CLI \ud83d\udc68\u200d\ud83d\udcbb, Netflix\u2019s LLM stack \ud83e\udd16",
-      "u": "https://tldr.tech/ai/2026-07-20",
-      "p": "https://tldr.tech/ai/2026-07-20",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784534400,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-77",
-      "t": "Kimi K3 \ud83c\udf15, Gemini 3.5 delayed \u23f3, crushing ARC-AGI 3 \ud83e\udd16",
-      "u": "https://tldr.tech/ai/2026-07-17",
-      "p": "https://tldr.tech/ai/2026-07-17",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784275200,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-78",
-      "t": "Thinking Machines Inkling \ud83e\udde0, GPT-Red \ud83d\udd12, Perplexity sandboxes \ud83d\udee1\ufe0f",
-      "u": "https://tldr.tech/ai/2026-07-16",
-      "p": "https://tldr.tech/ai/2026-07-16",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784188800,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-79",
-      "t": "DeepSeek IPO plans \ud83d\udcc8, Kalshi compute markets \u26a1,\u00a0 Bonsai phone model \ud83d\udcf1",
-      "u": "https://tldr.tech/ai/2026-07-15",
-      "p": "https://tldr.tech/ai/2026-07-15",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784102400,
-      "rank": 0.0,
-      "content_available": false,
-      "content_quality": 0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-84",
+      "i": "rs-64",
       "t": "Nvidia's new CPU \u26a1, Jack Dorsey's Slack rival \ud83d\udcac, software factories \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-22",
       "p": "https://tldr.tech/tech/2026-07-22",
@@ -2636,7 +2528,7 @@
       "content": ""
     },
     {
-      "i": "rs-85",
+      "i": "rs-65",
       "t": "Google's Gemini chip \ud83e\udd16, AMD vs Nvidia \u26a1, agent economics \ud83d\udcb0",
       "u": "https://tldr.tech/tech/2026-07-21",
       "p": "https://tldr.tech/tech/2026-07-21",
@@ -2654,7 +2546,7 @@
       "content": ""
     },
     {
-      "i": "rs-86",
+      "i": "rs-66",
       "t": "Meta Anthropic deal \ud83e\udd1d, SpaceX Pentagon compute \u26a1, AI code migrations \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-20",
       "p": "https://tldr.tech/tech/2026-07-20",
@@ -2672,7 +2564,7 @@
       "content": ""
     },
     {
-      "i": "rs-87",
+      "i": "rs-67",
       "t": "xAI chaos \ud83d\udd25, Gemini delays \u23f3, earning judgement \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-17",
       "p": "https://tldr.tech/tech/2026-07-17",
@@ -2690,7 +2582,7 @@
       "content": ""
     },
     {
-      "i": "rs-88",
+      "i": "rs-68",
       "t": "Stripe's PayPal bid \ud83d\udcb0, Uber vs Waymo \ud83d\ude97, against SDKs \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-16",
       "p": "https://tldr.tech/tech/2026-07-16",
@@ -2708,7 +2600,7 @@
       "content": ""
     },
     {
-      "i": "rs-89",
+      "i": "rs-69",
       "t": "OpenAI's first device \ud83d\udce2, Apple shrinking AI \ud83d\udcf1, vibecoding at scale \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-15",
       "p": "https://tldr.tech/tech/2026-07-15",
@@ -2726,7 +2618,7 @@
       "content": ""
     },
     {
-      "i": "rs-91",
+      "i": "rs-71",
       "t": "Import AI 465: Open vs closed gaps; Kimi K3; Demis\u2019 big policy plan",
       "u": "https://jack-clark.net/2026/07/20/import-ai-465-open-vs-closed-gaps-kimi-k3-demis-big-policy-plan/",
       "p": "https://jack-clark.net/2026/07/20/import-ai-465-open-vs-closed-gaps-kimi-k3-demis-big-policy-plan/",
@@ -2744,7 +2636,7 @@
       "content": ""
     },
     {
-      "i": "rs-92",
+      "i": "rs-72",
       "t": "Import AI 464: Fables writes GPU kernels; AI automation; and analog computation",
       "u": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
       "p": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
@@ -2762,7 +2654,7 @@
       "content": ""
     },
     {
-      "i": "rs-93",
+      "i": "rs-73",
       "t": "Import AI 463: Self-improving robots; a 10k Chinese GPU cluster; and an elegiac essay for the human era",
       "u": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
       "p": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
@@ -2780,7 +2672,7 @@
       "content": ""
     },
     {
-      "i": "rs-94",
+      "i": "rs-74",
       "t": "Import AI 462: Superpersuasion; self-sustaining AI; paths to ASI",
       "u": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
       "p": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
@@ -2798,7 +2690,7 @@
       "content": ""
     },
     {
-      "i": "rs-95",
+      "i": "rs-75",
       "t": "Import AI 461: \u201cAlignment is not on track\u201d; FrontierCode; and synthetic research interns",
       "u": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
       "p": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
@@ -2816,7 +2708,7 @@
       "content": ""
     },
     {
-      "i": "rs-96",
+      "i": "rs-76",
       "t": "Import AI 460: Reward hacking society, RSI data from Anthropic; and RL-based quadcopter racing",
       "u": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
       "p": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
@@ -2834,7 +2726,7 @@
       "content": ""
     },
     {
-      "i": "rs-97",
+      "i": "rs-77",
       "t": "Import AI 459: AI oversight is difficult; scaling laws for protein folding models; and pricing the extinction risk of AI systems",
       "u": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
       "p": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
@@ -2852,7 +2744,7 @@
       "content": ""
     },
     {
-      "i": "rs-98",
+      "i": "rs-78",
       "t": "Import AI 458: Reckoning with the future; and a singularity story",
       "u": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
       "p": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
@@ -2870,7 +2762,7 @@
       "content": ""
     },
     {
-      "i": "rs-99",
+      "i": "rs-79",
       "t": "Import AI 457: AI stuxnet; cursed Muon optimizer; and positive alignment",
       "u": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
       "p": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
@@ -2886,89 +2778,193 @@
       "content_quality": 0,
       "excerpt": "Welcome to Import AI, a newsletter about AI research. Import AI runs on arXiv, cappuccinos, and feedback from readers. If you\u2019d like to support this, please subscribe. Subscribe now Stuxnet before Stu",
       "content": ""
+    },
+    {
+      "i": "rs-84",
+      "t": "Gemini 3.6 Flash \u2728, OpenAI security escape \ud83d\udea8, Devin Outposts \ud83d\udef0\ufe0f",
+      "u": "https://tldr.tech/ai/2026-07-22",
+      "p": "https://tldr.tech/ai/2026-07-22",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784707200,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-85",
+      "t": "Ramp Router \u26a1, Kimi Work \ud83d\udcbc , AMD Helios \ud83e\uddf1",
+      "u": "https://tldr.tech/ai/2026-07-21",
+      "p": "https://tldr.tech/ai/2026-07-21",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784620800,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-86",
+      "t": "Qwen 3.8 \u2728, Kimi Code CLI \ud83d\udc68\u200d\ud83d\udcbb, Netflix\u2019s LLM stack \ud83e\udd16",
+      "u": "https://tldr.tech/ai/2026-07-20",
+      "p": "https://tldr.tech/ai/2026-07-20",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784534400,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-87",
+      "t": "Kimi K3 \ud83c\udf15, Gemini 3.5 delayed \u23f3, crushing ARC-AGI 3 \ud83e\udd16",
+      "u": "https://tldr.tech/ai/2026-07-17",
+      "p": "https://tldr.tech/ai/2026-07-17",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784275200,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-88",
+      "t": "Thinking Machines Inkling \ud83e\udde0, GPT-Red \ud83d\udd12, Perplexity sandboxes \ud83d\udee1\ufe0f",
+      "u": "https://tldr.tech/ai/2026-07-16",
+      "p": "https://tldr.tech/ai/2026-07-16",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784188800,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-89",
+      "t": "DeepSeek IPO plans \ud83d\udcc8, Kalshi compute markets \u26a1,\u00a0 Bonsai phone model \ud83d\udcf1",
+      "u": "https://tldr.tech/ai/2026-07-15",
+      "p": "https://tldr.tech/ai/2026-07-15",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784102400,
+      "rank": 0.0,
+      "content_available": false,
+      "content_quality": 0,
+      "excerpt": "",
+      "content": ""
     }
   ],
   "summary": {
     "schema_version": "2",
-    "simple": "Anthropic formally states its position on open-weights models, drawing attention away from lighter tech and biotech stories. Perplexity pushes agentic AI into Windows PCs, signaling a deeper move toward OS-level AI agents. A new HIV vaccine candidate and a US measles treatment push also stand out, while Apple's reported 'HomePad' and Logitech's handheld plans round out the consumer hardware chatter.",
+    "simple": "Anthropic\u2019s stance on open-weight models is the clearest AI policy signal in this roundup, while the New York Times\u2019 fight with AI companies highlights the growing conflict over copyright and journalism. The broader mix also points to technology\u2019s expanding role in accessibility, public health, transportation, and resilience against extreme space weather.",
     "structured": {
       "themes": [
-        "AI policy and open-weights positioning",
-        "Agentic AI moving onto consumer operating systems",
-        "Biotech and consumer hardware as secondary beats"
+        "Open-weight AI policy and model control",
+        "AI, copyright, and the future of journalism",
+        "Technology for accessibility, public health, and infrastructure resilience"
       ],
-      "breaking": "Anthropic published its first formal position on releasing open-weights models, framing its stance amid industry debate.",
+      "breaking": "Anthropic has publicly outlined its position on open-weight models, adding a significant policy perspective to the debate over whether advanced AI systems should be released openly or kept under tighter control.",
       "mustRead": [
         {
           "id": "hn-8",
           "title": "Our position on open-weights models",
           "url": "https://www.anthropic.com/news/position-open-weights-models",
-          "reason": "Anthropic's first public stance on open-weights sets the tone for how a frontier lab will engage the open-source AI debate."
+          "reason": "Anthropic\u2019s policy position could influence how the industry debates model openness, safety, competition, and control of advanced AI capabilities."
         },
         {
-          "id": "rs-14",
-          "title": "Perplexity's Personal Computer turns Windows PCs into AI agents",
-          "url": "https://www.theverge.com/ai-artificial-intelligence/971750/perplexity-personal-computer-windows-ai-agents",
-          "reason": "Extends agentic AI from browsers into the Windows desktop, marking a concrete step toward OS-level AI assistants."
+          "id": "rs-2",
+          "title": "Can the New York Times Save Journalism From Our AI Overlords?",
+          "url": "https://www.wired.com/story/the-big-interview-podcast-a-g-sulzberger-new-york-times/",
+          "reason": "The Times\u2019 copyright lawsuit and broader strategy illustrate how major publishers are responding to AI companies\u2019 use of journalistic content."
         },
         {
-          "id": "hn-1",
-          "title": "New HIV vaccine shows unprecedented success in preclinical study",
-          "url": "https://www.lji.org/news-events/news/post/new-hiv-vaccine-shows-unprecedented-success-in-preclinical-study/",
-          "reason": "A preclinical HIV vaccine result with unusually strong outcomes could reshape the long-stalled HIV immunization field."
+          "id": "rs-5",
+          "title": "An Extreme Solar Storm May Be Even More Devastating Than Previously Imagined",
+          "url": "https://www.wired.com/story/an-extreme-solar-storm-may-be-even-more-devastating-than-previously-imagined/",
+          "reason": "Revised estimates of extreme solar-storm risk matter because satellite, communications, navigation, and power infrastructure could face widespread disruption."
         }
       ]
     },
     "fullBrief": {
-      "intro": "Anthropic's open-weights position is the day's most consequential AI story, while Perplexity's move of its agentic 'Personal Computer' product onto Windows shows the agent race is shifting onto the OS itself. Biotech delivers a striking HIV vaccine preclinical result and a new push on measles therapeutics, and consumer hardware is dominated by Apple HomePad rumors, Twelve South's updated wireless charger, Logitech cooling on a G Cloud successor, and a reminder that cheaper handheld fans beat the Dyson tax.",
+      "intro": "This roundup is led by a consequential AI governance debate: Anthropic is defining when open-weight models may create unacceptable safety and misuse risks. Alongside that policy story, publishers are confronting AI\u2019s impact on copyright and journalism, while other reports show technology being applied to accessible micromobility, safer consumer products, biomedical research, and preparation for rare but severe space-weather events.",
       "sections": [
         {
-          "heading": "AI policy and agents go mainstream",
-          "body": "Anthropic published a formal position on open-weights models, the clearest signal yet of how a frontier lab intends to engage the open-source AI debate and what guardrails it considers non-negotiable. On the product side, Perplexity expanded its agentic 'Personal Computer' tool to Windows, letting the OS become an execution surface for AI agents rather than a passive shell \u2014 a meaningful step toward ambient, OS-level assistants on the most widely used desktop platform."
+          "heading": "AI openness is becoming a strategic policy fault line",
+          "body": "Anthropic\u2019s open-weights position is the most important story because it addresses a central question in AI development: whether powerful models should be broadly downloadable or controlled through hosted services and safeguards. The decision affects safety research, misuse prevention, competition, national security, and the ability of smaller developers to build on frontier systems."
         },
         {
-          "heading": "Biotech breakthroughs and a measles response",
-          "body": "Researchers reported a new HIV vaccine candidate with unprecedented preclinical results, raising cautious optimism for a field where progress has been slow. Separately, biotech firms are mobilizing to develop new measles treatments as US case counts climb, aiming to protect the most vulnerable patients while public health infrastructure strains under the resurgence."
-        },
-        {
-          "heading": "Consumer hardware: home hubs, chargers, and gaming handhelds",
-          "body": "Apple's reported 'HomePad' smart home hub may arrive as soon as October, setting up a direct challenge to Google and Amazon in the home hub category. Twelve South refreshed its leather-wrapped wireless charging tray with a smaller footprint and higher wattage via Qi2 25W, Logitech's new gaming chief cooled expectations for a G Cloud 2 handheld in the near term, and a Verge test showed budget Jisulife handheld fans match Dyson's premium HushJet Mini Cool for everyday use."
+          "heading": "The technology story is expanding beyond chatbots",
+          "body": "The rest of the roundup shows tech policy and innovation spreading into adjacent systems. The New York Times\u2019 conflict with OpenAI and Microsoft reflects the economic and legal stakes of machine-generated content, while electric trikes target accessibility in shared transportation and new research explores a promising HIV vaccine. The solar-storm report is a reminder that resilience for digital infrastructure also depends on understanding threats from the natural environment."
         }
       ],
-      "closing": "The day's signal is clear: frontier AI labs are staking out policy ground while agentic products race onto the desktop, even as biotech and consumer hardware quietly deliver the week's most tangible wins."
+      "closing": "The key takeaway is that the next phase of tech disruption will be shaped as much by governance, public infrastructure, and institutional trust as by new AI capabilities."
     }
   },
   "metrics": {
     "runtime": {
-      "fetch_seconds": 2.19,
-      "scrape_seconds": 4.12,
-      "ranking_seconds": 0.03,
-      "summary_seconds": 24.24,
-      "total_seconds": 30.58,
+      "fetch_seconds": 1.6,
+      "scrape_seconds": 0.0,
+      "ranking_seconds": 0.01,
+      "summary_seconds": 21.55,
+      "total_seconds": 23.16,
       "within_budget": true
     },
     "scraping": {
       "candidate_urls": 10,
-      "cache_hits": 1,
-      "network_success": 9,
+      "cache_hits": 10,
+      "network_success": 0,
       "failures": 0,
       "success_rate": 100.0,
-      "cache_hit_rate": 10.0
+      "cache_hit_rate": 100.0
     },
     "ranking": {
       "total_posts": 160,
       "llm_quality_used": false,
       "llm_usage": {
-        "input_tokens": 2986,
+        "input_tokens": 2985,
         "output_tokens": 1044,
-        "cost_usd": 0.04625,
+        "cost_usd": 0.046245,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 4030,
+        "total_tokens": 4029,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 4030,
-        "estimated_input_tokens": 2986,
+        "estimated_tokens": 4029,
+        "estimated_input_tokens": 2985,
         "estimated_output_tokens": 1044,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -2986,11 +2982,11 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 24.236,
-        "prompt_chars": 3945,
+        "duration_seconds": 21.549,
+        "prompt_chars": 3797,
         "story_count": 8
       },
-      "duration_seconds": 24.236,
+      "duration_seconds": 21.549,
       "validation_warnings": []
     },
     "cost": {
@@ -3001,19 +2997,19 @@
       ],
       "openrouter_cost_used": false,
       "estimated_cost_used": true,
-      "estimated_tokens": 4030,
-      "session_model_usd": 0.04625,
+      "estimated_tokens": 4029,
+      "session_model_usd": 0.046245,
       "ranking_llm": {
-        "input_tokens": 2986,
+        "input_tokens": 2985,
         "output_tokens": 1044,
-        "cost_usd": 0.04625,
+        "cost_usd": 0.046245,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 4030,
+        "total_tokens": 4029,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 4030,
-        "estimated_input_tokens": 2986,
+        "estimated_tokens": 4029,
+        "estimated_input_tokens": 2985,
         "estimated_output_tokens": 1044,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -3027,8 +3023,8 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 24.236,
-        "prompt_chars": 3945,
+        "duration_seconds": 21.549,
+        "prompt_chars": 3797,
         "story_count": 8
       },
       "within_budget": true
