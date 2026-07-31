@@ -326,19 +326,40 @@ def _fetch_via_archive_today(url: str) -> Tuple[Optional[str], str]:
         return None, "archive_network_error"
 
 
-def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
+def _fetch_and_extract(url: str) -> Tuple[Optional[str], str, Dict[str, Any]]:
+    """Fetch and extract article text.
+
+    Returns ``(content, error, telemetry)`` where telemetry records which
+    extractor won, the ordered list of stages attempted, and a mapping of
+    stage -> failure reason for every stage that was tried but failed. This
+    powers the extraction-stage breakdown in the pipeline metrics.
+    """
+    tele: Dict[str, Any] = {"winner": None, "attempts": [], "failures": {}}
+
+    def _fail(stage: str, reason: str) -> None:
+        tele["attempts"].append(stage)
+        tele["failures"][stage] = reason
+
+    def _win(stage: str, text: str) -> Tuple[Optional[str], str, Dict[str, Any]]:
+        tele["attempts"].append(stage)
+        tele["winner"] = stage
+        return text, "", tele
+
     url = html.unescape(url or "").strip()
     if not url:
-        return None, "invalid_url"
+        _fail("validate", "invalid_url")
+        return None, "invalid_url", tele
     host = (urlparse(url).netloc or "").lower()
     if _is_host_temporarily_blocked(host):
-        return None, "host_blocked_skip"
+        _fail("validate", "host_blocked_skip")
+        return None, "host_blocked_skip", tele
 
     # Preferred path: defuddle handles its own fetch + extraction and copes with
     # JS-heavy pages. Fall through to the requests+trafilatura chain on failure.
     defuddle_text = _extract_with_defuddle(url)
     if defuddle_text:
-        return defuddle_text, ""
+        return _win("defuddle", defuddle_text)
+    _fail("defuddle", "no_output")
 
     headers = REQUEST_HEADERS
     last_error = "unknown_error"
@@ -350,92 +371,109 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
             status_code = int(response.status_code or 0)
             if status_code != 200 or not response.text:
                 last_error = f"http_{status_code}"
+                _fail("fetch", f"http_{status_code}")
                 if status_code in {401, 403, 429, 451}:
                     _mark_host_blocked(host)
                     proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                     if proxy_text:
-                        return proxy_text, ""
+                        return _win("jina", proxy_text)
+                    _fail("jina", proxy_error or "no_output")
                     archive_text, archive_error = _fetch_via_archive_today(url)
                     if archive_text:
-                        return archive_text, ""
+                        return _win("archive", archive_text)
+                    _fail("archive", archive_error or "no_output")
                     last_error = f"{last_error}|{proxy_error}|{archive_error}"
                 if status_code in {403, 429, 500, 502, 503, 504} and attempt < len(BACKOFF_SECONDS):
                     time.sleep(BACKOFF_SECONDS[attempt])
                     continue
-                return None, last_error
+                return None, last_error, tele
             content_type = (response.headers.get("Content-Type") or "").lower()
             if "text/html" not in content_type and "application/xhtml+xml" not in content_type:
-                return None, "unsupported_content_type"
+                _fail("fetch", "unsupported_content_type")
+                return None, "unsupported_content_type", tele
             page_html = response.text
             lowered = page_html.lower()
             if any(token in lowered for token in ("cf-browser-verification", "just a moment...", "captcha", "access denied")):
                 _mark_host_blocked(host)
+                _fail("fetch", "botwall_detected")
                 proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                 if proxy_text:
-                    return proxy_text, ""
+                    return _win("jina", proxy_text)
+                _fail("jina", proxy_error or "no_output")
                 archive_text, archive_error = _fetch_via_archive_today(url)
                 if archive_text:
-                    return archive_text, ""
-                return None, f"botwall_detected|{proxy_error}|{archive_error}"
+                    return _win("archive", archive_text)
+                _fail("archive", archive_error or "no_output")
+                return None, f"botwall_detected|{proxy_error}|{archive_error}", tele
             text = _extract_with_trafilatura(page_html, url)
             if text:
-                return text, ""
+                return _win("trafilatura", text)
+            _fail("trafilatura", "no_output")
             fallback_text = _extract_with_readability(page_html)
             if fallback_text:
-                return fallback_text, ""
+                return _win("readability", fallback_text)
+            _fail("readability", "no_output")
             lxml_text = _extract_with_lxml_fallback(page_html)
             if lxml_text:
-                return lxml_text, ""
+                return _win("lxml", lxml_text)
+            _fail("lxml", "no_output")
             meta_text = _extract_with_metadata_fallback(page_html)
             if meta_text:
-                return meta_text, ""
+                return _win("metadata", meta_text)
+            _fail("metadata", "no_output")
             proxy_text, proxy_error = _fetch_via_jina_proxy(url)
             if proxy_text:
-                return proxy_text, ""
+                return _win("jina", proxy_text)
+            _fail("jina", proxy_error or "no_output")
             archive_text, archive_error = _fetch_via_archive_today(url)
             if archive_text:
-                return archive_text, ""
-            return None, f"extract_failed|{proxy_error}|{archive_error}"
+                return _win("archive", archive_text)
+            _fail("archive", archive_error or "no_output")
+            return None, f"extract_failed|{proxy_error}|{archive_error}", tele
         except requests.Timeout:
             last_error = "timeout"
+            _fail("fetch", "timeout")
             if attempt < len(BACKOFF_SECONDS):
                 time.sleep(BACKOFF_SECONDS[attempt])
             else:
                 proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                 if proxy_text:
-                    return proxy_text, ""
-                return None, f"{last_error}|{proxy_error}"
+                    return _win("jina", proxy_text)
+                _fail("jina", proxy_error or "no_output")
+                return None, f"{last_error}|{proxy_error}", tele
         except requests.RequestException:
             last_error = "network_error"
+            _fail("fetch", "network_error")
             if attempt < len(BACKOFF_SECONDS):
                 time.sleep(BACKOFF_SECONDS[attempt])
             else:
                 proxy_text, proxy_error = _fetch_via_jina_proxy(url)
                 if proxy_text:
-                    return proxy_text, ""
-                return None, f"{last_error}|{proxy_error}"
-    return None, last_error
+                    return _win("jina", proxy_text)
+                _fail("jina", proxy_error or "no_output")
+                return None, f"{last_error}|{proxy_error}", tele
+    return None, last_error, tele
 
 
 def _scrape_one(url: str) -> Optional[str]:
     cached = get_cached_content(url)
     if cached:
         return cached
-    extracted, _ = _fetch_and_extract(url)
+    extracted, _, _ = _fetch_and_extract(url)
     if extracted:
         _set_cached_content(url, extracted)
     return extracted
 
 
-def _scrape_one_with_source(url: str) -> Tuple[Optional[str], str, str]:
+def _scrape_one_with_source(url: str) -> Tuple[Optional[str], str, str, Dict[str, Any]]:
     cached = get_cached_content(url)
     if cached:
-        return cached, "cache", ""
-    extracted, error = _fetch_and_extract(url)
+        return cached, "cache", "", {"winner": "cache", "attempts": ["cache"], "failures": {}}
+    extracted, error, tele = _fetch_and_extract(url)
     if extracted:
         _set_cached_content(url, extracted)
-        return extracted, "network", ""
-    return None, "failed", error
+        return extracted, "network", "", tele
+    return None, "failed", error, tele
 
 
 def scrape_articles(urls: List[str], max_concurrent: int = 5) -> Dict[str, Optional[str]]:
@@ -456,10 +494,16 @@ def scrape_articles_with_stats(
     urls: List[str],
     max_concurrent: int = 5,
     progress_callback: Optional[Callable[[Dict[str, Any]], None]] = None,
-) -> Tuple[Dict[str, Optional[str]], Dict[str, int]]:
-    """Scrape articles and return content with cache/network outcome stats."""
+) -> Tuple[Dict[str, Optional[str]], Dict[str, Any]]:
+    """Scrape articles and return content with cache/network outcome stats.
+
+    The stats dict includes an ``extractor_breakdown`` mapping showing how many
+    URLs each extractor (defuddle/trafilatura/readability/lxml/metadata/jina/
+    archive/cache) ultimately produced content for, how many fell through to
+    ``none``, and a ``failure_reasons`` sub-map counting ``stage:reason`` pairs.
+    """
     if not urls:
-        return {}, {"requested": 0, "cache_hits": 0, "network_success": 0, "failures": 0}
+        return {}, {"requested": 0, "cache_hits": 0, "network_success": 0, "failures": 0, "extractor_breakdown": {"none": 0, "failure_reasons": {}}}
 
     from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -472,6 +516,10 @@ def scrape_articles_with_stats(
     failures = 0
     done = 0
     total = len(unique_urls)
+    # Extraction-stage telemetry: which extractor ultimately produced the content
+    # (or "none"), plus aggregated per-stage failure reasons across all URLs.
+    extractor_wins: Dict[str, int] = {}
+    failure_reasons: Dict[str, int] = {}
 
     with ThreadPoolExecutor(max_workers=workers) as pool:
         for url in unique_urls:
@@ -479,7 +527,7 @@ def scrape_articles_with_stats(
 
         for future in as_completed(future_to_url):
             url = future_to_url[future]
-            content, source, error = future.result()
+            content, source, error, tele = future.result()
             results_by_url[url] = (content, source, error)
             done += 1
             if source == "cache":
@@ -488,6 +536,11 @@ def scrape_articles_with_stats(
                 network_success += 1
             else:
                 failures += 1
+            winner = (tele or {}).get("winner") or "none"
+            extractor_wins[winner] = extractor_wins.get(winner, 0) + 1
+            for stage, reason in ((tele or {}).get("failures") or {}).items():
+                key = f"{stage}:{reason}"
+                failure_reasons[key] = failure_reasons.get(key, 0) + 1
             if progress_callback:
                 progress_callback(
                     {
@@ -508,6 +561,11 @@ def scrape_articles_with_stats(
         "cache_hits": cache_hits,
         "network_success": network_success,
         "failures": failures,
+        "extractor_breakdown": {
+            **extractor_wins,
+            "none": extractor_wins.get("none", 0),
+            "failure_reasons": failure_reasons,
+        },
     }
     return mapping, stats
 

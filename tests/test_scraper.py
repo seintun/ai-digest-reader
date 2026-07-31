@@ -62,7 +62,7 @@ def test_get_cached_content_respects_ttl(tmp_path, monkeypatch):
 def test_scrape_articles_with_stats_uses_cache(tmp_path, monkeypatch):
     cache_path = tmp_path / "cache.sqlite3"
     monkeypatch.setattr(scraper, "CACHE_PATH", cache_path)
-    monkeypatch.setattr(scraper, "_fetch_and_extract", lambda _url: ("network text", ""))
+    monkeypatch.setattr(scraper, "_fetch_and_extract", lambda _url: ("network text", "", {"winner": "defuddle", "attempts": ["defuddle"], "failures": {}}))
 
     url_cached = "https://example.com/cached"
     url_fresh = "https://example.com/fresh"
@@ -79,9 +79,9 @@ def test_scrape_articles_with_stats_uses_cache(tmp_path, monkeypatch):
 
 def test_scrape_articles_with_stats_emits_progress_events(monkeypatch):
     outcomes = {
-        "https://example.com/a": ("a", "network", ""),
-        "https://example.com/b": ("b", "cache", ""),
-        "https://example.com/c": (None, "failed", "http_429"),
+        "https://example.com/a": ("a", "network", "", {"winner": "defuddle", "attempts": ["defuddle"], "failures": {}}),
+        "https://example.com/b": ("b", "cache", "", {"winner": "cache", "attempts": ["cache"], "failures": {}}),
+        "https://example.com/c": (None, "failed", "http_429", {"winner": None, "attempts": ["defuddle", "fetch"], "failures": {"defuddle": "no_output", "fetch": "http_429"}}),
     }
 
     def fake_scrape(url):
@@ -181,10 +181,11 @@ def test_fetch_and_extract_prefers_defuddle(monkeypatch):
     monkeypatch.setattr(scraper, "_is_host_temporarily_blocked", lambda host: False)
     # If requests.get were called it would blow up — proves defuddle short-circuits.
     monkeypatch.setattr(scraper.requests, "get", lambda *a, **k: calls.append("requests") or (_ for _ in ()).throw(AssertionError("requests should not be called")))
-    text, err = scraper._fetch_and_extract("https://example.com/story")
+    text, err, tele = scraper._fetch_and_extract("https://example.com/story")
     assert text == "defuddle content here"
     assert err == ""
     assert calls == ["defuddle"]
+    assert tele["winner"] == "defuddle"
 
 
 def test_fetch_and_extract_falls_back_when_defuddle_fails(monkeypatch):
@@ -200,6 +201,8 @@ def test_fetch_and_extract_falls_back_when_defuddle_fails(monkeypatch):
     monkeypatch.setattr(scraper.requests, "get", lambda *a, **k: response)
     monkeypatch.setattr(scraper, "_extract_with_trafilatura", lambda html, url: "trafilatura text")
 
-    text, err = scraper._fetch_and_extract("https://example.com/story")
+    text, err, tele = scraper._fetch_and_extract("https://example.com/story")
     assert text == "trafilatura text"
     assert err == ""
+    assert tele["winner"] == "trafilatura"
+    assert "defuddle" in tele["failures"]
