@@ -274,6 +274,18 @@ def main():
     estimated_tokens = int(ranking_usage.get("total_tokens", ranking_usage.get("estimated_tokens", 0)) or 0) + int(summary_usage.get("total_tokens", summary_usage.get("estimated_tokens", 0)) or 0)
 
     total_seconds = time.perf_counter() - run_started
+
+    # Quality/health metrics: how much of the digest is backed by real scraped
+    # content vs title-only, and where the stories came from.
+    total_stories = len(ranked_posts)
+    stories_with_content = sum(1 for p in ranked_posts if p.get("content"))
+    evidence_coverage = round((stories_with_content / total_stories * 100.0), 1) if total_stories else 0.0
+    source_counts = {
+        "reddit": len(reddit_ranked),
+        "hackernews": len(hn_ranked),
+        "rss": len(rss_ranked),
+    }
+
     metrics = {
         "runtime": {
             "fetch_seconds": round(fetch_seconds, 2),
@@ -324,6 +336,13 @@ def main():
             "summary_fallback_used": summary_meta.get("source") in {"analyzer_v1", "legacy"},
             "no_summary_fallback_used": not summary_meta.get("generated", False),
         },
+        "quality": {
+            "total_stories": total_stories,
+            "stories_with_content": stories_with_content,
+            "evidence_coverage_pct": evidence_coverage,
+            "source_counts": source_counts,
+            "analysis_generated": bool(analysis_meta.get("generated", False)),
+        },
     }
     digest["metrics"] = metrics
 
@@ -342,6 +361,7 @@ def main():
         print(f"  - extraction fallthroughs: {_reason_summary}")
     print(f"  - ranking LLM used: {metrics['ranking']['llm_quality_used']}")
     print(f"  - summary source: {metrics['summary']['source']}")
+    print(f"  - evidence coverage: {metrics['quality']['evidence_coverage_pct']}% ({stories_with_content}/{total_stories} stories with content)")
     print(f"  - session model cost: ${metrics['cost']['session_model_usd']}")
 
     markdown_reddit = [
