@@ -55,6 +55,13 @@ export interface FullBrief {
   closing: string;
 }
 
+export interface DigestAnalysis {
+  implications: string[];
+  skeptic_take: string;
+  confidence: 'high' | 'medium' | 'low';
+  evidence_basis: string[];
+}
+
 export interface DigestSummary {
   schema_version: string;
   simple: string;
@@ -64,6 +71,7 @@ export interface DigestSummary {
     mustRead: MustReadItem[];
   };
   fullBrief: FullBrief;
+  analysis?: DigestAnalysis;
 }
 
 export interface Digest {
