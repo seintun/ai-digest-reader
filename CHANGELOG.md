@@ -9,6 +9,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 3: Multi-Stage Summarization (2026-07-31)
+
+- **`engine/analysis.py`** (new) — stage-3 analysis pipeline. Runs one extra LLM
+  call after the base schema-v2 summary and attaches an `analysis` block:
+  `implications` (engineers/industry), `skeptic_take` (strongest counter-argument),
+  `confidence` (high/medium/low), and `evidence_basis` (verified vs title-only).
+  Reuses the Hermes CLI plumbing from `engine.summary` and the robust
+  `parse_llm_json` scanner, which tolerates the CLI's warning line + reasoning-box
+  preamble before the JSON. Gated by `AI_DIGEST_ANALYSIS_ENABLED=1` (default off).
+  Verified end-to-end against the live Hermes CLI.
+- **`analyzer_v2.py`** — summary prompt now tags each story
+  `evidence:verified-content` vs `evidence:title-only` and instructs the model not
+  to invent specifics/numbers/quotes for title-only stories (and to prefer
+  verified-content stories for mustRead/breaking).
+- **`engine/config.py`** — `summary_excerpt_chars` default bumped 120 → 400 for
+  richer grounding; new `analysis_enabled` flag (`AI_DIGEST_ANALYSIS_ENABLED`).
+- **`digest.py`** — wires the analysis stage after the summary, adds
+  `analysis_seconds` to runtime metrics and an `analysis` entry to summary metrics.
+
+### Added — Extraction-Stage Telemetry (2026-07-31)
+
+- **`scraper.py`** — `_fetch_and_extract` now returns `(content, error, telemetry)`
+  recording the winning extractor, the ordered list of stages attempted, and a
+  `stage -> reason` map of every fallthrough (defuddle → fetch → trafilatura →
+  readability → lxml → metadata → jina → archive). `scrape_articles_with_stats`
+  aggregates this into an `extractor_breakdown`: per-extractor win counts, a
+  `none` count, and a `failure_reasons` sub-map counting `stage:reason` pairs
+  (e.g. `defuddle:no_output`, `fetch:http_403`).
+- **`digest.py`** — surfaces the breakdown in `metrics.scraping.extractor_breakdown`
+  and prints `extractor wins:` / `extraction fallthroughs:` lines to the console.
+  Answers "how many sites fell through defuddle to the next stage, and why".
+
 ### Added — Phase 2: Ranking Signal (2026-07-31)
 
 - **`ranker.py`** — `_title_quality_heuristic(post)`: scores a story 0-10 from
@@ -89,7 +121,7 @@ Part of the quality-enhancement plan
 - `tests/test_hn.py` — new: 8 tests for `fetch_hn_top_comments` (flattening, limit,
   shallow replies, HTTP/network error handling, truncation) and `strip_html`
   (tag removal + entity unescaping).
-- Full suite: **171 passing**.
+- Full suite: **188 passing**.
 
 ---
 
