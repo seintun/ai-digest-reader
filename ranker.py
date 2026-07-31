@@ -105,6 +105,49 @@ def _heuristic_quality(post: Dict, scraped_content: Dict[str, str]) -> int:
     return 3
 
 
+# Title keywords that signal a substantive AI/tech story vs. meta/clickbait.
+_TITLE_BOOST_RE = re.compile(
+    r"\b(gpt|claude|gemini|llama|deepseek|mistral|qwen|kimi|openai|anthropic|"
+    r"google deepmind|deepmind|meta ai|hugging ?face|nvidia|model|llm|agent|"
+    r"benchmark|paper|release|launch|announce|open[- ]?source|gguf|fine[- ]?tun)\b",
+    re.IGNORECASE,
+)
+_TITLE_VERSION_RE = re.compile(r"\b\d+(?:\.\d+)+\b|\bv\d+\b", re.IGNORECASE)
+_TITLE_NEWS_RE = re.compile(
+    r"\b(breaking|release|launch|announce|paper|benchmark|study|report|raises|funding)\b",
+    re.IGNORECASE,
+)
+_TITLE_PENALTY_RE = re.compile(
+    r"\b(megathread|list of|scrolling through|day \d+ of|ama|meta|off[- ]?topic|"
+    r"what (are|is) your|anyone else|hot take)\b",
+    re.IGNORECASE,
+)
+
+
+def _title_quality_heuristic(post: Dict) -> float:
+    """Score a story 0-10 from title signals when article content is unavailable.
+
+    This is a fallback so unscraped posts don't all collapse to quality 0 (which
+    makes every post tie on rank). When real content exists, the LLM rater or
+    the excerpt-length heuristic stays authoritative — this only fills the gap.
+    """
+    title = (post.get("t", "") or "").strip()
+    if not title:
+        return 1.0
+    score = 5.0  # neutral baseline
+    if _TITLE_BOOST_RE.search(title):
+        score += 1.5
+    if _TITLE_VERSION_RE.search(title):
+        score += 1.0  # concrete version numbers signal a real release
+    if _TITLE_NEWS_RE.search(title):
+        score += 1.0
+    if _TITLE_PENALTY_RE.search(title):
+        score -= 2.5
+    if len(title) < 20:
+        score -= 1.0
+    return round(max(0.0, min(10.0, score)), 1)
+
+
 def _quality_candidates(posts: List[Dict], scraped_content: Dict[str, str]) -> List[Tuple[str, str]]:
     candidates: List[Tuple[str, str]] = []
     for post in posts:
@@ -467,10 +510,23 @@ def rank_posts_with_metrics(posts: List[Dict], scraped_content: Dict[str, str]) 
 
         content = scraped_content.get(post.get("u", ""), "") or ""
         if llm_quality is None:
-            quality_rating = 0
-            quality_points = 0.0
+            # LLM rater unavailable. Fall back to content-based heuristic when we
+            # have scraped text, otherwise to the title heuristic — never a flat 0,
+            # which would make every post tie on rank.
+            if content:
+                quality_rating = _heuristic_quality(post, scraped_content)
+            else:
+                quality_rating = _title_quality_heuristic(post)
+            quality_points = (quality_rating / 10.0) * 35.0
         else:
-            quality_rating = llm_quality.get(story_id, _heuristic_quality(post, scraped_content))
+            quality_rating = llm_quality.get(story_id)
+            if quality_rating is None:
+                # Story wasn't rated by the LLM (e.g. excerpt too short / unscraped).
+                quality_rating = (
+                    _heuristic_quality(post, scraped_content)
+                    if content
+                    else _title_quality_heuristic(post)
+                )
             quality_points = (quality_rating / 10.0) * 35.0
 
         total = engagement + recency + cross_source + quality_points
