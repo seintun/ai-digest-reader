@@ -188,6 +188,25 @@ PY
     echo "[benchmark] report generator unavailable; skipping report write"
     echo "$SUMMARY_JSON"
   fi
+
+  # Quality-regression gate: soft warnings (never blocks the run). Exit code 2
+  # means warnings were emitted; we capture them and fold them into the report
+  # JSON so the Hermes cron agent can surface them to Discord.
+  if [ -f "$REPO_ROOT/scripts/quality_gate.py" ]; then
+    QG_OUTPUT="$(.venv/bin/python "$REPO_ROOT/scripts/quality_gate.py" "$DIGEST_PATH" 2>&1)"
+    QG_EXIT=$?
+    echo "$QG_OUTPUT"
+    SUMMARY_JSON="$SUMMARY_JSON" QG_OUTPUT="$QG_OUTPUT" QG_EXIT="$QG_EXIT" python3 - <<'PY'
+import json, os
+payload = json.loads(os.environ["SUMMARY_JSON"])
+warnings = [line for line in os.environ["QG_OUTPUT"].splitlines() if line.startswith("Quality gate:")]
+payload["quality_gate"] = {
+    "exit_code": int(os.environ["QG_EXIT"]),
+    "warnings": warnings,
+}
+print(json.dumps(payload, separators=(",", ":")))
+PY
+  fi
 else
   echo "$SUMMARY_JSON"
 fi
