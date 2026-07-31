@@ -4,8 +4,10 @@ from __future__ import annotations
 import hashlib
 import html
 import json
+import os
 import random
 import sqlite3
+import subprocess
 import threading
 import time
 from pathlib import Path
@@ -13,8 +15,6 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 from urllib.parse import urlparse
 
 import requests
-
-import os as _os
 
 from config import (
     ARCHIVE_TIMEOUT,
@@ -25,6 +25,8 @@ from config import (
 )
 
 USER_AGENT = "DailyDigestBot/1.0 (+https://dailydigest.vercel.app)"
+DEFUDDLE_BIN = os.environ.get("DEFUDDLE_BIN", "/Users/seintun/.local/bin/defuddle")
+DEFUDDLE_TIMEOUT = float(os.environ.get("SCRAPER_DEFUDDLE_TIMEOUT", "12") or "12")
 REQUEST_HEADERS = {
     "User-Agent": (
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
@@ -40,12 +42,10 @@ REQUEST_HEADERS = {
     "Sec-Fetch-Site": "none",
 }
 JINA_PROXY_BASE = "https://r.jina.ai/"
-JINA_TIMEOUT = float(_os.environ.get("SCRAPER_JINA_TIMEOUT", "8") or "8")
+JINA_TIMEOUT = float(os.environ.get("SCRAPER_JINA_TIMEOUT", "8") or "8")
 CACHE_TTL_SECONDS = 24 * 60 * 60
 CACHE_PATH = Path(".cache") / "scraper_cache.sqlite3"
 BACKOFF_SECONDS = (2, 5)
-
-del _os
 
 _blocked_hosts: Dict[str, float] = {}
 _host_last_request: Dict[str, float] = {}
@@ -147,6 +147,30 @@ def _mark_host_blocked(host: str) -> None:
         return
     with _host_lock:
         _blocked_hosts[host] = time.time()
+
+
+def _extract_with_defuddle(url: str) -> Optional[str]:
+    """Extract clean article markdown via the defuddle CLI (preferred extractor).
+
+    defuddle renders/parse the live URL and returns clean markdown. It handles
+    JS-heavy and cluttered pages better than trafilatura for many modern sites.
+    Returns None on any failure so callers fall through to HTML-based extractors.
+    """
+    if not url:
+        return None
+    try:
+        result = subprocess.run(
+            [DEFUDDLE_BIN, "parse", url, "--md"],
+            capture_output=True,
+            text=True,
+            timeout=DEFUDDLE_TIMEOUT,
+        )
+    except (FileNotFoundError, subprocess.TimeoutExpired, OSError):
+        return None
+    if result.returncode != 0:
+        return None
+    text = _normalize_text(result.stdout or "", min_length=140)
+    return text
 
 
 def _extract_with_trafilatura(html: str, url: str) -> Optional[str]:
@@ -309,6 +333,13 @@ def _fetch_and_extract(url: str) -> Tuple[Optional[str], str]:
     host = (urlparse(url).netloc or "").lower()
     if _is_host_temporarily_blocked(host):
         return None, "host_blocked_skip"
+
+    # Preferred path: defuddle handles its own fetch + extraction and copes with
+    # JS-heavy pages. Fall through to the requests+trafilatura chain on failure.
+    defuddle_text = _extract_with_defuddle(url)
+    if defuddle_text:
+        return defuddle_text, ""
+
     headers = REQUEST_HEADERS
     last_error = "unknown_error"
 
