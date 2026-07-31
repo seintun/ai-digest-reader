@@ -9,6 +9,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 4: Delivery & Reader UX (2026-07-31)
+
+- **`ai-digest-reader/src/types.ts`** — new `DigestAnalysis` interface; `analysis?`
+  added to `DigestSummary`.
+- **`ai-digest-reader/src/pages/index.astro`** — the summary card now renders a
+  collapsible "Analysis & Implications" block (native `<details>`, no carousel/JS
+  changes) when the summary carries an `analysis` object: implications list,
+  skeptic's take, evidence basis, and a color-coded confidence badge.
+
+### Added — Phase 5: Operational Hardening (2026-07-31)
+
+- **`digest.py`** — new `metrics.quality` block: `total_stories`,
+  `stories_with_content`, `evidence_coverage_pct`, `source_counts`
+  (reddit/hackernews/rss), and `analysis_generated`. Evidence coverage is printed
+  to the console. (This surfaced a real signal: a typical run has ~6% evidence
+  coverage because Reddit self-posts and zero-score RSS items aren't scrape
+  candidates — only HN external links are.)
+- **`scripts/quality_gate.py`** (new) — soft quality-regression gate. Warns when
+  evidence coverage drops below a threshold (default 30%) or the summary is
+  missing/invalid for N consecutive runs (default 2, tracked in a state file).
+  Never blocks the pipeline; exits 2 on warnings.
+- **`scripts/hermes-digest-run.sh`** — runs the quality gate after a successful
+  run and folds warnings into the report JSON so the cron agent can surface them
+  to Discord.
+
 ### Added — Phase 3: Multi-Stage Summarization (2026-07-31)
 
 - **`engine/analysis.py`** (new) — stage-3 analysis pipeline. Runs one extra LLM
@@ -121,7 +146,7 @@ Part of the quality-enhancement plan
 - `tests/test_hn.py` — new: 8 tests for `fetch_hn_top_comments` (flattening, limit,
   shallow replies, HTTP/network error handling, truncation) and `strip_html`
   (tag removal + entity unescaping).
-- Full suite: **188 passing**.
+- Full suite: **194 passing**.
 
 ---
 
