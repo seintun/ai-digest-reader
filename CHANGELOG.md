@@ -9,6 +9,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added — Phase 2: Ranking Signal (2026-07-31)
+
+- **`ranker.py`** — `_title_quality_heuristic(post)`: scores a story 0-10 from
+  title signals (known AI orgs/models, version numbers, news verbs) with
+  penalties for meta/clickbait titles ("megathread", "day N of", "scrolling
+  through"). Used as the quality fallback when a story has no scrapeable content
+  and the LLM rater is unavailable or skipped it. This fixes the dead tie where
+  every post collapsed to `content_quality = 0` (all posts tied at rank 5.5 in
+  the 2026-07-31 run). Scraped posts keep the excerpt-length heuristic;
+  LLM-rated posts keep their LLM score.
+
+### Verified — Phase 2: Ranking Signal (2026-07-31)
+
+- **`ranker.py`** — `_compute_cross_source_scores` was already source-agnostic:
+  it buckets by canonical URL across all source prefixes (`rd`/`hn`/`rs`), so RSS
+  stories already participate in cross-source corroboration. The plan assumed RSS
+  was excluded; it was not. Added a regression test to lock the behavior in. No
+  production code change.
+
 ### Added — Phase 1: Data Acquisition (2026-07-31)
 
 Part of the quality-enhancement plan
@@ -70,7 +89,7 @@ Part of the quality-enhancement plan
 - `tests/test_hn.py` — new: 8 tests for `fetch_hn_top_comments` (flattening, limit,
   shallow replies, HTTP/network error handling, truncation) and `strip_html`
   (tag removal + entity unescaping).
-- Full suite: **166 passing**.
+- Full suite: **171 passing**.
 
 ---
 
