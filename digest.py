@@ -221,6 +221,22 @@ def main():
                 raise RuntimeError(f"Hermes summary unavailable: {summary_meta.get('error', 'unknown error')}")
     summary_seconds = time.perf_counter() - summary_started
 
+    # Stage-3 analysis (devil's-advocate implications). Additive, opt-in via
+    # AI_DIGEST_ANALYSIS_ENABLED=1. Runs only when a base summary was produced.
+    analysis = None
+    analysis_meta = {"source": "analysis", "generated": False}
+    analysis_started = time.perf_counter()
+    if summary and engine_config.analysis_enabled and not args.no_ai:
+        print("Generating stage-3 analysis (implications / skeptic take)...")
+        from engine.analysis import generate_analysis_with_hermes
+        analysis, analysis_meta = generate_analysis_with_hermes(summary, ranked_posts, engine_config)
+        if analysis:
+            summary["analysis"] = analysis
+            print(f"  - analysis generated (confidence={analysis.get('confidence')})")
+        else:
+            print(f"  - analysis unavailable: {analysis_meta.get('error', 'unknown')}")
+    analysis_seconds = time.perf_counter() - analysis_started
+
     digest_date = date.today().strftime(DATE_FORMAT)
     digest_time = datetime.now().strftime("%H%M%S")
 
@@ -264,6 +280,7 @@ def main():
             "scrape_seconds": round(scrape_seconds, 2),
             "ranking_seconds": round(ranking_seconds, 2),
             "summary_seconds": round(summary_seconds, 2),
+            "analysis_seconds": round(analysis_seconds, 2),
             "total_seconds": round(total_seconds, 2),
             "within_budget": total_seconds < 180,
         },
@@ -277,6 +294,7 @@ def main():
         },
         "ranking": ranking_metrics,
         "summary": summary_meta,
+        "analysis": analysis_meta,
         "cost": {
             "pricing_source": pricing_source,
             "cost_sources": cost_sources,

@@ -20,6 +20,7 @@ class DigestEngineConfig:
     hermes_model: str = "codex-combo"
     summary_limit: int = 8
     summary_excerpt_chars: int = 120
+    analysis_enabled: bool = False
 
     @property
     def uses_openclaw_summary(self) -> bool:
@@ -73,6 +74,7 @@ def load_engine_config(env: dict[str, str] | None = None) -> DigestEngineConfig:
         hermes_model=(env.get("AI_DIGEST_HERMES_MODEL") or "codex-combo").strip(),
         summary_limit=max(1, int(env.get("AI_DIGEST_SUMMARY_LIMIT", "8") or "8")),
         summary_excerpt_chars=max(0, int(env.get("AI_DIGEST_SUMMARY_EXCERPT_CHARS", "120") or "120")),
+        analysis_enabled=(env.get("AI_DIGEST_ANALYSIS_ENABLED") or "0").strip() == "1",
     )
 
 
