@@ -1,6 +1,6 @@
 import sqlite3
 import time
-from unittest.mock import MagicMock, patch  # noqa: F401
+from unittest.mock import MagicMock, patch
 
 import scraper
 
@@ -138,3 +138,68 @@ def test_fetch_via_archive_today_returns_none_on_timeout():
         text, err = scraper._fetch_via_archive_today("https://www.cnbc.com/article/slow")
     assert text is None
     assert err == "archive_timeout"
+
+
+# --- defuddle extractor tests ---
+
+def test_extract_with_defuddle_returns_normalized_markdown(monkeypatch):
+    long_md = "# Title\n\n" + ("This is a substantive article sentence. " * 10)
+    result = MagicMock(returncode=0, stdout=long_md)
+    monkeypatch.setattr(scraper.subprocess, "run", lambda *a, **k: result)
+    text = scraper._extract_with_defuddle("https://example.com/story")
+    assert text is not None
+    assert "substantive article" in text
+
+
+def test_extract_with_defuddle_returns_none_on_nonzero_exit(monkeypatch):
+    result = MagicMock(returncode=1, stdout="")
+    monkeypatch.setattr(scraper.subprocess, "run", lambda *a, **k: result)
+    assert scraper._extract_with_defuddle("https://example.com/x") is None
+
+
+def test_extract_with_defuddle_returns_none_when_binary_missing(monkeypatch):
+    monkeypatch.setattr(scraper.subprocess, "run", MagicMock(side_effect=FileNotFoundError))
+    assert scraper._extract_with_defuddle("https://example.com/x") is None
+
+
+def test_extract_with_defuddle_returns_none_on_timeout(monkeypatch):
+    import subprocess as sp
+    monkeypatch.setattr(scraper.subprocess, "run", MagicMock(side_effect=sp.TimeoutExpired(cmd="defuddle", timeout=1)))
+    assert scraper._extract_with_defuddle("https://example.com/x") is None
+
+
+def test_extract_with_defuddle_rejects_short_output(monkeypatch):
+    result = MagicMock(returncode=0, stdout="too short")
+    monkeypatch.setattr(scraper.subprocess, "run", lambda *a, **k: result)
+    assert scraper._extract_with_defuddle("https://example.com/x") is None
+
+
+def test_fetch_and_extract_prefers_defuddle(monkeypatch):
+    """defuddle is tried first; requests/trafilatura chain is skipped on success."""
+    calls = []
+    monkeypatch.setattr(scraper, "_extract_with_defuddle", lambda url: calls.append("defuddle") or "defuddle content here")
+    monkeypatch.setattr(scraper, "_is_host_temporarily_blocked", lambda host: False)
+    # If requests.get were called it would blow up — proves defuddle short-circuits.
+    monkeypatch.setattr(scraper.requests, "get", lambda *a, **k: calls.append("requests") or (_ for _ in ()).throw(AssertionError("requests should not be called")))
+    text, err = scraper._fetch_and_extract("https://example.com/story")
+    assert text == "defuddle content here"
+    assert err == ""
+    assert calls == ["defuddle"]
+
+
+def test_fetch_and_extract_falls_back_when_defuddle_fails(monkeypatch):
+    """When defuddle returns None, the requests+trafilatura chain runs."""
+    monkeypatch.setattr(scraper, "_extract_with_defuddle", lambda url: None)
+    monkeypatch.setattr(scraper, "_is_host_temporarily_blocked", lambda host: False)
+    monkeypatch.setattr(scraper, "_throttle", lambda host="": None)
+
+    response = MagicMock()
+    response.status_code = 200
+    response.text = "<html><body>" + ("word " * 200) + "</body></html>"
+    response.headers = {"Content-Type": "text/html"}
+    monkeypatch.setattr(scraper.requests, "get", lambda *a, **k: response)
+    monkeypatch.setattr(scraper, "_extract_with_trafilatura", lambda html, url: "trafilatura text")
+
+    text, err = scraper._fetch_and_extract("https://example.com/story")
+    assert text == "trafilatura text"
+    assert err == ""
