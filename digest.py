@@ -3,6 +3,7 @@
 import argparse
 import json
 import os
+import re
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from datetime import date, datetime
 from pathlib import Path
@@ -10,7 +11,7 @@ import time
 from typing import Any, Dict, List
 
 from config import SUBREDDITS, POST_LIMIT, DATE_FORMAT
-from fetchers import fetch_reddit_posts, fetch_hn_posts, reddit_live_fetch_globally_blocked
+from fetchers import fetch_reddit_posts, fetch_hn_posts, fetch_hn_top_comments, reddit_live_fetch_globally_blocked
 from formatter import format_digest
 from pipeline_metrics import (
     render_dashboard,
@@ -184,6 +185,23 @@ def main():
     reddit_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rd-")]
     hn_ranked = [post for post in ranked_posts if post.get("i", "").startswith("hn-")]
     rss_ranked = [post for post in ranked_posts if post.get("i", "").startswith("rs-")]
+
+    # Enrich the top HN stories with discussion context (top comments) so the
+    # summarizer has community signal, not just titles. Bounded to limit API calls.
+    hn_comment_limit = int(os.environ.get("AI_DIGEST_HN_COMMENT_STORIES", "10") or "0")
+    if hn_comment_limit > 0 and hn_ranked and not args.no_ai:
+        print(f"Fetching discussion context for top {min(hn_comment_limit, len(hn_ranked))} HN stories...")
+        enriched = 0
+        for post in hn_ranked[:hn_comment_limit]:
+            permalink = post.get("p", "")
+            m = re.search(r"[?&]id=(\d+)", permalink)
+            if not m:
+                continue
+            comments = fetch_hn_top_comments(int(m.group(1)), limit=5)
+            if comments:
+                post["discussion_context"] = comments
+                enriched += 1
+        print(f"  - enriched {enriched} HN stories with discussion context")
 
     summary = None
     summary_meta = {"source": "none", "generated": False, "usage": usage_to_dict(0, 0)}
