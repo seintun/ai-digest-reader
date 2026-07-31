@@ -291,6 +291,7 @@ def main():
             "failures": scrape_stats.get("failures", 0),
             "success_rate": round(scrape_success_rate, 1),
             "cache_hit_rate": round(cache_hit_rate, 1),
+            "extractor_breakdown": scrape_stats.get("extractor_breakdown", {}),
         },
         "ranking": ranking_metrics,
         "summary": summary_meta,
@@ -330,6 +331,15 @@ def main():
     print(f"  - runtime: {metrics['runtime']['total_seconds']}s")
     print(f"  - scrape success: {metrics['scraping']['success_rate']}%")
     print(f"  - cache hit rate: {metrics['scraping']['cache_hit_rate']}%")
+    _extractor_breakdown = metrics["scraping"].get("extractor_breakdown") or {}
+    _winner_counts = {k: v for k, v in _extractor_breakdown.items() if k != "failure_reasons" and v}
+    if _winner_counts:
+        _winner_summary = ", ".join(f"{k}={v}" for k, v in sorted(_winner_counts.items(), key=lambda kv: -kv[1]))
+        print(f"  - extractor wins: {_winner_summary}")
+    _failure_reasons = _extractor_breakdown.get("failure_reasons") or {}
+    if _failure_reasons:
+        _reason_summary = ", ".join(f"{k}={v}" for k, v in sorted(_failure_reasons.items(), key=lambda kv: -kv[1])[:6])
+        print(f"  - extraction fallthroughs: {_reason_summary}")
     print(f"  - ranking LLM used: {metrics['ranking']['llm_quality_used']}")
     print(f"  - summary source: {metrics['summary']['source']}")
     print(f"  - session model cost: ${metrics['cost']['session_model_usd']}")

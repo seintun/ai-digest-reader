@@ -36,7 +36,11 @@ You are a tech news analyst. Output ONLY a single raw JSON object matching this 
 }
 Rules: No markdown. All values plain text strings. schema_version must be "2". \
 themes must have exactly 3 strings. mustRead must have exactly 3 items. \
-fullBrief.sections must have 2-4 items. Use story IDs from the input (e.g. "rd-0", "hn-2")."""
+fullBrief.sections must have 2-4 items. Use story IDs from the input (e.g. "rd-0", "hn-2"). \
+Each story carries an evidence tag: evidence:verified-content means the article body \
+was scraped and its details are trustworthy; evidence:title-only means only the headline \
+is known — for those, summarize at headline level and do NOT invent specifics, numbers, \
+or quotes. Prefer verified-content stories for mustRead and breaking."""
 
 
 def _age_hours(post: Dict) -> float:
@@ -72,8 +76,12 @@ def _build_prompt(ranked_posts: List[Dict], excerpt_chars: int = 200) -> str:
         source = _source_label(post)
         raw_content = post.get("content", "") or post.get("excerpt", "") or post.get("b", "") or ""
         excerpt = extract_excerpt(raw_content, max_chars=max(0, excerpt_chars))
+        # Evidence label tells the model how much to trust the story's details:
+        # verified-content = we scraped the article; title-only = headline only,
+        # so it must not invent specifics for those.
+        evidence = "verified-content" if (post.get("content") or excerpt) else "title-only"
         lines.append(
-            f"[{story_id}] [{rank}/100] {title} | src:{source} | age:{age}h | score:{score} | quality:{quality}/10"
+            f"[{story_id}] [{rank}/100] {title} | src:{source} | age:{age}h | score:{score} | quality:{quality}/10 | evidence:{evidence}"
         )
         if url:
             lines.append(f"url: {url}")

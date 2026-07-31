@@ -74,3 +74,24 @@ def test_generate_summary_returns_none_on_invalid_json(monkeypatch):
 
     assert summary is None
     assert meta["generated"] is False
+
+
+def test_build_prompt_labels_verified_content_stories():
+    """Stories with scraped content are labeled so the LLM knows the evidence is real."""
+    prompt = _build_prompt([_make_post(content="Substantive article body text here.")])
+    assert "evidence:verified-content" in prompt
+
+
+def test_build_prompt_labels_title_only_stories():
+    """Stories with no scraped content are flagged title-only so the LLM doesn't invent details."""
+    prompt = _build_prompt([_make_post(content="", excerpt="", b="")])
+    assert "evidence:title-only" in prompt
+
+
+def test_build_prompt_respects_excerpt_chars():
+    long_content = "Sentence about technology. " * 40
+    prompt = _build_prompt([_make_post(content=long_content)], excerpt_chars=400)
+    # The excerpt line should be present and bounded near the requested length.
+    excerpt_line = [line for line in prompt.splitlines() if line.startswith("excerpt:")]
+    assert excerpt_line
+    assert len(excerpt_line[0]) <= len('excerpt: ""') + 400 + 1
