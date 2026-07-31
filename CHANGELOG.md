@@ -26,6 +26,14 @@ Part of the quality-enhancement plan
   endpoints are permanently blocked for unauthenticated clients, but RSS stays
   available and returns fresh posts. Verified live: r/LocalLLaMA returns current
   stories (e.g. DeepSeek V4 Flash) instead of empty/stale-cache results.
+- **`fetchers/hn.py`** — `fetch_hn_top_comments(story_id, limit)`: pulls the full
+  comment tree from the Algolia `items` endpoint in a single request and flattens
+  it breadth-first to a shallow depth (top-level comment + immediate reply).
+  Exported from the `fetchers` package.
+- **`digest.py`** — attaches the top 5 comments as `discussion_context` to the
+  top-N HN stories so the summarizer sees community signal, not just titles.
+  Controlled by `AI_DIGEST_HN_COMMENT_STORIES` (default 10; set 0 to disable).
+  Runs only on AI-enabled runs (`--no-ai` skips enrichment).
 
 ### Changed — Phase 1: Data Acquisition (2026-07-31)
 
@@ -38,6 +46,8 @@ Part of the quality-enhancement plan
   single 403, which prevented the new per-subreddit RSS recovery from running.
   Re-enable it only if you also set `REDDIT_RSS_FALLBACK_ON_TERMINAL=0` and rely
   purely on the local cache.
+- **`fetchers/hn.py`** — `strip_html()` now also unescapes HTML entities
+  (`&gt;`, `&#x2F;`, `&amp;`, …) so comment text fed to the summarizer is clean.
 
 ### Notes / Known Limitations
 
@@ -57,6 +67,10 @@ Part of the quality-enhancement plan
   fallback-to-trafilatura). 15 passing.
 - `tests/test_reddit.py` — updated for new defaults: 403→RSS fallback by default,
   403→empty when fallback disabled, probe disabled by default. 8 passing.
+- `tests/test_hn.py` — new: 8 tests for `fetch_hn_top_comments` (flattening, limit,
+  shallow replies, HTTP/network error handling, truncation) and `strip_html`
+  (tag removal + entity unescaping).
+- Full suite: **166 passing**.
 
 ---
 
