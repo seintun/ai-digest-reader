@@ -80,6 +80,22 @@ def test_cross_source_signal_applies_to_same_story_across_sources():
     assert by_id["hn-0"]["rank"] > by_id["rs-0"]["rank"]
 
 
+def test_cross_source_signal_counts_rss_as_distinct_source():
+    """A story appearing on HN AND RSS gets the cross-source boost (RSS is a real source)."""
+    posts = [
+        {"i": "hn-0", "u": "https://example.com/story/deepseek-v4", "s": 10, "c": 2},
+        {"i": "rs-0", "u": "https://example.com/story/deepseek-v4", "s": 10, "c": 2},
+        {"i": "hn-1", "u": "https://example.com/solo-story", "s": 10, "c": 2},
+    ]
+    scores = ranker._compute_cross_source_scores(posts)
+    # hn-0 and rs-0 share a canonical URL across two distinct sources -> boost.
+    assert scores["hn-0"] > 0
+    assert scores["rs-0"] > 0
+    assert scores["hn-0"] == scores["rs-0"]
+    # hn-1 appears once -> no cross-source boost.
+    assert scores["hn-1"] == 0.0
+
+
 def test_ranker_falls_back_when_llm_quality_unavailable(monkeypatch):
     monkeypatch.setattr(ranker, "_rate_content_quality", lambda _posts, _content: (None, {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0}))
     posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 100, "c": 20, "b": "body"}]
