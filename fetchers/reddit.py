@@ -222,10 +222,11 @@ def _fetch_reddit_rss_posts(subreddit: str, limit: int, headers: dict[str, str])
 def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
     """Fetch top posts from a subreddit.
 
-    Uses JSON API first. 401/403/429 are terminal by default: they return []
-    immediately to let the caller use cache instead of trying top.json and RSS.
-    Set REDDIT_RSS_FALLBACK_ON_TERMINAL=1 to keep the old RSS fallback behavior
-    for terminal statuses.
+    Uses JSON API first. 401/403/429 are terminal for the JSON endpoints, but
+    Reddit's Atom RSS feed (hot.rss) typically stays available, so on a terminal
+    JSON status we fall back to RSS by default. Set
+    REDDIT_RSS_FALLBACK_ON_TERMINAL=0 to restore the old "return [] immediately"
+    behavior and let the caller use the local cache instead.
     """
     posts: list[dict] = []
     headers = _reddit_headers()
@@ -242,9 +243,9 @@ def fetch_reddit_posts(subreddit: str, limit: int = POST_LIMIT) -> list[dict]:
             response = requests.get(url, headers=headers, timeout=_reddit_timeout())
             status_code = int(response.status_code or 0)
             if status_code in TERMINAL_REDDIT_STATUSES:
-                print(f"Reddit JSON {status_code} for r/{subreddit}: {url} (terminal; skipping remaining endpoints)")
+                print(f"Reddit JSON {status_code} for r/{subreddit}: {url} (terminal; skipping remaining JSON endpoints)")
                 _write_subreddit_block_cache(subreddit, status_code)
-                if _env_bool("REDDIT_RSS_FALLBACK_ON_TERMINAL", False):
+                if _env_bool("REDDIT_RSS_FALLBACK_ON_TERMINAL", True):
                     return _fetch_reddit_rss_posts(subreddit, limit, headers)
                 return []
             if status_code != 200:
@@ -285,8 +286,13 @@ def reddit_live_fetch_globally_blocked(subreddits: Iterable[str]) -> bool:
     This keeps full digest runs from launching dozens of doomed subreddit
     requests. The block result is cached for REDDIT_GLOBAL_BLOCK_TTL_SECONDS
     (default 6h) under output/reddit-blocks.json.
+
+    NOTE: Disabled by default (REDDIT_GLOBAL_BLOCK_PROBE=0) because the JSON
+    403 now triggers a per-subreddit RSS fallback that still yields fresh posts.
+    The global short-circuit would skip that recovery. Enable it only if you
+    also disable REDDIT_RSS_FALLBACK_ON_TERMINAL and rely purely on the cache.
     """
-    if not _env_bool("REDDIT_GLOBAL_BLOCK_PROBE", True):
+    if not _env_bool("REDDIT_GLOBAL_BLOCK_PROBE", False):
         return False
     if _global_block_cache_active():
         return True
