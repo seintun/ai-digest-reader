@@ -2,6 +2,49 @@ from ranker import rank_posts, rank_posts_with_metrics
 import ranker
 
 
+def test_title_quality_heuristic_boosts_substantive_titles():
+    substantive = {"t": "OpenAI releases GPT-5.6 with native filesystem MCP support"}
+    clickbait = {"t": "Day 32 of building GTA 6 using claude"}
+    high = ranker._title_quality_heuristic(substantive)
+    low = ranker._title_quality_heuristic(clickbait)
+    assert high > low
+    assert 0.0 <= high <= 10.0
+    assert 0.0 <= low <= 10.0
+
+
+def test_title_quality_heuristic_penalizes_meta_posts():
+    meta = {"t": "r/ClaudeAI List of Ongoing Megathreads"}
+    assert ranker._title_quality_heuristic(meta) < 5.0
+
+
+def test_unscraped_posts_get_title_heuristic_quality_when_llm_off(monkeypatch):
+    """When the LLM ranker is disabled, unscraped posts must not all tie at quality 0."""
+    monkeypatch.setenv("RANKER_AI_ENABLED", "0")
+    posts = [
+        {"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2,
+         "t": "Anthropic launches Claude Sonnet 5 with near-Opus performance"},
+        {"i": "rd-1", "u": "https://example.com/b", "s": 10, "c": 2,
+         "t": "Scrolling through r/ClaudeAI"},
+    ]
+    ranked, metrics = rank_posts_with_metrics(posts, {})  # no scraped content
+    assert metrics["llm_quality_used"] is False
+    by_id = {p["i"]: p for p in ranked}
+    # Substantive title scores higher than the meta/vague title — no dead tie.
+    assert by_id["rd-0"]["content_quality"] > by_id["rd-1"]["content_quality"]
+    assert by_id["rd-0"]["content_quality"] > 0
+
+
+def test_scraped_post_still_uses_llm_or_excerpt_heuristic_not_title(monkeypatch):
+    """When content IS available, the title heuristic must not override content-based quality."""
+    monkeypatch.setenv("RANKER_AI_ENABLED", "0")
+    posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2,
+              "t": "Day 32 of building GTA 6 using claude"}]  # low-quality title
+    scraped = {"https://example.com/a": "Substantive article body text. " * 20}
+    ranked, _ = rank_posts_with_metrics(posts, scraped)
+    # Long scraped excerpt -> _heuristic_quality returns 7, not the low title score.
+    assert ranked[0]["content_quality"] == 7
+
+
 def test_rank_posts_adds_expected_fields():
     posts = [
         {"i": "rd-0", "u": "https://example.com/a", "s": 500, "c": 100, "b": "Short body", "ts": 1_700_000_000},
@@ -41,7 +84,8 @@ def test_ranker_falls_back_when_llm_quality_unavailable(monkeypatch):
     monkeypatch.setattr(ranker, "_rate_content_quality", lambda _posts, _content: (None, {"input_tokens": 0, "output_tokens": 0, "cost_usd": 0.0}))
     posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 100, "c": 20, "b": "body"}]
     ranked = rank_posts(posts, {})
-    assert ranked[0]["content_quality"] == 0
+    # No scraped content and no LLM -> title heuristic (neutral baseline, not a flat 0).
+    assert ranked[0]["content_quality"] > 0
 
 
 def test_ranker_parallel_batches_merge_metrics(monkeypatch):
@@ -159,7 +203,8 @@ def test_openclaw_ranker_provider_falls_back_on_failure(monkeypatch):
     posts = [{"i": "rd-0", "u": "https://example.com/a", "s": 10, "c": 2, "b": "body"}]
     scraped = {"https://example.com/a": "article text " * 20}
     ranked, metrics = rank_posts_with_metrics(posts, scraped)
-    assert ranked[0]["content_quality"] == 0
+    # OpenClaw failed but scraped content exists -> excerpt-length heuristic (7), not a flat 0.
+    assert ranked[0]["content_quality"] == 7
     assert metrics["llm_quality_used"] is False
     assert metrics["llm_usage"]["ai_parallel_fallback_reason"] == "openclaw_nonzero_exit"
 
