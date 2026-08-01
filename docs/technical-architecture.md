@@ -2,17 +2,23 @@
 
 ## Data Flow
 
-1. `digest.py` orchestrates Reddit, HN, and RSS fetchers, normalizes payloads, and builds a unified post list.
-2. `scraper.py` selects top candidates (`score > 10 OR comments > 5`, max 40), scrapes article content with cache + fallbacks.
-3. `ranker.py` scores posts with engagement, recency, cross-source matching, and optional LLM content quality.
-4. `analyzer_v2.py` summarizes the top 15 ranked stories with content-aware prompts.
-5. Future optional engine adapter mode may delegate selected AI stages to OpenClaw while preserving this output schema. See [`docs/architecture/openclaw-engine-integration-plan.md`](architecture/openclaw-engine-integration-plan.md).
+1. `digest.py` orchestrates Reddit, HN, and RSS fetchers, normalizes payloads, and builds a unified post list. Reddit recovers via Atom RSS when the JSON API is blocked (401/403/429); HN top stories are enriched with their top comments (Algolia) as `discussion_context`.
+2. `scraper.py` selects top candidates (`score > 10 OR comments > 5`, max 40) and scrapes article content. Extraction tries **defuddle first**, then falls back through HTTP fetch + trafilatura → readability → lxml → metadata → Jina proxy → archive.today. Every URL records which extractor won and why others fell through (`extractor_breakdown` telemetry). Content is cached in SQLite (24h TTL).
+3. `ranker.py` scores posts with engagement, recency, cross-source matching, and LLM content quality. When a story has no scrapeable content (or the LLM rater is unavailable), a title heuristic supplies the quality signal so posts don't collapse to a tie.
+4. `analyzer_v2.py` summarizes the top ranked stories with content-aware, evidence-tagged prompts (`verified-content` vs `title-only`).
+5. `engine/analysis.py` (optional, `AI_DIGEST_ANALYSIS_ENABLED=1`) runs a stage-3 devil's-advocate pass and attaches an `analysis` block (implications, skeptic's take, confidence, evidence basis).
 6. `digest.py` writes:
-   - `output/<date>/digest.json` (v4 data + metrics)
+   - `output/<date>/digest.json` (v4 data + metrics, including `scraping.extractor_breakdown` and `quality`)
    - `output/<date>/metrics.json` (monitoring metrics)
    - `output/<date>/monitoring-dashboard.md` (human-readable dashboard)
-6. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend.
-7. Frontend merges all sources and sorts globally by `rank` (fallback to score), so users see most important stories first.
+7. `scripts/hermes-digest-run.sh` validates the digest, writes the summary/benchmark report, and runs `scripts/quality_gate.py` (soft warnings on low scrape success or repeated summary failures).
+8. `ai-digest-reader/public/data/digest.json` is consumed by the Astro frontend, which renders the summary card (including the collapsible Analysis panel) and merges all sources sorted globally by `rank`.
+
+## Quality & Observability
+
+- **Extraction telemetry** — `metrics.scraping.extractor_breakdown` counts per-extractor wins and a `failure_reasons` map of `stage:reason` pairs, answering "how many sites fell through defuddle, and why".
+- **Quality block** — `metrics.quality` reports `content_coverage_pct` (% of all stories with content; informational), `scrape_success_rate` (% of attempted URLs that returned content, cache-inclusive; the gate signal), and per-source counts.
+- **Quality gate** — `scripts/quality_gate.py` warns (never blocks) when scrape success drops below threshold or the summary fails for consecutive runs; warnings are surfaced to Discord by the Hermes cron report.
 
 ## Security and Validation Hardening
 

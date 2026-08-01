@@ -4,12 +4,17 @@ Automated AI news digest aggregating content from Reddit, Hacker News, and RSS f
 
 ## Features
 
-- **Multi-source aggregation** — 24 Reddit subs + HN front page + 14 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
-- **AI summaries** — Standalone mode can use an explicit project OpenRouter key; local OpenClaw mode can generate validated summaries through OpenClaw/research-engine without consuming AI Digest's OpenRouter key
+- **Multi-source aggregation** — 24 Reddit subs + HN front page + 13 RSS feeds (TechCrunch, Wired, TLDR, The Batch, Import AI, ArXiv AI/ML, and more)
+- **Resilient fetching** — Reddit recovers via Atom RSS when the JSON API is blocked (401/403/429); article extraction tries defuddle first, then a trafilatura → readability → lxml → metadata → Jina → archive.today chain
+- **Extraction telemetry** — every run records which extractor won each URL and why others fell through (`metrics.scraping.extractor_breakdown`)
+- **HN discussion context** — top HN stories are enriched with their top comments (Algolia) so the summary sees community signal, not just titles
+- **AI summaries + analysis** — schema-v2 summary (TL;DR, themes, breaking, must-read, full brief) plus an optional stage-3 devil's-advocate analysis (implications, skeptic's take, confidence, evidence basis)
+- **Evidence-aware prompting** — stories are tagged `verified-content` vs `title-only` so the model doesn't invent specifics for unscraped items
 - **Story categories** — AI & ML, Tech, Security, Science, World News, Business, Futurology, Startups
-- **Schema v4** — Ranked stories, content-quality metadata, optional RSS stories, run metrics
-- **Automation** — Local OpenClaw/Dexter cron runs twice daily at 8am and 5pm Pacific; GitHub Actions scheduling has been removed
-- **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support
+- **Schema v4** — Ranked stories, content-quality metadata, RSS stories, run metrics, quality block
+- **Quality gate** — soft regression gate warns when scrape success drops or the summary fails repeatedly; surfaced to Discord via the cron report
+- **Automation** — Hermes cron runs twice daily at 8am and 5pm Pacific; GitHub Actions scheduling has been removed
+- **PWA reader** — Mobile-first Astro site with search, category filters, bookmarks, dark mode, offline support, and a collapsible Analysis & Implications panel
 
 ## Quick Start
 
@@ -37,7 +42,8 @@ npm run dev
 
 - Python 3.8+
 - Node 18+
-- An [OpenRouter](https://openrouter.ai) API key (for AI summaries)
+- An [OpenRouter](https://openrouter.ai) API key (for AI summaries) — or a Hermes CLI for the Hermes summary/analysis provider
+- (Optional) [`defuddle`](https://www.npmjs.com/package/defuddle) CLI on `PATH` — preferred article extractor. Without it, the pipeline falls back to the trafilatura chain automatically. Override the binary path with `DEFUDDLE_BIN`.
 
 ### One-command setup
 
@@ -138,24 +144,28 @@ This runs the digest, copies JSON, builds the site, and commits + pushes.
 
 ## Automation
 
-### OpenClaw/Dexter cron
+### Hermes cron
 
-Production scheduling is owned by OpenClaw, not GitHub Actions. The intended schedule is 8:00 AM and 5:00 PM Pacific.
-
-The scheduled run should use explicit OpenClaw mode:
+Production scheduling is owned by Hermes (not GitHub Actions). The schedule is 8:00 AM and 5:00 PM Pacific. Hermes invokes [`scripts/hermes-digest-run.sh`](scripts/hermes-digest-run.sh) with these environment variables:
 
 ```bash
 AI_DIGEST_ENGINE=openclaw \
-AI_DIGEST_OPENCLAW_STAGES=summary \
+AI_DIGEST_OPENCLAW_STAGES=summary,notebooklm_ingest \
+AI_DIGEST_SUMMARY_PROVIDER=hermes \
 AI_DIGEST_REQUIRE_SUMMARY=1 \
-./scripts/generate-and-deploy.sh
+AI_DIGEST_RANKER_PROVIDER=openclaw \
+RANKER_AI_ENABLED=1 \
+AI_DIGEST_HERMES_PROVIDER=omniroute \
+AI_DIGEST_HERMES_MODEL=codex-combo \
+AI_DIGEST_ANALYSIS_ENABLED=1 \
+bash ./scripts/hermes-digest-run.sh --full
 ```
 
-OpenClaw/Dexter should report failures to Rickie if generation, validation, build, commit, or push fails. Hermes can own the schedule by invoking [`scripts/hermes-digest-run.sh`](scripts/hermes-digest-run.sh). Supported modes include `--full`, `--validate-only`, and `--check-only`. The runbook is [`scripts/openclaw-cron-run.md`](scripts/openclaw-cron-run.md).
+The wrapper runs the pipeline, validates the digest, writes the summary/benchmark report, and runs the quality gate. It emits a final single-line JSON report (status, digest path, quality-gate warnings) that the Hermes cron agent uses to post a rich Discord message: TL;DR, breaking headline, top-3 must-read links, the analysis (when present), and any quality-gate warnings. Supported modes: `--full`, `--validate-only`, `--check-only`. The runbook is [`scripts/openclaw-cron-run.md`](scripts/openclaw-cron-run.md).
 
 ### Legacy local crontab
 
-`scripts/cron-install.sh` is kept for manual machine crontab installs, but OpenClaw cron is preferred because it can use Dexter's model routing and report failures.
+`scripts/cron-install.sh` is kept for manual machine crontab installs, but Hermes cron is preferred because it can use model routing, the analysis stage, and report failures/quality warnings to Discord.
 
 ## Output
 
@@ -180,11 +190,25 @@ output/
   "rs": [ /* RSS stories */ ],
   "metrics": {
     "runtime": {"total_seconds": 72.4, "within_budget": true},
-    "scraping": {"candidate_urls": 40, "success_rate": 82.5, "cache_hit_rate": 35.0},
+    "scraping": {
+      "candidate_urls": 40, "success_rate": 82.5, "cache_hit_rate": 35.0,
+      "extractor_breakdown": {
+        "defuddle": 28, "trafilatura": 4, "cache": 6, "none": 2,
+        "failure_reasons": {"defuddle:no_output": 6, "fetch:http_403": 2}
+      }
+    },
     "ranking": {"total_posts": 120, "llm_quality_used": true},
-    "summary": {"source": "openrouter", "generated": true},
+    "summary": {"source": "hermes", "generated": true},
+    "analysis": {"source": "analysis", "generated": true, "confidence": "medium"},
+    "quality": {
+      "total_stories": 160, "stories_with_content": 10,
+      "content_coverage_pct": 6.2, "scrape_success_rate": 95.0,
+      "scrape_candidate_urls": 40,
+      "source_counts": {"reddit": 20, "hackernews": 10, "rss": 130},
+      "analysis_generated": true
+    },
     "cost": {
-      "pricing_source": "https://platform.kimi.ai/docs/pricing/chat-k26 (static rates: input=$0.213/M, output=$4.00/M)",
+      "pricing_source": "OpenRouter response usage accounting",
       "session_model_usd": 0.021384,
       "within_budget": true
     },
@@ -207,10 +231,27 @@ output/
       "intro": "...",
       "sections": [{ "heading": "...", "body": "..." }],
       "closing": "..."
+    },
+    "analysis": {
+      "implications": ["what this means for engineers", "what this means for the industry"],
+      "skeptic_take": "strongest counter-argument",
+      "confidence": "high | medium | low",
+      "evidence_basis": ["which claims are verified", "which are title-only"]
     }
   }
 }
 ```
+
+> **Notes on the metrics:**
+> - `scraping.extractor_breakdown` counts which extractor produced each URL's
+>   content (`defuddle`/`trafilatura`/`readability`/`lxml`/`metadata`/`jina`/
+>   `archive`/`cache`), how many fell through to `none`, and a `failure_reasons`
+>   map of `stage:reason` pairs.
+> - `quality.content_coverage_pct` is the % of *all* stories with scraped content
+>   (informational; structurally low because most RSS/Reddit items aren't scrape
+>   candidates). `quality.scrape_success_rate` is the % of *attempted* URLs that
+>   returned content (cache-inclusive) — this is what the quality gate watches.
+> - `summary.analysis` is only present when `AI_DIGEST_ANALYSIS_ENABLED=1`.
 
 Each story object:
 
@@ -227,21 +268,24 @@ Each story object:
 | `cat` | string | Category: `AI & ML`, `Tech`, `Security`, `Science`, `World News`, `Business`, `Futurology`, `Startups` |
 | `rank` | number | Importance score (0-100) |
 | `content_available` | boolean | Whether full article content was scraped |
-| `content_quality` | number | LLM-rated substance score (1-10, or 0 when fallback used) |
-| `excerpt` | string | First 200 chars of scraped content (or body fallback) |
+| `content_quality` | number | LLM-rated substance score (1-10), title-heuristic fallback when unscraped |
+| `excerpt` | string | First ~400 chars of scraped content (or body fallback) |
+| `discussion_context` | array | (HN only) Top comments: `[{author, text, depth}]`, when enrichment is enabled |
 
 ## Degradation Procedures
 
 The pipeline degrades safely in this order when dependencies fail:
 
-1. **Full pipeline**: scraping + ranking + content-aware summary.
-2. **Scraping fallback**: if content extraction fails for a URL, ranking uses post snippets.
-3. **Ranking fallback**: if LLM quality scoring fails, ranking uses engagement + recency + cross-source only.
-4. **Summary fallback**: if `analyzer_v2` fails, fallback to legacy `analyzer.py`.
-5. **No-summary fallback**: if all LLM paths fail, digest still outputs stories without `summary`.
+1. **Full pipeline**: defuddle-first scraping + ranking + content-aware, evidence-tagged summary + optional analysis.
+2. **Reddit fetch fallback**: if the Reddit JSON API returns 401/403/429, the fetcher recovers via the Atom RSS feed (titles/URLs, no scores).
+3. **Extraction fallback chain**: for each URL, defuddle → HTTP fetch + trafilatura → readability → lxml → metadata → Jina proxy → archive.today. Each fallthrough is recorded in `extractor_breakdown`.
+4. **Ranking fallback**: if LLM quality scoring fails or a story has no scrapeable content, ranking uses a title heuristic plus engagement + recency + cross-source signals.
+5. **Summary fallback**: if the configured summary provider fails, the digest still outputs stories without `summary` (and the quality gate flags repeated failures).
+6. **Analysis is best-effort**: if the stage-3 analysis fails, the summary is still emitted without an `analysis` block.
 
-Every run records which fallback paths were used in `digest.json.metrics.degradation`.
-Per-run model spend from actual API token usage is recorded in `digest.json.metrics.cost.session_model_usd`.
+Every run records which fallback paths were used in `digest.json.metrics.degradation`, extraction outcomes in `metrics.scraping.extractor_breakdown`, and coverage/health in `metrics.quality`. Per-run model spend is recorded in `metrics.cost.session_model_usd`.
+
+The **quality gate** (`scripts/quality_gate.py`) runs after each successful run and warns (without blocking) when scrape success drops below threshold or the summary fails for consecutive runs. Warnings are surfaced to Discord by the Hermes cron report.
 
 ## Sources
 
@@ -276,7 +320,7 @@ Per-run model spend from actual API token usage is recorded in `digest.json.metr
 
 **Hacker News** — Front page (Tech)
 
-**RSS Feeds** (14 feeds)
+**RSS Feeds** (13 feeds)
 
 | Feed | Category |
 |------|----------|
@@ -289,7 +333,6 @@ Per-run model spend from actual API token usage is recorded in `digest.json.metr
 | ArXiv CS.LG | AI & ML |
 | MIT Tech Review | Tech |
 | BBC Technology | Tech |
-| Reuters Technology | World News |
 | TLDR Tech | Tech |
 | TLDR AI | AI & ML |
 | The Batch (DeepLearning.AI) | AI & ML |
@@ -301,15 +344,22 @@ Per-run model spend from actual API token usage is recorded in `digest.json.metr
 |--------|---------|
 | `scripts/setup.sh` | One-time setup: venv, deps, .env |
 | `scripts/generate-and-deploy.sh` | Full pipeline: generate → copy → build → push |
-| `scripts/cron-install.sh` | Install local crontab for scheduled runs |
+| `scripts/hermes-digest-run.sh` | Hermes-owned wrapper: run → validate → benchmark report → quality gate |
+| `scripts/quality_gate.py` | Soft quality-regression gate (scrape success + repeated summary failures) |
+| `scripts/write_summary_benchmark_report.py` | Writes the daily summary/benchmark report |
+| `scripts/validate-digest.py` | Validates digest JSON against the v4 envelope + summary schema |
+| `scripts/cron-install.sh` | Install local crontab for scheduled runs (legacy) |
 | `digest.py` | Main entry point |
-| `analyzer_v2.py` | Content-aware top-15 summary generation |
+| `analyzer_v2.py` | Content-aware, evidence-tagged summary generation |
 | `analyzer.py` | Legacy summary fallback (OpenRouter + Claude CLI) |
-| `ranker.py` | Multi-signal ranking with optional LLM quality score |
-| `scraper.py` | Article scraping, fallback extraction, and SQLite cache |
+| `engine/analysis.py` | Stage-3 devil's-advocate analysis (implications/skeptic/confidence) |
+| `engine/summary.py` | Summary provider routing (OpenClaw / Hermes / benchmark) |
+| `engine/config.py` | Engine + summary provider configuration |
+| `ranker.py` | Multi-signal ranking with LLM quality + title-heuristic fallback |
+| `scraper.py` | defuddle-first scraping, fallback extraction chain, telemetry, SQLite cache |
 | `pipeline_metrics.py` | Runtime/cost metrics and monitoring dashboard renderer |
 | `schema.py` | TypedDict contracts + validators for v2/v3/v4 schema |
-| `fetchers/` | Reddit, HN, and RSS API integration |
+| `fetchers/` | Reddit (JSON + RSS fallback), HN (+ top comments), and RSS integration |
 | `formatter.py` | Markdown output formatting |
 | `config.py` | Subreddits, RSS feeds, categories, limits |
 
@@ -320,7 +370,25 @@ source .venv/bin/activate
 PYTHONPATH=$(pwd) pytest tests/ -v
 ```
 
-100 tests covering fetchers, schema validation, config, RSS parsing, and source expansion.
+197 tests covering fetchers, scraper (defuddle + telemetry), ranker, schema
+validation, config, RSS parsing, the analysis stage, the quality gate, and the
+benchmark report.
+
+## Environment Variables
+
+| Variable | Default | Purpose |
+|----------|---------|---------|
+| `OPENROUTER_API_KEY` | — | OpenRouter key for ranking/summary (standalone mode) |
+| `AI_DIGEST_ENGINE` | `standalone` | `standalone` or `openclaw` |
+| `AI_DIGEST_SUMMARY_PROVIDER` | `hermes` | `legacy` / `openclaw` / `hermes` / `benchmark` |
+| `AI_DIGEST_ANALYSIS_ENABLED` | `0` | Set `1` to run the stage-3 analysis |
+| `AI_DIGEST_HN_COMMENT_STORIES` | `10` | Top-N HN stories enriched with comments (`0` disables) |
+| `AI_DIGEST_SUMMARY_EXCERPT_CHARS` | `400` | Excerpt length fed to the summary prompt |
+| `DEFUDDLE_BIN` | `/Users/.../defuddle` | Path to the defuddle CLI |
+| `SCRAPER_DEFUDDLE_TIMEOUT` | `12` | defuddle per-URL timeout (seconds) |
+| `REDDIT_RSS_FALLBACK_ON_TERMINAL` | `1` | Recover via RSS when Reddit JSON is blocked |
+| `REDDIT_GLOBAL_BLOCK_PROBE` | `0` | Re-enable the global Reddit block short-circuit |
+| `RANKER_AI_ENABLED` | `1` | Enable LLM content-quality scoring |
 
 ## Troubleshooting
 
