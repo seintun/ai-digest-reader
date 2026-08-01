@@ -285,7 +285,9 @@ def main():
     total_stories = len(ranked_posts)
     stories_with_content = sum(1 for p in ranked_posts if p.get("content"))
     content_coverage = round((stories_with_content / total_stories * 100.0), 1) if total_stories else 0.0
-    scrape_success_rate = round(float(scrape_stats.get("success_rate", 0.0) or 0.0), 1)
+    # Reuse the scrape_success_rate computed above (cache hits + network success
+    # over candidates). Do NOT use scrape_stats["success_rate"], which counts
+    # network fetches only and would read 0% for a fully-cached (healthy) run.
     source_counts = {
         "reddit": len(reddit_ranked),
         "hackernews": len(hn_ranked),
