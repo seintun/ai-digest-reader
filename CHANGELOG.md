@@ -9,6 +9,27 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed — Production Correctness (2026-07-31)
+
+- **`config.py`** — removed the dead Reuters Tech RSS feed (`feeds.reuters.com`
+  no longer resolves; it threw a DNS error on every run). 14 → 13 feeds.
+- **`digest.py` / `scripts/quality_gate.py`** — split the misleading single
+  "evidence coverage" metric into two honest signals: `content_coverage_pct`
+  (informational; structurally low because most RSS/Reddit items aren't scrape
+  candidates) and `scrape_success_rate` (the actionable extraction-health
+  signal, cache-inclusive). The quality gate now thresholds on
+  `scrape_success_rate` (default 50%) and only when there were scrape
+  candidates, so it no longer warns on every run — and a fully-cached run
+  correctly reports 100% instead of a false 0%.
+- **`scripts/write_summary_benchmark_report.py`** — in normal single-provider
+  runs the benchmark block is empty, which made the report claim "both providers
+  failed" even when the summary succeeded. It now reports the real summary
+  outcome; the provider-comparison view only renders in actual benchmark mode.
+- **Cron job (AI Digest)** — enabled `AI_DIGEST_ANALYSIS_ENABLED=1` so the
+  stage-3 analysis actually runs in production; the Discord report now posts the
+  TL;DR + breaking + top-3 mustRead links + analysis (when present) + any
+  quality-gate warnings, instead of a terse success/failure line.
+
 ### Added — Phase 4: Delivery & Reader UX (2026-07-31)
 
 - **`ai-digest-reader/src/types.ts`** — new `DigestAnalysis` interface; `analysis?`
