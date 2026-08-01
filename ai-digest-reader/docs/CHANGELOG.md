@@ -2,6 +2,17 @@
 
 All notable changes to the AI News Digest Aggregator project.
 
+## [Unreleased] - Analysis Panel & v4 Schema
+
+### Added
+- **`src/types.ts`** — `DigestAnalysis` interface; `analysis?` added to `DigestSummary`; `Digest.v` widened to `2 | 3 | 4`; `rs?` (RSS stories) and `metrics?` fields.
+- **`src/pages/index.astro`** — collapsible "Analysis & Implications" block in the summary card (native `<details>`, no carousel/JS changes). Renders implications, skeptic's take, evidence basis, and a color-coded confidence badge — only when the summary carries an `analysis` object.
+
+### Changed
+- `docs/DATA_SCHEMA.md` — rewritten for the current v4 schema (metrics block, extractor telemetry, quality block, `summary.analysis`, HN `discussion_context`); v1/v2 retained for reference.
+
+---
+
 ## [Unreleased] - Strict v2 Summary Schema
 
 ### Added
