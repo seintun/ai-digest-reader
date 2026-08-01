@@ -65,7 +65,6 @@ RSS_FEEDS = [
     {"url": "http://export.arxiv.org/rss/cs.LG", "name": "ArXiv ML", "category": "AI & ML"},
     {"url": "https://www.technologyreview.com/feed/", "name": "MIT Tech Review", "category": "Tech"},
     {"url": "https://feeds.bbci.co.uk/news/technology/rss.xml", "name": "BBC Tech", "category": "Tech"},
-    {"url": "https://feeds.reuters.com/reuters/technologyNews", "name": "Reuters Tech", "category": "Tech"},
     {"url": "https://tldr.tech/api/rss/tech", "name": "TLDR Tech", "category": "Tech"},
     {"url": "https://tldr.tech/api/rss/ai", "name": "TLDR AI", "category": "AI & ML"},
     {"url": "https://charonhub.deeplearning.ai/rss/", "name": "The Batch", "category": "AI & ML"},

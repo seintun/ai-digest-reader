@@ -4,9 +4,12 @@
 Reads a freshly generated digest, checks two health signals, and maintains a
 small state file so it can detect *repeated* failures across runs:
 
-1. Evidence coverage — the % of stories backed by real scraped content. If it
-   drops below a threshold (default 30%), the digest is mostly title-only and
-   the summary is at risk of hallucination. Warn.
+1. Scrape success rate — the % of URLs we actually attempted to scrape that
+   returned content. If it drops below a threshold (default 50%), extraction is
+   degrading (sites blocking us, extractors failing). Warn. This is the
+   actionable signal. (Note: we do NOT threshold on overall content coverage,
+   which is structurally low because most RSS/Reddit items are intentionally not
+   scrape candidates.)
 2. Summary availability — if the summary is missing/invalid for N consecutive
    runs (default 2), warn. A single failure is tolerated (transient LLM error).
 
@@ -27,27 +30,31 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from schema import validate_summary
 
-DEFAULT_COVERAGE_THRESHOLD = 30.0
+DEFAULT_SCRAPE_SUCCESS_THRESHOLD = 50.0
 DEFAULT_FAILURE_STREAK = 2
 DEFAULT_STATE_PATH = "output/quality-gate-state.json"
 
 
 def check_quality(
     *,
-    evidence_coverage_pct: float,
+    scrape_success_rate: float,
+    scrape_candidate_urls: int,
     summary_present: bool,
     summary_valid: bool,
     prev_state: dict[str, Any],
-    coverage_threshold: float = DEFAULT_COVERAGE_THRESHOLD,
+    scrape_success_threshold: float = DEFAULT_SCRAPE_SUCCESS_THRESHOLD,
     failure_streak: int = DEFAULT_FAILURE_STREAK,
 ) -> tuple[list[str], dict[str, Any]]:
     """Evaluate one run. Returns (warnings, new_state)."""
     warnings: list[str] = []
 
-    if evidence_coverage_pct < coverage_threshold:
+    # Only judge scrape health when we actually attempted to scrape something;
+    # a run with zero candidates (e.g. all cache) has nothing to warn about.
+    if scrape_candidate_urls > 0 and scrape_success_rate < scrape_success_threshold:
         warnings.append(
-            f"Quality gate: evidence coverage {evidence_coverage_pct}% is below "
-            f"{coverage_threshold}% — digest is mostly title-only; summary may be thin or speculative."
+            f"Quality gate: scrape success {scrape_success_rate}% is below "
+            f"{scrape_success_threshold}% ({scrape_candidate_urls} candidate URLs) — "
+            f"extraction is degrading; check extractor fallthroughs."
         )
 
     summary_ok = summary_present and summary_valid
@@ -64,7 +71,7 @@ def check_quality(
 
     new_state = {
         "consecutive_summary_failures": consecutive,
-        "last_evidence_coverage_pct": evidence_coverage_pct,
+        "last_scrape_success_rate": scrape_success_rate,
         "last_summary_ok": summary_ok,
     }
     return warnings, new_state
@@ -74,7 +81,7 @@ def evaluate_digest_file(
     path: str,
     *,
     prev_state: dict[str, Any] | None = None,
-    coverage_threshold: float = DEFAULT_COVERAGE_THRESHOLD,
+    scrape_success_threshold: float = DEFAULT_SCRAPE_SUCCESS_THRESHOLD,
     failure_streak: int = DEFAULT_FAILURE_STREAK,
 ) -> tuple[list[str], dict[str, Any]]:
     """Read a digest JSON and run the quality checks."""
@@ -85,18 +92,20 @@ def evaluate_digest_file(
         return [f"Quality gate: could not read digest JSON: {exc}"], prev_state
 
     quality = (digest.get("metrics") or {}).get("quality") or {}
-    coverage = float(quality.get("evidence_coverage_pct", 0.0) or 0.0)
+    scrape_success_rate = float(quality.get("scrape_success_rate", 0.0) or 0.0)
+    scrape_candidate_urls = int(quality.get("scrape_candidate_urls", 0) or 0)
 
     summary = digest.get("summary")
     summary_present = bool(summary)
     summary_valid = bool(summary) and validate_summary(summary)
 
     return check_quality(
-        evidence_coverage_pct=coverage,
+        scrape_success_rate=scrape_success_rate,
+        scrape_candidate_urls=scrape_candidate_urls,
         summary_present=summary_present,
         summary_valid=summary_valid,
         prev_state=prev_state,
-        coverage_threshold=coverage_threshold,
+        scrape_success_threshold=scrape_success_threshold,
         failure_streak=failure_streak,
     )
 
@@ -119,7 +128,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="AI Digest quality-regression gate")
     parser.add_argument("path", help="path to digest.json")
     parser.add_argument("--state-path", default=DEFAULT_STATE_PATH)
-    parser.add_argument("--coverage-threshold", type=float, default=DEFAULT_COVERAGE_THRESHOLD)
+    parser.add_argument("--scrape-success-threshold", type=float, default=DEFAULT_SCRAPE_SUCCESS_THRESHOLD)
     parser.add_argument("--failure-streak", type=int, default=DEFAULT_FAILURE_STREAK)
     args = parser.parse_args()
 
@@ -127,7 +136,7 @@ def main() -> int:
     warnings, new_state = evaluate_digest_file(
         args.path,
         prev_state=prev_state,
-        coverage_threshold=args.coverage_threshold,
+        scrape_success_threshold=args.scrape_success_threshold,
         failure_streak=args.failure_streak,
     )
     save_state(args.state_path, new_state)

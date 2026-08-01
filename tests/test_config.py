@@ -44,7 +44,8 @@ def test_hn_category_is_string():
 
 def test_rss_feeds_count():
     from config import RSS_FEEDS
-    assert len(RSS_FEEDS) == 14
+    # 13 feeds (Reuters Tech removed 2026-07-31: feeds.reuters.com no longer resolves).
+    assert len(RSS_FEEDS) == 13
 
 
 def test_rss_feeds_have_required_keys():
