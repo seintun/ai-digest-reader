@@ -33,6 +33,35 @@ def build_report(digest: dict[str, Any], digest_path: Path) -> str:
     hermes = benchmark.get("hermes") or {}
     selected = summary_meta.get("source") or "none"
 
+    date_str = digest.get("d") or digest_path.parent.name
+    generated_at = digest.get("g") or "unknown"
+    header = [
+        "# AI Digest Summary Report",
+        "",
+        f"- Digest date: {date_str}",
+        f"- Generated at: {generated_at}",
+        f"- Digest file: `{digest_path}`",
+        f"- Selected summary source: `{selected}`",
+    ]
+
+    # The benchmark block is only populated when running in benchmark mode
+    # (both providers compared). In normal single-provider runs it's empty, so
+    # report the actual summary outcome instead of a misleading "both failed".
+    if not benchmark:
+        return "\n".join(header + [
+            "",
+            "## Summary status",
+            f"- Source: `{selected}`",
+            f"- Generated: {bool(summary_meta.get('generated'))}",
+            f"- Error: {summary_meta.get('error') or 'none'}",
+            "",
+            "## Selected summary",
+            f"- Simple text: {_summary_text(digest.get('summary') if isinstance(digest.get('summary'), dict) else None) or 'none'}",
+            "",
+            "## Notes",
+            "- Single-provider run (no benchmark comparison). The summary above is the live result.",
+        ]) + "\n"
+
     openclaw_summary = openclaw.get("summary") if isinstance(openclaw, dict) else None
     hermes_summary = hermes.get("summary") if isinstance(hermes, dict) else None
     openclaw_ids = set(_must_read_ids(openclaw_summary if isinstance(openclaw_summary, dict) else None))
@@ -49,15 +78,7 @@ def build_report(digest: dict[str, Any], digest_path: Path) -> str:
             return "generated"
         return f"failed: {entry.get('error', 'unknown error')}"
 
-    date_str = digest.get("d") or digest_path.parent.name
-    generated_at = digest.get("g") or "unknown"
-    lines = [
-        "# AI Digest Hermes/OpenClaw Benchmark Report",
-        "",
-        f"- Digest date: {date_str}",
-        f"- Generated at: {generated_at}",
-        f"- Digest file: `{digest_path}`",
-        f"- Selected summary source: `{selected}`",
+    lines = header + [
         f"- Benchmark primary: `{benchmark.get('primary', 'unknown')}`",
         "",
         "## Provider results",

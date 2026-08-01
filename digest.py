@@ -275,11 +275,17 @@ def main():
 
     total_seconds = time.perf_counter() - run_started
 
-    # Quality/health metrics: how much of the digest is backed by real scraped
-    # content vs title-only, and where the stories came from.
+    # Quality/health metrics. Two distinct coverage signals:
+    #  - content_coverage_pct: % of ALL stories that ended up with scraped content.
+    #    Informational only — most RSS/Reddit items are intentionally not scrape
+    #    candidates (self-posts, zero-score links), so this is structurally low.
+    #  - scrape_success_rate: % of URLs we actually attempted to scrape that
+    #    returned content. This is the actionable extraction-health signal and
+    #    what the quality gate thresholds against.
     total_stories = len(ranked_posts)
     stories_with_content = sum(1 for p in ranked_posts if p.get("content"))
-    evidence_coverage = round((stories_with_content / total_stories * 100.0), 1) if total_stories else 0.0
+    content_coverage = round((stories_with_content / total_stories * 100.0), 1) if total_stories else 0.0
+    scrape_success_rate = round(float(scrape_stats.get("success_rate", 0.0) or 0.0), 1)
     source_counts = {
         "reddit": len(reddit_ranked),
         "hackernews": len(hn_ranked),
@@ -339,7 +345,9 @@ def main():
         "quality": {
             "total_stories": total_stories,
             "stories_with_content": stories_with_content,
-            "evidence_coverage_pct": evidence_coverage,
+            "content_coverage_pct": content_coverage,
+            "scrape_success_rate": scrape_success_rate,
+            "scrape_candidate_urls": scrape_stats.get("requested", 0),
             "source_counts": source_counts,
             "analysis_generated": bool(analysis_meta.get("generated", False)),
         },
@@ -361,7 +369,8 @@ def main():
         print(f"  - extraction fallthroughs: {_reason_summary}")
     print(f"  - ranking LLM used: {metrics['ranking']['llm_quality_used']}")
     print(f"  - summary source: {metrics['summary']['source']}")
-    print(f"  - evidence coverage: {metrics['quality']['evidence_coverage_pct']}% ({stories_with_content}/{total_stories} stories with content)")
+    print(f"  - scrape success: {metrics['quality']['scrape_success_rate']}% of {metrics['quality']['scrape_candidate_urls']} candidate URLs")
+    print(f"  - content coverage: {metrics['quality']['content_coverage_pct']}% ({stories_with_content}/{total_stories} stories with content)")
     print(f"  - session model cost: ${metrics['cost']['session_model_usd']}")
 
     markdown_reddit = [
