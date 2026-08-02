@@ -1,7 +1,7 @@
 {
   "v": 4,
   "d": "2026-08-01",
-  "g": "2026-08-01T17:01:25.823800",
+  "g": "2026-08-01T17:02:52.485499",
   "r": [
     {
       "i": "rd-4",
@@ -191,7 +191,7 @@
       "u": "https://mitsloan.mit.edu/ideas-made-to-matter/ai-financial-advice-surprisingly-good-especially-if-you-ask-right-questions",
       "p": "https://news.ycombinator.com/item?id=49139102",
       "b": "",
-      "s": 78,
+      "s": 80,
       "c": 52,
       "a": "foxtrot8672",
       "sn": "",
@@ -242,7 +242,7 @@
       "sn": "",
       "cat": "Tech",
       "ts": 1785626363,
-      "rank": 39.4,
+      "rank": 39.3,
       "content_available": true,
       "content_quality": 7,
       "excerpt": "I\u2019ve been working on a spec for months. Finally\u2026every stakeholder approves. I\u2019ve cataloged every piece of code that needs to be migrated in a Notion DB. I\u2019m working on one of the first PRs and then I ",
@@ -311,7 +311,7 @@
       "u": "https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5",
       "p": "https://news.ycombinator.com/item?id=49138302",
       "b": "",
-      "s": 102,
+      "s": 103,
       "c": 35,
       "a": "njaremko",
       "sn": "",
@@ -356,7 +356,7 @@
       "u": "https://diataxis.fr/",
       "p": "https://news.ycombinator.com/item?id=49138188",
       "b": "",
-      "s": 139,
+      "s": 140,
       "c": 21,
       "a": "ryanseys",
       "sn": "",
@@ -481,7 +481,7 @@
       "u": "https://censys.com/blog/cisa-alert-water-tower-plc-targeting/",
       "p": "https://news.ycombinator.com/item?id=49137228",
       "b": "",
-      "s": 51,
+      "s": 52,
       "c": 39,
       "a": "speckx",
       "sn": "",
@@ -604,7 +604,7 @@
       "content": ""
     },
     {
-      "i": "rs-14",
+      "i": "rs-24",
       "t": "The OpenAI and Anthropic AI Hacking Sprees Are a Messy New Legal Frontier",
       "u": "https://www.wired.com/story/openai-anthropic-ai-hacking-sprees-illegal/",
       "p": "https://www.wired.com/story/openai-anthropic-ai-hacking-sprees-illegal/",
@@ -623,24 +623,6 @@
     },
     {
       "i": "rs-0",
-      "t": "Here's how engineers plan to save the satellite sent to save NASA's Swift mission",
-      "u": "https://arstechnica.com/space/2026/08/heres-how-engineers-plan-to-save-the-satellite-sent-to-save-nasas-swift-mission/",
-      "p": "https://arstechnica.com/space/2026/08/heres-how-engineers-plan-to-save-the-satellite-sent-to-save-nasas-swift-mission/",
-      "b": "\"We believe that a capture of Swift, an attempted capture of Swift, is very much in the cards.\"",
-      "s": 0,
-      "c": 0,
-      "a": "Stephen Clark",
-      "sn": "Ars Technica",
-      "cat": "Tech",
-      "ts": 1785637211,
-      "rank": 32.5,
-      "content_available": false,
-      "content_quality": 5.0,
-      "excerpt": "\"We believe that a capture of Swift, an attempted capture of Swift, is very much in the cards.\"",
-      "content": ""
-    },
-    {
-      "i": "rs-20",
       "t": "Inside the London hacker house taking a stand against founder burnout",
       "u": "https://techcrunch.com/2026/08/01/inside-one-london-founder-house-rewriting-the-founder-house-rules/",
       "p": "https://techcrunch.com/2026/08/01/inside-one-london-founder-house-rewriting-the-founder-house-rules/",
@@ -658,7 +640,7 @@
       "content": ""
     },
     {
-      "i": "rs-21",
+      "i": "rs-1",
       "t": "Judge denies xAI\u2019s request to block Minnesota ban on \u2018nudify\u2019 apps",
       "u": "https://techcrunch.com/2026/08/01/judge-denies-xais-request-to-block-minnesota-ban-on-nudify-apps/",
       "p": "https://techcrunch.com/2026/08/01/judge-denies-xais-request-to-block-minnesota-ban-on-nudify-apps/",
@@ -676,7 +658,7 @@
       "content": ""
     },
     {
-      "i": "rs-22",
+      "i": "rs-2",
       "t": "YouTuber Hank Green says his AI usage is \u2018not healthy\u2019",
       "u": "https://techcrunch.com/2026/08/01/youtuber-hank-green-says-his-ai-usage-is-not-healthy/",
       "p": "https://techcrunch.com/2026/08/01/youtuber-hank-green-says-his-ai-usage-is-not-healthy/",
@@ -694,7 +676,7 @@
       "content": ""
     },
     {
-      "i": "rs-23",
+      "i": "rs-3",
       "t": "Should you still buy your next smartphone \u2014 or subscribe to it instead?",
       "u": "https://techcrunch.com/2026/08/01/should-you-still-buy-your-next-smartphone-or-subscribe-to-it-instead/",
       "p": "https://techcrunch.com/2026/08/01/should-you-still-buy-your-next-smartphone-or-subscribe-to-it-instead/",
@@ -712,7 +694,7 @@
       "content": ""
     },
     {
-      "i": "rs-24",
+      "i": "rs-4",
       "t": "Sam Altman is still making the case for parenting via ChatGPT",
       "u": "https://techcrunch.com/2026/08/01/sam-altman-is-still-making-the-case-for-parenting-via-chatgpt/",
       "p": "https://techcrunch.com/2026/08/01/sam-altman-is-still-making-the-case-for-parenting-via-chatgpt/",
@@ -730,7 +712,7 @@
       "content": ""
     },
     {
-      "i": "rs-25",
+      "i": "rs-5",
       "t": "This $9 key physically locks your most addictive apps",
       "u": "https://techcrunch.com/2026/08/01/this-9-key-physically-locks-your-most-addictive-apps/",
       "p": "https://techcrunch.com/2026/08/01/this-9-key-physically-locks-your-most-addictive-apps/",
@@ -745,6 +727,24 @@
       "content_available": false,
       "content_quality": 5.0,
       "excerpt": "This $9 NFC key requires you to physically scan it to unlock distracting apps on your phone.",
+      "content": ""
+    },
+    {
+      "i": "rs-10",
+      "t": "Here's how engineers plan to save the satellite sent to save NASA's Swift mission",
+      "u": "https://arstechnica.com/space/2026/08/heres-how-engineers-plan-to-save-the-satellite-sent-to-save-nasas-swift-mission/",
+      "p": "https://arstechnica.com/space/2026/08/heres-how-engineers-plan-to-save-the-satellite-sent-to-save-nasas-swift-mission/",
+      "b": "\"We believe that a capture of Swift, an attempted capture of Swift, is very much in the cards.\"",
+      "s": 0,
+      "c": 0,
+      "a": "Stephen Clark",
+      "sn": "Ars Technica",
+      "cat": "Tech",
+      "ts": 1785637211,
+      "rank": 32.5,
+      "content_available": false,
+      "content_quality": 5.0,
+      "excerpt": "\"We believe that a capture of Swift, an attempted capture of Swift, is very much in the cards.\"",
       "content": ""
     },
     {
@@ -838,7 +838,7 @@
       "content": ""
     },
     {
-      "i": "rs-50",
+      "i": "rs-60",
       "t": "Pixel 11 specs and price leak with no surprises",
       "u": "https://www.theverge.com/tech/974238/pixel-11-specs-and-price-leak",
       "p": "https://www.theverge.com/tech/974238/pixel-11-specs-and-price-leak",
@@ -856,7 +856,7 @@
       "content": ""
     },
     {
-      "i": "rs-51",
+      "i": "rs-61",
       "t": "Angela Nissel faces down grief with a laugh",
       "u": "https://www.theverge.com/report/974226/angela-nissel-interview-good-grief-pass-the-bread-mom-is-dead",
       "p": "https://www.theverge.com/report/974226/angela-nissel-interview-good-grief-pass-the-bread-mom-is-dead",
@@ -874,7 +874,7 @@
       "content": ""
     },
     {
-      "i": "rs-52",
+      "i": "rs-62",
       "t": "Is this Billboard Hot 100 hit AI slop?",
       "u": "https://www.theverge.com/ai-artificial-intelligence/974209/fenix-flexin-billboard-hot-100-rubberz-ai-slop",
       "p": "https://www.theverge.com/ai-artificial-intelligence/974209/fenix-flexin-billboard-hot-100-rubberz-ai-slop",
@@ -892,7 +892,7 @@
       "content": ""
     },
     {
-      "i": "rs-53",
+      "i": "rs-63",
       "t": "Spider-Man: Brand New Day leak racks up millions of views",
       "u": "https://www.theverge.com/entertainment/974199/spider-man-brand-new-day-leak-box-office-records",
       "p": "https://www.theverge.com/entertainment/974199/spider-man-brand-new-day-leak-box-office-records",
@@ -910,7 +910,7 @@
       "content": ""
     },
     {
-      "i": "rs-1",
+      "i": "rs-11",
       "t": "Review: Yes, we're still arguing about Nolan's The Odyssey",
       "u": "https://arstechnica.com/culture/2026/08/review-yes-were-still-arguing-about-nolans-the-odyssey/",
       "p": "https://arstechnica.com/culture/2026/08/review-yes-were-still-arguing-about-nolans-the-odyssey/",
@@ -928,7 +928,7 @@
       "content": ""
     },
     {
-      "i": "rs-54",
+      "i": "rs-64",
       "t": "Trump blames Tim Walz for water hacks even though it\u2019s probably Iran",
       "u": "https://www.theverge.com/policy/974197/trump-tim-walz-minnesota-water-hacks-iran",
       "p": "https://www.theverge.com/policy/974197/trump-tim-walz-minnesota-water-hacks-iran",
@@ -946,7 +946,7 @@
       "content": ""
     },
     {
-      "i": "rs-26",
+      "i": "rs-6",
       "t": "Uber is building an autonomous vehicle empire, and here\u2019s every company it\u2019s using to do it",
       "u": "https://techcrunch.com/2026/08/01/ubers-autonomous-vehicle-deal-tracker/",
       "p": "https://techcrunch.com/2026/08/01/ubers-autonomous-vehicle-deal-tracker/",
@@ -993,14 +993,14 @@
       "sn": "Slashdot",
       "cat": "Tech",
       "ts": 1785583800,
-      "rank": 31.7,
+      "rank": 31.6,
       "content_available": false,
       "content_quality": 6.5,
       "excerpt": "An anonymous reader quotes a report from Reuters: OpenAI has discovered other instances in which autonomous agents have escaped containment as the company expands its investigation of the hacking inci",
       "content": ""
     },
     {
-      "i": "rs-64",
+      "i": "rs-54",
       "t": "Open Models, Open Harnesses, Open Security: What we did when Claude Fable 5 and GPT-5.6 Sol refused our security requests",
       "u": "https://charonhub.deeplearning.ai/open-models-open-harnesses-open-security/",
       "p": "https://charonhub.deeplearning.ai/open-models-open-harnesses-open-security/",
@@ -1018,7 +1018,7 @@
       "content": ""
     },
     {
-      "i": "rs-27",
+      "i": "rs-7",
       "t": "Apps that help you break free from doomscrolling and get active",
       "u": "https://techcrunch.com/2026/08/01/apps-that-help-you-break-free-from-doomscrolling-and-get-active/",
       "p": "https://techcrunch.com/2026/08/01/apps-that-help-you-break-free-from-doomscrolling-and-get-active/",
@@ -1036,7 +1036,7 @@
       "content": ""
     },
     {
-      "i": "rs-55",
+      "i": "rs-65",
       "t": "The Verge\u2019s 2026 back-to-school shopping guide",
       "u": "https://www.theverge.com/gadgets/968645/back-to-school-shopping-guide-gifts",
       "p": "https://www.theverge.com/gadgets/968645/back-to-school-shopping-guide-gifts",
@@ -1054,7 +1054,7 @@
       "content": ""
     },
     {
-      "i": "rs-28",
+      "i": "rs-8",
       "t": "What\u2019s the best handheld mini fan?",
       "u": "https://techcrunch.com/2026/08/01/whats-the-best-handheld-mini-fan/",
       "p": "https://techcrunch.com/2026/08/01/whats-the-best-handheld-mini-fan/",
@@ -1072,7 +1072,7 @@
       "content": ""
     },
     {
-      "i": "rs-56",
+      "i": "rs-66",
       "t": "You could be taking way better photos on your phone",
       "u": "https://www.theverge.com/tech/973055/how-to-take-better-smartphone-photos",
       "p": "https://www.theverge.com/tech/973055/how-to-take-better-smartphone-photos",
@@ -1090,7 +1090,7 @@
       "content": ""
     },
     {
-      "i": "rs-57",
+      "i": "rs-67",
       "t": "The Mermaid Mask is a perfect vacation murder mystery",
       "u": "https://www.theverge.com/games/971660/the-mermaid-mask-review",
       "p": "https://www.theverge.com/games/971660/the-mermaid-mask-review",
@@ -1108,7 +1108,7 @@
       "content": ""
     },
     {
-      "i": "rs-2",
+      "i": "rs-12",
       "t": "As Reddit stock falls, CEO questions value of Google's AI Overviews",
       "u": "https://arstechnica.com/ai/2026/08/reddit-ceo-on-ai-overviews-were-still-looking-for-that-win-win/",
       "p": "https://arstechnica.com/ai/2026/08/reddit-ceo-on-ai-overviews-were-still-looking-for-that-win-win/",
@@ -1126,7 +1126,7 @@
       "content": ""
     },
     {
-      "i": "rs-58",
+      "i": "rs-68",
       "t": "The OG reading app just got a big update",
       "u": "https://www.theverge.com/tech/973929/instapaper-app-pastebot-spiderman-movie-installer",
       "p": "https://www.theverge.com/tech/973929/instapaper-app-pastebot-spiderman-movie-installer",
@@ -1144,7 +1144,7 @@
       "content": ""
     },
     {
-      "i": "rs-29",
+      "i": "rs-9",
       "t": "OpenAI reportedly finds evidence that more of its agents ran amok",
       "u": "https://techcrunch.com/2026/07/31/openai-reportedly-finds-evidence-that-more-of-its-agents-ran-amok/",
       "p": "https://techcrunch.com/2026/07/31/openai-reportedly-finds-evidence-that-more-of-its-agents-ran-amok/",
@@ -1162,7 +1162,7 @@
       "content": ""
     },
     {
-      "i": "rs-3",
+      "i": "rs-13",
       "t": "After noise complaints, judge orders Waymo to stop overnight charging in Santa Monica",
       "u": "https://arstechnica.com/tech-policy/2026/08/after-noise-complaints-judge-orders-waymo-to-stop-overnight-charging-in-santa-monica/",
       "p": "https://arstechnica.com/tech-policy/2026/08/after-noise-complaints-judge-orders-waymo-to-stop-overnight-charging-in-santa-monica/",
@@ -1180,7 +1180,7 @@
       "content": ""
     },
     {
-      "i": "rs-10",
+      "i": "rs-20",
       "t": "China\u2019s EV Market Is Booming. There\u2019s Just One Problem",
       "u": "https://www.wired.com/story/china-millions-of-evs-battery-recycling/",
       "p": "https://www.wired.com/story/china-millions-of-evs-battery-recycling/",
@@ -1216,7 +1216,7 @@
       "content": ""
     },
     {
-      "i": "rs-11",
+      "i": "rs-21",
       "t": "7 States\u2019 Water Systems Hit by Cyberattacks Likely Tied to Iran",
       "u": "https://www.wired.com/story/security-news-this-week-7-states-water-systems-hit-by-cyberattacks-likely-tied-to-iran/",
       "p": "https://www.wired.com/story/security-news-this-week-7-states-water-systems-hit-by-cyberattacks-likely-tied-to-iran/",
@@ -1234,7 +1234,7 @@
       "content": ""
     },
     {
-      "i": "rs-12",
+      "i": "rs-22",
       "t": "Boroux vs. Rorra vs. Culligan: Water Filters, Tested Head to Head",
       "u": "https://www.wired.com/story/steel-water-filters-head-to-head/",
       "p": "https://www.wired.com/story/steel-water-filters-head-to-head/",
@@ -1252,25 +1252,7 @@
       "content": ""
     },
     {
-      "i": "rs-13",
-      "t": "Dreo Summer Flash Sale 2026: Lowest Price Ever on Chefmaker, Fan",
-      "u": "https://www.wired.com/story/dreo-chefmaker-turbocool-fan-flash-deal-2026/",
-      "p": "https://www.wired.com/story/dreo-chefmaker-turbocool-fan-flash-deal-2026/",
-      "b": "On Dreo\u2019s summer flash sale from August 1 to 3, a great misting fan and an even better air fryer are at the lowest prices we\u2019ve seen them.",
-      "s": 0,
-      "c": 0,
-      "a": "Matthew Korfhage",
-      "sn": "Wired",
-      "cat": "Tech",
-      "ts": 1785607740,
-      "rank": 29.3,
-      "content_available": false,
-      "content_quality": 5.0,
-      "excerpt": "On Dreo\u2019s summer flash sale from August 1 to 3, a great misting fan and an even better air fryer are at the lowest prices we\u2019ve seen them.",
-      "content": ""
-    },
-    {
-      "i": "rs-4",
+      "i": "rs-14",
       "t": "Defcon's new badge is a security key you can see inside",
       "u": "https://arstechnica.com/security/2026/08/defcons-new-badge-is-a-security-key-you-can-see-inside/",
       "p": "https://arstechnica.com/security/2026/08/defcons-new-badge-is-a-security-key-you-can-see-inside/",
@@ -1288,7 +1270,7 @@
       "content": ""
     },
     {
-      "i": "rs-5",
+      "i": "rs-15",
       "t": "How fruit flies chase invisible ribbons of smell to get to their source",
       "u": "https://arstechnica.com/science/2026/08/how-fruit-flies-chase-invisible-ribbons-of-smell-to-get-to-their-source/",
       "p": "https://arstechnica.com/science/2026/08/how-fruit-flies-chase-invisible-ribbons-of-smell-to-get-to-their-source/",
@@ -1306,7 +1288,25 @@
       "content": ""
     },
     {
-      "i": "rs-70",
+      "i": "rs-23",
+      "t": "Dreo Summer Flash Sale 2026: Lowest Price Ever on Chefmaker, Fan",
+      "u": "https://www.wired.com/story/dreo-chefmaker-turbocool-fan-flash-deal-2026/",
+      "p": "https://www.wired.com/story/dreo-chefmaker-turbocool-fan-flash-deal-2026/",
+      "b": "On Dreo\u2019s summer flash sale from August 1 to 3, a great misting fan and an even better air fryer are at the lowest prices we\u2019ve seen them.",
+      "s": 0,
+      "c": 0,
+      "a": "Matthew Korfhage",
+      "sn": "Wired",
+      "cat": "Tech",
+      "ts": 1785607740,
+      "rank": 29.2,
+      "content_available": false,
+      "content_quality": 5.0,
+      "excerpt": "On Dreo\u2019s summer flash sale from August 1 to 3, a great misting fan and an even better air fryer are at the lowest prices we\u2019ve seen them.",
+      "content": ""
+    },
+    {
+      "i": "rs-100",
       "t": "Inkling-Small \ud83e\udde0, GPT-5.6 price cuts \ud83d\udcb8, Gemini Robotics 2 \ud83e\udd16",
       "u": "https://tldr.tech/ai/2026-07-31",
       "p": "https://tldr.tech/ai/2026-07-31",
@@ -1324,7 +1324,7 @@
       "content": ""
     },
     {
-      "i": "rs-15",
+      "i": "rs-25",
       "t": "Astronomers Have Detected an Exomoon for the First Time",
       "u": "https://www.wired.com/story/astronomer-detect-exomoon-for-first-time/",
       "p": "https://www.wired.com/story/astronomer-detect-exomoon-for-first-time/",
@@ -1342,7 +1342,7 @@
       "content": ""
     },
     {
-      "i": "rs-61",
+      "i": "rs-51",
       "t": "Anthropic, OpenAI Fight for Compute: Anthropic and OpenAI both spend big to make deals for data center sites and hardware",
       "u": "https://charonhub.deeplearning.ai/anthropic-openai-fight-for-compute/",
       "p": "https://charonhub.deeplearning.ai/anthropic-openai-fight-for-compute/",
@@ -1360,7 +1360,7 @@
       "content": ""
     },
     {
-      "i": "rs-62",
+      "i": "rs-52",
       "t": "OpenAI Models Hack Hugging Face: Inside the accidental cyberattack that compromised Hugging Face's systems",
       "u": "https://charonhub.deeplearning.ai/openai-models-hack-hugging-face/",
       "p": "https://charonhub.deeplearning.ai/openai-models-hack-hugging-face/",
@@ -1378,7 +1378,7 @@
       "content": ""
     },
     {
-      "i": "rs-63",
+      "i": "rs-53",
       "t": "Claude Debuts Another Opus: Anthropic addresses some (but not all) complaints about Fable with Claude Opus 5",
       "u": "https://charonhub.deeplearning.ai/claude-debuts-another-opus/",
       "p": "https://charonhub.deeplearning.ai/claude-debuts-another-opus/",
@@ -1414,7 +1414,7 @@
       "content": ""
     },
     {
-      "i": "rs-65",
+      "i": "rs-55",
       "t": "Opus Outshines Even Fable, Inside the Hugging Face Hack, AI Companies Spend Big for Compute",
       "u": "https://charonhub.deeplearning.ai/issue-364/",
       "p": "https://charonhub.deeplearning.ai/issue-364/",
@@ -1432,7 +1432,7 @@
       "content": ""
     },
     {
-      "i": "rs-71",
+      "i": "rs-101",
       "t": "OpenAI tops ARC-AGI-3 \ud83d\udcc8, GPT-5.6 efficiency \u2699\ufe0f, AlphaFold team dissolution \ud83e\uddec",
       "u": "https://tldr.tech/ai/2026-07-30",
       "p": "https://tldr.tech/ai/2026-07-30",
@@ -1450,7 +1450,7 @@
       "content": ""
     },
     {
-      "i": "rs-16",
+      "i": "rs-26",
       "t": "TurboTax Full Service Coupons This August",
       "u": "https://www.wired.com/story/turbotax-coupon/",
       "p": "https://www.wired.com/story/turbotax-coupon/",
@@ -1468,7 +1468,7 @@
       "content": ""
     },
     {
-      "i": "rs-77",
+      "i": "rs-107",
       "t": "Gemini 3.6 Flash \u2728, OpenAI security escape \ud83d\udea8, Devin Outposts \ud83d\udef0\ufe0f",
       "u": "https://tldr.tech/ai/2026-07-22",
       "p": "https://tldr.tech/ai/2026-07-22",
@@ -1486,7 +1486,7 @@
       "content": ""
     },
     {
-      "i": "rs-79",
+      "i": "rs-109",
       "t": "Qwen 3.8 \u2728, Kimi Code CLI \ud83d\udc68\u200d\ud83d\udcbb, Netflix\u2019s LLM stack \ud83e\udd16",
       "u": "https://tldr.tech/ai/2026-07-20",
       "p": "https://tldr.tech/ai/2026-07-20",
@@ -1504,7 +1504,7 @@
       "content": ""
     },
     {
-      "i": "rs-90",
+      "i": "rs-80",
       "t": "Tesla SpaceX merger \ud83d\ude97, OpenAI price cuts \ud83d\udcc9, Stripe's AI knowledge platform \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-31",
       "p": "https://tldr.tech/tech/2026-07-31",
@@ -1522,7 +1522,7 @@
       "content": ""
     },
     {
-      "i": "rs-17",
+      "i": "rs-27",
       "t": "SpaceX\u2019s Falcon 9 Rocket Is About to Crash Into the Moon\u2014and It Could Be Visible From Earth",
       "u": "https://www.wired.com/story/spacex-falcon-9-rocket-crash-into-moon/",
       "p": "https://www.wired.com/story/spacex-falcon-9-rocket-crash-into-moon/",
@@ -1540,7 +1540,7 @@
       "content": ""
     },
     {
-      "i": "rs-6",
+      "i": "rs-16",
       "t": "Not just Neanderthals: Ghost lineage in Africa left its mark on our DNA",
       "u": "https://arstechnica.com/science/2026/07/not-just-neanderthals-ghost-lineage-in-africa-left-its-mark-on-our-dna/",
       "p": "https://arstechnica.com/science/2026/07/not-just-neanderthals-ghost-lineage-in-africa-left-its-mark-on-our-dna/",
@@ -1558,7 +1558,7 @@
       "content": ""
     },
     {
-      "i": "rs-59",
+      "i": "rs-69",
       "t": "With Switch 2, iPhone, and laptop tricks, the Sharge Disk Pro 2 is finally a worthy EDC",
       "u": "https://www.theverge.com/gadgets/973886/sharge-disk-pro-2-hands-on-switch-2-hdmi-usb-c-dock",
       "p": "https://www.theverge.com/gadgets/973886/sharge-disk-pro-2-hands-on-switch-2-hdmi-usb-c-dock",
@@ -1576,7 +1576,7 @@
       "content": ""
     },
     {
-      "i": "rs-80",
+      "i": "rs-90",
       "t": "Snapchat joins other popular platforms in fight against 'AI slop'",
       "u": "https://www.bbc.co.uk/news/articles/c77g6dm5pr8o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c77g6dm5pr8o?at_medium=RSS&at_campaign=rss",
@@ -1594,7 +1594,7 @@
       "content": ""
     },
     {
-      "i": "rs-7",
+      "i": "rs-17",
       "t": "Doctors took a look at man's painful shoulder\u2014they found the joint was missing",
       "u": "https://arstechnica.com/health/2026/07/doctors-took-a-look-at-mans-painful-shoulder-they-found-the-joint-was-missing/",
       "p": "https://arstechnica.com/health/2026/07/doctors-took-a-look-at-mans-painful-shoulder-they-found-the-joint-was-missing/",
@@ -1612,7 +1612,7 @@
       "content": ""
     },
     {
-      "i": "rs-8",
+      "i": "rs-18",
       "t": "Google plans to exempt sanctioned nations from Android developer verification",
       "u": "https://arstechnica.com/gadgets/2026/07/google-plans-to-exempt-sanctioned-nations-from-android-developer-verification/",
       "p": "https://arstechnica.com/gadgets/2026/07/google-plans-to-exempt-sanctioned-nations-from-android-developer-verification/",
@@ -1630,7 +1630,7 @@
       "content": ""
     },
     {
-      "i": "rs-9",
+      "i": "rs-19",
       "t": "Reddit keeps its strange DMCA fight over Google search results alive",
       "u": "https://arstechnica.com/tech-policy/2026/07/reddit-keeps-weird-dmca-lawsuit-against-web-scraper-alive-despite-googles-loss/",
       "p": "https://arstechnica.com/tech-policy/2026/07/reddit-keeps-weird-dmca-lawsuit-against-web-scraper-alive-despite-googles-loss/",
@@ -1648,7 +1648,7 @@
       "content": ""
     },
     {
-      "i": "rs-86",
+      "i": "rs-96",
       "t": "Trump considering AI controls after OpenAI hacking incidents",
       "u": "https://www.bbc.co.uk/news/articles/c20dppq3y90o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c20dppq3y90o?at_medium=RSS&at_campaign=rss",
@@ -1666,7 +1666,7 @@
       "content": ""
     },
     {
-      "i": "rs-18",
+      "i": "rs-28",
       "t": "Chinese AI Researchers Are Finding Their Voice on X",
       "u": "https://www.wired.com/story/chinese-ai-researchers-are-finding-their-voice-on-x/",
       "p": "https://www.wired.com/story/chinese-ai-researchers-are-finding-their-voice-on-x/",
@@ -1684,7 +1684,7 @@
       "content": ""
     },
     {
-      "i": "rs-66",
+      "i": "rs-56",
       "t": "Kimi K3 weights are open (with an asterisk): A full timeline for the OpenAI/Hugging Face hack",
       "u": "https://charonhub.deeplearning.ai/kimi-k3-weights-are-open-with-an-asterisk/",
       "p": "https://charonhub.deeplearning.ai/kimi-k3-weights-are-open-with-an-asterisk/",
@@ -1702,7 +1702,7 @@
       "content": ""
     },
     {
-      "i": "rs-81",
+      "i": "rs-91",
       "t": "AI firms must answer for rogue bots, says boss of hacked company",
       "u": "https://www.bbc.co.uk/news/articles/cr7k49xjzzeo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/cr7k49xjzzeo?at_medium=RSS&at_campaign=rss",
@@ -1720,7 +1720,7 @@
       "content": ""
     },
     {
-      "i": "rs-89",
+      "i": "rs-99",
       "t": "OpenAI says its rogue AI tried to hack other companies",
       "u": "https://www.bbc.co.uk/news/articles/c2el319vzr3o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c2el319vzr3o?at_medium=RSS&at_campaign=rss",
@@ -1738,25 +1738,7 @@
       "content": ""
     },
     {
-      "i": "rs-19",
-      "t": "Can Republicans Actually Send Anthony Fauci to Jail?",
-      "u": "https://www.wired.com/story/can-republicans-actually-send-anthony-fauci-to-jail/",
-      "p": "https://www.wired.com/story/can-republicans-actually-send-anthony-fauci-to-jail/",
-      "b": "MAGA is loudly calling for the former White House chief medical adviser to end up in prison. WIRED asked legal experts to weigh in on whether that\u2019s even possible.",
-      "s": 0,
-      "c": 0,
-      "a": "David Gilbert",
-      "sn": "Wired",
-      "cat": "Tech",
-      "ts": 1785542977,
-      "rank": 23.1,
-      "content_available": false,
-      "content_quality": 5.0,
-      "excerpt": "MAGA is loudly calling for the former White House chief medical adviser to end up in prison. WIRED asked legal experts to weigh in on whether that\u2019s even possible.",
-      "content": ""
-    },
-    {
-      "i": "rs-92",
+      "i": "rs-82",
       "t": "Apple smart home \ud83c\udfe0, Anthropic cracks encryption \ud83d\udd12, orchestrator's tax \ud83e\udd16",
       "u": "https://tldr.tech/tech/2026-07-29",
       "p": "https://tldr.tech/tech/2026-07-29",
@@ -1771,6 +1753,24 @@
       "content_available": false,
       "content_quality": 6.5,
       "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-29",
+      "t": "Can Republicans Actually Send Anthony Fauci to Jail?",
+      "u": "https://www.wired.com/story/can-republicans-actually-send-anthony-fauci-to-jail/",
+      "p": "https://www.wired.com/story/can-republicans-actually-send-anthony-fauci-to-jail/",
+      "b": "MAGA is loudly calling for the former White House chief medical adviser to end up in prison. WIRED asked legal experts to weigh in on whether that\u2019s even possible.",
+      "s": 0,
+      "c": 0,
+      "a": "David Gilbert",
+      "sn": "Wired",
+      "cat": "Tech",
+      "ts": 1785542977,
+      "rank": 23.0,
+      "content_available": false,
+      "content_quality": 5.0,
+      "excerpt": "MAGA is loudly calling for the former White House chief medical adviser to end up in prison. WIRED asked legal experts to weigh in on whether that\u2019s even possible.",
       "content": ""
     },
     {
@@ -1792,7 +1792,7 @@
       "content": ""
     },
     {
-      "i": "rs-67",
+      "i": "rs-57",
       "t": "Claude Opus 5 is a workhorse: Big Tech agrees: The world needs open weight AI models",
       "u": "https://charonhub.deeplearning.ai/claude-opus-5-is-a-workhorse/",
       "p": "https://charonhub.deeplearning.ai/claude-opus-5-is-a-workhorse/",
@@ -1810,25 +1810,7 @@
       "content": ""
     },
     {
-      "i": "rs-73",
-      "t": "Anthropic on open weights \ud83d\udd13, Kimi releases K3 weights \ud83e\udd16, MAI Cyber model \ud83d\udd10",
-      "u": "https://tldr.tech/ai/2026-07-28",
-      "p": "https://tldr.tech/ai/2026-07-28",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1785225600,
-      "rank": 22.9,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-93",
+      "i": "rs-83",
       "t": "OpenAI's $500B datacenter \u26a1, Amazon's Starlink rival \ud83d\udef0\ufe0f, Nvidia backs SSI \ud83d\udcb0",
       "u": "https://tldr.tech/tech/2026-07-28",
       "p": "https://tldr.tech/tech/2026-07-28",
@@ -1846,7 +1828,25 @@
       "content": ""
     },
     {
-      "i": "rs-60",
+      "i": "rs-103",
+      "t": "Anthropic on open weights \ud83d\udd13, Kimi releases K3 weights \ud83e\udd16, MAI Cyber model \ud83d\udd10",
+      "u": "https://tldr.tech/ai/2026-07-28",
+      "p": "https://tldr.tech/ai/2026-07-28",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1785225600,
+      "rank": 22.9,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-50",
       "t": "A Full Accounting of Models\u2019 GPU Use: Researchers detail the energy and water needed to train a family of open weight models",
       "u": "https://charonhub.deeplearning.ai/a-full-accounting-of-models-gpu-use/",
       "p": "https://charonhub.deeplearning.ai/a-full-accounting-of-models-gpu-use/",
@@ -1864,115 +1864,7 @@
       "content": ""
     },
     {
-      "i": "rs-74",
-      "t": "Claude Opus 5 \ud83e\udde0, inside OpenAI\u2019s hack \ud83d\udc68\u200d\ud83d\udcbb, NVIDIA open weights \ud83d\udd13",
-      "u": "https://tldr.tech/ai/2026-07-27",
-      "p": "https://tldr.tech/ai/2026-07-27",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1785139200,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-76",
-      "t": "Cursor Router \ud83d\udd00, OpenAI Presence \ud83e\udd16, AMD + Anthropic deal \ud83e\udd1d\ud83c\udffb",
-      "u": "https://tldr.tech/ai/2026-07-23",
-      "p": "https://tldr.tech/ai/2026-07-23",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784793600,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-78",
-      "t": "Ramp Router \u26a1, Kimi Work \ud83d\udcbc , AMD Helios \ud83e\uddf1",
-      "u": "https://tldr.tech/ai/2026-07-21",
-      "p": "https://tldr.tech/ai/2026-07-21",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR AI",
-      "cat": "AI & ML",
-      "ts": 1784620800,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-96",
-      "t": "OpenAI Presence \ud83e\udd16, Apple overhauls Macs \ud83d\udcbb, state of WebMCP \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-23",
-      "p": "https://tldr.tech/tech/2026-07-23",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784793600,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-97",
-      "t": "Nvidia's new CPU \u26a1, Jack Dorsey's Slack rival \ud83d\udcac, software factories \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-22",
-      "p": "https://tldr.tech/tech/2026-07-22",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784707200,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-98",
-      "t": "Google's Gemini chip \ud83e\udd16, AMD vs Nvidia \u26a1, agent economics \ud83d\udcb0",
-      "u": "https://tldr.tech/tech/2026-07-21",
-      "p": "https://tldr.tech/tech/2026-07-21",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784620800,
-      "rank": 22.8,
-      "content_available": false,
-      "content_quality": 6.5,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-100",
+      "i": "rs-70",
       "t": "Import AI 466: The bitter lesson for robotics, AIs complete week-long programming tasks; and OpenAI\u2019s accidental AI hacker",
       "u": "https://jack-clark.net/2026/07/27/import-ai-466-the-bitter-lesson-for-robotics-ais-complete-week-long-programming-tasks-and-openais-accidental-ai-hacker/",
       "p": "https://jack-clark.net/2026/07/27/import-ai-466-the-bitter-lesson-for-robotics-ais-complete-week-long-programming-tasks-and-openais-accidental-ai-hacker/",
@@ -1990,7 +1882,7 @@
       "content": ""
     },
     {
-      "i": "rs-101",
+      "i": "rs-71",
       "t": "Import AI 465: Open vs closed gaps; Kimi K3; Demis\u2019 big policy plan",
       "u": "https://jack-clark.net/2026/07/20/import-ai-465-open-vs-closed-gaps-kimi-k3-demis-big-policy-plan/",
       "p": "https://jack-clark.net/2026/07/20/import-ai-465-open-vs-closed-gaps-kimi-k3-demis-big-policy-plan/",
@@ -2008,7 +1900,7 @@
       "content": ""
     },
     {
-      "i": "rs-106",
+      "i": "rs-76",
       "t": "Import AI 460: Reward hacking society, RSI data from Anthropic; and RL-based quadcopter racing",
       "u": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
       "p": "https://jack-clark.net/2026/06/08/import-ai-460-reward-hacking-society-rsi-data-from-anthropic-and-rl-based-quadcopter-racing/",
@@ -2023,6 +1915,114 @@
       "content_available": false,
       "content_quality": 6.5,
       "excerpt": "Welcome to Import AI, a newsletter about AI research. Import AI runs on arXiv, cappuccinos, and feedback from readers. If you\u2019d like to support this, please subscribe. Subscribe now Society can be rew",
+      "content": ""
+    },
+    {
+      "i": "rs-86",
+      "t": "OpenAI Presence \ud83e\udd16, Apple overhauls Macs \ud83d\udcbb, state of WebMCP \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-23",
+      "p": "https://tldr.tech/tech/2026-07-23",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1784793600,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-87",
+      "t": "Nvidia's new CPU \u26a1, Jack Dorsey's Slack rival \ud83d\udcac, software factories \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-22",
+      "p": "https://tldr.tech/tech/2026-07-22",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1784707200,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-88",
+      "t": "Google's Gemini chip \ud83e\udd16, AMD vs Nvidia \u26a1, agent economics \ud83d\udcb0",
+      "u": "https://tldr.tech/tech/2026-07-21",
+      "p": "https://tldr.tech/tech/2026-07-21",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1784620800,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-104",
+      "t": "Claude Opus 5 \ud83e\udde0, inside OpenAI\u2019s hack \ud83d\udc68\u200d\ud83d\udcbb, NVIDIA open weights \ud83d\udd13",
+      "u": "https://tldr.tech/ai/2026-07-27",
+      "p": "https://tldr.tech/ai/2026-07-27",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1785139200,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-106",
+      "t": "Cursor Router \ud83d\udd00, OpenAI Presence \ud83e\udd16, AMD + Anthropic deal \ud83e\udd1d\ud83c\udffb",
+      "u": "https://tldr.tech/ai/2026-07-23",
+      "p": "https://tldr.tech/ai/2026-07-23",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784793600,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-108",
+      "t": "Ramp Router \u26a1, Kimi Work \ud83d\udcbc , AMD Helios \ud83e\uddf1",
+      "u": "https://tldr.tech/ai/2026-07-21",
+      "p": "https://tldr.tech/ai/2026-07-21",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR AI",
+      "cat": "AI & ML",
+      "ts": 1784620800,
+      "rank": 22.8,
+      "content_available": false,
+      "content_quality": 6.5,
+      "excerpt": "",
       "content": ""
     },
     {
@@ -2062,7 +2062,7 @@
       "content": ""
     },
     {
-      "i": "rs-75",
+      "i": "rs-105",
       "t": "ChatGPT Health \ud83e\ude7a, Fugu-Ultra 1.1 \ud83d\udc21, Runway Media Router \ud83c\udfac",
       "u": "https://tldr.tech/ai/2026-07-24",
       "p": "https://tldr.tech/ai/2026-07-24",
@@ -2080,7 +2080,7 @@
       "content": ""
     },
     {
-      "i": "rs-82",
+      "i": "rs-92",
       "t": "Amazon and Apple just told us more about their AI plans - here are three things we learned",
       "u": "https://www.bbc.co.uk/news/articles/cp87m46g392o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/cp87m46g392o?at_medium=RSS&at_campaign=rss",
@@ -2098,7 +2098,7 @@
       "content": ""
     },
     {
-      "i": "rs-83",
+      "i": "rs-93",
       "t": "How police are trying to divert teen hackers away from crime",
       "u": "https://www.bbc.co.uk/news/articles/cn0nqpy1rk4o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/cn0nqpy1rk4o?at_medium=RSS&at_campaign=rss",
@@ -2116,7 +2116,7 @@
       "content": ""
     },
     {
-      "i": "rs-84",
+      "i": "rs-94",
       "t": "India wants to join the strawberry superpowers",
       "u": "https://www.bbc.co.uk/news/articles/c8x274xxxpwo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c8x274xxxpwo?at_medium=RSS&at_campaign=rss",
@@ -2152,7 +2152,7 @@
       "content": ""
     },
     {
-      "i": "rs-85",
+      "i": "rs-95",
       "t": "Xbox tech boss says 'unacceptable' outage should not have affected disc games",
       "u": "https://www.bbc.co.uk/news/articles/cq5637p7qpno?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/cq5637p7qpno?at_medium=RSS&at_campaign=rss",
@@ -2206,7 +2206,7 @@
       "content": ""
     },
     {
-      "i": "rs-91",
+      "i": "rs-81",
       "t": "Starlink cell network \ud83d\udef0\ufe0f, DoorDash drones \ud83d\ude81, inside ChatGPT optimizations \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-30",
       "p": "https://tldr.tech/tech/2026-07-30",
@@ -2278,7 +2278,7 @@
       "content": ""
     },
     {
-      "i": "rs-88",
+      "i": "rs-98",
       "t": "Data centres could pay hundreds of millions in deposits for power demands",
       "u": "https://www.bbc.co.uk/news/articles/c9q90q9qnn2o?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/c9q90q9qnn2o?at_medium=RSS&at_campaign=rss",
@@ -2296,7 +2296,7 @@
       "content": ""
     },
     {
-      "i": "rs-72",
+      "i": "rs-102",
       "t": "AI slowdown pact \u23f8\ufe0f, Personal superintelligence access \ud83c\udf0d, Grok Build Mode \ud83d\udee0\ufe0f",
       "u": "https://tldr.tech/ai/2026-07-29",
       "p": "https://tldr.tech/ai/2026-07-29",
@@ -2332,7 +2332,7 @@
       "content": ""
     },
     {
-      "i": "rs-68",
+      "i": "rs-58",
       "t": "Web Retrieval Flusters LLMs: AI agents searching online can struggle to retrieve correct info, researchers find",
       "u": "https://charonhub.deeplearning.ai/web-retrieval-flusters-llms/",
       "p": "https://charonhub.deeplearning.ai/web-retrieval-flusters-llms/",
@@ -2350,7 +2350,7 @@
       "content": ""
     },
     {
-      "i": "rs-69",
+      "i": "rs-59",
       "t": "Cloudflare\u2019s Web Crawler Flare-Up: Cloudflare moves to block all AI training bots by default",
       "u": "https://charonhub.deeplearning.ai/cloudflares-web-crawler-flare-up/",
       "p": "https://charonhub.deeplearning.ai/cloudflares-web-crawler-flare-up/",
@@ -2368,25 +2368,7 @@
       "content": ""
     },
     {
-      "i": "rs-95",
-      "t": "Stripe's OpenRouter talks \ud83d\udcb0, ChatGPT Health \u2695\ufe0f, why software factories fail \ud83d\udc68\u200d\ud83d\udcbb",
-      "u": "https://tldr.tech/tech/2026-07-24",
-      "p": "https://tldr.tech/tech/2026-07-24",
-      "b": "",
-      "s": 0,
-      "c": 0,
-      "a": "TLDR",
-      "sn": "TLDR Tech",
-      "cat": "Tech",
-      "ts": 1784880000,
-      "rank": 17.5,
-      "content_available": false,
-      "content_quality": 5.0,
-      "excerpt": "",
-      "content": ""
-    },
-    {
-      "i": "rs-102",
+      "i": "rs-72",
       "t": "Import AI 464: Fables writes GPU kernels; AI automation; and analog computation",
       "u": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
       "p": "https://jack-clark.net/2026/07/06/import-ai-464-fables-writes-gpu-kernels-ai-automation-and-analog-computation/",
@@ -2404,7 +2386,7 @@
       "content": ""
     },
     {
-      "i": "rs-103",
+      "i": "rs-73",
       "t": "Import AI 463: Self-improving robots; a 10k Chinese GPU cluster; and an elegiac essay for the human era",
       "u": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
       "p": "https://jack-clark.net/2026/06/29/import-ai-463-self-improving-robots-a-10k-chinese-gpu-cluster-and-an-elegiac-essay-for-the-human-era/",
@@ -2422,7 +2404,7 @@
       "content": ""
     },
     {
-      "i": "rs-104",
+      "i": "rs-74",
       "t": "Import AI 462: Superpersuasion; self-sustaining AI; paths to ASI",
       "u": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
       "p": "https://jack-clark.net/2026/06/22/import-ai-462-superpersuasion-self-sustaining-ai-paths-to-asi/",
@@ -2440,7 +2422,7 @@
       "content": ""
     },
     {
-      "i": "rs-105",
+      "i": "rs-75",
       "t": "Import AI 461: \u201cAlignment is not on track\u201d; FrontierCode; and synthetic research interns",
       "u": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
       "p": "https://jack-clark.net/2026/06/15/import-ai-461-alignment-is-not-on-track-frontiercode-and-synthetic-research-interns/",
@@ -2458,7 +2440,7 @@
       "content": ""
     },
     {
-      "i": "rs-107",
+      "i": "rs-77",
       "t": "Import AI 459: AI oversight is difficult; scaling laws for protein folding models; and pricing the extinction risk of AI systems",
       "u": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
       "p": "https://jack-clark.net/2026/06/01/import-ai-459-ai-oversight-is-difficult-scaling-laws-for-protein-folding-models-and-pricing-the-extinction-risk-of-ai-systems/",
@@ -2476,7 +2458,7 @@
       "content": ""
     },
     {
-      "i": "rs-108",
+      "i": "rs-78",
       "t": "Import AI 458: Reckoning with the future; and a singularity story",
       "u": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
       "p": "https://jack-clark.net/2026/05/26/import-ai-458-reckoning-with-the-future-and-a-singularity-story/",
@@ -2494,7 +2476,7 @@
       "content": ""
     },
     {
-      "i": "rs-109",
+      "i": "rs-79",
       "t": "Import AI 457: AI stuxnet; cursed Muon optimizer; and positive alignment",
       "u": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
       "p": "https://jack-clark.net/2026/05/18/import-ai-457-ai-stuxnet-cursed-muon-optimizer-and-positive-alignment/",
@@ -2512,7 +2494,25 @@
       "content": ""
     },
     {
-      "i": "rs-94",
+      "i": "rs-85",
+      "t": "Stripe's OpenRouter talks \ud83d\udcb0, ChatGPT Health \u2695\ufe0f, why software factories fail \ud83d\udc68\u200d\ud83d\udcbb",
+      "u": "https://tldr.tech/tech/2026-07-24",
+      "p": "https://tldr.tech/tech/2026-07-24",
+      "b": "",
+      "s": 0,
+      "c": 0,
+      "a": "TLDR",
+      "sn": "TLDR Tech",
+      "cat": "Tech",
+      "ts": 1784880000,
+      "rank": 17.5,
+      "content_available": false,
+      "content_quality": 5.0,
+      "excerpt": "",
+      "content": ""
+    },
+    {
+      "i": "rs-84",
       "t": "Nvidia's $250B OpenAI deal \ud83d\udcb0, Meta Seller \ud83e\udd1d, Google Maps travel time API \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-27",
       "p": "https://tldr.tech/tech/2026-07-27",
@@ -2530,7 +2530,7 @@
       "content": ""
     },
     {
-      "i": "rs-99",
+      "i": "rs-89",
       "t": "Meta Anthropic deal \ud83e\udd1d, SpaceX Pentagon compute \u26a1, AI code migrations \ud83d\udc68\u200d\ud83d\udcbb",
       "u": "https://tldr.tech/tech/2026-07-20",
       "p": "https://tldr.tech/tech/2026-07-20",
@@ -2548,7 +2548,7 @@
       "content": ""
     },
     {
-      "i": "rs-87",
+      "i": "rs-97",
       "t": "Meta shares fall as frustration grows over AI spending plans",
       "u": "https://www.bbc.co.uk/news/articles/ckgd31l5yrdo?at_medium=RSS&at_campaign=rss",
       "p": "https://www.bbc.co.uk/news/articles/ckgd31l5yrdo?at_medium=RSS&at_campaign=rss",
@@ -2568,73 +2568,88 @@
   ],
   "summary": {
     "schema_version": "2",
-    "simple": "ByteDance launched Seedance 2.5 as a creative-work model built on joint audio-video generation, signaling a push beyond isolated clip generation. Other key stories examine how well-framed questions improve AI financial advice, how a hidden database commit can undermine transaction atomicity, and how Lean addressed a kernel soundness bug.",
+    "simple": "Critical infrastructure security takes center stage with a CISA alert on water sector PLC targeting, while AI advances continue with MIT research validating AI financial advice and ByteDance launching Seedance 2.5 for video creation. Software engineering lessons emerge from a costly stray commit and a Lean kernel soundness bug postmortem.",
     "structured": {
       "themes": [
-        "AI systems moving from generation to practical workflows",
-        "Software correctness and hidden implementation risks",
-        "Frameworks for better decisions and technical communication"
+        "Critical infrastructure cybersecurity threats",
+        "AI practical applications and model releases",
+        "Software engineering reliability lessons"
       ],
-      "breaking": "ByteDance officially launched Seedance 2.5, positioning its latest joint audio-video model as a tool for completing creative works rather than merely generating individual clips.",
+      "breaking": "CISA has issued an alert that threat actors are actively targeting programmable logic controllers in the water sector, raising urgent concerns about critical infrastructure security.",
       "mustRead": [
         {
-          "id": "hn-1",
-          "title": "Seedance 2.5",
-          "url": "https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5",
-          "reason": "It shows ByteDance shifting AI video toward integrated creative production built on a unified multimodal audio-video architecture."
+          "id": "hn-8",
+          "title": "CISA Alert: Water Sector PLC Targeting",
+          "url": "https://censys.com/blog/cisa-alert-water-tower-plc-targeting/",
+          "reason": "Official CISA alert confirms active targeting of water infrastructure PLCs, making this the highest-impact security story for engineers and operators."
         },
         {
           "id": "hn-0",
           "title": "AI financial advice is surprisingly good if you ask the right questions",
           "url": "https://mitsloan.mit.edu/ideas-made-to-matter/ai-financial-advice-surprisingly-good-especially-if-you-ask-right-questions",
-          "reason": "It examines the practical value of AI financial guidance while highlighting how question quality influences the usefulness of the advice."
+          "reason": "MIT Sloan research validates that AI financial guidance improves outcomes when users frame prompts correctly, a practical finding for AI adoption."
         },
         {
-          "id": "hn-5",
-          "title": "Postmortem for Kernel Soundness Bug #14576",
-          "url": "https://leodemoura.github.io/blog/2026-8-1-postmortem-for-kernel-soundness-bug-14576/",
-          "reason": "The postmortem documents a recently reported and fixed soundness flaw in the Lean kernel, a critical trust boundary for formal proofs."
+          "id": "hn-1",
+          "title": "Seedance 2.5",
+          "url": "https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5",
+          "reason": "ByteDance's new video generation model shifts from clip creation to complete creative works with unified audio-video architecture."
         }
       ]
     },
     "fullBrief": {
-      "intro": "Today\u2019s strongest stories center on whether increasingly capable systems can be trusted to complete consequential work. ByteDance is extending generative video into broader creative production, researchers are evaluating AI as a source of financial guidance, and software engineers are confronting correctness failures hidden beneath apparently safe abstractions.",
+      "intro": "Today's top stories span critical infrastructure security, practical AI applications, and hard-won software engineering lessons. The most urgent item is a CISA alert confirming active attacks on water sector programmable logic controllers. Meanwhile, MIT research shows AI financial advice works well with proper prompting, and ByteDance launches Seedance 2.5 for end-to-end video creation. Two postmortems \u2014 a stray database commit costing months and a Lean kernel soundness bug \u2014 offer cautionary tales for developers.",
       "sections": [
         {
-          "heading": "AI moves from output generation to guided work",
-          "body": "ByteDance says Seedance 2.5 builds on Seedance 2.0\u2019s unified multimodal audio-video joint-generation architecture and responds to demand for complete creative works rather than standalone clips. Separately, MIT Sloan\u2019s examination of AI financial advice suggests that these systems can provide useful guidance when users ask the right questions, making interaction design and user framing central to real-world value."
+          "heading": "Critical Infrastructure Under Attack",
+          "body": "CISA's alert via Censys reveals threat actors are actively scanning for and targeting PLCs in water systems. This follows a pattern of increasing OT/IT convergence attacks. Engineers responsible for industrial control systems should immediately audit internet-exposed PLCs, enforce network segmentation, and apply vendor patches. The alert underscores that critical infrastructure is no longer theoretical \u2014 it's an active battlefield."
         },
         {
-          "heading": "Correctness failures expose fragile trust boundaries",
-          "body": "A developer\u2019s account of discovering a deeply buried database commit illustrates how code that appears transactional can quietly lose atomicity and invalidate months of migration planning. Lean\u2019s postmortem covers a kernel soundness bug reported and fixed during the week of July 27, reinforcing the importance of transparent incident analysis in systems whose core promise is correctness."
+          "heading": "AI Moves from Demo to Utility",
+          "body": "MIT Sloan's study finds AI financial advice improves outcomes when users ask specific, contextual questions rather than vague prompts. Half of Americans already use AI for money decisions, making prompt literacy a financial skill. Separately, ByteDance's Seedance 2.5 represents a shift from generating clips to producing complete creative works with synchronized audio-video, signaling the next phase of generative video tooling for content creators."
         },
         {
-          "heading": "Better structures remain a competitive advantage",
-          "body": "Di\u00e1taxis presents technical documentation as four distinct forms organized around user needs, offering a systematic alternative to undifferentiated documentation. Alongside the database and Lean incidents, it underscores a shared lesson: explicit structure helps teams reveal assumptions before those assumptions become expensive failures."
+          "heading": "Software Engineering: Small Mistakes, Massive Costs",
+          "body": "A developer's stray `db.commit()` buried in a migration PR broke atomicity guarantees and cost months of work \u2014 a reminder that transaction boundaries must be explicit and reviewed. Separately, the Lean 4 kernel soundness bug #14576 postmortem shows how a subtle type-checking flaw can undermine a proof assistant's foundation, caught only through community vigilance. Both cases highlight that correctness in critical paths requires layered defense: code review, static analysis, and runtime assertions."
         }
       ],
-      "closing": "The durable advantage is not merely more capable technology, but systems and workflows that make their assumptions, boundaries, and failure modes visible."
+      "closing": "Security teams should treat the CISA water-sector alert as an immediate action item; AI practitioners should study the MIT prompting patterns; and every engineer should audit their transaction boundaries and kernel-level assumptions."
+    },
+    "analysis": {
+      "implications": [
+        "Engineers must prioritize securing PLCs and critical infrastructure against targeted attacks, treating them as high\u2011value threat surfaces.",
+        "AI tools that deliver reliable, reproducible outcomes (e.g., financial advice, video generation) raise expectations for rigorous validation before deployment in production systems.",
+        "Reliability lessons from stray commits and kernel bugs underscore the need for thorough code review and testing pipelines to avoid hidden regressions."
+      ],
+      "skeptic_take": "Many of the announced AI breakthroughs are based on single\u2011source press releases or title\u2011only reports, so claims of performance gains should be treated as preliminary until independently replicated results emerge.",
+      "confidence": "medium",
+      "evidence_basis": [
+        "CISA water sector PLC targeting alert is corroborated by a primary source (CISA advisory)",
+        "MIT study validating AI financial advice is primary, verified content",
+        "ByteDance Seedance 2.5 launch is reported only by title (single\u2011source)",
+        "Stray commit incident is verified\u2011content from Hacker News"
+      ]
     }
   },
   "metrics": {
     "runtime": {
-      "fetch_seconds": 2.54,
-      "scrape_seconds": 1.34,
-      "ranking_seconds": 0.03,
-      "summary_seconds": 32.65,
-      "analysis_seconds": 0.0,
-      "total_seconds": 57.23,
+      "fetch_seconds": 1.16,
+      "scrape_seconds": 0.0,
+      "ranking_seconds": 0.01,
+      "summary_seconds": 45.05,
+      "analysis_seconds": 21.6,
+      "total_seconds": 71.23,
       "within_budget": true
     },
     "scraping": {
       "candidate_urls": 9,
-      "cache_hits": 0,
-      "network_success": 9,
+      "cache_hits": 9,
+      "network_success": 0,
       "failures": 0,
       "success_rate": 100.0,
-      "cache_hit_rate": 0.0,
+      "cache_hit_rate": 100.0,
       "extractor_breakdown": {
-        "defuddle": 9,
+        "cache": 9,
         "none": 0,
         "failure_reasons": {}
       }
@@ -2643,16 +2658,16 @@
       "total_posts": 130,
       "llm_quality_used": false,
       "llm_usage": {
-        "input_tokens": 2890,
+        "input_tokens": 2887,
         "output_tokens": 1032,
-        "cost_usd": 0.04541,
+        "cost_usd": 0.045395,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 3922,
+        "total_tokens": 3919,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 3922,
-        "estimated_input_tokens": 2890,
+        "estimated_tokens": 3919,
+        "estimated_input_tokens": 2887,
         "estimated_output_tokens": 1032,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -2670,16 +2685,24 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 32.641,
+        "duration_seconds": 45.04,
         "prompt_chars": 5820,
         "story_count": 8
       },
-      "duration_seconds": 32.641,
+      "duration_seconds": 45.04,
       "validation_warnings": []
     },
     "analysis": {
       "source": "analysis",
-      "generated": false
+      "generated": true,
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "cost_usd": 0.0,
+        "cost_source": "hermes_cli",
+        "duration_seconds": 21.598
+      },
+      "confidence": "medium"
     },
     "cost": {
       "pricing_source": "Static token estimate for OpenClaw/subscription/free model usage; actual marginal cost may be lower, free, or unknown",
@@ -2689,19 +2712,19 @@
       ],
       "openrouter_cost_used": false,
       "estimated_cost_used": true,
-      "estimated_tokens": 3922,
-      "session_model_usd": 0.04541,
+      "estimated_tokens": 3919,
+      "session_model_usd": 0.045395,
       "ranking_llm": {
-        "input_tokens": 2890,
+        "input_tokens": 2887,
         "output_tokens": 1032,
-        "cost_usd": 0.04541,
+        "cost_usd": 0.045395,
         "cost_source": "openclaw_static_estimate",
-        "total_tokens": 3922,
+        "total_tokens": 3919,
         "cost_label": "estimated at $5/M input + $30/M output tokens; actual OpenClaw marginal cost may be free/subscription/unknown",
         "ranker_ai_provider": "openclaw",
         "requested_model": "openclaw-current",
-        "estimated_tokens": 3922,
-        "estimated_input_tokens": 2890,
+        "estimated_tokens": 3919,
+        "estimated_input_tokens": 2887,
         "estimated_output_tokens": 1032,
         "estimate_input_usd_per_million_tokens": 5.0,
         "estimate_output_usd_per_million_tokens": 30.0,
@@ -2715,7 +2738,7 @@
         "output_tokens": 0,
         "cost_usd": 0.0,
         "cost_source": "hermes_cli",
-        "duration_seconds": 32.641,
+        "duration_seconds": 45.04,
         "prompt_chars": 5820,
         "story_count": 8
       },
@@ -2752,7 +2775,7 @@
         "hackernews": 10,
         "rss": 110
       },
-      "analysis_generated": false
+      "analysis_generated": true
     },
     "notebook_ingest": {
       "enabled": true,
