@@ -22,6 +22,54 @@ from model_pricing import usage_to_dict
 from engine.config import load_engine_config, render_preflight
 from engine.summary import generate_summary_with_provider
 
+# Scraped article text regularly quotes real credentials (security write-ups do this
+# constantly). Committing that verbatim trips GitHub push protection and blocks the
+# deploy, so scrub anything key-shaped out of the digest before it is written.
+_SECRET_PATTERNS = re.compile(
+    r"""(
+        rubygems_[A-Za-z0-9]{32,}
+      | gh[pousr]_[A-Za-z0-9]{36,}
+      | github_pat_[A-Za-z0-9_]{60,}
+      | sk-[A-Za-z0-9]{20,}
+      | sk-ant-[A-Za-z0-9\-_]{20,}
+      | xox[baprs]-[A-Za-z0-9\-]{10,}
+      | AKIA[0-9A-Z]{16}
+      | AIza[0-9A-Za-z\-_]{35}
+      | glpat-[A-Za-z0-9\-_]{20,}
+      | npm_[A-Za-z0-9]{36}
+      | ctx7sk-[A-Za-z0-9\-]{20,}
+      | eyJ[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}
+    )""",
+    re.VERBOSE,
+)
+
+
+def redact_secrets_in_place(node: Any) -> int:
+    """Replace credential-shaped tokens with [REDACTED] throughout a nested structure.
+
+    Returns the number of tokens replaced. Mutates dicts and lists in place.
+    """
+    count = 0
+    if isinstance(node, dict):
+        for key, value in node.items():
+            if isinstance(value, str):
+                cleaned, n = _SECRET_PATTERNS.subn("[REDACTED]", value)
+                if n:
+                    node[key] = cleaned
+                    count += n
+            else:
+                count += redact_secrets_in_place(value)
+    elif isinstance(node, list):
+        for i, value in enumerate(node):
+            if isinstance(value, str):
+                cleaned, n = _SECRET_PATTERNS.subn("[REDACTED]", value)
+                if n:
+                    node[i] = cleaned
+                    count += n
+            else:
+                count += redact_secrets_in_place(value)
+    return count
+
 try:
     from config import SUBREDDIT_CATEGORIES, HN_CATEGORY, RSS_FEEDS
     from fetchers import fetch_all_rss_feeds
@@ -432,6 +480,9 @@ def main():
         digest.setdefault("metrics", {})["notebook_ingest"] = {"enabled": False}
 
     json_path = output_dir / "digest.json"
+    redacted_count = redact_secrets_in_place(digest)
+    if redacted_count:
+        print(f"Redacted {redacted_count} secret-like token(s) from scraped content")
     with open(json_path, "w") as f:
         json.dump(digest, f, indent=2)
     print(f"\nSaved JSON to {json_path}")
